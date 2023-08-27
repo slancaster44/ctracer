@@ -84,15 +84,15 @@ static inline __m128 invertMultHelper(__m128 m1, __m128 m2) {
 
 //Blockwise matrix inversion
 Matrix4x4 MatrixInvert(Matrix4x4 m1) {
-    __m128 A = NewTuple3(m1.contents[0][0], m1.contents[0][1], m1.contents[1][0], m1.contents[1][1]);
-    __m128 B = NewTuple3(m1.contents[0][2], m1.contents[0][3], m1.contents[1][2], m1.contents[1][3]);
-    __m128 C = NewTuple3(m1.contents[2][0], m1.contents[2][1], m1.contents[3][0], m1.contents[3][1]);
-    __m128 D = NewTuple3(m1.contents[2][2], m1.contents[2][3], m1.contents[3][2], m1.contents[3][3]);
+    __m128 A = SHUFFLE_M128(m1.contents[0], m1.contents[1], 0, 1, 0, 1);
+    __m128 B = SHUFFLE_M128(m1.contents[0], m1.contents[1], 2, 3, 2, 3);
+    __m128 C = SHUFFLE_M128(m1.contents[2], m1.contents[3], 0, 1, 0, 1);
+    __m128 D = SHUFFLE_M128(m1.contents[2], m1.contents[3], 2, 3, 2, 3);
 
     __m128 Ainv = invertHelper(A);
     __m128 CAinv = invertMultHelper(C, Ainv);
-
     __m128 schur_compliment = invertHelper(TupleSubtract(D, invertMultHelper(CAinv, B)));
+    __m128 Bschur_inv = invertMultHelper(B, schur_compliment);
 
     /*
         [X, Y,
@@ -100,29 +100,14 @@ Matrix4x4 MatrixInvert(Matrix4x4 m1) {
     */
    __m128 W = schur_compliment;
    __m128 Z = invertMultHelper(TupleNegate(schur_compliment), CAinv);
-   __m128 Y = invertMultHelper(TupleNegate(Ainv), invertMultHelper(B, schur_compliment));
-   __m128 X = TupleAdd(Ainv, invertMultHelper(invertMultHelper(Ainv, invertMultHelper(B, schur_compliment)), CAinv));
+   __m128 Y = invertMultHelper(TupleNegate(Ainv), Bschur_inv);
+   __m128 X = TupleAdd(Ainv, invertMultHelper(invertMultHelper(Ainv, Bschur_inv), CAinv));
 
     Matrix4x4 output;
-    output.contents[0][0] = X[0];
-    output.contents[0][1] = X[1];
-    output.contents[1][0] = X[2];
-    output.contents[1][1] = X[3];
-
-    output.contents[0][2] = Y[0];
-    output.contents[0][3] = Y[1];
-    output.contents[1][2] = Y[2];
-    output.contents[1][3] = Y[3];
-
-    output.contents[2][0] = Z[0];
-    output.contents[2][1] = Z[1];
-    output.contents[3][0] = Z[2];
-    output.contents[3][1] = Z[3];
-
-    output.contents[2][2] = W[0];
-    output.contents[2][3] = W[1];
-    output.contents[3][2] = W[2];
-    output.contents[3][3] = W[3];
+    output.contents[0] = SHUFFLE_M128(X, Y, 0, 1, 0, 1);
+    output.contents[1] = SHUFFLE_M128(X, Y, 2, 3, 2, 3);
+    output.contents[2] = SHUFFLE_M128(Z, W, 0, 1, 0, 1);
+    output.contents[3] = SHUFFLE_M128(Z, W, 2, 3, 2, 3);
 
     return output;
 }

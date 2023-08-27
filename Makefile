@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -O2 -o tracer -march=native
+CFLAGS = -O3 -o tracer -march=native
 INCLUDE = -Iinclude
 SOURCE = `find ./src -name *.c ! -name test.c ! -name main.c ! -name benchmark.c`
 LDFLAGS = -lm
