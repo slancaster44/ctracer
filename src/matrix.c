@@ -21,15 +21,23 @@ int MatrixEqual(Matrix4x4 m1, Matrix4x4 m2) {
 }
 
 int MatrixFuzzyEqual(Matrix4x4 m1, Matrix4x4 m2) {
-    for (int i = 0; i < 4; i++) {
-        for (int j = 0; j < 4; j++) {
-            if (!FloatEquality(m1.contents[i][j], m2.contents[i][j])) {
-                return 0;
-            }
-        }
-    }
+    __m256 diff0 = _mm256_sub_ps(m1.chunks[0], m2.chunks[0]);
+    __m256 diff1 = _mm256_sub_ps(m1.chunks[1], m2.chunks[1]);
 
-    return 1;
+    //Mask Out Sign Bits
+    __m256 mask = (__m256) _mm256_set1_epi32(0x7FFFFFFF);
+    diff0 = _mm256_and_ps(diff0, mask);
+    diff1 = _mm256_and_ps(diff1, mask);
+
+    //Compare
+    __m256 epsilon = _mm256_set1_ps(EQUALITY_EPSILON);
+    __m256 cmp0 = _mm256_cmp_ps(diff0, epsilon, _CMP_LT_OQ);
+    __m256 cmp1 = _mm256_cmp_ps(diff1, epsilon, _CMP_LT_OQ);
+
+    unsigned r0 = _mm256_movemask_ps(cmp0);
+    unsigned r1 = _mm256_movemask_ps(cmp1);
+
+    return (r0 == 0xff) && (r1 == 0xff);
 }
 
 static inline __m128 matrixMultHelper(int a, Matrix4x4 m1, Matrix4x4 m2) {
@@ -82,7 +90,7 @@ static inline __m128 invertMultHelper(__m128 m1, __m128 m2) {
     return _mm_add_ps(r0, r1);
 }
 
-//Blockwise matrix inversion
+//Blockwise matrix inversion, see the wikipedia page on inverse matricies for more
 Matrix4x4 MatrixInvert(Matrix4x4 m1) {
     __m128 A = SHUFFLE_M128(m1.contents[0], m1.contents[1], 0, 1, 0, 1);
     __m128 B = SHUFFLE_M128(m1.contents[0], m1.contents[1], 2, 3, 2, 3);

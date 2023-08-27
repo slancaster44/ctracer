@@ -16,7 +16,7 @@ void Pass(const char* msg) {
 void TestMatrixEqual() {
     Matrix4x4 m1 = {
         contents: {
-            {1, 2, 3, 4},
+            {-1, 2, 3, 4},
             {2, 4, 4, 2},
             {8, 6, 4, 1},
             {0, 0, 0, 1},
@@ -25,7 +25,7 @@ void TestMatrixEqual() {
 
     Matrix4x4 m2 = {
         contents: {
-            {1, 2, 3, 4},
+            {-1, 2, 3, 4},
             {2, 4, 4, 2},
             {8, 6, 4, 1},
             {0, 0, 0, 1},
@@ -38,7 +38,7 @@ void TestMatrixEqual() {
         Pass("Matrix Equality");
     }
 
-    m2.contents[0][0] = 1.0001;
+    m2.contents[0][0] = -1.0001;
     if (MatrixEqual(m1, m2) || !MatrixFuzzyEqual(m1, m2)) {
         Fail("Matrix Fuzzy Equality");
     } else {
