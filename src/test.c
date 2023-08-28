@@ -4,6 +4,7 @@
 #include "tuple.h"
 #include "trig.h"
 #include "matrix.h"
+#include "canvas.h"
 
 void Fail(const char* msg) {
     printf("\033[0;31m[FAIL]\033[0;37m %s\n", msg);
@@ -311,6 +312,25 @@ void TestTupleSubtract() {
     }
 }
 
+void TestCanvas() {
+    Tuple3 start = NewPnt3(0, 1, 0);
+    Tuple3 velocity = TupleScalarMultiply(TupleNormalize(NewVec3(1, 1.8, 0)), 11.25);
+
+    Tuple3 gravity = NewVec3(0, -0.1, 0);
+
+    Canvas c;
+    ConstructCanvas(&c, 900, 550);
+
+    while (start[1] > 0) {
+        WritePixel(&c, NewColor(255, 255, 255, 255), (int) start[0], (int) start[1]);
+        
+        start = TupleAdd(start, velocity);
+        velocity = TupleAdd(velocity, gravity);
+    }
+
+    WriteToPPM(&c, "output.ppm");
+}
+
 int main() {
     TestMatrixEqual();
     TestMatrixMultiply();
@@ -333,5 +353,6 @@ int main() {
     TestTupleAdd();
     TestTupleSubtract();
 
+    TestCanvas();
     return 0;
 }

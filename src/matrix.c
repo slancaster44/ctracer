@@ -129,7 +129,7 @@ void PrintMatrix(Matrix4x4 m1) {
     }
 }
 
-Matrix4x4 Translation(float x, float y, float z) {
+Matrix4x4 TranslationMatrix(float x, float y, float z) {
     Matrix4x4 out = {
         contents: {
             {1, 0, 0, x},
@@ -142,7 +142,7 @@ Matrix4x4 Translation(float x, float y, float z) {
     return out;
 }
 
-Matrix4x4 Scaling(float x, float y, float z) {
+Matrix4x4 ScalingMatrix(float x, float y, float z) {
     Matrix4x4 out = {
         contents: {
             {x, 0, 0, 0},
@@ -155,7 +155,7 @@ Matrix4x4 Scaling(float x, float y, float z) {
     return out;
 }
 
-Matrix4x4 RotationX(float theta) {
+Matrix4x4 RotationXMatrix(float theta) {
     Matrix4x4 out = {
         contents: {
             {1, 0, 0, 0},
@@ -168,7 +168,7 @@ Matrix4x4 RotationX(float theta) {
     return out;
 }
 
-Matrix4x4 RotationY(float theta) {
+Matrix4x4 RotationYMatrix(float theta) {
     Matrix4x4 out = {
         contents: {
             {_cos(theta), 0, _sin(theta), 0},
@@ -181,7 +181,7 @@ Matrix4x4 RotationY(float theta) {
     return out;
 }
 
-Matrix4x4 RotationZ(float theta) {
+Matrix4x4 RotationZMatrix(float theta) {
     Matrix4x4 out = {
         contents: {
             {_cos(theta), -_sin(theta), 0, 0},
@@ -194,7 +194,7 @@ Matrix4x4 RotationZ(float theta) {
     return out;
 }
 
-Matrix4x4 Shearing(float xy, float xz, float yx, float yz, float zx, float zy) {
+Matrix4x4 ShearingMatrix(float xy, float xz, float yx, float yz, float zx, float zy) {
     Matrix4x4 out = {
         contents: {
             {1, xy, xz, 0},
