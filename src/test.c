@@ -358,6 +358,7 @@ void TestRaySphereIntersection() {
 
     if (!FloatEquality(4.0, intersection.ray_times[0])) {
         Fail("Ray/Sphere Intersection, Normal");
+        printf("\t%f\n", intersection.ray_times[0]);
     } else {
         Pass("Ray/Sphere Intersection, Normal");
     }
@@ -371,6 +372,7 @@ void TestRaySphereIntersection() {
 
     if (!FloatEquality(i2.ray_times[0], 5.0)) {
         Fail("Ray/Sphere Intersection, Tangent");
+        printf("\t%f\n", i2.ray_times[0]);
     } else {
         Pass("Ray/Sphere Intersection, Tangent");
     }
@@ -384,6 +386,7 @@ void TestRaySphereIntersection() {
 
     if (!FloatEquality(i3.ray_times[0], -1)) {
         Fail("Ray/Sphere Intersection, Inside");
+        printf("\t%f\n", i3.ray_times[0]);
     } else {
         Pass("Ray/Sphere Intersection, Inside");
     }
@@ -398,6 +401,7 @@ void TestRaySphereIntersection() {
 
     if (!FloatEquality(i4.ray_times[0], -6)) {
         Fail("Ray/Sphere Intersection, Behind");
+        printf("\t%f\n", i4.ray_times[0]);
     } else {
         Pass("Ray/Sphere Intersection, Behind");
     }

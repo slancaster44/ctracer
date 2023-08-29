@@ -18,27 +18,17 @@ Intersections IntersectSphere(Shape s, Ray r) {
 
     Sphere sphere = s.as.sphere;
 
-    Tuple3 sphere_to_ray = TupleSubtract(r.origin, sphere.center_point);
-    float a = TupleDotProduct(r.direction, r.direction);
-    float b = 2 * TupleDotProduct(r.direction, sphere_to_ray);
-    float c = TupleDotProduct(sphere_to_ray, sphere_to_ray) - 1;
-    float discriminant = (b * b) - 4 * a * c;
+    Tuple3 l = TupleSubtract(r.origin, sphere.center_point);
+    float l_2 = TupleDotProduct(l, l);
+    float _s = TupleDotProduct(l, r.direction);
 
-    if (discriminant < 0) {
-        result.count = 0;
-        
-    } else if (discriminant == 0) {
-        result.count = 1;
-        result.ray_times[0] = -b / (a * 2);
+    float m_2 = l_2 - (_s * _s);
+    float q = sqrtf(1 - m_2);
 
+    if (l_2 > 1) {
+        result.ray_times[0] = -(_s + q);
     } else {
-        result.count = 2;
-
-        float a_2 = a * 2;
-        float d_sqrt = sqrtf(discriminant);
-
-        result.ray_times[0] = (-b - d_sqrt) / a_2;
-        result.ray_times[1] = (-b + d_sqrt) / a_2;
+        result.ray_times[0] = _s - q;
     }
 
     return result;

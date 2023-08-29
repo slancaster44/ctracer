@@ -32,7 +32,6 @@ typedef struct {
 } Intersections;
 
 void ConstructSphere(Shape* s, Tuple3 center_points);
-void DeconstructShape(Shape* s);
 Intersections Intersect(Shape s, Ray r);
 
 #endif
