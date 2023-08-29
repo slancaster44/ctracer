@@ -5,13 +5,13 @@
 
 #define BENCHMARK_CYCLES 8192
 #define BENCHMARK(fn, width) {                          \
-    double average = 0;                                \
+    double average = 0;                                 \
     for (int i = 0; i < BENCHMARK_CYCLES; i++) {        \
         clock_t start = clock();                        \
         for (int j = 0; j < width; j++)                 \
             fn;                                         \
         clock_t end = clock();                          \
-        average += (double) (end - start);                       \
+        average += (double) (end - start);              \
     }                                                   \
     printf("%s: %lf clocks\n", #fn, average / (double) BENCHMARK_CYCLES);\
 }
