@@ -5,6 +5,7 @@
 #include "trig.h"
 #include "matrix.h"
 #include "canvas.h"
+#include "shape.h"
 
 void Fail(const char* msg) {
     printf("\033[0;31m[FAIL]\033[0;37m %s\n", msg);
@@ -328,7 +329,78 @@ void TestCanvas() {
         velocity = TupleAdd(velocity, gravity);
     }
 
-    WriteToPPM(&c, "output.ppm");
+    WriteToPPM(&c, "canvas_test.ppm");
+}
+
+void TestRay() {
+    Ray r = {
+        origin: NewPnt3(2, 3, 4),
+        direction: NewVec3(1, 0, 0),
+    };
+
+    if (!TupleEqual(RayPosition(r, 2.5), NewPnt3(4.5, 3, 4))) {
+        Fail("Ray Position Finding");
+    } else {
+        Pass("Ray Position Finding");
+    }
+}
+
+void TestRaySphereIntersection() {
+    Shape sphere;
+    ConstructSphere(&sphere, NewPnt3(0, 0, 0));
+
+    Ray r1 = {
+        origin: NewPnt3(0, 0, -5),
+        direction: NewVec3(0, 0, 1),
+    };
+
+    Intersections intersection = Intersect(sphere, r1);
+
+    if (!FloatEquality(4.0, intersection.ray_times[0])) {
+        Fail("Ray/Sphere Intersection, Normal");
+    } else {
+        Pass("Ray/Sphere Intersection, Normal");
+    }
+
+    Ray r2 = {
+        origin: NewPnt3(0, 1, -5),
+        direction: NewVec3(0, 0, 1),
+    };
+
+    Intersections i2 = Intersect(sphere, r2);
+
+    if (!FloatEquality(i2.ray_times[0], 5.0)) {
+        Fail("Ray/Sphere Intersection, Tangent");
+    } else {
+        Pass("Ray/Sphere Intersection, Tangent");
+    }
+    
+    Ray r3 = {
+        origin: NewPnt3(0, 0, 0),
+        direction: NewVec3(0, 0, 1),
+    };
+
+    Intersections i3 = Intersect(sphere, r3);
+
+    if (!FloatEquality(i3.ray_times[0], -1)) {
+        Fail("Ray/Sphere Intersection, Inside");
+    } else {
+        Pass("Ray/Sphere Intersection, Inside");
+    }
+
+
+    Ray r4 = {
+        origin: NewPnt3(0, 0, 5),
+        direction: NewVec3(0, 0, 1),
+    };
+
+    Intersections i4 = Intersect(sphere, r4);
+
+    if (!FloatEquality(i4.ray_times[0], -6)) {
+        Fail("Ray/Sphere Intersection, Behind");
+    } else {
+        Pass("Ray/Sphere Intersection, Behind");
+    }
 }
 
 int main() {
@@ -354,5 +426,8 @@ int main() {
     TestTupleSubtract();
 
     TestCanvas();
+    TestRay();
+    TestRaySphereIntersection();
+
     return 0;
 }

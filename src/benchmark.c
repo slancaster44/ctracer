@@ -2,6 +2,7 @@
 #include <stdio.h>
 
 #include "matrix.h"
+#include "shape.h"
 
 #define BENCHMARK_CYCLES 8192
 #define BENCHMARK(fn, width) {                          \
@@ -123,6 +124,18 @@ void BenchmarkMatrixTupleMultiply() {
     BENCHMARK(MatrixTupleMultiply(m1, t1), 8192);
 }
 
+void BenchmarkRaySphere() {
+    Shape sphere;
+    ConstructSphere(&sphere, NewPnt3(0, 0, 0));
+
+    Ray r1 = {
+        origin: NewPnt3(0, 0, -5),
+        direction: NewVec3(0, 0, 1),
+    };
+
+    BENCHMARK(Intersect(sphere, r1), 8192);
+}
+
 int main() {
     BenchmarkMatrixEqual();
     BenchmarkMatrixFuzzyEqual();
@@ -130,5 +143,6 @@ int main() {
     BenchmarkMatrixInvert();
     BenchmarkMatrixTranspose();
     BenchmarkMatrixTupleMultiply();
+    BenchmarkRaySphere();
     return 0;
 }

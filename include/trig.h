@@ -4,6 +4,7 @@
 float _cos(float theta);
 float _sin(float theta);
 float _tan(float theta);
+float _sqrt(float n);
 
 #define EQUALITY_EPSILON 0.0005
 int FloatEquality(float n1, float n2);

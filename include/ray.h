@@ -8,4 +8,6 @@ typedef struct {
     Tuple3 direction;
 } Ray;
 
+Tuple3 RayPosition(Ray r, float pos);
+
 #endif

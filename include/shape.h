@@ -3,6 +3,9 @@
 
 #include "tuple.h"
 #include "ray.h"
+#include "matrix.h"
+
+#define MAX_NUMBER_INTERSECTIONS 2
 
 typedef enum {
     SPHERE,
@@ -10,18 +13,26 @@ typedef enum {
 
 typedef struct {
     Tuple3 center_point;
-    float radius;
 } Sphere;
 
 typedef struct {
+    Matrix4x4 transformation;
+
     SHAPE_TYPE type;
     union {
-        Sphere* sphere;
+        Sphere sphere;
     } as;
 } Shape;
 
-void ConstructSphere(Shape* s, Tuple3 center_point, float radius);
+typedef struct {
+    Shape shape;
+    Ray ray;
+    float ray_times[MAX_NUMBER_INTERSECTIONS];
+    int count;
+} Intersections;
+
+void ConstructSphere(Shape* s, Tuple3 center_points);
 void DeconstructShape(Shape* s);
-Tuple3 Intersect(Shape s, Ray r);
+Intersections Intersect(Shape s, Ray r);
 
 #endif
