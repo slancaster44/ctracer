@@ -27,4 +27,6 @@ Matrix4x4 ShearingMatrix(float xy, float xz, float yx, float yyz, float zx, floa
 Tuple3 MatrixTupleMultiply(Matrix4x4 m1, Tuple3 t1);
 void PrintMatrix(Matrix4x4 m1);
 
+Matrix4x4 IdentityMatrix();
+
 #endif

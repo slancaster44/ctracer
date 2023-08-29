@@ -10,6 +10,7 @@
 #define SET_M256(a, b, c, d, e, f, g, h) \
     _mm256_set_ps(h, g, f, e, d, c, b, a)
 
+
 int MatrixEqual(Matrix4x4 m1, Matrix4x4 m2) {
     __m256 cmp1 = _mm256_cmp_ps(m1.chunks[0], m2.chunks[0], _CMP_EQ_OQ);
     __m256 cmp2 = _mm256_cmp_ps(m1.chunks[1], m2.chunks[1], _CMP_EQ_OQ);
@@ -205,4 +206,17 @@ Matrix4x4 ShearingMatrix(float xy, float xz, float yx, float yz, float zx, float
     };
 
     return out;
+}
+
+Matrix4x4 IdentityMatrix() {
+    Matrix4x4 result = {
+        contents: {
+            {1, 0, 0, 0},
+            {0, 1, 0, 0},
+            {0, 0, 1, 0},
+            {0, 0, 0, 1},
+        }
+    };
+
+    return result;
 }

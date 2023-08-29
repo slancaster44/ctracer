@@ -4,7 +4,7 @@
 #include "matrix.h"
 #include "shape.h"
 
-#define BENCHMARK_CYCLES 8192
+#define BENCHMARK_CYCLES 1080
 #define BENCHMARK(fn, width) {                          \
     double average = 0;                                 \
     for (int i = 0; i < BENCHMARK_CYCLES; i++) {        \
@@ -36,7 +36,7 @@ void BenchmarkMatrixEqual() {
         }
     };
 
-    BENCHMARK(MatrixEqual(m1, m2), 8192);
+    BENCHMARK(MatrixEqual(m1, m2), 1920);
 }
 
 void BenchmarkMatrixFuzzyEqual() {
@@ -58,7 +58,7 @@ void BenchmarkMatrixFuzzyEqual() {
         }
     };
 
-    BENCHMARK(MatrixFuzzyEqual(m1, m2), 8192);
+    BENCHMARK(MatrixFuzzyEqual(m1, m2), 1920);
 }
 
 void BenchmarkMatrixMultiply() {
@@ -80,7 +80,7 @@ void BenchmarkMatrixMultiply() {
         }
     };
 
-    BENCHMARK(MatrixMultiply(m1, m2), 8192);
+    BENCHMARK(MatrixMultiply(m1, m2), 1920);
 }
 
 void BenchmarkMatrixTranspose() {
@@ -93,7 +93,7 @@ void BenchmarkMatrixTranspose() {
         }
     };
 
-    BENCHMARK(MatrixTranspose(m1), 8192);
+    BENCHMARK(MatrixTranspose(m1), 1920);
 }
 
 void BenchmarkMatrixInvert() {
@@ -106,7 +106,7 @@ void BenchmarkMatrixInvert() {
         }
     };
 
-    BENCHMARK(MatrixInvert(m1), 8192);
+    BENCHMARK(MatrixInvert(m1), 1920);
 }
 
 void BenchmarkMatrixTupleMultiply() {
@@ -121,7 +121,7 @@ void BenchmarkMatrixTupleMultiply() {
 
     Tuple3 t1 = NewTuple3(1, 2, 3, 4);
 
-    BENCHMARK(MatrixTupleMultiply(m1, t1), 8192);
+    BENCHMARK(MatrixTupleMultiply(m1, t1), 1920);
 }
 
 void BenchmarkRaySphere() {
@@ -133,7 +133,7 @@ void BenchmarkRaySphere() {
         direction: NewVec3(0, 0, 1),
     };
 
-    BENCHMARK(Intersect(sphere, r1), 8192);
+    BENCHMARK(Intersect(sphere, r1), 1920);
 }
 
 int main() {

@@ -356,9 +356,9 @@ void TestRaySphereIntersection() {
 
     Intersections intersection = Intersect(sphere, r1);
 
-    if (!FloatEquality(4.0, intersection.ray_times[0])) {
+    if (!FloatEquality(4.0, intersection.ray_times[0]) || !FloatEquality(6.0, intersection.ray_times[1])) {
         Fail("Ray/Sphere Intersection, Normal");
-        printf("\t%f\n", intersection.ray_times[0]);
+        printf("\t%f\n", intersection.ray_times[1]);
     } else {
         Pass("Ray/Sphere Intersection, Normal");
     }
@@ -370,9 +370,9 @@ void TestRaySphereIntersection() {
 
     Intersections i2 = Intersect(sphere, r2);
 
-    if (!FloatEquality(i2.ray_times[0], 5.0)) {
+    if (!FloatEquality(i2.ray_times[0], 5.0) || !FloatEquality(5.0, i2.ray_times[1])) {
         Fail("Ray/Sphere Intersection, Tangent");
-        printf("\t%f\n", i2.ray_times[0]);
+        printf("\t%f\n", i2.ray_times[1]);
     } else {
         Pass("Ray/Sphere Intersection, Tangent");
     }
@@ -384,7 +384,7 @@ void TestRaySphereIntersection() {
 
     Intersections i3 = Intersect(sphere, r3);
 
-    if (!FloatEquality(i3.ray_times[0], -1)) {
+    if (!FloatEquality(i3.ray_times[0], -1) || !FloatEquality(1.0, i3.ray_times[1])) {
         Fail("Ray/Sphere Intersection, Inside");
         printf("\t%f\n", i3.ray_times[0]);
     } else {
@@ -399,11 +399,27 @@ void TestRaySphereIntersection() {
 
     Intersections i4 = Intersect(sphere, r4);
 
-    if (!FloatEquality(i4.ray_times[0], -6)) {
+    if (!FloatEquality(i4.ray_times[0], -6) || !FloatEquality(-4.0, i4.ray_times[1])) {
         Fail("Ray/Sphere Intersection, Behind");
         printf("\t%f\n", i4.ray_times[0]);
     } else {
         Pass("Ray/Sphere Intersection, Behind");
+    }
+}
+
+void TestRayTransform() {
+    Ray r = {
+        origin: NewPnt3(1, 2, 3),
+        direction: NewVec3(0, 1, 0),
+    };
+
+    Matrix4x4 scaling = ScalingMatrix(2, 3, 4);
+    Ray r2 = RayTransform(r, scaling);
+
+    if (!TupleFuzzyEqual(r2.direction, NewVec3(0, 3, 0)) || !TupleFuzzyEqual(r2.origin, NewPnt3(2, 6, 12))) {
+        Pass("Ray Transformation");
+    } else {
+        Fail("Ray Transformation");
     }
 }
 
@@ -432,6 +448,7 @@ int main() {
     TestCanvas();
     TestRay();
     TestRaySphereIntersection();
+    TestRayTransform();
 
     return 0;
 }

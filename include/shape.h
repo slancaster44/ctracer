@@ -17,6 +17,7 @@ typedef struct {
 
 typedef struct {
     Matrix4x4 transformation;
+    Matrix4x4 inverse_transform;
 
     SHAPE_TYPE type;
     union {

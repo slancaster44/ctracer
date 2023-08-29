@@ -2,6 +2,7 @@
 #include <math.h>
 #include <stdio.h>
 
+#include "trig.h"
 #include "tuple.h"
 
 Tuple3 NewVec3(float x, float y, float z) {
@@ -29,6 +30,19 @@ int TupleEqual(Tuple3 t1, Tuple3 t2) {
     unsigned bitmask = _mm_movemask_ps(res);
 
     return (bitmask == 0xf);
+}
+
+int TupleFuzzyEqual(Tuple3 t1, Tuple3 t2) {
+    __m128 diff = _mm_sub_ps(t1, t2);
+    __m128 mask = (__m128) _mm_set1_epi32(0x7FFFFFFF);
+    diff = _mm_and_ps(diff, mask);
+
+    __m128 epsilon = _mm_set1_ps(EQUALITY_EPSILON);
+    __m128 cmp = _mm_cmp_ps(diff, epsilon, _CMP_LT_OQ);
+
+    unsigned res = _mm_movemask_ps(cmp);
+
+    return (res == 0xff);
 }
 
 Tuple3 TupleScalarMultiply(Tuple3 t1, float scalar) {
