@@ -347,7 +347,7 @@ void TestRay() {
 
 void TestRaySphereIntersection() {
     Shape sphere;
-    ConstructSphere(&sphere, NewPnt3(0, 0, 0));
+    ConstructSphere(&sphere, NewPnt3(0, 0, 0), 1.0);
 
     Ray r1 = {
         origin: NewPnt3(0, 0, -5),
@@ -405,6 +405,19 @@ void TestRaySphereIntersection() {
     } else {
         Pass("Ray/Sphere Intersection, Behind");
     }
+
+    Ray r5 = {
+        origin: NewPnt3(1.1, 1.1, 0),
+        direction: NewVec3(0, 0, 1),
+    };
+
+    Intersections i5 = Intersect(sphere, r5);
+
+    if (i5.count != 0) {
+        Fail("Ray/Sphere Intersection, No Hit");
+    } else {
+        Pass("Ray/Sphere Intersection, No Hit");
+    }
 }
 
 void TestRayTransform() {
@@ -417,9 +430,83 @@ void TestRayTransform() {
     Ray r2 = RayTransform(r, scaling);
 
     if (!TupleFuzzyEqual(r2.direction, NewVec3(0, 3, 0)) || !TupleFuzzyEqual(r2.origin, NewPnt3(2, 6, 12))) {
-        Pass("Ray Transformation");
-    } else {
         Fail("Ray Transformation");
+    } else {
+        Pass("Ray Transformation");
+    }
+}
+
+void SphereNormal() {
+    Shape s;
+    ConstructSphere(&s, NewPnt3(0, 0, 0), 1.0);
+
+    if (!TupleFuzzyEqual(NormalAt(s, NewPnt3(1, 0, 0)), NewVec3(1, 0, 0))) {
+        PrintTuple(NormalAt(s, NewPnt3(1, 0, 0)));
+        PrintTuple(NewVec3(1, 0, 0));
+        Fail("Sphere Normal");
+    } else {
+        Pass("Sphere Normal");
+    }
+
+
+    s.transformation = TranslationMatrix(0, 1, 0);
+    s.inverse_transform = MatrixInvert(s.transformation); 
+
+    Tuple3 n = NormalAt(s, NewPnt3(0, 1.70711, -0.70711));
+    Tuple3 expected_out = NewVec3(0, 0.70711, -0.70711);
+
+    if (!TupleFuzzyEqual(n, expected_out)) {
+        PrintTuple(n);
+        Fail("Sphere Normal, Translation");
+    } else {
+        Pass("Sphere Normal, Translation");
+    }
+
+    s.transformation = MatrixMultiply(ScalingMatrix(1, 0.5, 1), RotationZMatrix(M_PI / 5));
+    s.inverse_transform = MatrixInvert(s.transformation);
+
+    n = NormalAt(s, NewPnt3(0, sqrtf(2) / 2, -sqrtf(2) / 2));
+    expected_out = NewVec3(0, 0.97014, -0.24254);
+
+    if (!TupleFuzzyEqual(n, expected_out)) {
+        PrintTuple(n);
+        Fail("Sphere Normal, Scaling & Rotation");
+    } else {
+        Pass("Sphere Normal, Scaling & Rotation");
+    }
+}
+
+void TestSphereGeometry() {
+    Shape s;
+    ConstructSphere(&s, NewPnt3(0, 0, 0), 6.0);
+
+    Ray r = {
+        origin: NewPnt3(0, 6, 0),
+        direction: NewVec3(0, 0, 1),
+    };
+
+    Intersections res = Intersect(s, r);
+
+    if (res.ray_times[0] != res.ray_times[1]) {
+        Fail("Sphere geometry, radius");
+        printf("\t%d: %f, %f\n", res.count, res.ray_times[0], res.ray_times[1]);
+    } else {
+        Pass("Sphere geometry, radius");
+    }
+
+    ConstructSphere(&s, NewPnt3(1, 1, 0), 1.0);
+    Ray r2 = {
+        origin: NewPnt3(1, 1, -3),
+        direction: NewVec3(0, 0, 1),
+    };
+
+    res = Intersect(s, r2);
+    if (res.ray_times[0] != 2) {
+        PrintTuple(RayPosition(r2, res.ray_times[0]));
+        printf("%d: %f", res.count, res.ray_times[0]);
+        Fail("Sphere geometry, origin");
+    } else {
+        Pass("Sphere geometry, origin");
     }
 }
 
@@ -449,6 +536,8 @@ int main() {
     TestRay();
     TestRaySphereIntersection();
     TestRayTransform();
+    SphereNormal();
+    TestSphereGeometry();
 
     return 0;
 }

@@ -11,18 +11,12 @@ typedef enum {
     SPHERE,
 } SHAPE_TYPE;
 
-typedef struct {
-    Tuple3 center_point;
-} Sphere;
 
 typedef struct {
     Matrix4x4 transformation;
     Matrix4x4 inverse_transform;
 
     SHAPE_TYPE type;
-    union {
-        Sphere sphere;
-    } as;
 } Shape;
 
 typedef struct {
@@ -32,7 +26,9 @@ typedef struct {
     int count;
 } Intersections;
 
-void ConstructSphere(Shape* s, Tuple3 center_points);
+void ApplyTransformation(Shape* s, Matrix4x4 t);
+void ConstructSphere(Shape* s, Tuple3 center_point, float radius);
 Intersections Intersect(Shape s, Ray r);
+Tuple3 NormalAt(Shape s, Tuple3 pnt);
 
 #endif

@@ -126,7 +126,7 @@ void BenchmarkMatrixTupleMultiply() {
 
 void BenchmarkRaySphere() {
     Shape sphere;
-    ConstructSphere(&sphere, NewPnt3(0, 0, 0));
+    ConstructSphere(&sphere, NewPnt3(0, 0, 0), 1.0);
 
     Ray r1 = {
         origin: NewPnt3(0, 0, -5),

@@ -42,7 +42,7 @@ int TupleFuzzyEqual(Tuple3 t1, Tuple3 t2) {
 
     unsigned res = _mm_movemask_ps(cmp);
 
-    return (res == 0xff);
+    return (res == 0xf);
 }
 
 Tuple3 TupleScalarMultiply(Tuple3 t1, float scalar) {
