@@ -4,6 +4,7 @@
 #include "tuple.h"
 #include "ray.h"
 #include "matrix.h"
+#include "material.h"
 
 #define MAX_NUMBER_INTERSECTIONS 2
 
@@ -15,6 +16,8 @@ typedef enum {
 typedef struct {
     Matrix4x4 transformation;
     Matrix4x4 inverse_transform;
+
+    Material material;
 
     SHAPE_TYPE type;
 } Shape;

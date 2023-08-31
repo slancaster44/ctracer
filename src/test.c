@@ -6,6 +6,9 @@
 #include "matrix.h"
 #include "canvas.h"
 #include "shape.h"
+#include "material.h"
+#include "light.h"
+#include "shading.h"
 
 void Fail(const char* msg) {
     printf("\033[0;31m[FAIL]\033[0;37m %s\n", msg);
@@ -510,6 +513,36 @@ void TestSphereGeometry() {
     }
 }
 
+void AssignDefaultTestMaterial(Material* m) {
+    m->color = NewColor(255, 255, 255, 255);
+    m->ambient_reflection = 0.1;
+    m->diffuse_reflection = 0.9;
+    m->specular_reflection = 0.9;
+    m->shininess = 200;
+}
+
+void TestPhongShading() {
+    Material m;
+    AssignDefaultTestMaterial(&m);
+    Tuple3 position = NewPnt3(0, 0, 0);
+
+    Tuple3 eyev, normalv, result;
+    Light light;
+
+    eyev = NewVec3(0, 0, -1);
+    normalv = NewVec3(0, 0, -1);
+    light.origin = NewPnt3(0, 0, -10);
+    light.color = NewColor(255, 255, 255, 255);
+
+    result = PhongShading(m, light, position, eyev, normalv);
+
+    if (!TupleFuzzyEqual(NewTuple3(1.9, 1.9, 1.9, 1.0), result)) {
+        Fail("Phong Shading, Behind");
+    } else {
+        Pass("Phong Shading, Behind");
+    }
+}
+
 int main() {
     TestMatrixEqual();
     TestMatrixMultiply();
@@ -538,6 +571,7 @@ int main() {
     TestRayTransform();
     SphereNormal();
     TestSphereGeometry();
+    TestPhongShading();
 
     return 0;
 }

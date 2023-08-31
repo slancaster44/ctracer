@@ -25,5 +25,6 @@ Tuple3 TupleMultiply(Tuple3 t1, Tuple3 t2);
 Tuple3 TupleDivide(Tuple3 t1, Tuple3 t2);
 Tuple3 TupleAdd(Tuple3 t1, Tuple3 t2);
 Tuple3 TupleSubtract(Tuple3 t1, Tuple3 t2);
+Tuple3 TupleReflect(Tuple3 t1, Tuple3 normal);
 
 #endif

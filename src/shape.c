@@ -2,7 +2,6 @@
 
 
 void ConstructSphere(Shape* s, Tuple3 cp, float radius) {
-
     s->type = SPHERE;
 
     Matrix4x4 center_point_translation = TranslationMatrix(cp[0], cp[1], cp[2]);
