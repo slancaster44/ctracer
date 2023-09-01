@@ -3,6 +3,8 @@
 
 #include "matrix.h"
 #include "shape.h"
+#include "shading.h"
+#include "light.h"
 
 #define BENCHMARK_CYCLES 1080
 #define BENCHMARK(fn, width) {                          \
@@ -124,7 +126,7 @@ void BenchmarkMatrixTupleMultiply() {
     BENCHMARK(MatrixTupleMultiply(m1, t1), 1920);
 }
 
-void BenchmarkRaySphere() {
+void BenchmarkRaySphereIntersection() {
     Shape sphere;
     ConstructSphere(&sphere, NewPnt3(0, 0, 0), 1.0);
 
@@ -136,6 +138,30 @@ void BenchmarkRaySphere() {
     BENCHMARK(Intersect(sphere, r1), 1920);
 }
 
+void AssignDefaultTestMaterial(Material* m) {
+    m->color = NewColor(255, 255, 255, 255);
+    m->ambient_reflection = 0.1;
+    m->diffuse_reflection = 0.9;
+    m->specular_reflection = 0.9;
+    m->shininess = 200;
+}
+
+void BenchmarkPhongShading() {
+    Material m;
+    AssignDefaultTestMaterial(&m);
+    Tuple3 position = NewPnt3(0, 0, 0);
+
+    Tuple3 eyev, normalv;
+    Light light;
+
+    eyev = NewVec3(0, 0, -1);
+    normalv = NewVec3(0, 0, -1);
+    light.origin = NewPnt3(0, 0, -10);
+    light.color = NewColor(255, 255, 255, 255);
+
+    BENCHMARK(PhongShading(m, light, position, eyev, normalv), 1920);
+}
+
 int main() {
     BenchmarkMatrixEqual();
     BenchmarkMatrixFuzzyEqual();
@@ -143,6 +169,7 @@ int main() {
     BenchmarkMatrixInvert();
     BenchmarkMatrixTranspose();
     BenchmarkMatrixTupleMultiply();
-    BenchmarkRaySphere();
+    BenchmarkRaySphereIntersection();
+    BenchmarkPhongShading();
     return 0;
 }

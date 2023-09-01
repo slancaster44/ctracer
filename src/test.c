@@ -536,10 +536,55 @@ void TestPhongShading() {
 
     result = PhongShading(m, light, position, eyev, normalv);
 
-    if (!TupleFuzzyEqual(NewTuple3(1.9, 1.9, 1.9, 1.0), result)) {
+    if (!TupleFuzzyEqual(NewTuple3(1.9, 1.9, 1.9, 1.9), result)) {
+        PrintTuple(result);
         Fail("Phong Shading, Behind");
     } else {
         Pass("Phong Shading, Behind");
+    }
+
+    float rt2_2 = sqrtf(2) / 2;
+
+    eyev = NewVec3(0, rt2_2, -rt2_2);
+    result = PhongShading(m, light, position, eyev, normalv);
+
+    if (!TupleFuzzyEqual(NewTuple3(1.0, 1.0, 1.0, 1.0), result)) {
+        PrintTuple(result);
+        Fail("Phong Shading, Angled Viewer");
+    } else {
+        Pass("Phong Shading, Angled Viewer");
+    }
+
+    eyev = NewVec3(0, 0, -1);
+    light.origin = NewPnt3(0, 10, -10);
+    result = PhongShading(m, light, position, eyev, normalv);
+
+    if (!TupleFuzzyEqual(NewTuple3(0.7364, 0.7364, 0.7364, 0.7364), result)) {
+        PrintTuple(result);
+        Fail("Phong Shading, Angled Light");
+    } else {
+        Pass("Phong Shading, Angled Light");
+    }
+
+    eyev = NewVec3(0, -rt2_2, -rt2_2);
+    result = PhongShading(m, light, position, eyev, normalv);
+
+    if (!TupleFuzzyEqual(NewTuple3(1.6364, 1.6364, 1.6364, 1.6364), result)) {
+        PrintTuple(result);
+        Fail("Phong Shading, Angled Viewer & Light");
+    } else {
+        Pass("Phong Shading, Angled Viewer & Light");
+    }
+
+    eyev = NewVec3(0, 0, -1);
+    light.origin = NewPnt3(0, 0, 10);
+    result = PhongShading(m, light, position, eyev, normalv);
+
+    if (!TupleFuzzyEqual(NewTuple3(0.1, 0.1, 0.1, 0.1), result)) {
+        PrintTuple(result);
+        Fail("Phong Shading, Light Behind Surface");
+    } else {
+        Pass("Phong Shading, Light Behind Surface");
     }
 }
 
