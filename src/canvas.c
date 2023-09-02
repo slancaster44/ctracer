@@ -1,10 +1,11 @@
+#include <string.h>
 #include "canvas.h"
-
 
 void ConstructCanvas(Canvas* c, size_t width, size_t height) {
     c->buffer = (Tuple3*) malloc(width * height * sizeof(Tuple3));
     c->canvas_width = width;
     c->canvas_height = height;
+    memset(c->buffer, 0, width * height * sizeof(Tuple3));
 }
 
 void DeconstructCanvas(Canvas* c) {

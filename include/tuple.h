@@ -26,5 +26,7 @@ Tuple3 TupleDivide(Tuple3 t1, Tuple3 t2);
 Tuple3 TupleAdd(Tuple3 t1, Tuple3 t2);
 Tuple3 TupleSubtract(Tuple3 t1, Tuple3 t2);
 Tuple3 TupleReflect(Tuple3 t1, Tuple3 normal);
+Tuple3 TupleScalarSubtract(Tuple3 t, float n);
+Tuple3 TupleScalarAdd(Tuple3 t, float n);
 
 #endif

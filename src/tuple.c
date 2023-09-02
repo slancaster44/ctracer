@@ -54,6 +54,14 @@ Tuple3 TupleScalarDivide(Tuple3 t1, float scalar) {
     return _mm_div_ps(t1, _mm_set1_ps(scalar));
 }
 
+Tuple3 TupleScalarSubtract(Tuple3 t1, float scalar) {
+    return _mm_sub_ps(t1, _mm_set1_ps(scalar));
+}
+
+Tuple3 TupleScalarAdd(Tuple3 t1, float scalar) {
+    return _mm_add_ps(t1, _mm_set1_ps(scalar));
+}
+
 Tuple3 TupleNegate(Tuple3 t1) {
     return _mm_sub_ps(_mm_set1_ps(0), t1);
 }
