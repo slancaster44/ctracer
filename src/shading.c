@@ -23,7 +23,7 @@ Tuple3 PhongShading(Material m, Light l, Tuple3 position, Tuple3 eye_vector, Tup
         Tuple3 reflect_vector = TupleReflect(TupleNegate(light_pos_vector), surface_normal);
         float reflect_dot_eye = TupleDotProduct(reflect_vector, eye_vector);
 
-        if (reflect_dot_eye <= 0.0) {
+        if (reflect_dot_eye < 0.0) {
             specular = BLACK;
         } else {
             float factor = powf(reflect_dot_eye, m.shininess);

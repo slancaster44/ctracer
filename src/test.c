@@ -588,6 +588,46 @@ void TestPhongShading() {
     }
 }
 
+void TestShadeSphere() {
+    Material m;
+    AssignDefaultTestMaterial(&m);
+    m.color = NewColor(0, 100, 200, 255);
+
+    Light l;
+    l.origin = NewPnt3(-200, -200, -400);
+    l.color = NewColor(255, 255, 255, 255);
+    
+    Canvas c;
+    ConstructCanvas(&c, 800, 600);
+
+    Shape s;
+    ConstructSphere(&s, NewPnt3(0, 0, 0), 250); 
+    s.material = m;
+
+    Ray r;
+    r.direction = NewVec3(0, 0, 1);
+
+    for (int x = 0; x < 800; x++) {
+        for (int y = 0; y < 600; y++) {
+            r.origin = NewPnt3(x-400, y - 300, -200);
+            Intersections i = Intersect(s, r);
+
+            if (i.count > 0) {
+
+                Tuple3 pos = RayPosition(r, i.ray_times[0]);
+                Tuple3 norm = NormalAt(s, pos);
+                Tuple3 eyev = TupleNegate(r.direction);
+
+                Tuple3 color = PhongShading(s.material, l, pos, eyev, norm);
+                WritePixel(&c, color, x, y);
+            }
+        }
+    }
+
+    WriteToPPM(&c, "sphere.ppm");
+    DeconstructCanvas(&c);
+}
+
 int main() {
     TestMatrixEqual();
     TestMatrixMultiply();
@@ -617,6 +657,7 @@ int main() {
     SphereNormal();
     TestSphereGeometry();
     TestPhongShading();
+    TestShadeSphere();
 
     return 0;
 }

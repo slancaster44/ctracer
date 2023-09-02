@@ -18,11 +18,12 @@ Tuple3 NewTuple3(float x, float y, float z, float w) {
 }
 
 Tuple3 NewColor(uint8_t r, uint8_t g, uint8_t b, uint8_t a) {
-    return _mm_set_ps((float) r / 255, (float) g / 255, (float) b / 255, (float) a / 255);
+    Tuple3 c = NewTuple3((float) r, (float) g, (float) b, (float) a);
+    return TupleScalarDivide(c, 255);
 }
 
 void PrintTuple(Tuple3 t) {
-    printf("[%f %f %f %f]", t[0], t[1], t[2], t[3]);
+    printf("[%f %f %f %f]\n", t[0], t[1], t[2], t[3]);
 }
 
 int TupleEqual(Tuple3 t1, Tuple3 t2) {
