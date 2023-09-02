@@ -8,4 +8,6 @@ typedef struct {
     Tuple3 color;
 } Light;
 
+void ConstructLight(Light* l, Tuple3 origin);
+
 #endif

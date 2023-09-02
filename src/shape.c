@@ -2,6 +2,7 @@
 
 
 void ConstructSphere(Shape* s, Tuple3 cp, float radius) {
+    ConstructMaterial(&(s->material), NewTuple3(0.8, 1.0, 0.6, 1.0));
     s->type = SPHERE;
 
     Matrix4x4 center_point_translation = TranslationMatrix(cp[0], cp[1], cp[2]);

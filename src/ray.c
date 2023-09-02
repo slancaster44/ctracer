@@ -5,10 +5,12 @@ Tuple3 RayPosition(Ray r, float pos) {
 }
 
 Ray RayTransform(Ray r, Matrix4x4 transformation) {
-    Ray result = {
-        origin: MatrixTupleMultiply(transformation, r.origin),
-        direction: MatrixTupleMultiply(transformation, r.direction),
-    };
+    r.origin = MatrixTupleMultiply(transformation, r.origin);
+    r.direction = MatrixTupleMultiply(transformation, r.direction);
+    return r;
+}
 
-    return result;
+void ConstructRay(Ray* r, Tuple3 origin, Tuple3 direction) {
+    r->origin = origin;
+    r->direction = direction;
 }

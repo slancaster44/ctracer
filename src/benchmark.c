@@ -5,6 +5,7 @@
 #include "shape.h"
 #include "shading.h"
 #include "light.h"
+#include "intersection.h"
 #include "canvas.h"
 
 #define BENCHMARK_CYCLES 1080
@@ -185,7 +186,7 @@ void TestShadeSphere() {
     for (int x = 0; x < 800; x++) {
         for (int y = 0; y < 600; y++) {
             r.origin = NewPnt3(x-400, y - 300, 0);
-            Intersections i = Intersect(s, r);
+            Intersection i = Intersect(s, r);
 
             if (i.count > 0) {
 

@@ -9,6 +9,7 @@ typedef struct {
     Tuple3 direction;
 } Ray;
 
+void ConstructRay(Ray* r, Tuple3 origin, Tuple3 direction);
 Tuple3 RayPosition(Ray r, float pos);
 Ray RayTransform(Ray r, Matrix4x4 transformation);
 

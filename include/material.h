@@ -11,4 +11,6 @@ typedef struct {
     float shininess;
 } Material;
 
+void ConstructMaterial(Material* m, Tuple3 color);
+
 #endif

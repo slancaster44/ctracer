@@ -8,7 +8,10 @@
 #include "shape.h"
 #include "material.h"
 #include "light.h"
+#include "scene.h"
 #include "shading.h"
+#include "intersection.h"
+#include "set.h"
 
 void Fail(const char* msg) {
     printf("\033[0;31m[FAIL]\033[0;37m %s\n", msg);
@@ -16,6 +19,48 @@ void Fail(const char* msg) {
 
 void Pass(const char* msg) {
     printf("\033[0;32m[PASS]\033[0;37m %s\n", msg);
+}
+
+void TestSet() {
+    Set s;
+    ConstructSet(&s, sizeof(int));
+
+    int l = 1;
+    AppendValue(&s, &l);
+    AppendValue(&s, &l);
+    AppendValue(&s, &l);
+    AppendValue(&s, &l);
+    AppendValue(&s, &l);
+
+    int out = 0;
+    for (int i = 0; i < s.length; i++) {
+        int* n;
+        n = Index(&s, i);
+        out += *n;
+    }
+
+    if (out != 5) {
+        Fail("Set Indexing");
+        printf("\t%d\n", out);
+    } else {
+        Pass("Set Indexing");
+    }
+
+    out = 0;
+    for (int i = 0; i < s.length; i++) {
+        int n;
+        CopyOut(&s, i, &n);
+        out += n;
+    }
+
+    if (out != 5) {
+        Fail("Set Copy Out");
+        printf("\t%d\n", out);
+    } else {
+        Pass("Set Copy Out");
+    }
+
+    DeconstructSet(&s);
 }
 
 void TestMatrixEqual() {
@@ -333,6 +378,7 @@ void TestCanvas() {
     }
 
     WriteToPPM(&c, "canvas_test.ppm");
+    DeconstructCanvas(&c);
 }
 
 void TestRay() {
@@ -357,7 +403,7 @@ void TestRaySphereIntersection() {
         direction: NewVec3(0, 0, 1),
     };
 
-    Intersections intersection = Intersect(sphere, r1);
+    Intersection intersection = Intersect(sphere, r1);
 
     if (!FloatEquality(4.0, intersection.ray_times[0]) || !FloatEquality(6.0, intersection.ray_times[1])) {
         Fail("Ray/Sphere Intersection, Normal");
@@ -371,11 +417,11 @@ void TestRaySphereIntersection() {
         direction: NewVec3(0, 0, 1),
     };
 
-    Intersections i2 = Intersect(sphere, r2);
+    Intersection i2 = Intersect(sphere, r2);
 
-    if (!FloatEquality(i2.ray_times[0], 5.0) || !FloatEquality(5.0, i2.ray_times[1])) {
+    if (!FloatEquality(i2.ray_times[0], 5.0) || i2.count != 1) {
         Fail("Ray/Sphere Intersection, Tangent");
-        printf("\t%f\n", i2.ray_times[1]);
+        printf("\t%f\n", i2.ray_times[0]);
     } else {
         Pass("Ray/Sphere Intersection, Tangent");
     }
@@ -385,7 +431,7 @@ void TestRaySphereIntersection() {
         direction: NewVec3(0, 0, 1),
     };
 
-    Intersections i3 = Intersect(sphere, r3);
+    Intersection i3 = Intersect(sphere, r3);
 
     if (!FloatEquality(i3.ray_times[0], -1) || !FloatEquality(1.0, i3.ray_times[1])) {
         Fail("Ray/Sphere Intersection, Inside");
@@ -400,7 +446,7 @@ void TestRaySphereIntersection() {
         direction: NewVec3(0, 0, 1),
     };
 
-    Intersections i4 = Intersect(sphere, r4);
+    Intersection i4 = Intersect(sphere, r4);
 
     if (!FloatEquality(i4.ray_times[0], -6) || !FloatEquality(-4.0, i4.ray_times[1])) {
         Fail("Ray/Sphere Intersection, Behind");
@@ -414,10 +460,11 @@ void TestRaySphereIntersection() {
         direction: NewVec3(0, 0, 1),
     };
 
-    Intersections i5 = Intersect(sphere, r5);
+    Intersection i5 = Intersect(sphere, r5);
 
     if (i5.count != 0) {
         Fail("Ray/Sphere Intersection, No Hit");
+        printf("\t%d\n", i5.count);
     } else {
         Pass("Ray/Sphere Intersection, No Hit");
     }
@@ -488,9 +535,9 @@ void TestSphereGeometry() {
         direction: NewVec3(0, 0, 1),
     };
 
-    Intersections res = Intersect(s, r);
+    Intersection res = Intersect(s, r);
 
-    if (res.ray_times[0] != res.ray_times[1]) {
+    if (res.ray_times[0] != 0) {
         Fail("Sphere geometry, radius");
         printf("\t%d: %f, %f\n", res.count, res.ray_times[0], res.ray_times[1]);
     } else {
@@ -610,7 +657,7 @@ void TestShadeSphere() {
     for (int x = 0; x < 800; x++) {
         for (int y = 0; y < 600; y++) {
             r.origin = NewPnt3(x-400, y - 300, -200);
-            Intersections i = Intersect(s, r);
+            Intersection i = Intersect(s, r);
 
             if (i.count > 0) {
 
@@ -628,7 +675,80 @@ void TestShadeSphere() {
     DeconstructCanvas(&c);
 }
 
+void TestSceneCreation() {
+    Scene s;
+    ConstructScene(&s);
+    DeconstructScene(&s);
+
+    Pass("Deconstruct Empty Scene");
+
+    ConstructScene(&s);
+    
+    Shape sphere;
+
+    ConstructSphere(&sphere, NewPnt3(0, 0, 0), 1.0);
+    AddShape(&s, sphere);
+
+    DeconstructScene(&s);
+
+    Pass("Deconstruct Scene with Shapes");
+}
+
+void ConstructDefaultScene(Scene* s) {
+    ConstructScene(s);
+    
+    Shape s1;
+    ConstructSphere(&s1, NewPnt3(0, 0, 0), 1.0);
+    s1.material.diffuse_reflection = 0.7;
+    s1.material.specular_reflection = 0.2;
+
+    Shape s2;
+    ConstructSphere(&s2, NewPnt3(0, 0, 0), 0.5);
+
+    AddShape(s, s1);
+    AddShape(s, s2);
+}
+
+void TestScene() {
+    Scene s;
+    ConstructDefaultScene(&s);
+
+    Ray r;
+    ConstructRay(&r, NewPnt3(0, 0, -5), NewVec3(0, 0, 1));
+
+    Set is;
+    ConstructSet(&is, sizeof(Intersection));
+
+    IntersectScene(&s, r, &is);
+
+    if (is.length != 2) {
+        Fail("Scene, Number of Intersections");
+        return;
+    } else {
+        Pass("Scene, Number of Intersections");
+    }
+
+    Intersection* i = Index(&is, 0);
+    Intersection* i2 = Index(&is, 1);
+
+    if (!FloatEquality(i->ray_times[0], 4.0) || !FloatEquality(i->ray_times[1], 6.0)) {
+        Fail("Scene, First Object");
+    } else {
+        Pass("Scene, First Object");
+    }
+
+    if (!FloatEquality(i2->ray_times[0], 4.5) || !FloatEquality(i2->ray_times[1], 5.5)) {
+        Fail("Scene, Second Object");
+    } else {
+        Pass("Scene, Second Object");
+    }
+
+    DeconstructSet(&is);
+    DeconstructScene(&s);
+}
+
 int main() {
+    TestSet();
     TestMatrixEqual();
     TestMatrixMultiply();
     TestMatrixTranspose();
@@ -658,6 +778,8 @@ int main() {
     TestSphereGeometry();
     TestPhongShading();
     TestShadeSphere();
+    TestSceneCreation();
+    TestScene();
 
     return 0;
 }

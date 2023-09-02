@@ -7,8 +7,8 @@ LDFLAGS = -lm
 test:
 	clear
 	$(CC) $(CFLAGS) -g $(INCLUDE) $(SOURCE) src/test.c $(LDFLAGS)
-	valgrind ./tracer
-	rm -r ./tracer
+	./tracer
+	rm -r ./tracer 
 
 benchmark:
 	clear
