@@ -7,6 +7,8 @@
 #include "light.h"
 #include "intersection.h"
 #include "canvas.h"
+#include "scene.h"
+#include "set.h"
 
 #define BENCHMARK_CYCLES 1080
 #define BENCHMARK(fn, width, samples) {                          \
@@ -101,15 +103,7 @@ void BenchmarkMatrixTranspose() {
 }
 
 void BenchmarkMatrixInvert() {
-    Matrix4x4 m1 = {
-        contents: {
-            {1, 2, 3, 4},
-            {2, 4, 4, 2},
-            {8, 6, 4, 1},
-            {0, 0, 0, 1},
-        }
-    };
-
+    Matrix4x4 m1 = ScalingMatrix(1, 2, 3);
     BENCHMARK(MatrixInvert(m1), 1920, BENCHMARK_CYCLES);
 }
 
@@ -137,7 +131,7 @@ void BenchmarkRaySphereIntersection() {
         direction: NewVec3(0, 0, 1),
     };
 
-    BENCHMARK(Intersect(sphere, r1), 1920, BENCHMARK_CYCLES);
+    BENCHMARK(Intersect(&sphere, r1), 1920, BENCHMARK_CYCLES);
 }
 
 void AssignDefaultTestMaterial(Material* m) {
@@ -186,16 +180,16 @@ void TestShadeSphere() {
     for (int x = 0; x < 800; x++) {
         for (int y = 0; y < 600; y++) {
             r.origin = NewPnt3(x-400, y - 300, 0);
-            Intersection i = Intersect(s, r);
+            Intersection i = Intersect(&s, r);
 
             if (i.count > 0) {
 
                 Tuple3 pos = RayPosition(r, i.ray_times[0]);
-                Tuple3 norm = NormalAt(s, pos);
+                Tuple3 norm = NormalAt(&s, pos);
                 Tuple3 eyev = TupleSubtract(NewPnt3(0, 0, -1), pos);
 
                 Tuple3 color = PhongShading(s.material, l, pos, eyev, norm);
-                WritePixel(&c, color, x, y);
+                WritePixel(&c, color, x, y, 0);
             }
         }
     }
@@ -203,7 +197,42 @@ void TestShadeSphere() {
     DeconstructCanvas(&c);
 }
 
+void ConstructDefaultScene(Scene* s) {
+    Camera c;
+    ConstructCamera(&c, 1920, 1080, 3.14 / 4);
+    CameraApplyTransformation(&c, ViewMatrix(NewPnt3(0, 0, -1200), NewPnt3(0, 0, 0), NewVec3(0, 1, 0)));
 
+    Light l;
+    ConstructLight(&l, NewPnt3(-300, -300, -300));
+    ConstructScene(s, c, l);
+    
+    Shape s1;
+    ConstructSphere(&s1, NewPnt3(0, 0, 0), 1.0);
+    s1.material.diffuse_reflection = 0.7;
+    s1.material.specular_reflection = 0.2;
+
+    Shape s2;
+    ConstructSphere(&s2, NewPnt3(0, 0, 0), 0.5);
+
+    AddShape(s, s1);
+    AddShape(s, s2);
+}
+
+void BenchmarkScene() {
+    Ray r;
+    ConstructRay(&r, NewPnt3(0, 0, -5), NewVec3(0, 0, 1));
+
+    Set is;
+    ConstructSet(&is, sizeof(Intersection));
+
+    Scene s;
+    ConstructDefaultScene(&s);
+
+    BENCHMARK(IntersectScene(&s, r, &is), 1920 * 1080, 5);
+
+    DeconstructSet(&is);
+    DeconstructScene(&s);
+}
 
 int main() {
     BenchmarkMatrixEqual();
@@ -215,6 +244,6 @@ int main() {
     BenchmarkRaySphereIntersection();
     BenchmarkPhongShading();
     BENCHMARK(TestShadeSphere(), 1, 10)
-
+    BenchmarkScene();
     return 0;
 }

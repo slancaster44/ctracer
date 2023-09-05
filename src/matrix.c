@@ -1,6 +1,8 @@
 #include "matrix.h"
 #include "trig.h"
 
+#include <stdio.h>
+
 #define SWIZZLE_M128(val, p1, p2, p3, p4) \
     _mm_permute_ps(val, p1 | (p2 << 2) | (p3 << 4) | (p4 << 6))
 #define SHUFFLE_M128(v1, v2, p1, p2, p3, p4) \
@@ -80,6 +82,11 @@ static inline __m128 invertHelper(__m128 m1) {
     float det = m1[0] * m1[3] - m1[1] * m1[2];
     out[1] = -out[1];
     out[2] = -out[2];
+    
+    if (det == 0) {
+        printf("Warning: Failed to Generate Inverse Matrix\n");
+    }
+
     return TupleScalarMultiply(out, 1/det);
 }
 
@@ -99,7 +106,7 @@ Matrix4x4 MatrixInvert(Matrix4x4 m1) {
     __m128 D = SHUFFLE_M128(m1.contents[2], m1.contents[3], 2, 3, 2, 3);
 
     __m128 Ainv = invertHelper(A);
-    __m128 CAinv = invertMultHelper(C, Ainv);
+    __m128 CAinv = invertMultHelper(C, Ainv); //
     __m128 schur_compliment = invertHelper(TupleSubtract(D, invertMultHelper(CAinv, B)));
     __m128 Bschur_inv = invertMultHelper(B, schur_compliment);
 
@@ -219,4 +226,22 @@ Matrix4x4 IdentityMatrix() {
     };
 
     return result;
+}
+
+Matrix4x4 ViewMatrix(Tuple3 from, Tuple3 to, Tuple3 upvec) {
+    Tuple3 forward = TupleNormalize(TupleSubtract(to, from));
+    upvec = TupleNormalize(upvec);
+    Tuple3 left = TupleCrossProduct(forward, upvec);
+    upvec = TupleCrossProduct(left, forward);
+
+    Matrix4x4 result = {
+        contents: {
+            {left[0], left[1], left[2], 0},
+            {upvec[0], upvec[1], upvec[2], 0},
+            {-forward[0], -forward[1], -forward[2], 0},
+            {0, 0, 0, 1}
+        }
+    };
+
+    return MatrixMultiply(result, TranslationMatrix(-from[0], -from[1], -from[2]));
 }

@@ -13,11 +13,13 @@ Tuple3 PhongShading(Material m, Light l, Tuple3 position, Tuple3 eye_vector, Tup
     Tuple3 light_pos_vector = TupleNormalize(TupleSubtract(l.origin, position));
     float light_dot_normal = TupleDotProduct(light_pos_vector, surface_normal); //Measure of light to surface angle
 
+
     if (light_dot_normal < 0.0) {
         diffuse = BLACK;
         specular = BLACK;
 
     } else {
+
         diffuse = TupleScalarMultiply(effective_color, m.diffuse_reflection * light_dot_normal);
 
         Tuple3 reflect_vector = TupleReflect(TupleNegate(light_pos_vector), surface_normal);

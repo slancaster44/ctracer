@@ -28,5 +28,6 @@ Tuple3 MatrixTupleMultiply(Matrix4x4 m1, Tuple3 t1);
 void PrintMatrix(Matrix4x4 m1);
 
 Matrix4x4 IdentityMatrix();
+Matrix4x4 ViewMatrix(Tuple3 from, Tuple3 to, Tuple3 upvec);
 
 #endif

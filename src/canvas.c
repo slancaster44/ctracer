@@ -1,4 +1,5 @@
 #include <string.h>
+#include <float.h>
 #include "canvas.h"
 
 void ConstructCanvas(Canvas* c, size_t width, size_t height) {
@@ -6,16 +7,25 @@ void ConstructCanvas(Canvas* c, size_t width, size_t height) {
     c->canvas_width = width;
     c->canvas_height = height;
     memset(c->buffer, 0, width * height * sizeof(Tuple3));
-}
 
-void DeconstructCanvas(Canvas* c) {
-    if (c->buffer != NULL) {
-        free(c->buffer);
+    c->depth_buffer = (float*) malloc(width * height * sizeof(float));
+    for (int i = 0; i < width * height; i++) {
+        c->depth_buffer[i] = FLT_MAX;
     }
 }
 
-void WritePixel(Canvas* c, Tuple3 color, size_t x, size_t y) {
-    c->buffer[(c->canvas_width * y) + x] = color;
+void DeconstructCanvas(Canvas* c) {
+    free(c->buffer);
+    free(c->depth_buffer);
+}
+
+void WritePixel(Canvas* c, Tuple3 color, size_t x, size_t y, float depth) {
+    size_t location = (c->canvas_width * y) + x;
+ 
+    if (depth <= c->depth_buffer[location]) {
+        c->buffer[location] = color;
+        c->depth_buffer[location] = depth;
+    }
 }
 
 void WriteToPPM(Canvas* c, const char* filename) {

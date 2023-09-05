@@ -13,11 +13,16 @@
 #include "intersection.h"
 #include "set.h"
 
+static int num_failed;
+static int num_passed;
+
 void Fail(const char* msg) {
+    num_failed ++;
     printf("\033[0;31m[FAIL]\033[0;37m %s\n", msg);
 }
 
 void Pass(const char* msg) {
+    num_passed ++;
     printf("\033[0;32m[PASS]\033[0;37m %s\n", msg);
 }
 
@@ -361,25 +366,7 @@ void TestTupleSubtract() {
     }
 }
 
-void TestCanvas() {
-    Tuple3 start = NewPnt3(0, 1, 0);
-    Tuple3 velocity = TupleScalarMultiply(TupleNormalize(NewVec3(1, 1.8, 0)), 11.25);
 
-    Tuple3 gravity = NewVec3(0, -0.1, 0);
-
-    Canvas c;
-    ConstructCanvas(&c, 900, 550);
-
-    while (start[1] > 0) {
-        WritePixel(&c, NewColor(255, 255, 255, 255), (int) start[0], (int) start[1]);
-        
-        start = TupleAdd(start, velocity);
-        velocity = TupleAdd(velocity, gravity);
-    }
-
-    WriteToPPM(&c, "canvas_test.ppm");
-    DeconstructCanvas(&c);
-}
 
 void TestRay() {
     Ray r = {
@@ -403,7 +390,7 @@ void TestRaySphereIntersection() {
         direction: NewVec3(0, 0, 1),
     };
 
-    Intersection intersection = Intersect(sphere, r1);
+    Intersection intersection = Intersect(&sphere, r1);
 
     if (!FloatEquality(4.0, intersection.ray_times[0]) || !FloatEquality(6.0, intersection.ray_times[1])) {
         Fail("Ray/Sphere Intersection, Normal");
@@ -417,7 +404,7 @@ void TestRaySphereIntersection() {
         direction: NewVec3(0, 0, 1),
     };
 
-    Intersection i2 = Intersect(sphere, r2);
+    Intersection i2 = Intersect(&sphere, r2);
 
     if (!FloatEquality(i2.ray_times[0], 5.0) || i2.count != 1) {
         Fail("Ray/Sphere Intersection, Tangent");
@@ -431,7 +418,7 @@ void TestRaySphereIntersection() {
         direction: NewVec3(0, 0, 1),
     };
 
-    Intersection i3 = Intersect(sphere, r3);
+    Intersection i3 = Intersect(&sphere, r3);
 
     if (!FloatEquality(i3.ray_times[0], -1) || !FloatEquality(1.0, i3.ray_times[1])) {
         Fail("Ray/Sphere Intersection, Inside");
@@ -446,7 +433,7 @@ void TestRaySphereIntersection() {
         direction: NewVec3(0, 0, 1),
     };
 
-    Intersection i4 = Intersect(sphere, r4);
+    Intersection i4 = Intersect(&sphere, r4);
 
     if (!FloatEquality(i4.ray_times[0], -6) || !FloatEquality(-4.0, i4.ray_times[1])) {
         Fail("Ray/Sphere Intersection, Behind");
@@ -460,7 +447,7 @@ void TestRaySphereIntersection() {
         direction: NewVec3(0, 0, 1),
     };
 
-    Intersection i5 = Intersect(sphere, r5);
+    Intersection i5 = Intersect(&sphere, r5);
 
     if (i5.count != 0) {
         Fail("Ray/Sphere Intersection, No Hit");
@@ -490,8 +477,8 @@ void SphereNormal() {
     Shape s;
     ConstructSphere(&s, NewPnt3(0, 0, 0), 1.0);
 
-    if (!TupleFuzzyEqual(NormalAt(s, NewPnt3(1, 0, 0)), NewVec3(1, 0, 0))) {
-        PrintTuple(NormalAt(s, NewPnt3(1, 0, 0)));
+    if (!TupleFuzzyEqual(NormalAt(&s, NewPnt3(1, 0, 0)), NewVec3(1, 0, 0))) {
+        PrintTuple(NormalAt(&s, NewPnt3(1, 0, 0)));
         PrintTuple(NewVec3(1, 0, 0));
         Fail("Sphere Normal");
     } else {
@@ -502,7 +489,7 @@ void SphereNormal() {
     s.transformation = TranslationMatrix(0, 1, 0);
     s.inverse_transform = MatrixInvert(s.transformation); 
 
-    Tuple3 n = NormalAt(s, NewPnt3(0, 1.70711, -0.70711));
+    Tuple3 n = NormalAt(&s, NewPnt3(0, 1.70711, -0.70711));
     Tuple3 expected_out = NewVec3(0, 0.70711, -0.70711);
 
     if (!TupleFuzzyEqual(n, expected_out)) {
@@ -515,7 +502,7 @@ void SphereNormal() {
     s.transformation = MatrixMultiply(ScalingMatrix(1, 0.5, 1), RotationZMatrix(M_PI / 5));
     s.inverse_transform = MatrixInvert(s.transformation);
 
-    n = NormalAt(s, NewPnt3(0, sqrtf(2) / 2, -sqrtf(2) / 2));
+    n = NormalAt(&s, NewPnt3(0, sqrtf(2) / 2, -sqrtf(2) / 2));
     expected_out = NewVec3(0, 0.97014, -0.24254);
 
     if (!TupleFuzzyEqual(n, expected_out)) {
@@ -535,7 +522,7 @@ void TestSphereGeometry() {
         direction: NewVec3(0, 0, 1),
     };
 
-    Intersection res = Intersect(s, r);
+    Intersection res = Intersect(&s, r);
 
     if (res.ray_times[0] != 0) {
         Fail("Sphere geometry, radius");
@@ -550,7 +537,7 @@ void TestSphereGeometry() {
         direction: NewVec3(0, 0, 1),
     };
 
-    res = Intersect(s, r2);
+    res = Intersect(&s, r2);
     if (res.ray_times[0] != 2) {
         PrintTuple(RayPosition(r2, res.ray_times[0]));
         printf("%d: %f", res.count, res.ray_times[0]);
@@ -635,54 +622,19 @@ void TestPhongShading() {
     }
 }
 
-void TestShadeSphere() {
-    Material m;
-    AssignDefaultTestMaterial(&m);
-    m.color = NewColor(0, 100, 200, 255);
 
-    Light l;
-    l.origin = NewPnt3(-200, -200, -400);
-    l.color = NewColor(255, 255, 255, 255);
-    
-    Canvas c;
-    ConstructCanvas(&c, 800, 600);
-
-    Shape s;
-    ConstructSphere(&s, NewPnt3(0, 0, 0), 250); 
-    s.material = m;
-
-    Ray r;
-    r.direction = NewVec3(0, 0, 1);
-
-    for (int x = 0; x < 800; x++) {
-        for (int y = 0; y < 600; y++) {
-            r.origin = NewPnt3(x-400, y - 300, -200);
-            Intersection i = Intersect(s, r);
-
-            if (i.count > 0) {
-
-                Tuple3 pos = RayPosition(r, i.ray_times[0]);
-                Tuple3 norm = NormalAt(s, pos);
-                Tuple3 eyev = TupleNegate(r.direction);
-
-                Tuple3 color = PhongShading(s.material, l, pos, eyev, norm);
-                WritePixel(&c, color, x, y);
-            }
-        }
-    }
-
-    WriteToPPM(&c, "sphere.ppm");
-    DeconstructCanvas(&c);
-}
 
 void TestSceneCreation() {
+    Camera c;
+    Light l;
+
     Scene s;
-    ConstructScene(&s);
+    ConstructScene(&s, c, l);
     DeconstructScene(&s);
 
     Pass("Deconstruct Empty Scene");
 
-    ConstructScene(&s);
+    ConstructScene(&s, c, l);
     
     Shape sphere;
 
@@ -695,7 +647,9 @@ void TestSceneCreation() {
 }
 
 void ConstructDefaultScene(Scene* s) {
-    ConstructScene(s);
+    Camera c;
+    Light l;
+    ConstructScene(s, c, l);
     
     Shape s1;
     ConstructSphere(&s1, NewPnt3(0, 0, 0), 1.0);
@@ -747,7 +701,116 @@ void TestScene() {
     DeconstructScene(&s);
 }
 
+void TestViewMatrix() {
+    Matrix4x4 m1 = ViewMatrix(NewPnt3(0, 0, 0), NewPnt3(0, 0, -1), NewVec3(0, 1, 0));
+    Matrix4x4 expected = IdentityMatrix();
+
+    if (!MatrixFuzzyEqual(m1, expected)) {
+        Fail("View Matrix, Identity");
+        PrintMatrix(m1);
+    } else {
+        Pass("View Matrix, Identity");
+    }
+
+    Matrix4x4 m2 = ViewMatrix(NewPnt3(0, 0, 0), NewPnt3(0, 0, 1), NewVec3(0, 1, 0));
+    Matrix4x4 expected2 = ScalingMatrix(-1, 1, -1);
+
+    if (!MatrixFuzzyEqual(m2, expected2)) {
+        Fail("View Matrix, Scaling");
+    } else {
+        Pass("View Matrix, Scaling");
+    }
+
+    Matrix4x4 m3 = ViewMatrix(NewPnt3(0, 0, 8), NewPnt3(0, 0, 0), NewVec3(0, 1, 0));
+    Matrix4x4 expected3 = TranslationMatrix(0, 0, -8);
+
+    if (!MatrixFuzzyEqual(m3, expected3)) {
+        Fail("View Matrix, Translation");
+        PrintMatrix(m3);
+        printf("\n");
+        PrintMatrix(expected3);
+    } else {
+        Pass("View Matrix, Translation");
+    }
+
+    Matrix4x4 m4 = ViewMatrix(NewPnt3(1, 3, 2), NewPnt3(4, -2, 8), NewVec3(1, 1, 0));
+    Matrix4x4 expected4 = {
+        contents: {
+            {-0.50709, 0.50709, 0.67612, -2.36643},
+            {0.76772, 0.60609, 0.12122, -2.82843},
+            {-0.35857, 0.59761, -0.71714, 0},
+            {0, 0, 0, 1}
+        }
+    };
+
+    if (!MatrixFuzzyEqual(m4, expected4)) {
+        Fail("View Matrix, Arbitrary");
+        PrintMatrix(m4);
+        printf("\n");
+        PrintMatrix(expected4);
+    } else {
+        Pass("View Matrix, Arbitrary");
+    }
+}
+
+void TestCamera() {
+    Camera c;
+    ConstructCamera(&c, 200, 125, M_PI/2);
+
+    if (!FloatEquality(0.01, c.pixel_size)) {
+        Fail("Pixel Size, Horizontal Canvas");
+    } else {
+        Pass("Pixel Size, Horizontal Canvas");
+    }
+
+    ConstructCamera(&c, 125, 200, M_PI/2);
+
+    if (!FloatEquality(0.01, c.pixel_size)) {
+        Fail("Pixel Size, Vertical Canvas");
+    } else {
+        Pass("Pixel Size, Vertical Canvas");
+    }
+ 
+    ConstructCamera(&c, 201, 101, M_PI / 2);
+    Ray r = RayForPixel(&c, 100, 50);
+
+    if (!TupleFuzzyEqual(NewPnt3(0, 0, 0), r.origin) || !TupleFuzzyEqual(NewVec3(0, 0, -1), r.direction)) {
+        Fail("Camera, Center of Canvas");
+        PrintTuple(r.origin);
+        PrintTuple(r.direction);
+    } else {
+        Pass("Camera, Center of Canvas");
+    }
+
+    ConstructCamera(&c, 201, 101, M_PI / 2);
+    r = RayForPixel(&c, 0, 0);
+
+    if (!TupleFuzzyEqual(NewPnt3(0, 0, 0), r.origin) || !TupleFuzzyEqual(NewVec3(0.66519, 0.33259, -0.66851), r.direction)) {
+        Fail("Camera, Corner of Canvas");
+        PrintTuple(r.origin);
+        PrintTuple(r.direction);
+    } else {
+        Pass("Camera, Corner of Canvas");
+    }
+
+    ConstructCamera(&c, 201, 101, M_PI / 2);
+    CameraApplyTransformation(&c, MatrixMultiply(RotationYMatrix(M_PI / 4), TranslationMatrix(0, -2, 5)));
+    r = RayForPixel(&c, 100, 50);
+    float r2_2 = sqrtf(2) / 2;
+ 
+    if (!TupleFuzzyEqual(NewPnt3(0, 2, -5), r.origin) || !TupleFuzzyEqual(NewVec3(r2_2, 0, -r2_2), r.direction)) {
+        Fail("Camera, Transformed");
+        PrintTuple(r.origin);
+        PrintTuple(r.direction);
+    } else {
+        Pass("Camera, Transformed");
+    }
+}
+
 int main() {
+    num_failed = 0;
+    num_passed = 0;
+
     TestSet();
     TestMatrixEqual();
     TestMatrixMultiply();
@@ -770,16 +833,18 @@ int main() {
     TestTupleAdd();
     TestTupleSubtract();
 
-    TestCanvas();
     TestRay();
     TestRaySphereIntersection();
     TestRayTransform();
     SphereNormal();
     TestSphereGeometry();
     TestPhongShading();
-    TestShadeSphere();
     TestSceneCreation();
     TestScene();
+    TestViewMatrix();
+    TestCamera();
+
+    printf("Test(s) Passed: %d\nTests(s) Failed: %d\n", num_passed, num_failed);
 
     return 0;
 }

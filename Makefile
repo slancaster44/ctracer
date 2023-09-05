@@ -1,7 +1,7 @@
 CC = gcc
 CFLAGS = -O2 -o tracer -march=native
 INCLUDE = -Iinclude
-SOURCE = `find ./src -name *.c ! -name test.c ! -name main.c ! -name benchmark.c`
+SOURCE = `find ./src -name *.c ! -name test.c ! -name demo.c ! -name benchmark.c`
 LDFLAGS = -lm
 
 test:
@@ -16,5 +16,8 @@ benchmark:
 	./tracer
 	rm -r ./tracer
 
-default:
-	$(CC) $(CFLAGS) $(INCLUDE) $(SOURCE) src/test.c $(LDFLAGS)
+demo:
+	clear
+	$(CC) $(CFLAGS) $(INCLUDE) $(SOURCE) src/demo.c $(LDFLAGS)
+	./tracer
+	rm -r ./tracer
