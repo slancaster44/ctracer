@@ -44,6 +44,9 @@ void RenderScene(Scene* s, Canvas* c) {
 
             for (int i = 0; i < intersections.length; i++) {
                 Intersection* this_intersection = Index(&intersections, i);
+                if (this_intersection->ray_times[0] < 0) {
+                    continue;
+                }
                 
                 Tuple3 pos = RayPosition(this_intersection->ray, this_intersection->ray_times[0]);
                 Tuple3 eyev = TupleNegate(r.direction);

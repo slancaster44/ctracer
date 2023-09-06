@@ -8,7 +8,7 @@ void ConstructSphere(Shape* s, Tuple3 cp, float radius) {
     Matrix4x4 center_point_translation = TranslationMatrix(cp[0], cp[1], cp[2]);
     Matrix4x4 radius_scaling = ScalingMatrix(radius, radius, radius);
 
-    s->transformation = MatrixMultiply(MatrixMultiply(IdentityMatrix(), radius_scaling), center_point_translation);
+    s->transformation = MatrixMultiply(radius_scaling, center_point_translation);
     s->inverse_transform = MatrixInvert(s->transformation);
 }
 

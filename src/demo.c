@@ -87,7 +87,7 @@ void DemoSphereScene() {
     ConstructCanvas(&c, 800, 600);
 
     Shape s;
-    ConstructSphere(&s, NewPnt3(-1, -1, -20), 50); 
+    ConstructSphere(&s, NewPnt3(0, 0, -10), 50); 
     s.material = m;
 
     Shape s2;
