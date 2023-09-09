@@ -51,8 +51,8 @@ void RenderSceneSection(Scene* s,
         ConstructSet(&intersections, sizeof(Intersection));
         IntersectScene(s, r, &intersections); 
 
-        for (int i = 0; i < intersections.length; i++) {
-            Intersection* this_intersection = Index(&intersections, i);
+        for (int j = 0; j < intersections.length; j++) {
+            Intersection* this_intersection = Index(&intersections, j);
             if (this_intersection->ray_times[0] < 0) {
                 continue;
             }
