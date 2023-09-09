@@ -234,6 +234,44 @@ void BenchmarkScene() {
     DeconstructScene(&s);
 }
 
+void DemoSphereScene() {
+    Material m;
+    AssignDefaultTestMaterial(&m);
+    m.color = NewColor(255, 0, 128, 255);
+
+    Light l;
+    l.origin = NewPnt3(-1000, -2000, -750);
+    l.color = NewColor(255, 255, 255, 255);
+    
+    Canvas c;
+    ConstructCanvas(&c, 800, 600);
+
+    Shape s;
+    ConstructSphere(&s, NewPnt3(0, 0, 2), 500); 
+    s.material = m;
+
+    Shape s2;
+    ConstructSphere(&s2, NewPnt3(1, 1, -5), 50);
+    m.color = NewColor(0, 255, 128, 255);
+    s2.material = m;
+
+    Camera ca;
+    ConstructCamera(&ca, 800, 600, 3.1415 / 3);
+    CameraApplyTransformation(&ca, ViewMatrix(NewPnt3(0, 0, -600), NewPnt3(0, 0, 0), NewVec3(0, -1, 0)));
+
+    Scene sc;
+    ConstructScene(&sc, ca, l);
+    AddShape(&sc, s);
+    AddShape(&sc, s2);
+
+    RenderScene(&sc, &c);
+
+    WriteToPPM(&c, "sphere_scene.ppm");
+
+    DeconstructScene(&sc);
+    DeconstructCanvas(&c);
+}
+
 int main() {
     BenchmarkMatrixEqual();
     BenchmarkMatrixFuzzyEqual();
@@ -244,6 +282,7 @@ int main() {
     BenchmarkRaySphereIntersection();
     BenchmarkPhongShading();
     BENCHMARK(TestShadeSphere(), 1, 10)
+    BENCHMARK(DemoSphereScene(), 1, 10);
     BenchmarkScene();
     return 0;
 }

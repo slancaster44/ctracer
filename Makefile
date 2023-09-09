@@ -18,6 +18,6 @@ benchmark:
 
 demo:
 	clear
-	$(CC) $(CFLAGS) $(INCLUDE) $(SOURCE) src/demo.c $(LDFLAGS)
+	$(CC) $(CFLAGS) -g $(INCLUDE) $(SOURCE) src/demo.c $(LDFLAGS)
 	./tracer
 	rm -r ./tracer

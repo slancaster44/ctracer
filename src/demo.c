@@ -80,18 +80,18 @@ void DemoSphereScene() {
     m.color = NewColor(255, 0, 128, 255);
 
     Light l;
-    l.origin = NewPnt3(0, 0, -1000);
+    l.origin = NewPnt3(-1000, -2000, -750);
     l.color = NewColor(255, 255, 255, 255);
     
     Canvas c;
     ConstructCanvas(&c, 800, 600);
 
     Shape s;
-    ConstructSphere(&s, NewPnt3(0, 0, -10), 50); 
+    ConstructSphere(&s, NewPnt3(0, 0, 2), 500); 
     s.material = m;
 
     Shape s2;
-    ConstructSphere(&s2, NewPnt3(0, 1, -20), 50);
+    ConstructSphere(&s2, NewPnt3(1, 1, -5), 50);
     m.color = NewColor(0, 255, 128, 255);
     s2.material = m;
 
@@ -102,7 +102,7 @@ void DemoSphereScene() {
     Scene sc;
     ConstructScene(&sc, ca, l);
     AddShape(&sc, s);
-   // AddShape(&sc, s2);
+    AddShape(&sc, s2);
 
     RenderScene(&sc, &c);
 
@@ -113,7 +113,7 @@ void DemoSphereScene() {
 }
 
 int main() {
-    DemoCanvas();
-    DemoShadeSphere();
+    //DemoCanvas();
+    //DemoShadeSphere();
     DemoSphereScene();
 }

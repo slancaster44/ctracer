@@ -1,22 +1,22 @@
 #include <string.h>
 #include <float.h>
+#include "shmem.h"
 #include "canvas.h"
 
 void ConstructCanvas(Canvas* c, size_t width, size_t height) {
-    c->buffer = (Tuple3*) malloc(width * height * sizeof(Tuple3));
+    c->buffer = (Tuple3*) shmalloc(width * height * sizeof(Tuple3));
     c->canvas_width = width;
     c->canvas_height = height;
-    memset(c->buffer, 0, width * height * sizeof(Tuple3));
 
-    c->depth_buffer = (float*) malloc(width * height * sizeof(float));
+    c->depth_buffer = (float*) shmalloc(width * height * sizeof(float));
     for (int i = 0; i < width * height; i++) {
         c->depth_buffer[i] = FLT_MAX;
     }
 }
 
 void DeconstructCanvas(Canvas* c) {
-    free(c->buffer);
-    free(c->depth_buffer);
+    shfree(c->buffer, c->canvas_width * c->canvas_height * sizeof(Tuple3));
+    shfree(c->depth_buffer, c->canvas_width * c->canvas_height * sizeof(float));
 }
 
 void WritePixel(Canvas* c, Tuple3 color, size_t x, size_t y, float depth) {
