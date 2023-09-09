@@ -68,7 +68,7 @@ void RenderSceneSection(Scene* s,
             Tuple3 color = PhongShading(this_intersection->shape_ptr->material, s->light, pos, eyev, normal);
             float depth = TupleMagnitude(TupleSubtract(r.origin, pos));
 
-            WritePixel(c, color, x, y, depth);
+            DirectWritePixel(c, color, i, depth);
         }
 
         DeconstructSet(&intersections);
@@ -80,7 +80,6 @@ void RenderScene(Scene* s, Canvas* c) {
     unsigned canvas_size = (c->canvas_height * c->canvas_width);
     unsigned chunk_size = canvas_size / get_nprocs();
     unsigned num_chunks = canvas_size / chunk_size;
-    unsigned leftovers = canvas_size % chunk_size;
 
     Set pids;
     ConstructSet(&pids, sizeof(int));
@@ -106,5 +105,8 @@ void RenderScene(Scene* s, Canvas* c) {
         waitpid(cur_pid, &exit_status, WUNTRACED);
     }
 
-    //TODO Leftovers
+    unsigned leftovers_start = num_chunks * chunk_size;
+    if (leftovers_start != canvas_size) {
+        RenderSceneSection(s, c, leftovers_start, canvas_size + 1, c->canvas_width);
+    }
 }

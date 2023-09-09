@@ -28,6 +28,11 @@ void WritePixel(Canvas* c, Tuple3 color, size_t x, size_t y, float depth) {
     }
 }
 
+void DirectWritePixel(Canvas* c, Tuple3 color, size_t i, float depth) {
+    c->buffer[i] = color;
+    c->depth_buffer[i] = depth;
+}
+
 void WriteToPPM(Canvas* c, const char* filename) {
     FILE* fp = fopen(filename, "w");
 

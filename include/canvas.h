@@ -19,6 +19,7 @@ typedef struct {
 void ConstructCanvas(Canvas* c, size_t width, size_t height);
 void DeconstructCanvas(Canvas* c);
 void WritePixel(Canvas* c, Tuple3 color, size_t x, size_t y, float depth);
+void DirectWritePixel(Canvas* c, Tuple3 color, size_t i, float depth);
 void WriteToPPM(Canvas* c, const char* filename);
 
 #endif
