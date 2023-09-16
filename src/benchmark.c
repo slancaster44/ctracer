@@ -155,7 +155,15 @@ void BenchmarkPhongShading() {
     light.origin = NewPnt3(0, 0, -10);
     light.color = NewColor(255, 255, 255, 255);
 
-    BENCHMARK(PhongShading(m, light, position, eyev, normalv), 1920, BENCHMARK_CYCLES);
+    ShadingJob sj = {
+        .material = m,
+        .light = light,
+        .position = position,
+        .eye_vector = eyev,
+        .surface_normal = normalv
+    };
+
+    BENCHMARK(PhongShading(sj), 1920, BENCHMARK_CYCLES);
 }
 
 void TestShadeSphere() {
@@ -188,7 +196,15 @@ void TestShadeSphere() {
                 Tuple3 norm = NormalAt(&s, pos);
                 Tuple3 eyev = TupleSubtract(NewPnt3(0, 0, -1), pos);
 
-                Tuple3 color = PhongShading(s.material, l, pos, eyev, norm);
+                ShadingJob sj = {
+                    .material = s.material,
+                    .light = l,
+                    .position = pos,
+                    .eye_vector = eyev,
+                    .surface_normal = norm,
+                };
+
+                Tuple3 color = PhongShading(sj);
                 WritePixel(&c, color, x, y, 0);
             }
         }

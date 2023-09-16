@@ -25,6 +25,30 @@ void SetSceneCamera(Scene* s, Camera c) {
     s->camera = c;
 }
 
+bool IsInShadow(Scene *s, Tuple3 location) {
+    Tuple3 pnt_light_vec = TupleSubtract(s->light.origin, location);
+
+    float distance = TupleMagnitude(pnt_light_vec);
+    Tuple3 direction = TupleNormalize(pnt_light_vec);
+
+    Ray ray;
+    ConstructRay(&ray, location, direction);
+
+    Set intersections;
+    ConstructSet(&intersections, sizeof(Intersection)); //TODO: Cleanup memory, deoncstruct
+    IntersectScene(s, ray, &intersections);
+
+    for (size_t i = 0; i < intersections.length; i++){
+        Intersection* this_intersection = Index(&intersections, i);
+        if (this_intersection->ray_times[0] < distance && this_intersection->ray_times[0] > 0) {
+            return true;
+        }
+
+    }
+
+    return false;
+}
+
 void IntersectScene(Scene* s, Ray r, Set* intersection_set) {
     for (int i = 0; i < s->shapes.length; i++) {
         Shape* this_shape = Index(&s->shapes, i);
@@ -65,7 +89,16 @@ void RenderSceneSection(Scene* s,
                 normal = TupleNegate(normal);
             }
 
-            Tuple3 color = PhongShading(this_intersection->shape_ptr->material, s->light, pos, eyev, normal);
+            ShadingJob lj = {
+                .material = this_intersection->shape_ptr->material,
+                .light = s->light,
+                .position = pos,
+                .eye_vector = eyev,
+                .surface_normal = normal,
+            	.shadow = IsInShadow(s, pos),
+	    };
+
+            Tuple3 color = PhongShading(lj);
             float depth = TupleMagnitude(TupleSubtract(r.origin, pos));
 
             DirectWritePixel(c, color, i, depth);

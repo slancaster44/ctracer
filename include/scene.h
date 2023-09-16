@@ -1,6 +1,8 @@
 #ifndef SCENE_H
 #define SCENE_H
 
+#include <stdbool.h>
+
 #include "shape.h"
 #include "light.h"
 #include "set.h"
@@ -18,5 +20,6 @@ void DeconstructScene(Scene* s);
 unsigned AddShape(Scene* s, Shape sp);
 void IntersectScene(Scene* s, Ray r, Set* intersection_set);
 void RenderScene(Scene* s, Canvas* c);
+bool IsInShadow(Scene *s, Tuple3 location);
 
 #endif

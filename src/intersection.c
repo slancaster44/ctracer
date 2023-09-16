@@ -27,16 +27,8 @@ void IntersectSphere(Shape* s, Ray r, Intersection* result) {
         float a_2 = a * 2;
         float d_sqrt = sqrtf(discriminant);
 
-        //I found this necessary to do. However, none
-        //of the literature indicated I have to do it,
-        //this could be indicative of a bug somewhere else
-
         result->ray_times[0] = (-b - d_sqrt) / a_2;
         result->ray_times[1] = (-b + d_sqrt) / a_2;
-
-        //if (result->ray_times[0] < 0 && result->ray_times[1] < 0) {
-
-        //}
     }
 }
 

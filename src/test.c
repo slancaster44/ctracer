@@ -189,10 +189,6 @@ void TestMatrixInvert() {
     }
 }
 
-void TestMatrixTranslation() {
-    
-}
-
 void TestMatrixVectorMultiply() {
     Matrix4x4 m1 = {
         contents: {
@@ -568,7 +564,16 @@ void TestPhongShading() {
     light.origin = NewPnt3(0, 0, -10);
     light.color = NewColor(255, 255, 255, 255);
 
-    result = PhongShading(m, light, position, eyev, normalv);
+    ShadingJob sj = {
+        .material = m,
+        .light = light,
+        .position = position,
+        .eye_vector = eyev,
+        .surface_normal = normalv,
+        .shadow = 0,
+    };
+
+    result = PhongShading(sj);
 
     if (!TupleFuzzyEqual(NewTuple3(1.9, 1.9, 1.9, 1.9), result)) {
         PrintTuple(result);
@@ -580,7 +585,17 @@ void TestPhongShading() {
     float rt2_2 = sqrtf(2) / 2;
 
     eyev = NewVec3(0, rt2_2, -rt2_2);
-    result = PhongShading(m, light, position, eyev, normalv);
+
+    ShadingJob sj6 = {
+        .material = m,
+        .light = light,
+        .position = position,
+        .eye_vector = eyev,
+        .surface_normal = normalv,
+        .shadow = 0,
+    };
+
+    result = PhongShading(sj6);
 
     if (!TupleFuzzyEqual(NewTuple3(1.0, 1.0, 1.0, 1.0), result)) {
         PrintTuple(result);
@@ -591,7 +606,17 @@ void TestPhongShading() {
 
     eyev = NewVec3(0, 0, -1);
     light.origin = NewPnt3(0, 10, -10);
-    result = PhongShading(m, light, position, eyev, normalv);
+
+    ShadingJob sj1 = {
+        .material = m,
+        .light = light,
+        .position = position,
+        .eye_vector = eyev,
+        .surface_normal = normalv,
+        .shadow = 0,
+    };
+
+    result = PhongShading(sj1);
 
     if (!TupleFuzzyEqual(NewTuple3(0.7364, 0.7364, 0.7364, 0.7364), result)) {
         PrintTuple(result);
@@ -601,7 +626,17 @@ void TestPhongShading() {
     }
 
     eyev = NewVec3(0, -rt2_2, -rt2_2);
-    result = PhongShading(m, light, position, eyev, normalv);
+
+    ShadingJob sj2 = {
+        .material = m,
+        .light = light,
+        .position = position,
+        .eye_vector = eyev,
+        .surface_normal = normalv,
+        .shadow = 0,
+    };
+
+    result = PhongShading(sj2);
 
     if (!TupleFuzzyEqual(NewTuple3(1.6364, 1.6364, 1.6364, 1.6364), result)) {
         PrintTuple(result);
@@ -612,7 +647,17 @@ void TestPhongShading() {
 
     eyev = NewVec3(0, 0, -1);
     light.origin = NewPnt3(0, 0, 10);
-    result = PhongShading(m, light, position, eyev, normalv);
+
+    ShadingJob sj3 = {
+        .material = m,
+        .light = light,
+        .position = position,
+        .eye_vector = eyev,
+        .surface_normal = normalv,
+        .shadow = 0,
+    };
+
+    result = PhongShading(sj3);
 
     if (!TupleFuzzyEqual(NewTuple3(0.1, 0.1, 0.1, 0.1), result)) {
         PrintTuple(result);
@@ -649,6 +694,7 @@ void TestSceneCreation() {
 void ConstructDefaultScene(Scene* s) {
     Camera c;
     Light l;
+    ConstructLight(&l, NewPnt3(-10, 10, -10));
     ConstructScene(s, c, l);
     
     Shape s1;
@@ -807,6 +853,54 @@ void TestCamera() {
     }
 }
 
+void TestShadow() {
+    ShadingJob sj = {
+        .eye_vector = NewVec3(0, 0, -1),
+        .surface_normal = NewVec3(0, 0, -1),
+        .shadow = 1,
+        .position = NewPnt3(0, 0, 0),
+    };
+
+    AssignDefaultTestMaterial(&sj.material);
+    ConstructLight(&sj.light, NewPnt3(0, 0, -10));
+
+    Tuple3 color = PhongShading(sj);
+    
+    if (!TupleFuzzyEqual(NewTuple3(0.1, 0.1, 0.1, 0.1), color)) {
+        Fail("Shadow Shading");
+        PrintTuple(color);
+    } else {
+        Pass("Shadow Shading");
+    }
+
+    Scene sc;
+    ConstructDefaultScene(&sc);
+
+    if (IsInShadow(&sc, NewPnt3(0, 10, 0))) {
+        Fail("Shadow Test, Out of Shadow");
+    } else {
+        Pass("Shadow Test, Out of Shadow");
+    }
+
+    if (!IsInShadow(&sc, NewPnt3(10, -10, 10))) {
+        Fail("Shadow Test, In Shadow");
+    } else {
+        Pass("Shadow Test, In Shadow");
+    }
+
+    if (IsInShadow(&sc, NewPnt3(-20, 20, -20))) {
+        Fail("Shadow Test, Object behind light");
+    } else {
+        Pass("Shadow Test, Object behind light");
+    }
+
+    if (IsInShadow(&sc, NewPnt3(-2, 2, -2))) {
+        Fail("Shadow Test, Object behind point");
+    } else {
+        Pass("Shadow Test, Object behind point");
+    }
+}
+
 int main() {
     num_failed = 0;
     num_passed = 0;
@@ -816,7 +910,6 @@ int main() {
     TestMatrixMultiply();
     TestMatrixTranspose();
     TestMatrixInvert();
-    TestMatrixTranslation();
     TestMatrixVectorMultiply();
     TestCos();
     TestSin();
@@ -843,6 +936,7 @@ int main() {
     TestScene();
     TestViewMatrix();
     TestCamera();
+    TestShadow();
 
     printf("Test(s) Passed: %d\nTests(s) Failed: %d\n", num_passed, num_failed);
 

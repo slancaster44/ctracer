@@ -64,7 +64,15 @@ void DemoShadeSphere() {
                 Tuple3 norm = NormalAt(&s, pos);
                 Tuple3 eyev = TupleNegate(r.direction);
 
-                Tuple3 color = PhongShading(s.material, l, pos, eyev, norm);
+                ShadingJob sj = {
+                    .material = s.material,
+                    .light = l,
+                    .position = pos,
+                    .eye_vector = eyev,
+                    .surface_normal = norm,
+                };
+
+                Tuple3 color = PhongShading(sj);
                 WritePixel(&c, color, x, y, 0);
             }
         }
@@ -80,7 +88,7 @@ void DemoSphereScene() {
     m.color = NewColor(255, 0, 128, 255);
 
     Light l;
-    l.origin = NewPnt3(-1000, -2000, -750);
+    l.origin = NewPnt3(1000, 2000, -2000);
     l.color = NewColor(255, 255, 255, 255);
     
     Canvas c;
@@ -113,7 +121,7 @@ void DemoSphereScene() {
 }
 
 int main() {
-    //DemoCanvas();
-    //DemoShadeSphere();
+    DemoCanvas();
+    DemoShadeSphere();
     DemoSphereScene();
 }
