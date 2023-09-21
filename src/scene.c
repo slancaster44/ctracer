@@ -34,17 +34,19 @@ bool IsInShadow(Scene *s, Tuple3 location) {
     Ray ray = NewRay(location, direction);
 
     Set intersections;
-    ConstructSet(&intersections, sizeof(Intersection)); //TODO: Cleanup memory, deoncstruct
+    ConstructSet(&intersections, sizeof(Intersection));
     IntersectScene(s, ray, &intersections);
 
     for (size_t i = 0; i < intersections.length; i++){
         Intersection* this_intersection = Index(&intersections, i);
         if (this_intersection->ray_times[0] < distance && this_intersection->ray_times[0] > 0) {
+            DeconstructSet(&intersections);
             return true;
         }
 
     }
 
+    DeconstructSet(&intersections);
     return false;
 }
 
