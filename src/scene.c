@@ -37,7 +37,7 @@ bool IsInShadow(Scene *s, Tuple3 location) {
     ConstructSet(&intersections, sizeof(Intersection));
     IntersectScene(s, ray, &intersections);
 
-    for (size_t i = 0; i < intersections.length; i++){
+    for (unsigned i = 0; i < intersections.length; i++){
         Intersection* this_intersection = Index(&intersections, i);
         if (this_intersection->ray_times[0] < distance && this_intersection->ray_times[0] > 0) {
             DeconstructSet(&intersections);
@@ -51,7 +51,7 @@ bool IsInShadow(Scene *s, Tuple3 location) {
 }
 
 void IntersectScene(Scene* s, Ray r, Set* intersection_set) {
-    for (int i = 0; i < s->shapes.length; i++) {
+    for (unsigned i = 0; i < s->shapes.length; i++) {
         Shape* this_shape = Index(&s->shapes, i);
         Intersection i = Intersect(this_shape, r);
         
@@ -76,7 +76,7 @@ void RenderSceneSection(Scene* s,
         ConstructSet(&intersections, sizeof(Intersection));
         IntersectScene(s, r, &intersections); 
 
-        for (int j = 0; j < intersections.length; j++) {
+        for (unsigned j = 0; j < intersections.length; j++) {
             Intersection* this_intersection = Index(&intersections, j);
             if (this_intersection->ray_times[0] < 0) {
                 continue;
@@ -112,7 +112,7 @@ void RenderSceneSection(Scene* s,
 
 void RenderScene(Scene* s, Canvas* c) {
     unsigned canvas_size = (c->canvas_height * c->canvas_width);
-    unsigned chunk_size = canvas_size / get_nprocs();
+    unsigned chunk_size = canvas_size / (unsigned) get_nprocs();
     unsigned num_chunks = canvas_size / chunk_size;
 
     Set pids;

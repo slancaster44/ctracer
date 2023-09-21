@@ -28,7 +28,7 @@ void PrintTuple(Tuple3 t) {
 
 int TupleEqual(Tuple3 t1, Tuple3 t2) {
     __m128 res = _mm_cmpeq_ps(t1, t2);
-    unsigned bitmask = _mm_movemask_ps(res);
+    unsigned bitmask = (unsigned) _mm_movemask_ps(res);
 
     return (bitmask == 0xf);
 }
@@ -41,7 +41,7 @@ int TupleFuzzyEqual(Tuple3 t1, Tuple3 t2) {
     __m128 epsilon = _mm_set1_ps(EQUALITY_EPSILON);
     __m128 cmp = _mm_cmp_ps(diff, epsilon, _CMP_LT_OQ);
 
-    unsigned res = _mm_movemask_ps(cmp);
+    unsigned res = (unsigned) _mm_movemask_ps(cmp);
 
     return (res == 0xf);
 }

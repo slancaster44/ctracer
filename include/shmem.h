@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void* shmalloc(size_t size) {
+void* shmalloc(unsigned size) {
     void* val = mmap(NULL, size, PROT_READ | PROT_WRITE, MAP_SHARED | MAP_ANONYMOUS, -1, 0);
     if (val == (void*) -1) {
         printf("mmap() failed, %d\n", errno);
@@ -13,6 +13,6 @@ void* shmalloc(size_t size) {
     return val;
 }
 
-void shfree(void* ptr, size_t size) {
+void shfree(void* ptr, unsigned size) {
     munmap(ptr, size);
 }

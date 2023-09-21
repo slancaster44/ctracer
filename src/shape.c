@@ -3,7 +3,7 @@
 
 Shape NewSphere(Tuple3 cp, float radius) {
     Shape s;
-    s.material = NewMaterial(NewTuple3(0.8, 1.0, 0.6, 1.0));
+    s.material = NewMaterial(NewTuple3(0.8f, 1.0f, 0.6f, 1.0f));
     s.type = SPHERE;
 
     Matrix4x4 center_point_translation = TranslationMatrix(cp[0], cp[1], cp[2]);

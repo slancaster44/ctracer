@@ -17,8 +17,8 @@ int MatrixEqual(Matrix4x4 m1, Matrix4x4 m2) {
     __m256 cmp1 = _mm256_cmp_ps(m1.chunks[0], m2.chunks[0], _CMP_EQ_OQ);
     __m256 cmp2 = _mm256_cmp_ps(m1.chunks[1], m2.chunks[1], _CMP_EQ_OQ);
 
-    unsigned r0 = _mm256_movemask_ps(cmp1);
-    unsigned r1 = _mm256_movemask_ps(cmp2);
+    unsigned r0 = (unsigned) _mm256_movemask_ps(cmp1);
+    unsigned r1 = (unsigned) _mm256_movemask_ps(cmp2);
 
     return (r0 == 0xff) && (r1 == 0xff);
 }
@@ -37,8 +37,8 @@ int MatrixFuzzyEqual(Matrix4x4 m1, Matrix4x4 m2) {
     __m256 cmp0 = _mm256_cmp_ps(diff0, epsilon, _CMP_LT_OQ);
     __m256 cmp1 = _mm256_cmp_ps(diff1, epsilon, _CMP_LT_OQ);
 
-    unsigned r0 = _mm256_movemask_ps(cmp0);
-    unsigned r1 = _mm256_movemask_ps(cmp1);
+    unsigned r0 = (unsigned) _mm256_movemask_ps(cmp0);
+    unsigned r1 = (unsigned) _mm256_movemask_ps(cmp1);
 
     return (r0 == 0xff) && (r1 == 0xff);
 }

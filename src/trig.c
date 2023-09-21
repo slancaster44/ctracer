@@ -3,10 +3,10 @@
 
 #include <math.h>
 
-const float TWO_PI = 2 * M_PI;
+const float TWO_PI = 2.0f * (float) M_PI;
 
 static inline float indexed_sin(int index) {
-    return (sin_table[(int) index] + sin_table[(int) index + 1]) * 0.5;
+    return (sin_table[(int) index] + sin_table[(int) index + 1]) * 0.5f;
 }
 
 static inline float indexed_cos(int index) {
@@ -21,12 +21,12 @@ float _sin(float theta) {
 
 float _cos(float theta) {
     float index = SIN_TABLE_SIZE * (fmodf(theta, TWO_PI) / TWO_PI);
-    return indexed_cos(index);
+    return indexed_cos((int) index);
 }
 
 float _tan(float theta) {
     float index = SIN_TABLE_SIZE * (fmodf(theta, TWO_PI) / TWO_PI);
-    return indexed_sin(index) / indexed_cos(index);
+    return indexed_sin((int) index) / indexed_cos((int) index);
 }
 
 int FloatEquality(float n1, float n2) {
