@@ -6,7 +6,7 @@ LDFLAGS = -lm
 
 test:
 	clear
-	$(CC) $(CFLAGS) -g -Wpedantic -Wall $(INCLUDE) $(SOURCE) src/test.c $(LDFLAGS)
+	$(CC) $(CFLAGS) -g -Wpedantic -Wall -Wconversion $(INCLUDE) $(SOURCE) src/test.c $(LDFLAGS)
 	./tracer
 	rm -r ./tracer 
 

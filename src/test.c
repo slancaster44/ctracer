@@ -38,7 +38,7 @@ void TestSet() {
     AppendValue(&s, &l);
 
     int out = 0;
-    for (int i = 0; i < s.length; i++) {
+    for (unsigned int i = 0; i < s.length; i++) {
         int* n;
         n = Index(&s, i);
         out += *n;
@@ -52,7 +52,7 @@ void TestSet() {
     }
 
     out = 0;
-    for (int i = 0; i < s.length; i++) {
+    for (unsigned int i = 0; i < s.length; i++) {
         int n;
         CopyOut(&s, i, &n);
         out += n;
@@ -93,7 +93,7 @@ void TestMatrixEqual() {
         Pass("Matrix Equality");
     }
 
-    m2.contents[0][0] = -1.0001;
+    m2.contents[0][0] = -1.0001f;
     if (MatrixEqual(m1, m2) || !MatrixFuzzyEqual(m1, m2)) {
         Fail("Matrix Fuzzy Equality");
     } else {
@@ -174,10 +174,10 @@ void TestMatrixInvert() {
 
     Matrix4x4 m2 = {
         .contents = {
-            {-0.15385, -0.15385, -0.28205, -0.53846},
-            {-0.07692, 0.12308, 0.02564, 0.03077},
-            {0.35897, 0.35897, 0.43590, 0.92308},
-            {-0.69231, -0.69231, -0.76923, -1.92308}
+            {-0.15385f, -0.15385f, -0.28205f, -0.53846f},
+            {-0.07692f, 0.12308f, 0.02564f, 0.03077f},
+            {0.35897f, 0.35897f, 0.43590f, 0.92308f},
+            {-0.69231f, -0.69231f, -0.76923f, -1.92308f}
         }
     };
 
@@ -219,8 +219,12 @@ void TestCos() {
 }
 
 void TestSin() {
-    if (!FloatEquality(_sin(0.0), 0.0) || !FloatEquality(_sin(M_PI / 2), 1.0) || !FloatEquality(_sin(M_PI * 3/2), -1.0) || !FloatEquality(_sin(M_PI * 2 / 3), 0.8660)) {
-        printf("%f %f %f %f\n", _sin(0.0), _sin(M_PI/2), _sin(M_PI * 3 / 2), _sin(M_PI * 3 / 4));
+    if (!FloatEquality(_sin(0.0f), 0.0) || 
+        !FloatEquality(_sin((float) M_PI / 2.0f), 1.0f) || 
+        !FloatEquality(_sin((float) M_PI * 3.0f/2.0f), -1.0f) || 
+        !FloatEquality(_sin((float) M_PI * 2.0f / 3.0f), 0.8660f)) {
+
+        printf("%f %f %f %f\n", _sin(0.0f), _sin((float) M_PI/2.0f), _sin((float) M_PI * 3.0f / 2.0f), _sin((float) M_PI * 3.0f / 4.0f));
         Fail("Sin Test");
     } else {
         Pass("Sin Test");
@@ -228,7 +232,7 @@ void TestSin() {
 }
 
 void TestTan() {
-    if (!FloatEquality(_tan(M_PI), 0.0)) {
+    if (!FloatEquality(_tan((float) M_PI), 0.0)) {
         Fail("Tan Test");
     } else {
         Pass("Tan Test");
@@ -303,7 +307,7 @@ void TestTupleNormalize() {
     Tuple3 t1 = NewVec3(100, 100, 100);
     Tuple3 result = TupleNormalize(t1);
 
-    if (abs(TupleMagnitude(result) - 1) > 0.0001) {
+    if (!FloatEquality(TupleMagnitude(result), 1.0)) {
         Fail("Tuple Normalization");
     } else {
         Pass("Tuple Normalization");
@@ -438,7 +442,7 @@ void TestRaySphereIntersection() {
     }
 
     Ray r5 = {
-        .origin = NewPnt3(1.1, 1.1, 0),
+        .origin = NewPnt3(1.1f, 1.1f, 0),
         .direction = NewVec3(0, 0, 1),
     };
 
@@ -483,8 +487,8 @@ void SphereNormal() {
     s.transformation = TranslationMatrix(0, 1, 0);
     s.inverse_transform = MatrixInvert(s.transformation); 
 
-    Tuple3 n = NormalAt(&s, NewPnt3(0, 1.70711, -0.70711));
-    Tuple3 expected_out = NewVec3(0, 0.70711, -0.70711);
+    Tuple3 n = NormalAt(&s, NewPnt3(0, 1.70711f, -0.70711f));
+    Tuple3 expected_out = NewVec3(0, 0.70711f, -0.70711f);
 
     if (!TupleFuzzyEqual(n, expected_out)) {
         PrintTuple(n);
@@ -493,11 +497,11 @@ void SphereNormal() {
         Pass("Sphere Normal, Translation");
     }
 
-    s.transformation = MatrixMultiply(ScalingMatrix(1, 0.5, 1), RotationZMatrix(M_PI / 5));
+    s.transformation = MatrixMultiply(ScalingMatrix(1, 0.5, 1), RotationZMatrix((float) M_PI / 5.0f));
     s.inverse_transform = MatrixInvert(s.transformation);
 
     n = NormalAt(&s, NewPnt3(0, sqrtf(2) / 2, -sqrtf(2) / 2));
-    expected_out = NewVec3(0, 0.97014, -0.24254);
+    expected_out = NewVec3(0.0f, 0.97014f, -0.24254f);
 
     if (!TupleFuzzyEqual(n, expected_out)) {
         PrintTuple(n);
@@ -542,9 +546,9 @@ void TestSphereGeometry() {
 
 void AssignDefaultTestMaterial(Material* m) {
     m->color = NewColor(255, 255, 255, 255);
-    m->ambient_reflection = 0.1;
-    m->diffuse_reflection = 0.9;
-    m->specular_reflection = 0.9;
+    m->ambient_reflection = 0.1f;
+    m->diffuse_reflection = 0.9f;
+    m->specular_reflection = 0.9f;
     m->shininess = 200;
 }
 
@@ -572,7 +576,7 @@ void TestPhongShading() {
 
     result = PhongShading(sj);
 
-    if (!TupleFuzzyEqual(NewTuple3(1.9, 1.9, 1.9, 1.9), result)) {
+    if (!TupleFuzzyEqual(NewTuple3(1.9f, 1.9f, 1.9f, 1.9f), result)) {
         PrintTuple(result);
         Fail("Phong Shading, Behind");
     } else {
@@ -615,7 +619,7 @@ void TestPhongShading() {
 
     result = PhongShading(sj1);
 
-    if (!TupleFuzzyEqual(NewTuple3(0.7364, 0.7364, 0.7364, 0.7364), result)) {
+    if (!TupleFuzzyEqual(NewTuple3(0.7364f, 0.7364f, 0.7364f, 0.7364f), result)) {
         PrintTuple(result);
         Fail("Phong Shading, Angled Light");
     } else {
@@ -635,7 +639,7 @@ void TestPhongShading() {
 
     result = PhongShading(sj2);
 
-    if (!TupleFuzzyEqual(NewTuple3(1.6364, 1.6364, 1.6364, 1.6364), result)) {
+    if (!TupleFuzzyEqual(NewTuple3(1.6364f, 1.6364f, 1.6364f, 1.6364f), result)) {
         PrintTuple(result);
         Fail("Phong Shading, Angled Viewer & Light");
     } else {
@@ -656,15 +660,13 @@ void TestPhongShading() {
 
     result = PhongShading(sj3);
 
-    if (!TupleFuzzyEqual(NewTuple3(0.1, 0.1, 0.1, 0.1), result)) {
+    if (!TupleFuzzyEqual(NewTuple3(0.1f, 0.1f, 0.1f, 0.1f), result)) {
         PrintTuple(result);
         Fail("Phong Shading, Light Behind Surface");
     } else {
         Pass("Phong Shading, Light Behind Surface");
     }
 }
-
-
 
 void TestSceneCreation() {
     Camera c;
@@ -692,8 +694,8 @@ void ConstructDefaultScene(Scene* s) {
     ConstructScene(s, c, l);
     
     Shape s1 = NewSphere(NewPnt3(0, 0, 0), 1.0);
-    s1.material.diffuse_reflection = 0.7;
-    s1.material.specular_reflection = 0.2;
+    s1.material.diffuse_reflection = 0.7f;
+    s1.material.specular_reflection = 0.2f;
 
     Shape s2 = NewSphere(NewPnt3(0, 0, 0), 0.5);
 
@@ -773,9 +775,9 @@ void TestViewMatrix() {
     Matrix4x4 m4 = ViewMatrix(NewPnt3(1, 3, 2), NewPnt3(4, -2, 8), NewVec3(1, 1, 0));
     Matrix4x4 expected4 = {
         .contents = {
-            {-0.50709, 0.50709, 0.67612, -2.36643},
-            {0.76772, 0.60609, 0.12122, -2.82843},
-            {-0.35857, 0.59761, -0.71714, 0},
+            {-0.50709f, 0.50709f, 0.67612f, -2.36643f},
+            {0.76772f, 0.60609f, 0.12122f, -2.82843f},
+            {-0.35857f, 0.59761f, -0.71714f, 0},
             {0, 0, 0, 1}
         }
     };
@@ -791,23 +793,23 @@ void TestViewMatrix() {
 }
 
 void TestCamera() {
-    Camera c = NewCamera(200, 125, M_PI/2);
+    Camera c = NewCamera(200, 125, (float) M_PI_2);
 
-    if (!FloatEquality(0.01, c.pixel_size)) {
+    if (!FloatEquality(0.01f, c.pixel_size)) {
         Fail("Pixel Size, Horizontal Canvas");
     } else {
         Pass("Pixel Size, Horizontal Canvas");
     }
 
-    c = NewCamera(125, 200, M_PI/2);
+    c = NewCamera(125, 200, (float) M_PI_2);
 
-    if (!FloatEquality(0.01, c.pixel_size)) {
+    if (!FloatEquality(0.01f, c.pixel_size)) {
         Fail("Pixel Size, Vertical Canvas");
     } else {
         Pass("Pixel Size, Vertical Canvas");
     }
  
-    c = NewCamera(201, 101, M_PI / 2);
+    c = NewCamera(201, 101, (float) M_PI_2);
     Ray r = RayForPixel(&c, 100, 50);
 
     if (!TupleFuzzyEqual(NewPnt3(0, 0, 0), r.origin) || !TupleFuzzyEqual(NewVec3(0, 0, -1), r.direction)) {
@@ -818,10 +820,10 @@ void TestCamera() {
         Pass("Camera, Center of Canvas");
     }
 
-    c = NewCamera(201, 101, M_PI / 2);
+    c = NewCamera(201, 101, (float) M_PI_2);
     r = RayForPixel(&c, 0, 0);
 
-    if (!TupleFuzzyEqual(NewPnt3(0, 0, 0), r.origin) || !TupleFuzzyEqual(NewVec3(0.66519, 0.33259, -0.66851), r.direction)) {
+    if (!TupleFuzzyEqual(NewPnt3(0, 0, 0), r.origin) || !TupleFuzzyEqual(NewVec3(0.66519f, 0.33259f, -0.66851f), r.direction)) {
         Fail("Camera, Corner of Canvas");
         PrintTuple(r.origin);
         PrintTuple(r.direction);
@@ -829,8 +831,8 @@ void TestCamera() {
         Pass("Camera, Corner of Canvas");
     }
 
-    c = NewCamera(201, 101, M_PI / 2);
-    CameraApplyTransformation(&c, MatrixMultiply(RotationYMatrix(M_PI / 4), TranslationMatrix(0, -2, 5)));
+    c = NewCamera(201, 101, (float) M_PI_2);
+    CameraApplyTransformation(&c, MatrixMultiply(RotationYMatrix((float) M_PI_4), TranslationMatrix(0, -2, 5)));
     r = RayForPixel(&c, 100, 50);
     float r2_2 = sqrtf(2) / 2;
  
@@ -856,7 +858,7 @@ void TestShadow() {
 
     Tuple3 color = PhongShading(sj);
     
-    if (!TupleFuzzyEqual(NewTuple3(0.1, 0.1, 0.1, 0.1), color)) {
+    if (!TupleFuzzyEqual(NewTuple3(0.1f, 0.1f, 0.1f, 0.1f), color)) {
         Fail("Shadow Shading");
         PrintTuple(color);
     } else {
