@@ -96,7 +96,7 @@ void DemoSphereScene() {
     Shape s = NewSphere(NewPnt3(0, 0, 2), 500); 
     s.material = m;
 
-    Shape s2 = NewSphere NewPnt3(1, 1, -5), 50);
+    Shape s2 = NewSphere(NewPnt3(1, 1, -5), 50);
     m.color = NewColor(0, 255, 128, 255);
     s2.material = m;
 
