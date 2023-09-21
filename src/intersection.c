@@ -32,10 +32,17 @@ void IntersectSphere(Shape* s, Ray r, Intersection* result) {
     }
 }
 
+Intersection NewIntersection(Shape* s, Ray r) {
+    Intersection i;
+    i.count = 0;
+    i.shape_ptr = s;
+    i.ray = r;
+    memset(i.ray_times, 0, sizeof(float) * MAX_NUMBER_INTERSECTIONS);
+    return i;
+}
 
 Intersection Intersect(Shape* s, Ray r) {
-    Intersection result;
-    ConstructIntersection(&result, s, r);
+    Intersection result = NewIntersection(s, r);
 
     switch(s->type) {
     case SPHERE:
@@ -49,9 +56,3 @@ Intersection Intersect(Shape* s, Ray r) {
     return result;
 }
 
-void ConstructIntersection(Intersection* i, Shape* s, Ray r) {
-    i->count = 0;
-    i->shape_ptr = s;
-    i->ray = r;
-    memset(i->ray_times, 0, sizeof(float) * MAX_NUMBER_INTERSECTIONS);
-}

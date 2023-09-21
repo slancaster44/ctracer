@@ -123,8 +123,7 @@ void BenchmarkMatrixTupleMultiply() {
 }
 
 void BenchmarkRaySphereIntersection() {
-    Shape sphere;
-    ConstructSphere(&sphere, NewPnt3(0, 0, 0), 1.0);
+    Shape sphere = NewSphere(NewPnt3(0, 0, 0), 1.0);
 
     Ray r1 = {
         .origin = NewPnt3(0, 0, -5),
@@ -178,8 +177,7 @@ void TestShadeSphere() {
     Canvas c;
     ConstructCanvas(&c, 800, 600);
 
-    Shape s;
-    ConstructSphere(&s, NewPnt3(0, 0, 0), 250); 
+    Shape s = NewSphere(NewPnt3(0, 0, 0), 250); 
     s.material = m;
 
     Ray r;
@@ -214,29 +212,24 @@ void TestShadeSphere() {
 }
 
 void ConstructDefaultScene(Scene* s) {
-    Camera c;
-    ConstructCamera(&c, 1920, 1080, 3.14 / 4);
+    Camera c = NewCamera(1920, 1080, 3.14 / 4);
     CameraApplyTransformation(&c, ViewMatrix(NewPnt3(0, 0, -1200), NewPnt3(0, 0, 0), NewVec3(0, 1, 0)));
 
-    Light l;
-    ConstructLight(&l, NewPnt3(-300, -300, -300));
+    Light l = NewLight(NewPnt3(-300, -300, -300));
     ConstructScene(s, c, l);
     
-    Shape s1;
-    ConstructSphere(&s1, NewPnt3(0, 0, 0), 1.0);
+    Shape s1 = NewSphere(NewPnt3(0, 0, 0), 1.0);
     s1.material.diffuse_reflection = 0.7;
     s1.material.specular_reflection = 0.2;
 
-    Shape s2;
-    ConstructSphere(&s2, NewPnt3(0, 0, 0), 0.5);
+    Shape s2 = NewSphere(NewPnt3(0, 0, 0), 0.5);
 
     AddShape(s, s1);
     AddShape(s, s2);
 }
 
 void BenchmarkScene() {
-    Ray r;
-    ConstructRay(&r, NewPnt3(0, 0, -5), NewVec3(0, 0, 1));
+    Ray r = NewRay(NewPnt3(0, 0, -5), NewVec3(0, 0, 1));
 
     Set is;
     ConstructSet(&is, sizeof(Intersection));
@@ -262,17 +255,14 @@ void DemoSphereScene() {
     Canvas c;
     ConstructCanvas(&c, 800, 600);
 
-    Shape s;
-    ConstructSphere(&s, NewPnt3(0, 0, 2), 500); 
+    Shape s = NewSphere(NewPnt3(0, 0, 2), 500); 
     s.material = m;
 
-    Shape s2;
-    ConstructSphere(&s2, NewPnt3(1, 1, -5), 50);
+    Shape s2 = NewSphere(NewPnt3(1, 1, -5), 50);
     m.color = NewColor(0, 255, 128, 255);
     s2.material = m;
 
-    Camera ca;
-    ConstructCamera(&ca, 800, 600, 3.1415 / 3);
+    Camera ca = NewCamera(800, 600, 3.1415 / 3);
     CameraApplyTransformation(&ca, ViewMatrix(NewPnt3(0, 0, -600), NewPnt3(0, 0, 0), NewVec3(0, -1, 0)));
 
     Scene sc;

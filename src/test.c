@@ -378,8 +378,7 @@ void TestRay() {
 }
 
 void TestRaySphereIntersection() {
-    Shape sphere;
-    ConstructSphere(&sphere, NewPnt3(0, 0, 0), 1.0);
+    Shape sphere = NewSphere(NewPnt3(0, 0, 0), 1.0);
 
     Ray r1 = {
         .origin = NewPnt3(0, 0, -5),
@@ -470,8 +469,7 @@ void TestRayTransform() {
 }
 
 void SphereNormal() {
-    Shape s;
-    ConstructSphere(&s, NewPnt3(0, 0, 0), 1.0);
+    Shape s = NewSphere(NewPnt3(0, 0, 0), 1.0);
 
     if (!TupleFuzzyEqual(NormalAt(&s, NewPnt3(1, 0, 0)), NewVec3(1, 0, 0))) {
         PrintTuple(NormalAt(&s, NewPnt3(1, 0, 0)));
@@ -510,8 +508,7 @@ void SphereNormal() {
 }
 
 void TestSphereGeometry() {
-    Shape s;
-    ConstructSphere(&s, NewPnt3(0, 0, 0), 6.0);
+    Shape s = NewSphere(NewPnt3(0, 0, 0), 6.0);
 
     Ray r = {
         .origin = NewPnt3(0, 6, 0),
@@ -527,7 +524,7 @@ void TestSphereGeometry() {
         Pass("Sphere geometry, radius");
     }
 
-    ConstructSphere(&s, NewPnt3(1, 1, 0), 1.0);
+    s = NewSphere(NewPnt3(1, 1, 0), 1.0);
     Ray r2 = {
         .origin = NewPnt3(1, 1, -3),
         .direction = NewVec3(0, 0, 1),
@@ -681,9 +678,7 @@ void TestSceneCreation() {
 
     ConstructScene(&s, c, l);
     
-    Shape sphere;
-
-    ConstructSphere(&sphere, NewPnt3(0, 0, 0), 1.0);
+    Shape sphere = NewSphere(NewPnt3(0, 0, 0), 1.0);
     AddShape(&s, sphere);
 
     DeconstructScene(&s);
@@ -693,17 +688,14 @@ void TestSceneCreation() {
 
 void ConstructDefaultScene(Scene* s) {
     Camera c;
-    Light l;
-    ConstructLight(&l, NewPnt3(-10, 10, -10));
+    Light l = NewLight(NewPnt3(-10, 10, -10));
     ConstructScene(s, c, l);
     
-    Shape s1;
-    ConstructSphere(&s1, NewPnt3(0, 0, 0), 1.0);
+    Shape s1 = NewSphere(NewPnt3(0, 0, 0), 1.0);
     s1.material.diffuse_reflection = 0.7;
     s1.material.specular_reflection = 0.2;
 
-    Shape s2;
-    ConstructSphere(&s2, NewPnt3(0, 0, 0), 0.5);
+    Shape s2 = NewSphere(NewPnt3(0, 0, 0), 0.5);
 
     AddShape(s, s1);
     AddShape(s, s2);
@@ -713,8 +705,7 @@ void TestScene() {
     Scene s;
     ConstructDefaultScene(&s);
 
-    Ray r;
-    ConstructRay(&r, NewPnt3(0, 0, -5), NewVec3(0, 0, 1));
+    Ray r = NewRay(NewPnt3(0, 0, -5), NewVec3(0, 0, 1));
 
     Set is;
     ConstructSet(&is, sizeof(Intersection));
@@ -800,8 +791,7 @@ void TestViewMatrix() {
 }
 
 void TestCamera() {
-    Camera c;
-    ConstructCamera(&c, 200, 125, M_PI/2);
+    Camera c = NewCamera(200, 125, M_PI/2);
 
     if (!FloatEquality(0.01, c.pixel_size)) {
         Fail("Pixel Size, Horizontal Canvas");
@@ -809,7 +799,7 @@ void TestCamera() {
         Pass("Pixel Size, Horizontal Canvas");
     }
 
-    ConstructCamera(&c, 125, 200, M_PI/2);
+    c = NewCamera(125, 200, M_PI/2);
 
     if (!FloatEquality(0.01, c.pixel_size)) {
         Fail("Pixel Size, Vertical Canvas");
@@ -817,7 +807,7 @@ void TestCamera() {
         Pass("Pixel Size, Vertical Canvas");
     }
  
-    ConstructCamera(&c, 201, 101, M_PI / 2);
+    c = NewCamera(201, 101, M_PI / 2);
     Ray r = RayForPixel(&c, 100, 50);
 
     if (!TupleFuzzyEqual(NewPnt3(0, 0, 0), r.origin) || !TupleFuzzyEqual(NewVec3(0, 0, -1), r.direction)) {
@@ -828,7 +818,7 @@ void TestCamera() {
         Pass("Camera, Center of Canvas");
     }
 
-    ConstructCamera(&c, 201, 101, M_PI / 2);
+    c = NewCamera(201, 101, M_PI / 2);
     r = RayForPixel(&c, 0, 0);
 
     if (!TupleFuzzyEqual(NewPnt3(0, 0, 0), r.origin) || !TupleFuzzyEqual(NewVec3(0.66519, 0.33259, -0.66851), r.direction)) {
@@ -839,7 +829,7 @@ void TestCamera() {
         Pass("Camera, Corner of Canvas");
     }
 
-    ConstructCamera(&c, 201, 101, M_PI / 2);
+    c = NewCamera(201, 101, M_PI / 2);
     CameraApplyTransformation(&c, MatrixMultiply(RotationYMatrix(M_PI / 4), TranslationMatrix(0, -2, 5)));
     r = RayForPixel(&c, 100, 50);
     float r2_2 = sqrtf(2) / 2;
@@ -859,10 +849,10 @@ void TestShadow() {
         .surface_normal = NewVec3(0, 0, -1),
         .shadow = 1,
         .position = NewPnt3(0, 0, 0),
+        .light = NewLight(NewPnt3(0, 0, -10)),
     };
 
     AssignDefaultTestMaterial(&sj.material);
-    ConstructLight(&sj.light, NewPnt3(0, 0, -10));
 
     Tuple3 color = PhongShading(sj);
     
@@ -899,6 +889,8 @@ void TestShadow() {
     } else {
         Pass("Shadow Test, Object behind point");
     }
+
+    DeconstructScene(&sc);
 }
 
 int main() {

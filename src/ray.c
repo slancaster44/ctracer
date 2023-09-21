@@ -10,7 +10,9 @@ Ray RayTransform(Ray r, Matrix4x4 transformation) {
     return r;
 }
 
-void ConstructRay(Ray* r, Tuple3 origin, Tuple3 direction) {
-    r->origin = origin;
-    r->direction = direction;
+Ray NewRay(Tuple3 origin, Tuple3 direction) {
+    Ray r;
+    r.origin = origin;
+    r.direction = direction;
+    return r;
 }

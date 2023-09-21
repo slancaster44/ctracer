@@ -1,6 +1,8 @@
 #include "light.h"
 
-void ConstructLight(Light* l, Tuple3 origin) {
-    l->origin = origin;
-    l->color = NewColor(255, 255, 255, 255);
+Light NewLight(Tuple3 origin) {
+    Light l;
+    l.origin = origin;
+    l.color = NewColor(255, 255, 255, 255);
+    return l;
 }

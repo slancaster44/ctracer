@@ -17,7 +17,7 @@ typedef struct {
     float pixel_size;
 } Camera;
 
-void ConstructCamera(Camera* c, unsigned width, unsigned height, float fov);
+Camera NewCamera(unsigned width, unsigned height, float fov);
 void CameraApplyTransformation(Camera* c, Matrix4x4 t);
 Ray RayForPixel(Camera* c, unsigned x, unsigned y);
 

@@ -31,8 +31,7 @@ bool IsInShadow(Scene *s, Tuple3 location) {
     float distance = TupleMagnitude(pnt_light_vec);
     Tuple3 direction = TupleNormalize(pnt_light_vec);
 
-    Ray ray;
-    ConstructRay(&ray, location, direction);
+    Ray ray = NewRay(location, direction);
 
     Set intersections;
     ConstructSet(&intersections, sizeof(Intersection)); //TODO: Cleanup memory, deoncstruct

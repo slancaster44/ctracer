@@ -8,15 +8,15 @@
 
 void AssignDefaultTestMaterial(Material* m) {
     m->color = NewColor(255, 255, 255, 255);
-    m->ambient_reflection = 0.1;
-    m->diffuse_reflection = 0.9;
-    m->specular_reflection = 0.9;
+    m->ambient_reflection = 0.1f;
+    m->diffuse_reflection = 0.9f;
+    m->specular_reflection = 0.9f;
     m->shininess = 200;
 }
 
 void DemoCanvas() {
     Tuple3 start = NewPnt3(0, 1, 0);
-    Tuple3 velocity = TupleScalarMultiply(TupleNormalize(NewVec3(1, 1.8, 0)), 11.25);
+    Tuple3 velocity = TupleScalarMultiply(TupleNormalize(NewVec3(1, 1.8f, 0)), 11.25f);
 
     Tuple3 gravity = NewVec3(0, -0.1, 0);
 
@@ -46,8 +46,7 @@ void DemoShadeSphere() {
     Canvas c;
     ConstructCanvas(&c, 800, 600);
 
-    Shape s;
-    ConstructSphere(&s, NewPnt3(0, 0, 0), 250); 
+    Shape s = NewSphere(NewPnt3(0, 0, 0), 250); 
     s.material = m;
 
     Ray r;
@@ -94,17 +93,14 @@ void DemoSphereScene() {
     Canvas c;
     ConstructCanvas(&c, 800, 600);
 
-    Shape s;
-    ConstructSphere(&s, NewPnt3(0, 0, 2), 500); 
+    Shape s = NewSphere(NewPnt3(0, 0, 2), 500); 
     s.material = m;
 
-    Shape s2;
-    ConstructSphere(&s2, NewPnt3(1, 1, -5), 50);
+    Shape s2 = NewSphere NewPnt3(1, 1, -5), 50);
     m.color = NewColor(0, 255, 128, 255);
     s2.material = m;
 
-    Camera ca;
-    ConstructCamera(&ca, 800, 600, 3.1415 / 3);
+    Camera ca = NewCamera(800, 600, 3.1415 / 3);
     CameraApplyTransformation(&ca, ViewMatrix(NewPnt3(0, 0, -600), NewPnt3(0, 0, 0), NewVec3(0, -1, 0)));
 
     Scene sc;

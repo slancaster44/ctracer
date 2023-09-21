@@ -14,7 +14,6 @@ typedef struct {
     int count;
 } Intersection;
 
-void ConstructIntersection(Intersection* i, Shape* s, Ray r);
 Intersection Intersect(Shape* s, Ray r);
 
 #endif
