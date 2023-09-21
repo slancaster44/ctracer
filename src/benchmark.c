@@ -25,7 +25,7 @@
 
 void BenchmarkMatrixEqual() {
     Matrix4x4 m1 = {
-        contents: {
+        .contents = {
             {1, 2, 3, 4},
             {2, 4, 4, 2},
             {8, 6, 4, 1},
@@ -34,7 +34,7 @@ void BenchmarkMatrixEqual() {
     };
 
     Matrix4x4 m2 = {
-        contents: {
+        .contents = {
             {1, 2, 3, 4},
             {2, 4, 4, 2},
             {8, 6, 4, 1},
@@ -47,7 +47,7 @@ void BenchmarkMatrixEqual() {
 
 void BenchmarkMatrixFuzzyEqual() {
         Matrix4x4 m1 = {
-        contents: {
+        .contents = {
             {1, 2, 3, 4},
             {2, 4, 4, 2},
             {8, 6, 4, 1},
@@ -56,7 +56,7 @@ void BenchmarkMatrixFuzzyEqual() {
     };
 
     Matrix4x4 m2 = {
-        contents: {
+        .contents = {
             {1, 2, 3, 4},
             {2, 4, 4, 2},
             {8, 6, 4, 1},
@@ -69,7 +69,7 @@ void BenchmarkMatrixFuzzyEqual() {
 
 void BenchmarkMatrixMultiply() {
         Matrix4x4 m1 = {
-        contents: {
+        .contents = {
             {1, 2, 3, 4},
             {2, 4, 4, 2},
             {8, 6, 4, 1},
@@ -78,7 +78,7 @@ void BenchmarkMatrixMultiply() {
     };
 
     Matrix4x4 m2 = {
-        contents: {
+        .contents = {
             {1, 2, 3, 4},
             {2, 4, 4, 2},
             {8, 6, 4, 1},
@@ -91,7 +91,7 @@ void BenchmarkMatrixMultiply() {
 
 void BenchmarkMatrixTranspose() {
             Matrix4x4 m1 = {
-        contents: {
+        .contents = {
             {1, 2, 3, 4},
             {2, 4, 4, 2},
             {8, 6, 4, 1},
@@ -109,7 +109,7 @@ void BenchmarkMatrixInvert() {
 
 void BenchmarkMatrixTupleMultiply() {
     Matrix4x4 m1 = {
-        contents: {
+        .contents = {
             {1, 2, 3, 4},
             {2, 4, 4, 2},
             {8, 6, 4, 1},
@@ -127,8 +127,8 @@ void BenchmarkRaySphereIntersection() {
     ConstructSphere(&sphere, NewPnt3(0, 0, 0), 1.0);
 
     Ray r1 = {
-        origin: NewPnt3(0, 0, -5),
-        direction: NewVec3(0, 0, 1),
+        .origin = NewPnt3(0, 0, -5),
+        .direction = NewVec3(0, 0, 1),
     };
 
     BENCHMARK(Intersect(&sphere, r1), 1920, BENCHMARK_CYCLES);

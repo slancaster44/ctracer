@@ -1,12 +1,12 @@
 CC = gcc
-CFLAGS = -O2 -o tracer -march=native
+CFLAGS = -O2 -o tracer -march=native -Wno-pointer-arith
 INCLUDE = -Iinclude
 SOURCE = `find ./src -name *.c ! -name test.c ! -name demo.c ! -name benchmark.c`
 LDFLAGS = -lm
 
 test:
 	clear
-	$(CC) $(CFLAGS) -g $(INCLUDE) $(SOURCE) src/test.c $(LDFLAGS)
+	$(CC) $(CFLAGS) -g -Wpedantic -Wall $(INCLUDE) $(SOURCE) src/test.c $(LDFLAGS)
 	./tracer
 	rm -r ./tracer 
 

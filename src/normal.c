@@ -21,4 +21,6 @@ Tuple3 NormalAt(Shape* s, Tuple3 pnt) {
         printf("Cannot find normal for unkown shape");
         break;
     }
+
+    return NewVec3(0, 0, 0);
 }

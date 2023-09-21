@@ -139,7 +139,7 @@ void PrintMatrix(Matrix4x4 m1) {
 
 Matrix4x4 TranslationMatrix(float x, float y, float z) {
     Matrix4x4 out = {
-        contents: {
+        .contents = {
             {1, 0, 0, x},
             {0, 1, 0, y},
             {0, 0, 1, z},
@@ -152,7 +152,7 @@ Matrix4x4 TranslationMatrix(float x, float y, float z) {
 
 Matrix4x4 ScalingMatrix(float x, float y, float z) {
     Matrix4x4 out = {
-        contents: {
+        .contents = {
             {x, 0, 0, 0},
             {0, y, 0, 0},
             {0, 0, z, 0},
@@ -165,7 +165,7 @@ Matrix4x4 ScalingMatrix(float x, float y, float z) {
 
 Matrix4x4 RotationXMatrix(float theta) {
     Matrix4x4 out = {
-        contents: {
+        .contents = {
             {1, 0, 0, 0},
             {0, _cos(theta), -_sin(theta), 0},
             {0, _sin(theta), _cos(theta), 0},
@@ -178,7 +178,7 @@ Matrix4x4 RotationXMatrix(float theta) {
 
 Matrix4x4 RotationYMatrix(float theta) {
     Matrix4x4 out = {
-        contents: {
+        .contents = {
             {_cos(theta), 0, _sin(theta), 0},
             {0, 1, 0, 0},
             {-_sin(theta), 0, _cos(theta), 0},
@@ -191,7 +191,7 @@ Matrix4x4 RotationYMatrix(float theta) {
 
 Matrix4x4 RotationZMatrix(float theta) {
     Matrix4x4 out = {
-        contents: {
+        .contents = {
             {_cos(theta), -_sin(theta), 0, 0},
             {_sin(theta), _cos(theta), 0, 0},
             {0, 0, 1, 0},
@@ -204,7 +204,7 @@ Matrix4x4 RotationZMatrix(float theta) {
 
 Matrix4x4 ShearingMatrix(float xy, float xz, float yx, float yz, float zx, float zy) {
     Matrix4x4 out = {
-        contents: {
+        .contents = {
             {1, xy, xz, 0},
             {yx, 1, yz, 0},
             {zx, zy, 1, 0},
@@ -217,7 +217,7 @@ Matrix4x4 ShearingMatrix(float xy, float xz, float yx, float yz, float zx, float
 
 Matrix4x4 IdentityMatrix() {
     Matrix4x4 result = {
-        contents: {
+        .contents = {
             {1, 0, 0, 0},
             {0, 1, 0, 0},
             {0, 0, 1, 0},
@@ -235,7 +235,7 @@ Matrix4x4 ViewMatrix(Tuple3 from, Tuple3 to, Tuple3 upvec) {
     upvec = TupleCrossProduct(left, forward);
 
     Matrix4x4 result = {
-        contents: {
+        .contents = {
             {left[0], left[1], left[2], 0},
             {upvec[0], upvec[1], upvec[2], 0},
             {-forward[0], -forward[1], -forward[2], 0},

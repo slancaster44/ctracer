@@ -70,7 +70,7 @@ void TestSet() {
 
 void TestMatrixEqual() {
     Matrix4x4 m1 = {
-        contents: {
+        .contents = {
             {-1, 2, 3, 4},
             {2, 4, 4, 2},
             {8, 6, 4, 1},
@@ -79,7 +79,7 @@ void TestMatrixEqual() {
     };
 
     Matrix4x4 m2 = {
-        contents: {
+        .contents = {
             {-1, 2, 3, 4},
             {2, 4, 4, 2},
             {8, 6, 4, 1},
@@ -103,7 +103,7 @@ void TestMatrixEqual() {
 
 void TestMatrixMultiply() {
     Matrix4x4 m1 = {
-        contents: {
+        .contents = {
             {1, 2, 3, 4},
             {5, 6, 7, 8},
             {9, 8, 7 ,6},
@@ -112,7 +112,7 @@ void TestMatrixMultiply() {
     };
 
     Matrix4x4 m2 = {
-        contents: {
+        .contents = {
             {-2, 1, 2, 3},
             {3, 2, 1, -1},
             {4, 3, 6, 5},
@@ -121,7 +121,7 @@ void TestMatrixMultiply() {
     };
 
     Matrix4x4 res = {
-        contents: {
+        .contents = {
             {20, 22, 50, 48},
             {44, 54, 114, 108},
             {40, 58, 110, 102},
@@ -138,7 +138,7 @@ void TestMatrixMultiply() {
 
 void TestMatrixTranspose() {
     Matrix4x4 m1 = {
-        contents: {
+        .contents = {
             {0, 9, 3, 0},
             {9, 8, 0, 8},
             {1, 8, 5, 3},
@@ -147,7 +147,7 @@ void TestMatrixTranspose() {
     };
 
     Matrix4x4 res = {
-        contents: {
+        .contents = {
             {0, 9, 1, 0},
             {9, 8, 8, 0},
             {3, 0, 5, 5},
@@ -164,7 +164,7 @@ void TestMatrixTranspose() {
 
 void TestMatrixInvert() {
     Matrix4x4 m1 = {
-        contents: {
+        .contents = {
             {8, -5, 9, 2},
             {7, 5, 6, 1},
             {-6, 0, 9, 6},
@@ -173,7 +173,7 @@ void TestMatrixInvert() {
     };
 
     Matrix4x4 m2 = {
-        contents: {
+        .contents = {
             {-0.15385, -0.15385, -0.28205, -0.53846},
             {-0.07692, 0.12308, 0.02564, 0.03077},
             {0.35897, 0.35897, 0.43590, 0.92308},
@@ -191,7 +191,7 @@ void TestMatrixInvert() {
 
 void TestMatrixVectorMultiply() {
     Matrix4x4 m1 = {
-        contents: {
+        .contents = {
             {1, 2, 3, 4},
             {2, 4, 4, 2},
             {8, 6, 4, 1},
@@ -366,8 +366,8 @@ void TestTupleSubtract() {
 
 void TestRay() {
     Ray r = {
-        origin: NewPnt3(2, 3, 4),
-        direction: NewVec3(1, 0, 0),
+        .origin = NewPnt3(2, 3, 4),
+        .direction = NewVec3(1, 0, 0),
     };
 
     if (!TupleEqual(RayPosition(r, 2.5), NewPnt3(4.5, 3, 4))) {
@@ -382,8 +382,8 @@ void TestRaySphereIntersection() {
     ConstructSphere(&sphere, NewPnt3(0, 0, 0), 1.0);
 
     Ray r1 = {
-        origin: NewPnt3(0, 0, -5),
-        direction: NewVec3(0, 0, 1),
+        .origin = NewPnt3(0, 0, -5),
+        .direction = NewVec3(0, 0, 1),
     };
 
     Intersection intersection = Intersect(&sphere, r1);
@@ -396,8 +396,8 @@ void TestRaySphereIntersection() {
     }
 
     Ray r2 = {
-        origin: NewPnt3(0, 1, -5),
-        direction: NewVec3(0, 0, 1),
+        .origin = NewPnt3(0, 1, -5),
+        .direction = NewVec3(0, 0, 1),
     };
 
     Intersection i2 = Intersect(&sphere, r2);
@@ -410,8 +410,8 @@ void TestRaySphereIntersection() {
     }
     
     Ray r3 = {
-        origin: NewPnt3(0, 0, 0),
-        direction: NewVec3(0, 0, 1),
+        .origin = NewPnt3(0, 0, 0),
+        .direction = NewVec3(0, 0, 1),
     };
 
     Intersection i3 = Intersect(&sphere, r3);
@@ -425,8 +425,8 @@ void TestRaySphereIntersection() {
 
 
     Ray r4 = {
-        origin: NewPnt3(0, 0, 5),
-        direction: NewVec3(0, 0, 1),
+        .origin = NewPnt3(0, 0, 5),
+        .direction = NewVec3(0, 0, 1),
     };
 
     Intersection i4 = Intersect(&sphere, r4);
@@ -439,8 +439,8 @@ void TestRaySphereIntersection() {
     }
 
     Ray r5 = {
-        origin: NewPnt3(1.1, 1.1, 0),
-        direction: NewVec3(0, 0, 1),
+        .origin = NewPnt3(1.1, 1.1, 0),
+        .direction = NewVec3(0, 0, 1),
     };
 
     Intersection i5 = Intersect(&sphere, r5);
@@ -455,8 +455,8 @@ void TestRaySphereIntersection() {
 
 void TestRayTransform() {
     Ray r = {
-        origin: NewPnt3(1, 2, 3),
-        direction: NewVec3(0, 1, 0),
+        .origin = NewPnt3(1, 2, 3),
+        .direction = NewVec3(0, 1, 0),
     };
 
     Matrix4x4 scaling = ScalingMatrix(2, 3, 4);
@@ -514,8 +514,8 @@ void TestSphereGeometry() {
     ConstructSphere(&s, NewPnt3(0, 0, 0), 6.0);
 
     Ray r = {
-        origin: NewPnt3(0, 6, 0),
-        direction: NewVec3(0, 0, 1),
+        .origin = NewPnt3(0, 6, 0),
+        .direction = NewVec3(0, 0, 1),
     };
 
     Intersection res = Intersect(&s, r);
@@ -529,8 +529,8 @@ void TestSphereGeometry() {
 
     ConstructSphere(&s, NewPnt3(1, 1, 0), 1.0);
     Ray r2 = {
-        origin: NewPnt3(1, 1, -3),
-        direction: NewVec3(0, 0, 1),
+        .origin = NewPnt3(1, 1, -3),
+        .direction = NewVec3(0, 0, 1),
     };
 
     res = Intersect(&s, r2);
@@ -781,7 +781,7 @@ void TestViewMatrix() {
 
     Matrix4x4 m4 = ViewMatrix(NewPnt3(1, 3, 2), NewPnt3(4, -2, 8), NewVec3(1, 1, 0));
     Matrix4x4 expected4 = {
-        contents: {
+        .contents = {
             {-0.50709, 0.50709, 0.67612, -2.36643},
             {0.76772, 0.60609, 0.12122, -2.82843},
             {-0.35857, 0.59761, -0.71714, 0},
