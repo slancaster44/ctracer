@@ -17,7 +17,7 @@ void DeconstructSet(Set* s) {
     free(s->data);
 }
 
-unsigned AppendValue(Set* s, void* value) {
+unsigned long AppendValue(Set* s, void* value) {
     if (s->length + 1 >= s->capacity) {
         s->capacity *= 3;
         s->data = reallocarray(s->data, s->capacity, s->data_width);
@@ -29,11 +29,11 @@ unsigned AppendValue(Set* s, void* value) {
     return s->length-1;
 }
 
-void* Index(Set* s, unsigned index) {
+void* Index(Set* s, unsigned long index) {
     return s->data + (index * s->data_width);
 }
 
-void CopyOut(Set* s, unsigned index, void* out) {
+void CopyOut(Set* s, unsigned long index, void* out) {
     void* ptr = Index(s, index);
     memcpy(out, ptr, s->data_width);
 }

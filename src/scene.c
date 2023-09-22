@@ -17,7 +17,7 @@ void DeconstructScene(Scene* s) {
     DeconstructSet(&(s->shapes));
 }
 
-unsigned AddShape(Scene* s, Shape sp) {
+unsigned long AddShape(Scene* s, Shape sp) {
     return AppendValue(&(s->shapes), &sp);
 }
 
