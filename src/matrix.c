@@ -1,6 +1,7 @@
 #include "matrix.h"
-#include "trig.h"
+#include "equality.h"
 
+#include <math.h>
 #include <stdio.h>
 
 #define SWIZZLE_M128(val, p1, p2, p3, p4) \
@@ -58,6 +59,24 @@ Matrix4x4 MatrixMultiply(Matrix4x4 m1, Matrix4x4 m2) {
     out.contents[1] = matrixMultHelper(1, m1, m2);
     out.contents[2] = matrixMultHelper(2, m1, m2);
     out.contents[3] = matrixMultHelper(3, m1, m2);
+
+    return out;
+}
+
+Matrix4x4 MatrixScalarMultiply(Matrix4x4 m1, float f1) {
+    __m256 scale = _mm256_set1_ps(f1);
+
+    Matrix4x4 m2;
+    m2.chunks[0] = _mm256_mul_ps(m1.chunks[0], scale);
+    m2.chunks[1] = _mm256_mul_ps(m1.chunks[1], scale);
+
+    return m2;
+}
+
+Matrix4x4 MatrixAdd(Matrix4x4 m1, Matrix4x4 m2) {
+    Matrix4x4 out;
+    out.chunks[0] = _mm256_add_ps(m1.chunks[0], m2.chunks[0]);
+    out.chunks[1] = _mm256_add_ps(m1.chunks[1], m2.chunks[1]);
 
     return out;
 }
@@ -167,8 +186,8 @@ Matrix4x4 RotationXMatrix(float theta) {
     Matrix4x4 out = {
         .contents = {
             {1, 0, 0, 0},
-            {0, _cos(theta), -_sin(theta), 0},
-            {0, _sin(theta), _cos(theta), 0},
+            {0, cosf(theta), -sinf(theta), 0},
+            {0, sinf(theta), cosf(theta), 0},
             {0, 0, 0, 1}
         }
     };
@@ -179,9 +198,9 @@ Matrix4x4 RotationXMatrix(float theta) {
 Matrix4x4 RotationYMatrix(float theta) {
     Matrix4x4 out = {
         .contents = {
-            {_cos(theta), 0, _sin(theta), 0},
+            {cosf(theta), 0, sinf(theta), 0},
             {0, 1, 0, 0},
-            {-_sin(theta), 0, _cos(theta), 0},
+            {-sinf(theta), 0, cosf(theta), 0},
             {0, 0, 0, 1}
         }
     };
@@ -192,14 +211,22 @@ Matrix4x4 RotationYMatrix(float theta) {
 Matrix4x4 RotationZMatrix(float theta) {
     Matrix4x4 out = {
         .contents = {
-            {_cos(theta), -_sin(theta), 0, 0},
-            {_sin(theta), _cos(theta), 0, 0},
+            {cosf(theta), -sinf(theta), 0, 0},
+            {sinf(theta), cosf(theta), 0, 0},
             {0, 0, 1, 0},
             {0, 0, 0, 1}
         }
     };
 
     return out;
+}
+
+Matrix4x4 RotationMatrix(float rot_x, float rot_y, float rot_z)  {
+    Matrix4x4 yaw = RotationXMatrix(rot_x);
+    Matrix4x4 pitch = RotationYMatrix(rot_y);
+    Matrix4x4 roll = RotationZMatrix(rot_z);
+
+    return MatrixMultiply(MatrixMultiply(yaw, pitch), roll);
 }
 
 Matrix4x4 ShearingMatrix(float xy, float xz, float yx, float yz, float zx, float zy) {
@@ -244,4 +271,17 @@ Matrix4x4 ViewMatrix(Tuple3 from, Tuple3 to, Tuple3 upvec) {
     };
 
     return MatrixMultiply(result, TranslationMatrix(-from[0], -from[1], -from[2]));
+}
+
+Matrix4x4 SkewSymmetricCPMatrix(Tuple3 t1) {
+    Matrix4x4 result = {
+        .contents = {
+            {0, t1[2], -t1[1], 0},
+            {-t1[2], 0, t1[0], 0},
+            {t1[1], -t1[0], 0, 0},
+            {0, 0, 0, 1},
+        }
+    };
+
+    return result;
 }

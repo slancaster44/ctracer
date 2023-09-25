@@ -1,5 +1,6 @@
 #include "shape.h"
 #include "intersection.h"
+#include "equality.h"
 
 #include <stdio.h>
 #include <math.h>
@@ -32,6 +33,22 @@ void IntersectSphere(Shape* s, Ray r, Intersection* result) {
     }
 }
 
+void IntersectPlane(Shape* s, Ray r, Intersection* result) {
+    r = RayTransform(r, s->inverse_transform);
+
+    /* Because the ray has been transformed into "shape space"
+     * then we can assume that the plane is on the x=0. As a result
+     * a y value near zero indcates the ray is either on the plane, or
+     * it is parallel to the plane
+     */
+    if (FloatEquality(r.direction[1], 0)) {
+        return;
+    }
+    
+    result->count = 1;
+    result->ray_times[0] = -r.origin[1] / r.direction[1];
+}
+
 Intersection NewIntersection(Shape* s, Ray r) {
     Intersection i;
     i.count = 0;
@@ -47,6 +64,9 @@ Intersection Intersect(Shape* s, Ray r) {
     switch(s->type) {
     case SPHERE:
         IntersectSphere(s, r, &result);
+        break;
+    case PLANE:
+        IntersectPlane(s, r, &result);
         break;
     default:
         printf("Invalid shape type\n");

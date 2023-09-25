@@ -1,6 +1,7 @@
 #include "scene.h"
 #include "intersection.h"
 #include "shading.h"
+#include "equality.h"
 
 #include <string.h>
 #include <sys/sysinfo.h>
@@ -39,7 +40,8 @@ bool IsInShadow(Scene *s, Tuple3 location) {
 
     for (unsigned i = 0; i < intersections.length; i++){
         Intersection* this_intersection = Index(&intersections, i);
-        if (this_intersection->ray_times[0] < distance && this_intersection->ray_times[0] > 0) {
+        if (this_intersection->ray_times[0] < (distance - EQUALITY_EPSILON) && 
+        this_intersection->ray_times[0] > EQUALITY_EPSILON) {
             DeconstructSet(&intersections);
             return true;
         }

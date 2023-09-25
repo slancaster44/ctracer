@@ -116,8 +116,38 @@ void DemoSphereScene() {
     DeconstructCanvas(&c);
 }
 
+void DemoPlane() {
+    Camera c = NewCamera(800, 600, 3.1415 / 3);
+    CameraApplyTransformation(&c, ViewMatrix(NewPnt3(0, 25, 600), NewPnt3(0, 0, 0), NewVec3(0, 1, 0)));
+
+
+    Light l = NewLight( NewPnt3(1000, 2000, 2000));
+
+    Scene s;
+    ConstructScene(&s, c, l);
+
+    Shape plane = NewPlane(NewPnt3(0, -10, 0), NewVec3(0, 1, 0));
+    AssignDefaultTestMaterial(&(plane.material));
+    AddShape(&s, plane);
+
+    Shape sphere = NewSphere(NewPnt3(0, 0.6, 5), 50);
+    AssignDefaultTestMaterial(&(sphere.material));
+    sphere.material.color = NewColor(0, 255, 128, 255);
+    AddShape(&s, sphere);
+
+    Canvas canvas;
+    ConstructCanvas(&canvas, 800, 600);
+
+    RenderScene(&s, &canvas);
+    WriteToPPM(&canvas, "plane_scene.ppm");
+
+    DeconstructCanvas(&canvas);
+    DeconstructScene(&s);
+}
+
 int main() {
     DemoCanvas();
     DemoShadeSphere();
     DemoSphereScene();
+    DemoPlane();
 }

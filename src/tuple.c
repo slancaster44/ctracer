@@ -2,7 +2,7 @@
 #include <math.h>
 #include <stdio.h>
 
-#include "trig.h"
+#include "equality.h"
 #include "tuple.h"
 
 Tuple3 NewVec3(float x, float y, float z) {

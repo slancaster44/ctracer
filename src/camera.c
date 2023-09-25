@@ -1,5 +1,5 @@
 #include "camera.h"
-#include "trig.h"
+#include <math.h>
 
 Camera NewCamera(unsigned width, unsigned height, float fov) {
     Camera c;
@@ -11,7 +11,7 @@ Camera NewCamera(unsigned width, unsigned height, float fov) {
     c.view_transformation = IdentityMatrix();
     c.inverse_view_transformation = IdentityMatrix();
 
-    float half_view = _tan(fov / 2);
+    float half_view = tanf(fov / 2);
     float aspect_ratio = (float) width / (float) height;
 
     if (aspect_ratio >= 1) {

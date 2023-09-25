@@ -2,7 +2,7 @@
 #include <math.h>
 
 #include "tuple.h"
-#include "trig.h"
+#include "equality.h"
 #include "matrix.h"
 #include "canvas.h"
 #include "shape.h"
@@ -25,6 +25,14 @@ void Pass(const char* msg) {
     num_passed ++;
     printf("\033[0;32m[PASS]\033[0;37m %s\n", msg);
 }
+
+#define TEST(CONDITION, MSG) {  \
+    if (CONDITION) {            \
+        Pass(MSG);              \
+    } else {                    \
+        Fail(MSG);              \
+    }                           \
+}                               \
 
 void TestSet() {
     Set s;
@@ -208,35 +216,6 @@ void TestMatrixVectorMultiply() {
         Pass("Matrix & Tuple Multiplication");
     }
 
-}
-
-void TestCos() {
-    if (!FloatEquality(_cos(0.0), 1.0)) {
-        Fail("Cos Test");
-    } else {
-        Pass("Cos Test");
-    }
-}
-
-void TestSin() {
-    if (!FloatEquality(_sin(0.0f), 0.0) || 
-        !FloatEquality(_sin((float) M_PI / 2.0f), 1.0f) || 
-        !FloatEquality(_sin((float) M_PI * 3.0f/2.0f), -1.0f) || 
-        !FloatEquality(_sin((float) M_PI * 2.0f / 3.0f), 0.8660f)) {
-
-        printf("%f %f %f %f\n", _sin(0.0f), _sin((float) M_PI/2.0f), _sin((float) M_PI * 3.0f / 2.0f), _sin((float) M_PI * 3.0f / 4.0f));
-        Fail("Sin Test");
-    } else {
-        Pass("Sin Test");
-    }
-}
-
-void TestTan() {
-    if (!FloatEquality(_tan((float) M_PI), 0.0)) {
-        Fail("Tan Test");
-    } else {
-        Pass("Tan Test");
-    }
 }
 
 void TestTupleEqual() {
@@ -895,6 +874,51 @@ void TestShadow() {
     DeconstructScene(&sc);
 }
 
+void TestPlane() {
+
+    bool passed = true;
+    for (float x = 0.1f; x < 1; x += 0.1f) {
+        for (float y = 0.0f; y < 1; y += 0.1f) {
+            for (float z = 0.0f; z < 1; z += 0.1f) {
+                Tuple3 normal = TupleNormalize(NewVec3(x, y, z));
+                Shape test_plane = NewPlane(NewPnt3(0, 0, 0), normal);
+
+                Tuple3 result = NormalAt(&test_plane, NewPnt3(0, 0, 0));
+
+                if (!TupleFuzzyEqual(result, normal)) {
+                    Fail("Plane Normal");
+                    PrintMatrix(test_plane.transformation);
+                    PrintTuple(normal);
+                    PrintTuple(result);
+                    passed = false;
+                }
+            }
+        }
+    }
+
+    if (passed) {
+        Pass("Plane Normal");
+    }
+
+    Shape plane = NewPlane(NewPnt3(0, 0, 0), NewVec3(0, 1, 0));
+    Ray r = NewRay(NewPnt3(0, 10, 0), NewVec3(0, 0, 1));
+    Intersection result = Intersect(&plane, r);
+    TEST(result.count == 0, "Plane Intersection, parallel ray")
+
+    r = NewRay(NewPnt3(0, 0, 0), NewVec3(0, 0, 1));
+    result = Intersect(&plane, r);
+    TEST(result.count == 0, "Plane Intersection, coplanar ray")
+
+    r = NewRay(NewPnt3(0, 1, 0), NewVec3(0, -1, 0));
+    result = Intersect(&plane, r);
+    TEST(FloatEquality(1.0, result.ray_times[0]), "Plane Intersection, Intersecting from above");
+
+
+    r = NewRay(NewPnt3(0, -1, 0), NewVec3(0, 1, 0));
+    result = Intersect(&plane, r);
+    TEST(FloatEquality(1.0, result.ray_times[0]), "Plane Intersection, Intersecting from above");
+}
+
 int main() {
     num_failed = 0;
     num_passed = 0;
@@ -905,9 +929,6 @@ int main() {
     TestMatrixTranspose();
     TestMatrixInvert();
     TestMatrixVectorMultiply();
-    TestCos();
-    TestSin();
-    TestTan();
     TestTupleEqual();
     TestScalarMultiply();
     TestScalarDivide();
@@ -931,6 +952,8 @@ int main() {
     TestViewMatrix();
     TestCamera();
     TestShadow();
+
+    TestPlane();
 
     printf("Test(s) Passed: %d\nTests(s) Failed: %d\n", num_passed, num_failed);
 
