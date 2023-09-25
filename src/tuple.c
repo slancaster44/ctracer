@@ -1,5 +1,6 @@
 #include <immintrin.h>
 #include <math.h>
+#include <stdbool.h>
 #include <stdio.h>
 
 #include "equality.h"
@@ -20,6 +21,10 @@ Tuple3 NewTuple3(float x, float y, float z, float w) {
 Tuple3 NewColor(uint8_t r, uint8_t g, uint8_t b, uint8_t a) {
     Tuple3 c = NewTuple3((float) r, (float) g, (float) b, (float) a);
     return TupleScalarDivide(c, 255);
+}
+
+bool TupleHasNaNs(Tuple3 t1) {
+    return TupleEqual(t1, _mm_set1_ps(NAN));
 }
 
 void PrintTuple(Tuple3 t) {
@@ -114,4 +119,12 @@ Tuple3 TupleSubtract(Tuple3 t1, Tuple3 t2) {
 Tuple3 TupleReflect(Tuple3 t1, Tuple3 normal) {
     float x = 2 * TupleDotProduct(t1, normal);
     return TupleSubtract(t1, TupleScalarMultiply(normal, x));
+}
+
+float MinComponent(Tuple3 t1) {
+    return fminf(t1[0], fminf(t1[1], t1[2]));
+}
+
+float MaxComponent(Tuple3 t1) {
+    return fmaxf(t1[0], fmaxf(t1[1], t1[2]));
 }

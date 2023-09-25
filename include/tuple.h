@@ -2,12 +2,13 @@
 #define TUPLE_H
 
 #include <immintrin.h>
-
-
+#include <stdbool.h>
 
 typedef unsigned char uint8_t;
 typedef __m128 Tuple3;
 
+#define Permute(val, p1, p2, p3, p4) \
+    _mm_permute_ps(val, p1 | (p2 << 2) | (p3 << 4) | (p4 << 6))
 
 Tuple3 NewVec3(float x, float y, float z);
 Tuple3 NewPnt3(float x, float y, float z);
@@ -30,5 +31,8 @@ Tuple3 TupleSubtract(Tuple3 t1, Tuple3 t2);
 Tuple3 TupleReflect(Tuple3 t1, Tuple3 normal);
 Tuple3 TupleScalarSubtract(Tuple3 t, float n);
 Tuple3 TupleScalarAdd(Tuple3 t, float n);
+bool TupleHasNaNs(Tuple3 t1);
+float MaxComponent(Tuple3 t1); 
+float MaxComponent(Tuple3 t1);
 
 #endif
