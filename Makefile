@@ -21,3 +21,8 @@ demo:
 	$(CC) $(CFLAGS) -g $(INCLUDE) $(SOURCE) src/demo.c $(LDFLAGS)
 	./tracer
 	rm -r ./tracer
+
+profile:
+	clear
+	$(CC) $(CFLAGS) $(INCLUDE) $(SOURCE) src/benchmark.c $(LDFLAGS) -pg
+	./tracer

@@ -1,4 +1,6 @@
 #include "shape.h"
+#include "intersection.h"
+#include "equality.h"
 
 #include <math.h>
 
@@ -12,6 +14,7 @@ Shape NewSphere(Tuple3 cp, float radius) {
 
     s.transformation = MatrixMultiply(radius_scaling, center_point_translation);
     s.inverse_transform = MatrixInvert(s.transformation);
+
 
     return s;
 }

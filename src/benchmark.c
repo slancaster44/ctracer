@@ -270,7 +270,7 @@ void DemoSphereScene() {
     AddShape(&sc, s);
     AddShape(&sc, s2);
 
-    RenderScene(&sc, &c);
+    RenderScene(&sc, &c, PhongShading);
 
     WriteToPPM(&c, "sphere_scene.ppm");
 

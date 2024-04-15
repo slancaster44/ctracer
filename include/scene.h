@@ -8,6 +8,7 @@
 #include "set.h"
 #include "camera.h"
 #include "canvas.h"
+#include "shading.h"
 
 typedef struct {
     Set shapes;
@@ -19,7 +20,7 @@ void ConstructScene(Scene* s, Camera c, Light);
 void DeconstructScene(Scene* s);
 unsigned long AddShape(Scene* s, Shape sp);
 void IntersectScene(Scene* s, Ray r, Set* intersection_set);
-void RenderScene(Scene* s, Canvas* c);
+void RenderScene(Scene* s, Canvas* c, Shader sh);
 bool IsInShadow(Scene *s, Tuple3 location);
 
 #endif

@@ -11,7 +11,8 @@ typedef enum {
     PLANE,
 } SHAPE_TYPE;
 
-typedef struct {
+
+typedef struct Shape {
     Matrix4x4 transformation;
     Matrix4x4 inverse_transform;
 

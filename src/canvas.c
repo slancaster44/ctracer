@@ -29,10 +29,14 @@ void WritePixel(Canvas* c, Tuple3 color, unsigned x, unsigned y, float depth) {
 }
 
 void DirectWritePixel(Canvas* c, Tuple3 color, unsigned location, float depth) {
-    if (depth <= c->depth_buffer[location]) {
+    if (IsVisible(c, location, depth)) {
         c->buffer[location] = color;
         c->depth_buffer[location] = depth;
     }
+}
+
+bool IsVisible(Canvas* c, unsigned location, float depth) {
+    return depth <= c->depth_buffer[location];
 }
 
 void WriteToPPM(Canvas* c, const char* filename) {

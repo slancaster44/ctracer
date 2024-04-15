@@ -41,7 +41,7 @@ bool IsInShadow(Scene *s, Tuple3 location) {
     for (unsigned i = 0; i < intersections.length; i++){
         Intersection* this_intersection = Index(&intersections, i);
         if (this_intersection->ray_times[0] < (distance - EQUALITY_EPSILON) && 
-        this_intersection->ray_times[0] > EQUALITY_EPSILON) {
+            this_intersection->ray_times[0] > EQUALITY_EPSILON) {
             DeconstructSet(&intersections);
             return true;
         }
@@ -63,11 +63,13 @@ void IntersectScene(Scene* s, Ray r, Set* intersection_set) {
     }
 }
 
-void RenderSceneSection(Scene* s, 
+void RenderSceneSection (
+    Scene* s, 
     Canvas* c,
+    Shader shader,
     unsigned start, unsigned end,
-    unsigned canvas_width) 
-{
+    unsigned canvas_width
+) {
     for (unsigned i = start; i < end; i++) {
         unsigned x = i % canvas_width;
         unsigned y = (i - x) / canvas_width;
@@ -85,6 +87,11 @@ void RenderSceneSection(Scene* s,
             }
             
             Tuple3 pos = RayPosition(this_intersection->ray, this_intersection->ray_times[0]);
+            float depth = TupleMagnitude(TupleSubtract(r.origin, pos));
+            if (!IsVisible(c, i, depth)) {
+                continue;
+            }
+           
             Tuple3 eyev = TupleNegate(r.direction);
             Tuple3 normal = NormalAt(this_intersection->shape_ptr, pos);
             
@@ -92,18 +99,18 @@ void RenderSceneSection(Scene* s,
                 normal = TupleNegate(normal);
             }
 
-            ShadingJob lj = {
-                .material = this_intersection->shape_ptr->material,
+            Shape* sp = this_intersection->shape_ptr;
+
+            ShadingJob sj = {
+                .material = sp->material,
                 .light = s->light,
                 .position = pos,
                 .eye_vector = eyev,
                 .surface_normal = normal,
             	.shadow = IsInShadow(s, pos),
-	    };
+	        };
 
-            Tuple3 color = PhongShading(lj);
-            float depth = TupleMagnitude(TupleSubtract(r.origin, pos));
-
+            Tuple3 color = shader(sj);
             DirectWritePixel(c, color, i, depth);
         }
 
@@ -112,7 +119,7 @@ void RenderSceneSection(Scene* s,
 }
 
 
-void RenderScene(Scene* s, Canvas* c) {
+void RenderScene(Scene* s, Canvas* c, Shader shader) {
     unsigned canvas_size = (c->canvas_height * c->canvas_width);
     unsigned chunk_size = canvas_size / (unsigned) get_nprocs();
     unsigned num_chunks = canvas_size / chunk_size;
@@ -126,11 +133,12 @@ void RenderScene(Scene* s, Canvas* c) {
 
         int pid = fork();
         if (pid == 0) { //Child renders its section
-            RenderSceneSection(s, c, cur_chunk_start, cur_chunk_end, c->canvas_width);
+            RenderSceneSection(s, c, shader, cur_chunk_start, cur_chunk_end, c->canvas_width);
             exit(0);
+        } else {
+            AppendValue(&pids, &pid); //Parent keeps track of child
         }
 
-        AppendValue(&pids, &pid);
     }
 
     for (unsigned pid_index = 0; pid_index < pids.length; pid_index++) {
@@ -143,6 +151,6 @@ void RenderScene(Scene* s, Canvas* c) {
 
     unsigned leftovers_start = num_chunks * chunk_size;
     if (leftovers_start != canvas_size) {
-        RenderSceneSection(s, c, leftovers_start, canvas_size + 1, c->canvas_width);
+        RenderSceneSection(s, c, shader, leftovers_start, canvas_size + 1, c->canvas_width);
     }
 }

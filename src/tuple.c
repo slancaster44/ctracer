@@ -79,8 +79,7 @@ float TupleMagnitude(Tuple3 t1) {
 }
 
 float TupleDotProduct(Tuple3 t1, Tuple3 t2) {
-    Tuple3 r2 = _mm_dp_ps(t1, t2, 0xff);
-    return r2[0];
+    return _mm_dp_ps(t1, t2, 0xff)[0];
 }
 
 Tuple3 TupleCrossProduct(Tuple3 t1, Tuple3 t2) {

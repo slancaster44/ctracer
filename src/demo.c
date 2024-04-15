@@ -108,7 +108,7 @@ void DemoSphereScene() {
     AddShape(&sc, s);
     AddShape(&sc, s2);
 
-    RenderScene(&sc, &c);
+    RenderScene(&sc, &c, PhongShading);
 
     WriteToPPM(&c, "sphere_scene.ppm");
 
@@ -138,7 +138,7 @@ void DemoPlane() {
     Canvas canvas;
     ConstructCanvas(&canvas, 800, 600);
 
-    RenderScene(&s, &canvas);
+    RenderScene(&s, &canvas, PhongShading);
     WriteToPPM(&canvas, "plane_scene.ppm");
 
     DeconstructCanvas(&canvas);

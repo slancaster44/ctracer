@@ -14,6 +14,9 @@ typedef struct {
     float shadow;
 } ShadingJob;
 
+//Take a shading job, and convert it to a color
+typedef Tuple3 (*Shader)(ShadingJob sj);
+
 Tuple3 PhongShading(ShadingJob lj);
 
 #endif
