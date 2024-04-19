@@ -1,15 +1,17 @@
 #include <math.h>
 
 #include "shading.h"
+#include "scene.h"
+#include "equality.h"
 #define BLACK NewColor(0, 0, 0, 0)
 
+static int recursion_count = 0;
+
 Tuple3 PhongShading(ShadingJob sj) {
+
+
     Tuple3 effective_color = TupleMultiply(sj.material.color, sj.light.color);
     Tuple3 ambient = TupleScalarMultiply(effective_color, sj.material.ambient_reflection);
-
-    if (sj.shadow) {
-        return ambient; //Multiply this by inverse of sj.shadow as a float?
-    }
 
     Tuple3 diffuse;
     Tuple3 specular;
@@ -17,8 +19,7 @@ Tuple3 PhongShading(ShadingJob sj) {
     Tuple3 light_pos_vector = TupleNormalize(TupleSubtract(sj.light.origin, sj.position));
     float light_dot_normal = TupleDotProduct(light_pos_vector, sj.surface_normal); //Measure of light to surface angle
 
-
-    if (light_dot_normal < 0.0) {
+    if (light_dot_normal < 0.0 || sj.shadow) {
         diffuse = BLACK;
         specular = BLACK;
 
@@ -36,7 +37,20 @@ Tuple3 PhongShading(ShadingJob sj) {
             specular = TupleScalarMultiply(sj.light.color, sj.material.specular_reflection * factor);
         }
     }
-    
-    return TupleAdd(ambient, TupleAdd(diffuse, specular));
+
+    Tuple3 general_reflection = BLACK;
+    if (!FloatEquality(0, sj.material.general_reflection) && sj.scene_ptr != NULL) {
+        recursion_count++;
+        if (recursion_count > (1 << 16)) {
+            recursion_count = 0;
+        } else {
+            Tuple3 over_point = TupleAdd(sj.position, TupleScalarMultiply(sj.surface_normal, EQUALITY_EPSILON));
+            general_reflection = ColorFor(sj.scene_ptr, NewRay(over_point, sj.reflection_vector), PhongShading);
+            general_reflection = TupleScalarMultiply(general_reflection, sj.material.general_reflection);
+        }
+
+    }
+
+    return TupleAdd(general_reflection, TupleAdd(ambient, TupleAdd(diffuse, specular)));
 }
 

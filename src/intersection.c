@@ -62,21 +62,29 @@ Intersection IntersectSphere(Shape* s, Ray r) {
         result.ray_times[1] = (-b + d_sqrt) / a_2;
     }
 
+    float max = fmaxf(result.ray_times[0], result.ray_times[1]);
+    float min = fminf(result.ray_times[0], result.ray_times[1]);
+    result.ray_times[0] = min;
+    result.ray_times[1] = max;
+
     return result;
 }
 
 Intersection Intersect(Shape* s, Ray r) {
+    Intersection result;
+
     switch (s->type) {
     case SPHERE:
-        return IntersectSphere(s, r);
+        result = IntersectSphere(s, r);
+        break;
     case PLANE:
-        return IntersectPlane(s, r);
+        result = IntersectPlane(s, r);
+        break;
     default:
         printf("Cannot intersect shape of type '%d'\n", s->type);
         exit(1);
     }
 
-    Intersection result = NewIntersection(s, r);
     return result;
 }
 

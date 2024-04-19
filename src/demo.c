@@ -24,7 +24,7 @@ void DemoCanvas() {
     ConstructCanvas(&c, 900, 550);
 
     while (start[1] > 0) {
-        WritePixel(&c, NewColor(255, 255, 255, 255), (int) start[0], (int) start[1], 0);
+        WritePixel(&c, NewColor(255, 255, 255, 255), (int) start[0], (int) start[1]);
         
         start = TupleAdd(start, velocity);
         velocity = TupleAdd(velocity, gravity);
@@ -72,7 +72,7 @@ void DemoShadeSphere() {
                 };
 
                 Tuple3 color = PhongShading(sj);
-                WritePixel(&c, color, x, y, 0);
+                WritePixel(&c, color, x, y);
             }
         }
     }
@@ -118,22 +118,28 @@ void DemoSphereScene() {
 
 void DemoPlane() {
     Camera c = NewCamera(800, 600, 3.1415 / 3);
-    CameraApplyTransformation(&c, ViewMatrix(NewPnt3(0, 25, 600), NewPnt3(0, 0, 0), NewVec3(0, 1, 0)));
+    CameraApplyTransformation(&c, ViewMatrix(NewPnt3(0, 100, 250), NewPnt3(0, 0, 0), NewVec3(0, 1, 0)));
 
-
-    Light l = NewLight( NewPnt3(1000, 2000, 2000));
+    Light l = NewLight( NewPnt3(750, 1200, 2000));
 
     Scene s;
     ConstructScene(&s, c, l);
+   
+    Shape sphere2 = NewSphere(NewPnt3(-0.5, 40, 100), 50);
+    AssignDefaultTestMaterial(&(sphere2.material));
+    sphere2.material.color = NewColor(0, 0, 255, 255);
+    sphere2.material.general_reflection = 0.5;
+    AddShape(&s, sphere2);
+
+    Shape sphere = NewSphere(NewPnt3(0, 100, 175), 20);
+    AssignDefaultTestMaterial(&(sphere.material));
+    sphere.material.color = NewColor(0, 255, 128, 255);
+    AddShape(&s, sphere);
 
     Shape plane = NewPlane(NewPnt3(0, -10, 0), NewVec3(0, 1, 0));
     AssignDefaultTestMaterial(&(plane.material));
     AddShape(&s, plane);
 
-    Shape sphere = NewSphere(NewPnt3(0, 0.6, 5), 50);
-    AssignDefaultTestMaterial(&(sphere.material));
-    sphere.material.color = NewColor(0, 255, 128, 255);
-    AddShape(&s, sphere);
 
     Canvas canvas;
     ConstructCanvas(&canvas, 800, 600);

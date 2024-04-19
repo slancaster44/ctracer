@@ -9,6 +9,7 @@ typedef struct {
     float diffuse_reflection;
     float specular_reflection;
     float shininess;
+    float general_reflection;
 } Material;
 
 Material NewMaterial(Tuple3 color);

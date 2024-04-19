@@ -8,19 +8,16 @@ test:
 	clear
 	$(CC) $(CFLAGS) -g -Wpedantic -Wall -Wconversion -Wswitch-enum $(INCLUDE) $(SOURCE) src/test.c $(LDFLAGS)
 	./tracer
-	rm -r ./tracer 
 
 benchmark:
 	clear
 	$(CC) $(CFLAGS) $(INCLUDE) $(SOURCE) src/benchmark.c $(LDFLAGS)
 	./tracer
-	rm -r ./tracer
 
 demo:
 	clear
 	$(CC) $(CFLAGS) -g $(INCLUDE) $(SOURCE) src/demo.c $(LDFLAGS)
 	./tracer
-	rm -r ./tracer
 
 profile:
 	clear

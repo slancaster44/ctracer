@@ -7,36 +7,19 @@ void ConstructCanvas(Canvas* c, unsigned width, unsigned height) {
     c->buffer = (Tuple3*) shmalloc(width * height * sizeof(Tuple3));
     c->canvas_width = width;
     c->canvas_height = height;
-
-    c->depth_buffer = (float*) shmalloc(width * height * sizeof(float));
-    for (int i = 0; i < width * height; i++) {
-        c->depth_buffer[i] = FLT_MAX;
-    }
 }
 
 void DeconstructCanvas(Canvas* c) {
     shfree(c->buffer, c->canvas_width * c->canvas_height * sizeof(Tuple3));
-    shfree(c->depth_buffer, c->canvas_width * c->canvas_height * sizeof(float));
 }
 
-void WritePixel(Canvas* c, Tuple3 color, unsigned x, unsigned y, float depth) {
+void WritePixel(Canvas* c, Tuple3 color, unsigned x, unsigned y) {
     unsigned location = (c->canvas_width * y) + x;
- 
-    if (depth <= c->depth_buffer[location]) {
-        c->buffer[location] = color;
-        c->depth_buffer[location] = depth;
-    }
+    DirectWritePixel(c, color, location);
 }
 
-void DirectWritePixel(Canvas* c, Tuple3 color, unsigned location, float depth) {
-    if (IsVisible(c, location, depth)) {
-        c->buffer[location] = color;
-        c->depth_buffer[location] = depth;
-    }
-}
-
-bool IsVisible(Canvas* c, unsigned location, float depth) {
-    return depth <= c->depth_buffer[location];
+void DirectWritePixel(Canvas* c, Tuple3 color, unsigned location) {
+    c->buffer[location] = color;
 }
 
 void WriteToPPM(Canvas* c, const char* filename) {

@@ -10,7 +10,6 @@
 
 typedef struct {
     Tuple3* buffer;
-    float* depth_buffer;
     unsigned canvas_width;
     unsigned canvas_height;
 } Canvas;
@@ -18,9 +17,8 @@ typedef struct {
 
 void ConstructCanvas(Canvas* c, unsigned width, unsigned height);
 void DeconstructCanvas(Canvas* c);
-void WritePixel(Canvas* c, Tuple3 color, unsigned x, unsigned y, float depth);
-void DirectWritePixel(Canvas* c, Tuple3 color, unsigned i, float depth);
+void WritePixel(Canvas* c, Tuple3 color, unsigned x, unsigned y);
+void DirectWritePixel(Canvas* c, Tuple3 color, unsigned i);
 void WriteToPPM(Canvas* c, const char* filename);
-bool IsVisible(Canvas* c, unsigned location, float depth);
 
 #endif

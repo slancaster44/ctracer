@@ -203,7 +203,7 @@ void TestShadeSphere() {
                 };
 
                 Tuple3 color = PhongShading(sj);
-                WritePixel(&c, color, x, y, 0);
+                WritePixel(&c, color, x, y);
             }
         }
     }

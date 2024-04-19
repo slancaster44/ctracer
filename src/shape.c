@@ -10,11 +10,11 @@ Shape NewSphere(Tuple3 cp, float radius) {
     s.type = SPHERE;
 
     Matrix4x4 center_point_translation = TranslationMatrix(cp[0], cp[1], cp[2]);
-    Matrix4x4 radius_scaling = ScalingMatrix(radius, radius, radius);
+    Tuple3 radius_vector = TupleScalarMultiply(NewVec3(1, 1, 1), radius);
+    Matrix4x4 radius_scaling = ScalingMatrix(radius_vector[0], radius_vector[1], radius_vector[2]);
 
-    s.transformation = MatrixMultiply(radius_scaling, center_point_translation);
+    s.transformation = MatrixMultiply(center_point_translation, radius_scaling);
     s.inverse_transform = MatrixInvert(s.transformation);
-
 
     return s;
 }

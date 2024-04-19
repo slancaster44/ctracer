@@ -682,6 +682,41 @@ void ConstructDefaultScene(Scene* s) {
     AddShape(s, s2);
 }
 
+Tuple3 ReflectionVectorTestHandler(ShadingJob sj) {
+    Tuple3 expected = NewVec3(0, sqrtf(2.0f) / 2, sqrtf(2.0f) / 2);
+    Tuple3 result = sj.reflection_vector;
+
+    TEST(TupleFuzzyEqual(expected, result), "Reflection vector calculation");
+    return  NewTuple3(0, 0, 0, 0);
+}
+
+void TestReflection() {
+    Shape plane = NewPlane(NewPnt3(0, 0, 0), NewVec3(0, 1, 0));
+    Ray r = NewRay(NewPnt3(0, 1, -1), NewVec3(0, -sqrtf(2.0f) / 2, sqrtf(2.0f) / 2));
+
+    Scene s;
+    Camera c;
+    Light l = NewLight(NewPnt3(-10, 10, -10));
+    ConstructScene(&s, c, l);
+
+    AddShape(&s, plane);
+    ColorFor(&s, r, ReflectionVectorTestHandler);
+
+    //Reflective surface
+    Scene reflective_scene;
+    ConstructDefaultScene(&reflective_scene);
+
+    Shape new_plane = NewPlane(NewPnt3(0, 0, 0), NewVec3(0, 1, 0));
+    new_plane.material = NewMaterial(NewColor(255, 255, 255, 255));
+    new_plane.material.general_reflection = 0.5;
+    ApplyTransformation(&new_plane, TranslationMatrix(0, -1, 0));
+    AddShape(&reflective_scene, new_plane);
+
+    Ray r2 = NewRay(NewPnt3(0, 0, -3), NewVec3(0, -sqrtf(2.0f) / 2, sqrtf(2.0f) / 2));
+    Tuple3 result = ColorFor(&reflective_scene, r2, PhongShading);
+    PrintTuple(result);
+}
+
 void TestScene() {
     Scene s;
     ConstructDefaultScene(&s);
@@ -954,6 +989,8 @@ int main() {
     TestShadow();
 
     TestPlane();
+
+    TestReflection();
 
     printf("Test(s) Passed: %d\nTests(s) Failed: %d\n", num_passed, num_failed);
 

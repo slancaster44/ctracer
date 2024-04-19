@@ -7,6 +7,7 @@
 #include <sys/sysinfo.h>
 #include <sys/wait.h>
 #include <unistd.h>
+#include <float.h>
 
 void ConstructScene(Scene* s, Camera c, Light l) {
     s->camera = c;
@@ -45,7 +46,6 @@ bool IsInShadow(Scene *s, Tuple3 location) {
             DeconstructSet(&intersections);
             return true;
         }
-
     }
 
     DeconstructSet(&intersections);
@@ -55,10 +55,10 @@ bool IsInShadow(Scene *s, Tuple3 location) {
 void IntersectScene(Scene* s, Ray r, Set* intersection_set) {
     for (unsigned i = 0; i < s->shapes.length; i++) {
         Shape* this_shape = Index(&s->shapes, i);
-        Intersection i = Intersect(this_shape, r);
+        Intersection intersection = Intersect(this_shape, r);
         
-        if (i.count > 0) {
-            AppendValue(intersection_set, &i);
+        if (intersection.count > 0) {
+            AppendValue(intersection_set, &intersection);
         }
     }
 }
@@ -75,47 +75,59 @@ void RenderSceneSection (
         unsigned y = (i - x) / canvas_width;
 
         Ray r = RayForPixel(&s->camera, x, y);
-
-        Set intersections;
-        ConstructSet(&intersections, sizeof(Intersection));
-        IntersectScene(s, r, &intersections); 
-
-        for (unsigned j = 0; j < intersections.length; j++) {
-            Intersection* this_intersection = Index(&intersections, j);
-            if (this_intersection->ray_times[0] < 0) {
-                continue;
-            }
-            
-            Tuple3 pos = RayPosition(this_intersection->ray, this_intersection->ray_times[0]);
-            float depth = TupleMagnitude(TupleSubtract(r.origin, pos));
-            if (!IsVisible(c, i, depth)) {
-                continue;
-            }
-           
-            Tuple3 eyev = TupleNegate(r.direction);
-            Tuple3 normal = NormalAt(this_intersection->shape_ptr, pos);
-            
-            if (TupleDotProduct(normal, eyev) < 0) {
-                normal = TupleNegate(normal);
-            }
-
-            Shape* sp = this_intersection->shape_ptr;
-
-            ShadingJob sj = {
-                .material = sp->material,
-                .light = s->light,
-                .position = pos,
-                .eye_vector = eyev,
-                .surface_normal = normal,
-            	.shadow = IsInShadow(s, pos),
-	        };
-
-            Tuple3 color = shader(sj);
-            DirectWritePixel(c, color, i, depth);
-        }
-
-        DeconstructSet(&intersections);
+        Tuple3 color = ColorFor(s, r, shader);
+        DirectWritePixel(c, color, i);
     }
+}
+
+Tuple3 ColorFor(Scene *s, Ray r, Shader shader) {
+    Set intersections;
+    ConstructSet(&intersections, sizeof(Intersection));
+    IntersectScene(s, r, &intersections); 
+    
+    float curDepth = FLT_MAX;
+    Tuple3 curColor = NewColor(0, 0, 0, 0);
+
+    Tuple3 eyev = TupleNegate(r.direction);
+
+
+    for (unsigned j = 0; j < intersections.length; j++) {
+        Intersection* this_intersection = Index(&intersections, j);
+        if (this_intersection->ray_times[0] < 0) {
+            continue;
+        }
+        
+        Tuple3 pos = RayPosition(this_intersection->ray, this_intersection->ray_times[0]);
+        float depth = TupleMagnitude(TupleSubtract(r.origin, pos));
+        if (depth > curDepth) {
+            continue;
+        } else {
+            curDepth = depth;
+        }
+        
+        Tuple3 normal = NormalAt(this_intersection->shape_ptr, pos);
+        if (TupleDotProduct(normal, eyev) < 0) {
+            normal = TupleNegate(normal);
+        }
+        
+        Tuple3 reflectv = TupleReflect(r.direction, normal);
+
+        ShadingJob sj = {
+            .material = this_intersection->shape_ptr->material,
+            .light = s->light,
+            .position = pos,
+            .eye_vector = eyev,
+            .surface_normal = normal,
+            .reflection_vector = reflectv,
+            .shadow = IsInShadow(s, pos),
+            .scene_ptr = s
+        };
+
+        curColor = shader(sj);
+    }
+
+    DeconstructSet(&intersections);
+    return curColor;
 }
 
 

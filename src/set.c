@@ -7,6 +7,8 @@
 
 void ConstructSet(Set* s, unsigned data_width) {
     s->data = malloc(data_width * SET_DEFAULT_CAPACITY);
+    memset(s->data, 0, data_width * SET_DEFAULT_CAPACITY);
+
     s->length = 0;
     s->capacity = SET_DEFAULT_CAPACITY;
     s->data_width = data_width;
