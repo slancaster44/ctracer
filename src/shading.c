@@ -41,11 +41,10 @@ Tuple3 PhongShading(ShadingJob sj) {
     Tuple3 general_reflection = BLACK;
     if (!FloatEquality(0, sj.material.general_reflection) && sj.scene_ptr != NULL) {
         recursion_count++;
-        if (recursion_count > (1 << 16)) {
+        if (recursion_count > (1 << 3)) {
             recursion_count = 0;
         } else {
-            Tuple3 over_point = TupleAdd(sj.position, TupleScalarMultiply(sj.surface_normal, EQUALITY_EPSILON));
-            general_reflection = ColorFor(sj.scene_ptr, NewRay(over_point, sj.reflection_vector), PhongShading);
+            general_reflection = ColorFor(sj.scene_ptr, NewRay(sj.position, sj.reflection_vector));
             general_reflection = TupleScalarMultiply(general_reflection, sj.material.general_reflection);
         }
 

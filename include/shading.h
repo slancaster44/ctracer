@@ -3,10 +3,10 @@
 
 #include "tuple.h"
 #include "light.h"
-#include "material.h"
 #include "scene.h"
+#include "material.h"
 
-typedef struct {
+typedef struct _ShadingJob {
     Material material;
     Light light;
     Tuple3 position;
@@ -18,10 +18,6 @@ typedef struct {
 } ShadingJob;
 
 //Take a shading job, and convert it to a color
-typedef Tuple3 (*Shader)(ShadingJob sj);
 Tuple3 PhongShading(ShadingJob lj);
-Tuple3 ColorFor(Scene *s, Ray r, Shader sh);
-void RenderScene(Scene* s, Canvas* c, Shader sh);
-
 
 #endif

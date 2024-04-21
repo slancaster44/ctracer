@@ -4,6 +4,7 @@
 
 #include <stdio.h>
 #include <math.h>
+#include <float.h>
 #include <string.h>
 
 Intersection NewIntersection(Shape* s, Ray r) {
@@ -51,6 +52,7 @@ Intersection IntersectSphere(Shape* s, Ray r) {
     } else if (discriminant == 0) {
         result.count = 1;
         result.ray_times[0] = -b / (a * 2);
+        result.ray_times[1] = FLT_MAX; //The results get sorted below, need this sorted last
 
     } else {
         result.count = 2;

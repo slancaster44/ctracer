@@ -22,4 +22,8 @@ unsigned long AddShape(Scene* s, Shape sp);
 void IntersectScene(Scene* s, Ray r, Set* intersection_set);
 bool IsInShadow(Scene *s, Tuple3 location);
 
+void ReadScene(Scene* s, const char* filename);
+Tuple3 ColorFor(Scene *s, Ray r);
+void RenderScene(Scene* s, Canvas* c);
+
 #endif

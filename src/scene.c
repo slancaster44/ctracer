@@ -2,6 +2,7 @@
 #include "intersection.h"
 #include "shading.h"
 #include "equality.h"
+#include "material.h"
 
 #include <string.h>
 #include <sys/sysinfo.h>
@@ -66,7 +67,6 @@ void IntersectScene(Scene* s, Ray r, Set* intersection_set) {
 void RenderSceneSection (
     Scene* s, 
     Canvas* c,
-    Shader shader,
     unsigned start, unsigned end,
     unsigned canvas_width
 ) {
@@ -75,12 +75,12 @@ void RenderSceneSection (
         unsigned y = (i - x) / canvas_width;
 
         Ray r = RayForPixel(&s->camera, x, y);
-        Tuple3 color = ColorFor(s, r, shader);
+        Tuple3 color = ColorFor(s, r);
         DirectWritePixel(c, color, i);
     }
 }
 
-Tuple3 ColorFor(Scene *s, Ray r, Shader shader) {
+Tuple3 ColorFor(Scene *s, Ray r) {
     Set intersections;
     ConstructSet(&intersections, sizeof(Intersection));
     IntersectScene(s, r, &intersections); 
@@ -123,7 +123,7 @@ Tuple3 ColorFor(Scene *s, Ray r, Shader shader) {
             .scene_ptr = s
         };
 
-        curColor = shader(sj);
+        curColor = sj.material.shader(sj);
     }
 
     DeconstructSet(&intersections);
@@ -131,7 +131,7 @@ Tuple3 ColorFor(Scene *s, Ray r, Shader shader) {
 }
 
 
-void RenderScene(Scene* s, Canvas* c, Shader shader) {
+void RenderScene(Scene* s, Canvas* c) {
     unsigned canvas_size = (c->canvas_height * c->canvas_width);
     unsigned chunk_size = canvas_size / (unsigned) get_nprocs();
     unsigned num_chunks = canvas_size / chunk_size;
@@ -145,7 +145,7 @@ void RenderScene(Scene* s, Canvas* c, Shader shader) {
 
         int pid = fork();
         if (pid == 0) { //Child renders its section
-            RenderSceneSection(s, c, shader, cur_chunk_start, cur_chunk_end, c->canvas_width);
+            RenderSceneSection(s, c, cur_chunk_start, cur_chunk_end, c->canvas_width);
             exit(0);
         } else {
             AppendValue(&pids, &pid); //Parent keeps track of child
@@ -163,6 +163,6 @@ void RenderScene(Scene* s, Canvas* c, Shader shader) {
 
     unsigned leftovers_start = num_chunks * chunk_size;
     if (leftovers_start != canvas_size) {
-        RenderSceneSection(s, c, shader, leftovers_start, canvas_size + 1, c->canvas_width);
+        RenderSceneSection(s, c, leftovers_start, canvas_size + 1, c->canvas_width);
     }
 }

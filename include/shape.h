@@ -15,9 +15,7 @@ typedef enum {
 typedef struct Shape {
     Matrix4x4 transformation;
     Matrix4x4 inverse_transform;
-
     Material material;
-
     SHAPE_TYPE type;
 } Shape;
 

@@ -1,0 +1,89 @@
+{
+    "light": {
+        "origin": [-10, 10, -10],
+        "color": [1, 1, 1]
+    },
+    "camera": {
+        "width": 3840,
+        "height": 2160,
+        "fov": 1.047,
+        "from": [0, 1.5, -5],
+        "to": [0, 1, 0],
+        "up": [0, 1, 0]
+    },
+    "shapes": [
+        {
+            "type": "sphere",
+            "transform": [
+                [0.33, 0, 0, -1.4], 
+                [0, 0.33, 0, 0.33], 
+                [0, 0, 0.33, -0.75],
+                [0, 0, 0, 1]],
+            "material": {
+                "shader": "phong",
+                "color": [0.635, 0, 1],
+                "ambient": 0.1,
+                "diffuse": 0.9,
+                "specular": 0.9,
+                "shininess": 200,
+                "general": 0.0
+            }
+        },
+
+        {
+            "type": "sphere",
+            "transform": [
+                [1, 0, 0, -0.5], 
+                [0, 1, 0, 1], 
+                [-0, 0, 1, 0.5], 
+                [0, 0, 0, 1]],
+            "material": {
+                "shader": "phong",
+                "color": [1, 0, 0.625],
+                "ambient": 0.1,
+                "diffuse": 0.9,
+                "specular": 1.8,
+                "shininess": 200, 
+                "general": 0.0
+            }
+        },
+
+        {
+            "type": "sphere",
+            "transform": [
+                [0.5, 0, 0, 1.5],
+                [0, 0.5, 0, 0.5],
+                [0, 0, 0.5, -0.5],
+                [0, 0, 0, 1]
+            ],
+            "material": {
+                "shader": "phong",
+                "color": [0, 0.635, 1],
+                "ambient": 0.1,
+                "diffuse": 0.9,
+                "specular": 1.8,
+                "shininess": 200, 
+                "general": 0.0
+            }
+        },
+
+        {
+            "type": "plane",
+            "transform": [
+                [1, 0, 0, 0],
+                [0, 1, 0, 0],
+                [0, 0, 1, 0],
+                [0, 0, 0, 1]
+            ],
+            "material": {
+                "shader": "phong",
+                "color": [0.5, 0.345, 0.45],
+                "specular": 0,
+                "ambient": 0.1,
+                "diffuse": 0.9,
+                "shininess": 200, 
+                "general": 0.0
+            }
+        }
+    ]
+}

@@ -693,6 +693,7 @@ Tuple3 ReflectionVectorTestHandler(ShadingJob sj) {
 void TestReflection() {
     Shape plane = NewPlane(NewPnt3(0, 0, 0), NewVec3(0, 1, 0));
     Ray r = NewRay(NewPnt3(0, 1, -1), NewVec3(0, -sqrtf(2.0f) / 2, sqrtf(2.0f) / 2));
+    plane.material.shader = ReflectionVectorTestHandler;
 
     Scene s;
     Camera c;
@@ -700,7 +701,7 @@ void TestReflection() {
     ConstructScene(&s, c, l);
 
     AddShape(&s, plane);
-    ColorFor(&s, r, ReflectionVectorTestHandler);
+    ColorFor(&s, r);
 
     //Reflective surface
     Scene reflective_scene;
@@ -713,7 +714,7 @@ void TestReflection() {
     AddShape(&reflective_scene, new_plane);
 
     Ray r2 = NewRay(NewPnt3(0, 0, -3), NewVec3(0, -sqrtf(2.0f) / 2, sqrtf(2.0f) / 2));
-    Tuple3 result = ColorFor(&reflective_scene, r2, PhongShading);
+    Tuple3 result = ColorFor(&reflective_scene, r2);
     PrintTuple(result);
 }
 
@@ -954,6 +955,44 @@ void TestPlane() {
     TEST(FloatEquality(1.0, result.ray_times[0]), "Plane Intersection, Intersecting from above");
 }
 
+void TestSceneReading() {
+    Scene s;
+    ReadScene(&s, "./scenes/three_spheres.json");
+
+    TEST(s.camera.width == 3840, "Reading json, camera width");
+    TEST(s.camera.height == 2160, "Reading json, camera height");
+    TEST(s.camera.fov == 1.047f, "Reading json, camera fov");
+    Matrix4x4 expected_camera_transform = ViewMatrix(NewPnt3(0, 1.5, -5), NewPnt3(0, 1, 0), NewVec3(0, 1, 0));
+    TEST(MatrixFuzzyEqual(expected_camera_transform, s.camera.view_transformation), "Reading json, camera transform");
+
+    TEST(TupleEqual(s.light.origin, NewPnt3(-10, 10, -10)), "Reading json, light origin");
+    TEST(TupleEqual(s.light.color, NewColor(255, 255, 255, 255)), "Reading json, light color");
+
+    Shape* s1 = Index(&s.shapes, 0);
+    TEST(s1->type == SPHERE, "Reading json, shape type");
+
+    Matrix4x4 s1_expected = {
+        .contents = {
+            {0.33f, 0, 0, -1.4f},
+            {0, 0.33f,  0, 0.33f},
+            {0, 0, 0.33f, -0.75f},
+            {0, 0, 0, 1.0f}
+        }
+    };
+    TEST(MatrixFuzzyEqual(s1_expected, s1->transformation), "Reading json, shape transformation");
+    TEST(MatrixFuzzyEqual(MatrixInvert(s1_expected), s1->inverse_transform), "Reading json, inverse transformation");
+    TEST(s.shapes.length == 4, "Reading json, shape list length");
+
+    TEST(FloatEquality(s1->material.ambient_reflection, 0.1f), "Reading json, ambient reflection");
+    TEST(FloatEquality(s1->material.diffuse_reflection, 0.9f), "Reading json, diffuse reflection");
+    TEST(FloatEquality(s1->material.specular_reflection, 0.9f), "Reading json, specular reflection");
+    TEST(s1->material.general_reflection == 0.0, "Reading json, general reflection");
+    TEST(s1->material.shininess == 200, "Reading json, material shininess");
+
+    TEST(TupleFuzzyEqual(NewPnt3(0.635f, 0, 1), s1->material.color), "Reading json, color");
+    TEST(PhongShading == s1->material.shader, "Reading json, shader function");
+}
+
 int main() {
     num_failed = 0;
     num_passed = 0;
@@ -987,10 +1026,10 @@ int main() {
     TestViewMatrix();
     TestCamera();
     TestShadow();
-
     TestPlane();
-
     TestReflection();
+
+    TestSceneReading();
 
     printf("Test(s) Passed: %d\nTests(s) Failed: %d\n", num_passed, num_failed);
 

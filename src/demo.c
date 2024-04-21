@@ -30,7 +30,7 @@ void DemoCanvas() {
         velocity = TupleAdd(velocity, gravity);
     }
 
-    WriteToPPM(&c, "canvas_test.ppm");
+    WriteToPPM(&c, "./renderings/canvas_test.ppm");
     DeconstructCanvas(&c);
 }
 
@@ -77,7 +77,7 @@ void DemoShadeSphere() {
         }
     }
 
-    WriteToPPM(&c, "sphere.ppm");
+    WriteToPPM(&c, "./renderings/sphere.ppm");
     DeconstructCanvas(&c);
 }
 
@@ -108,9 +108,9 @@ void DemoSphereScene() {
     AddShape(&sc, s);
     AddShape(&sc, s2);
 
-    RenderScene(&sc, &c, PhongShading);
+    RenderScene(&sc, &c);
 
-    WriteToPPM(&c, "sphere_scene.ppm");
+    WriteToPPM(&c, "./renderings/sphere_scene.ppm");
 
     DeconstructScene(&sc);
     DeconstructCanvas(&c);
@@ -144,8 +144,22 @@ void DemoPlane() {
     Canvas canvas;
     ConstructCanvas(&canvas, 800, 600);
 
-    RenderScene(&s, &canvas, PhongShading);
-    WriteToPPM(&canvas, "plane_scene.ppm");
+    RenderScene(&s, &canvas);
+    WriteToPPM(&canvas, "./renderings/plane_scene.ppm");
+
+    DeconstructCanvas(&canvas);
+    DeconstructScene(&s);
+}
+
+void DemoJsonScene() {
+    Scene s;
+    ReadScene(&s, "./scenes/three_spheres.json");
+
+    Canvas canvas;
+    ConstructCanvas(&canvas, s.camera.width, s.camera.height);
+
+    RenderScene(&s, &canvas);
+    WriteToPPM(&canvas, "./renderings/three_spheres.ppm");
 
     DeconstructCanvas(&canvas);
     DeconstructScene(&s);
@@ -156,4 +170,5 @@ int main() {
     DemoShadeSphere();
     DemoSphereScene();
     DemoPlane();
+    DemoJsonScene();
 }
