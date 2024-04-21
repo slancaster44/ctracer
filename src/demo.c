@@ -1,8 +1,9 @@
 #include "tuple.h"
 #include "canvas.h"
 #include "scene.h"
+#include "material.h"
+#include "shape.h"
 #include "intersection.h"
-#include "shading.h"
 
 #include <math.h>
 
@@ -31,53 +32,6 @@ void DemoCanvas() {
     }
 
     WriteToPPM(&c, "./renderings/canvas_test.ppm");
-    DeconstructCanvas(&c);
-}
-
-void DemoShadeSphere() {
-    Material m;
-    AssignDefaultTestMaterial(&m);
-    m.color = NewColor(0, 100, 200, 255);
-
-    Light l;
-    l.origin = NewPnt3(-200, -200, -400);
-    l.color = NewColor(255, 255, 255, 255);
-    
-    Canvas c;
-    ConstructCanvas(&c, 800, 600);
-
-    Shape s = NewSphere(NewPnt3(0, 0, 0), 250); 
-    s.material = m;
-
-    Ray r;
-    r.direction = NewVec3(0, 0, 1);
-
-    for (int x = 0; x < 800; x++) {
-        for (int y = 0; y < 600; y++) {
-            r.origin = NewPnt3(x-400, y - 300, -200);
-            Intersection i = Intersect(&s, r);
-
-            if (i.count > 0) {
-
-                Tuple3 pos = RayPosition(r, i.ray_times[0]);
-                Tuple3 norm = NormalAt(&s, pos);
-                Tuple3 eyev = TupleNegate(r.direction);
-
-                ShadingJob sj = {
-                    .material = s.material,
-                    .light = l,
-                    .position = pos,
-                    .eye_vector = eyev,
-                    .surface_normal = norm,
-                };
-
-                Tuple3 color = PhongShading(sj);
-                WritePixel(&c, color, x, y);
-            }
-        }
-    }
-
-    WriteToPPM(&c, "./renderings/sphere.ppm");
     DeconstructCanvas(&c);
 }
 
@@ -167,7 +121,6 @@ void DemoJsonScene() {
 
 int main() {
     DemoCanvas();
-    DemoShadeSphere();
     DemoSphereScene();
     DemoPlane();
     DemoJsonScene();

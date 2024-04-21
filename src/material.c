@@ -1,5 +1,4 @@
 #include "material.h"
-#include "shading.h"
 
 Material NewMaterial(Tuple3 color) {
     Material m;
@@ -9,7 +8,7 @@ Material NewMaterial(Tuple3 color) {
     m.specular_reflection = 0.9f;
     m.general_reflection = 0.0f;
     m.shininess = 200;
-    m.shader = PhongShading;
+    m.shader = PhongShader;
 
     return m;
 }

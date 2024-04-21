@@ -1,8 +1,8 @@
 #include "scene.h"
 #include "intersection.h"
-#include "shading.h"
 #include "equality.h"
 #include "material.h"
+#include "shape.h"
 
 #include <string.h>
 #include <sys/sysinfo.h>
@@ -88,9 +88,6 @@ Tuple3 ColorFor(Scene *s, Ray r) {
     float curDepth = FLT_MAX;
     Tuple3 curColor = NewColor(0, 0, 0, 0);
 
-    Tuple3 eyev = TupleNegate(r.direction);
-
-
     for (unsigned j = 0; j < intersections.length; j++) {
         Intersection* this_intersection = Index(&intersections, j);
         if (this_intersection->ray_times[0] < 0) {
@@ -105,25 +102,7 @@ Tuple3 ColorFor(Scene *s, Ray r) {
             curDepth = depth;
         }
         
-        Tuple3 normal = NormalAt(this_intersection->shape_ptr, pos);
-        if (TupleDotProduct(normal, eyev) < 0) {
-            normal = TupleNegate(normal);
-        }
-        
-        Tuple3 reflectv = TupleReflect(r.direction, normal);
-
-        ShadingJob sj = {
-            .material = this_intersection->shape_ptr->material,
-            .light = s->light,
-            .position = pos,
-            .eye_vector = eyev,
-            .surface_normal = normal,
-            .reflection_vector = reflectv,
-            .shadow = IsInShadow(s, pos),
-            .scene_ptr = s
-        };
-
-        curColor = sj.material.shader(sj);
+        curColor = this_intersection->shape_ptr->material.shader(s, this_intersection);
     }
 
     DeconstructSet(&intersections);

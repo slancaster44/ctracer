@@ -1,5 +1,7 @@
 #include "scene.h"
-#include "shading.h"
+#include "shape.h"
+#include "material.h"
+
 #include <stdio.h>
 #include <string.h>
 #include <cjson/cJSON.h>
@@ -175,7 +177,7 @@ void GetMaterial(Material* m, cJSON* json) {
     char* shader_name = cJSON_GetStringValue(shader_json);
     FatalDataCheck(shader_name, "Could get shader information");
     if (strncmp(shader_name, "phong", 5) == 0) {
-        m->shader = PhongShading;
+        m->shader = PhongShader;
     } else {
         printf("Unkown shader '%s'\n", shader_name);
         exit(1);

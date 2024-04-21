@@ -2,10 +2,10 @@
 #define INTERSECTION_H
 
 #include "ray.h"
-#include "shape.h"
 
 #define MAX_NUMBER_INTERSECTIONS 2
 
+typedef struct Shape Shape;
 typedef struct {
     Shape* shape_ptr;
     Ray ray;

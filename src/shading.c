@@ -1,55 +1,62 @@
 #include <math.h>
 
-#include "shading.h"
 #include "scene.h"
 #include "equality.h"
+#include "shape.h"
+#include "intersection.h"
 #define BLACK NewColor(0, 0, 0, 0)
 
 static int recursion_count = 0;
+Tuple3 PhongShader(Scene* s, Intersection* i) {
 
-Tuple3 PhongShading(ShadingJob sj) {
+    Tuple3 eyev = TupleNegate(i->ray.direction);
+    Tuple3 pos = RayPosition(i->ray, i->ray_times[0]);
+    Tuple3 normal = NormalAt(i->shape_ptr, pos);
+    if (TupleDotProduct(normal, eyev) < 0) {
+        normal = TupleNegate(normal);
+    }
+    Tuple3 reflectv = TupleReflect(i->ray.direction, normal);
+    Material material = i->shape_ptr->material;
 
-
-    Tuple3 effective_color = TupleMultiply(sj.material.color, sj.light.color);
-    Tuple3 ambient = TupleScalarMultiply(effective_color, sj.material.ambient_reflection);
+    Tuple3 effective_color = TupleMultiply(material.color, s->light.color);
+    Tuple3 ambient = TupleScalarMultiply(effective_color, material.ambient_reflection);
 
     Tuple3 diffuse;
     Tuple3 specular;
 
-    Tuple3 light_pos_vector = TupleNormalize(TupleSubtract(sj.light.origin, sj.position));
-    float light_dot_normal = TupleDotProduct(light_pos_vector, sj.surface_normal); //Measure of light to surface angle
+    Tuple3 light_pos_vector = TupleNormalize(TupleSubtract(s->light.origin, pos));
+    float light_dot_normal = TupleDotProduct(light_pos_vector, normal); //Measure of light to surface angle
 
-    if (light_dot_normal < 0.0 || sj.shadow) {
+    if (light_dot_normal < 0.0 || IsInShadow(s, pos)) {
         diffuse = BLACK;
         specular = BLACK;
 
     } else {
 
-        diffuse = TupleScalarMultiply(effective_color, sj.material.diffuse_reflection * light_dot_normal);
+        diffuse = TupleScalarMultiply(effective_color, material.diffuse_reflection * light_dot_normal);
 
-        Tuple3 reflect_vector = TupleReflect(TupleNegate(light_pos_vector), sj.surface_normal);
-        float reflect_dot_eye = TupleDotProduct(reflect_vector, sj.eye_vector);
+        Tuple3 reflect_vector = TupleReflect(TupleNegate(light_pos_vector), normal);
+        float reflect_dot_eye = TupleDotProduct(reflect_vector, eyev);
 
         if (reflect_dot_eye < 0.0) {
             specular = BLACK;
         } else {
-            float factor = powf(reflect_dot_eye, sj.material.shininess);
-            specular = TupleScalarMultiply(sj.light.color, sj.material.specular_reflection * factor);
+            float factor = powf(reflect_dot_eye, material.shininess);
+            specular = TupleScalarMultiply(s->light.color, material.specular_reflection * factor);
         }
     }
 
     Tuple3 general_reflection = BLACK;
-    if (!FloatEquality(0, sj.material.general_reflection) && sj.scene_ptr != NULL) {
+    if (!FloatEquality(0, material.general_reflection) && s != NULL) {
         recursion_count++;
         if (recursion_count > (1 << 3)) {
             recursion_count = 0;
         } else {
-            general_reflection = ColorFor(sj.scene_ptr, NewRay(sj.position, sj.reflection_vector));
-            general_reflection = TupleScalarMultiply(general_reflection, sj.material.general_reflection);
+            general_reflection = ColorFor(s, NewRay(pos, reflectv));
+            general_reflection = TupleScalarMultiply(general_reflection, material.general_reflection);
         }
 
     }
 
     return TupleAdd(general_reflection, TupleAdd(ambient, TupleAdd(diffuse, specular)));
 }
-

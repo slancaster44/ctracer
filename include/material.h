@@ -2,9 +2,11 @@
 #define MATERIAL_H
 
 #include "tuple.h"
+#include "intersection.h"
+#include "scene.h"
 
-typedef struct _ShadingJob ShadingJob;
-typedef Tuple3 (*Shader)(ShadingJob sj);
+typedef Tuple3 (*Shader)(Scene* s, Intersection* i);
+Tuple3 PhongShader(Scene* s, Intersection* i);
 
 typedef struct {
     Tuple3 color;

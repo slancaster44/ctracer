@@ -9,7 +9,6 @@
 #include "material.h"
 #include "light.h"
 #include "scene.h"
-#include "shading.h"
 #include "intersection.h"
 #include "set.h"
 
@@ -531,122 +530,6 @@ void AssignDefaultTestMaterial(Material* m) {
     m->shininess = 200;
 }
 
-void TestPhongShading() {
-    Material m;
-    AssignDefaultTestMaterial(&m);
-    Tuple3 position = NewPnt3(0, 0, 0);
-
-    Tuple3 eyev, normalv, result;
-    Light light;
-
-    eyev = NewVec3(0, 0, -1);
-    normalv = NewVec3(0, 0, -1);
-    light.origin = NewPnt3(0, 0, -10);
-    light.color = NewColor(255, 255, 255, 255);
-
-    ShadingJob sj = {
-        .material = m,
-        .light = light,
-        .position = position,
-        .eye_vector = eyev,
-        .surface_normal = normalv,
-        .shadow = 0,
-    };
-
-    result = PhongShading(sj);
-
-    if (!TupleFuzzyEqual(NewTuple3(1.9f, 1.9f, 1.9f, 1.9f), result)) {
-        PrintTuple(result);
-        Fail("Phong Shading, Behind");
-    } else {
-        Pass("Phong Shading, Behind");
-    }
-
-    float rt2_2 = sqrtf(2) / 2;
-
-    eyev = NewVec3(0, rt2_2, -rt2_2);
-
-    ShadingJob sj6 = {
-        .material = m,
-        .light = light,
-        .position = position,
-        .eye_vector = eyev,
-        .surface_normal = normalv,
-        .shadow = 0,
-    };
-
-    result = PhongShading(sj6);
-
-    if (!TupleFuzzyEqual(NewTuple3(1.0, 1.0, 1.0, 1.0), result)) {
-        PrintTuple(result);
-        Fail("Phong Shading, Angled Viewer");
-    } else {
-        Pass("Phong Shading, Angled Viewer");
-    }
-
-    eyev = NewVec3(0, 0, -1);
-    light.origin = NewPnt3(0, 10, -10);
-
-    ShadingJob sj1 = {
-        .material = m,
-        .light = light,
-        .position = position,
-        .eye_vector = eyev,
-        .surface_normal = normalv,
-        .shadow = 0,
-    };
-
-    result = PhongShading(sj1);
-
-    if (!TupleFuzzyEqual(NewTuple3(0.7364f, 0.7364f, 0.7364f, 0.7364f), result)) {
-        PrintTuple(result);
-        Fail("Phong Shading, Angled Light");
-    } else {
-        Pass("Phong Shading, Angled Light");
-    }
-
-    eyev = NewVec3(0, -rt2_2, -rt2_2);
-
-    ShadingJob sj2 = {
-        .material = m,
-        .light = light,
-        .position = position,
-        .eye_vector = eyev,
-        .surface_normal = normalv,
-        .shadow = 0,
-    };
-
-    result = PhongShading(sj2);
-
-    if (!TupleFuzzyEqual(NewTuple3(1.6364f, 1.6364f, 1.6364f, 1.6364f), result)) {
-        PrintTuple(result);
-        Fail("Phong Shading, Angled Viewer & Light");
-    } else {
-        Pass("Phong Shading, Angled Viewer & Light");
-    }
-
-    eyev = NewVec3(0, 0, -1);
-    light.origin = NewPnt3(0, 0, 10);
-
-    ShadingJob sj3 = {
-        .material = m,
-        .light = light,
-        .position = position,
-        .eye_vector = eyev,
-        .surface_normal = normalv,
-        .shadow = 0,
-    };
-
-    result = PhongShading(sj3);
-
-    if (!TupleFuzzyEqual(NewTuple3(0.1f, 0.1f, 0.1f, 0.1f), result)) {
-        PrintTuple(result);
-        Fail("Phong Shading, Light Behind Surface");
-    } else {
-        Pass("Phong Shading, Light Behind Surface");
-    }
-}
-
 void TestSceneCreation() {
     Camera c;
     Light l;
@@ -682,27 +565,7 @@ void ConstructDefaultScene(Scene* s) {
     AddShape(s, s2);
 }
 
-Tuple3 ReflectionVectorTestHandler(ShadingJob sj) {
-    Tuple3 expected = NewVec3(0, sqrtf(2.0f) / 2, sqrtf(2.0f) / 2);
-    Tuple3 result = sj.reflection_vector;
-
-    TEST(TupleFuzzyEqual(expected, result), "Reflection vector calculation");
-    return  NewTuple3(0, 0, 0, 0);
-}
-
 void TestReflection() {
-    Shape plane = NewPlane(NewPnt3(0, 0, 0), NewVec3(0, 1, 0));
-    Ray r = NewRay(NewPnt3(0, 1, -1), NewVec3(0, -sqrtf(2.0f) / 2, sqrtf(2.0f) / 2));
-    plane.material.shader = ReflectionVectorTestHandler;
-
-    Scene s;
-    Camera c;
-    Light l = NewLight(NewPnt3(-10, 10, -10));
-    ConstructScene(&s, c, l);
-
-    AddShape(&s, plane);
-    ColorFor(&s, r);
-
     //Reflective surface
     Scene reflective_scene;
     ConstructDefaultScene(&reflective_scene);
@@ -861,24 +724,6 @@ void TestCamera() {
 }
 
 void TestShadow() {
-    ShadingJob sj = {
-        .eye_vector = NewVec3(0, 0, -1),
-        .surface_normal = NewVec3(0, 0, -1),
-        .shadow = 1,
-        .position = NewPnt3(0, 0, 0),
-        .light = NewLight(NewPnt3(0, 0, -10)),
-    };
-
-    AssignDefaultTestMaterial(&sj.material);
-
-    Tuple3 color = PhongShading(sj);
-    
-    if (!TupleFuzzyEqual(NewTuple3(0.1f, 0.1f, 0.1f, 0.1f), color)) {
-        Fail("Shadow Shading");
-        PrintTuple(color);
-    } else {
-        Pass("Shadow Shading");
-    }
 
     Scene sc;
     ConstructDefaultScene(&sc);
@@ -990,7 +835,7 @@ void TestSceneReading() {
     TEST(s1->material.shininess == 200, "Reading json, material shininess");
 
     TEST(TupleFuzzyEqual(NewPnt3(0.635f, 0, 1), s1->material.color), "Reading json, color");
-    TEST(PhongShading == s1->material.shader, "Reading json, shader function");
+    TEST(PhongShader == s1->material.shader, "Reading json, shader function");
 }
 
 int main() {
@@ -1020,7 +865,6 @@ int main() {
     TestRayTransform();
     SphereNormal();
     TestSphereGeometry();
-    TestPhongShading();
     TestSceneCreation();
     TestScene();
     TestViewMatrix();

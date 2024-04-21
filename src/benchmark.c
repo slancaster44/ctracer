@@ -3,7 +3,6 @@
 
 #include "matrix.h"
 #include "shape.h"
-#include "shading.h"
 #include "light.h"
 #include "intersection.h"
 #include "canvas.h"
@@ -141,76 +140,6 @@ void AssignDefaultTestMaterial(Material* m) {
     m->shininess = 200;
 }
 
-void BenchmarkPhongShading() {
-    Material m;
-    AssignDefaultTestMaterial(&m);
-    Tuple3 position = NewPnt3(0, 0, 0);
-
-    Tuple3 eyev, normalv;
-    Light light;
-
-    eyev = NewVec3(0, 0, -1);
-    normalv = NewVec3(0, 0, -1);
-    light.origin = NewPnt3(0, 0, -10);
-    light.color = NewColor(255, 255, 255, 255);
-
-    ShadingJob sj = {
-        .material = m,
-        .light = light,
-        .position = position,
-        .eye_vector = eyev,
-        .surface_normal = normalv
-    };
-
-    BENCHMARK(PhongShading(sj), 1920, BENCHMARK_CYCLES);
-}
-
-void TestShadeSphere() {
-    Material m;
-    AssignDefaultTestMaterial(&m);
-    m.color = NewColor(255, 0, 128, 255);
-
-    Light l;
-    l.origin = NewPnt3(200, 200, -300);
-    l.color = NewColor(255, 255, 255, 255);
-    
-    Canvas c;
-    ConstructCanvas(&c, 800, 600);
-
-    Shape s = NewSphere(NewPnt3(0, 0, 0), 250); 
-    s.material = m;
-
-    Ray r;
-    r.direction = NewVec3(0, 0, 1);
-
-    for (int x = 0; x < 800; x++) {
-        for (int y = 0; y < 600; y++) {
-            r.origin = NewPnt3(x-400, y - 300, 0);
-            Intersection i = Intersect(&s, r);
-
-            if (i.count > 0) {
-
-                Tuple3 pos = RayPosition(r, i.ray_times[0]);
-                Tuple3 norm = NormalAt(&s, pos);
-                Tuple3 eyev = TupleSubtract(NewPnt3(0, 0, -1), pos);
-
-                ShadingJob sj = {
-                    .material = s.material,
-                    .light = l,
-                    .position = pos,
-                    .eye_vector = eyev,
-                    .surface_normal = norm,
-                };
-
-                Tuple3 color = PhongShading(sj);
-                WritePixel(&c, color, x, y);
-            }
-        }
-    }
-
-    DeconstructCanvas(&c);
-}
-
 void ConstructDefaultScene(Scene* s) {
     Camera c = NewCamera(1920, 1080, 3.14 / 4);
     CameraApplyTransformation(&c, ViewMatrix(NewPnt3(0, 0, -1200), NewPnt3(0, 0, 0), NewVec3(0, 1, 0)));
@@ -270,7 +199,7 @@ void DemoSphereScene() {
     AddShape(&sc, s);
     AddShape(&sc, s2);
 
-    RenderScene(&sc, &c, PhongShading);
+    RenderScene(&sc, &c);
 
     WriteToPPM(&c, "sphere_scene.ppm");
 
@@ -286,8 +215,6 @@ int main() {
     BenchmarkMatrixTranspose();
     BenchmarkMatrixTupleMultiply();
     BenchmarkRaySphereIntersection();
-    BenchmarkPhongShading();
-    BENCHMARK(TestShadeSphere(), 1, 10)
     BENCHMARK(DemoSphereScene(), 1, 10);
     BenchmarkScene();
     return 0;
