@@ -3,13 +3,14 @@
 
 #include "tuple.h"
 #include "intersection.h"
+#include "pattern.h"
 #include "scene.h"
 
 typedef Tuple3 (*Shader)(Scene* s, Intersection* i);
 Tuple3 PhongShader(Scene* s, Intersection* i);
 
 typedef struct {
-    Tuple3 color;
+    Pattern pattern;
     float ambient_reflection;
     float diffuse_reflection;
     float specular_reflection;

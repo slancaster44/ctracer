@@ -78,6 +78,13 @@ float TupleMagnitude(Tuple3 t1) {
     return sqrtf(r2[0]);
 }
 
+float TupleFloorSum(Tuple3 t1) {
+    Tuple3 floor = _mm_floor_ps(t1);
+    Tuple3 r1 = _mm_hadd_ps(floor, floor);
+    Tuple3 r2 = _mm_hadd_ps(r1, r1);
+    return r2[0];
+}
+
 float TupleDotProduct(Tuple3 t1, Tuple3 t2) {
     return _mm_dp_ps(t1, t2, 0xff)[0];
 }

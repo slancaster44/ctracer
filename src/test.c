@@ -523,7 +523,7 @@ void TestSphereGeometry() {
 }
 
 void AssignDefaultTestMaterial(Material* m) {
-    m->color = NewColor(255, 255, 255, 255);
+    m->pattern = NewSolidPattern(NewColor(255, 255, 255, 255));
     m->ambient_reflection = 0.1f;
     m->diffuse_reflection = 0.9f;
     m->specular_reflection = 0.9f;
@@ -834,8 +834,28 @@ void TestSceneReading() {
     TEST(s1->material.general_reflection == 0.0, "Reading json, general reflection");
     TEST(s1->material.shininess == 200, "Reading json, material shininess");
 
-    TEST(TupleFuzzyEqual(NewPnt3(0.635f, 0, 1), s1->material.color), "Reading json, color");
     TEST(PhongShader == s1->material.shader, "Reading json, shader function");
+}
+
+void TestStripePattern() {
+    Tuple3 black = NewColor(0, 0, 0, 255);
+    Tuple3 white = NewColor(255, 255, 255, 255);
+
+    Pattern p1 = NewStripedPattern(white, black);
+    Shape s1 = NewSphere(NewPnt3(0, 0, 0), 1.0f);
+    s1.material.pattern = p1;
+    
+    Tuple3 r1 = PatternColorAt(&s1, NewPnt3(0, 0, 0));
+    TEST(TupleFuzzyEqual(white, r1), "Stripe pattern, white stripe")
+
+    Tuple3 r2 = PatternColorAt(&s1, NewPnt3(0, 1, 0));
+    TEST(TupleFuzzyEqual(white, r2), "Stripe pattern, constant in y axis");
+
+    Tuple3 r3 = PatternColorAt(&s1, NewPnt3(0, 0, 1));
+    TEST(TupleFuzzyEqual(white, r3), "Stripe pattern. constant in z axis");
+
+    Tuple3 r4 = PatternColorAt(&s1, NewPnt3(1, 0, 0));
+    TEST(TupleFuzzyEqual(black, r4), "Stripe pattern, alters in x axis");
 }
 
 int main() {
@@ -874,6 +894,7 @@ int main() {
     TestReflection();
 
     TestSceneReading();
+    TestStripePattern();
 
     printf("Test(s) Passed: %d\nTests(s) Failed: %d\n", num_passed, num_failed);
 

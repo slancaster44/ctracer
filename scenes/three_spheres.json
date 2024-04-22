@@ -21,7 +21,17 @@
                 [0, 0, 0, 1]],
             "material": {
                 "shader": "phong",
-                "color": [0.635, 0, 1],
+                "pattern": {
+                    "type": "gradient",
+                    "color_a": [0.635, 0, 1],
+                    "color_b": [0.1, 0.0, 0.06],
+                    "transform": [
+                        [1, 0, 0, 0],
+                        [0, 1, 0, 0],
+                        [0, 0, 1, 0],
+                        [0, 0, 0, 1]
+                    ]
+                },
                 "ambient": 0.1,
                 "diffuse": 0.9,
                 "specular": 0.9,
@@ -38,12 +48,22 @@
                 [0, 0, 0, 1]],
             "material": {
                 "shader": "phong",
-                "color": [1, 0, 0.625],
+                "pattern": {
+                    "type": "solid",
+                    "color_a": [1, 0, 0.625],
+                    "color_b": [0, 0, 0],
+                    "transform": [
+                        [1, 0, 0, 0],
+                        [0, 1, 0, 0],
+                        [0, 0, 1, 0],
+                        [0, 0, 0, 1]
+                    ]
+                },
                 "ambient": 0.1,
                 "diffuse": 0.9,
                 "specular": 1.8,
                 "shininess": 200, 
-                "general": 0.0
+                "general": 0.75
             }
         },
         {
@@ -56,7 +76,17 @@
             ],
             "material": {
                 "shader": "phong",
-                "color": [0, 0.635, 1],
+                "pattern": {
+                    "type": "striped",
+                    "color_a": [0, 0.635, 1],
+                    "color_b": [0.635, 1, 0],
+                    "transform": [
+                        [0.073169, -0.068164, 0.000000, 0.000000],
+                        [0.068164, 0.073169, 0.000000, 0.000000],
+                        [0.000000, 0.000000, 0.100000, 0.000000],
+                        [0.000000, 0.000000, 0.000000, 1.000000]
+                    ]
+                },
                 "ambient": 0.1,
                 "diffuse": 0.9,
                 "specular": 1.8,
@@ -74,7 +104,17 @@
             ],
             "material": {
                 "shader": "phong",
-                "color": [0.5, 0.345, 0.45],
+                "pattern": {
+                    "type": "checkered",
+                    "color_a": [0.33, 0, 0.5],
+                    "color_b": [0.25, 1, 0.33],
+                    "transform": [
+                        [1, 0, 0, 0],
+                        [0, 1, 0, -0.125],
+                        [0, 0, 1, 0],
+                        [0, 0, 0, 1]
+                    ]
+                },
                 "specular": 0,
                 "ambient": 0.1,
                 "diffuse": 0.9,

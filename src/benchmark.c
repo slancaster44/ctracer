@@ -133,7 +133,7 @@ void BenchmarkRaySphereIntersection() {
 }
 
 void AssignDefaultTestMaterial(Material* m) {
-    m->color = NewColor(255, 255, 255, 255);
+    m->pattern = NewSolidPattern(NewColor(255, 255, 255, 255));
     m->ambient_reflection = 0.1;
     m->diffuse_reflection = 0.9;
     m->specular_reflection = 0.9;
@@ -175,7 +175,7 @@ void BenchmarkScene() {
 void DemoSphereScene() {
     Material m;
     AssignDefaultTestMaterial(&m);
-    m.color = NewColor(255, 0, 128, 255);
+    m.pattern = NewSolidPattern(NewColor(255, 0, 128, 255));
 
     Light l;
     l.origin = NewPnt3(-1000, -2000, -750);
@@ -188,7 +188,7 @@ void DemoSphereScene() {
     s.material = m;
 
     Shape s2 = NewSphere(NewPnt3(1, 1, -5), 50);
-    m.color = NewColor(0, 255, 128, 255);
+    m.pattern = NewSolidPattern(NewColor(0, 255, 128, 255));
     s2.material = m;
 
     Camera ca = NewCamera(800, 600, 3.1415 / 3);
@@ -207,6 +207,20 @@ void DemoSphereScene() {
     DeconstructCanvas(&c);
 }
 
+
+void DemoJsonScene() {
+    Scene s;
+    ReadScene(&s, "./scenes/three_spheres.json");
+
+    Canvas canvas;
+    ConstructCanvas(&canvas, s.camera.width, s.camera.height);
+
+    RenderScene(&s, &canvas);
+    WriteToPPM(&canvas, "./renderings/three_spheres.ppm");
+
+    DeconstructCanvas(&canvas);
+    DeconstructScene(&s);
+}
 int main() {
     BenchmarkMatrixEqual();
     BenchmarkMatrixFuzzyEqual();
@@ -216,6 +230,7 @@ int main() {
     BenchmarkMatrixTupleMultiply();
     BenchmarkRaySphereIntersection();
     BENCHMARK(DemoSphereScene(), 1, 10);
+    BENCHMARK(DemoJsonScene(), 1, 5);
     BenchmarkScene();
     return 0;
 }

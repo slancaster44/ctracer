@@ -18,7 +18,9 @@ Tuple3 PhongShader(Scene* s, Intersection* i) {
     Tuple3 reflectv = TupleReflect(i->ray.direction, normal);
     Material material = i->shape_ptr->material;
 
-    Tuple3 effective_color = TupleMultiply(material.color, s->light.color);
+    Tuple3 color = PatternColorAt(i->shape_ptr, pos);
+
+    Tuple3 effective_color = TupleMultiply(color, s->light.color);
     Tuple3 ambient = TupleScalarMultiply(effective_color, material.ambient_reflection);
 
     Tuple3 diffuse;

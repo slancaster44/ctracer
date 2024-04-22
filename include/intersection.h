@@ -5,7 +5,7 @@
 
 #define MAX_NUMBER_INTERSECTIONS 2
 
-typedef struct Shape Shape;
+typedef struct Shape Shape; //Prevents circular type dependencies intersection->shape->material->shader->intersection
 typedef struct {
     Shape* shape_ptr;
     Ray ray;

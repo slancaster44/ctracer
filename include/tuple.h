@@ -31,6 +31,7 @@ Tuple3 TupleSubtract(Tuple3 t1, Tuple3 t2);
 Tuple3 TupleReflect(Tuple3 t1, Tuple3 normal);
 Tuple3 TupleScalarSubtract(Tuple3 t, float n);
 Tuple3 TupleScalarAdd(Tuple3 t, float n);
+float TupleFloorSum(Tuple3 t1);
 bool TupleHasNaNs(Tuple3 t1);
 float MaxComponent(Tuple3 t1); 
 float MaxComponent(Tuple3 t1);

@@ -6,7 +6,7 @@ LDFLAGS = -lm -lcjson
 
 test:
 	clear
-	$(CC) $(CFLAGS) -g -Wpedantic -Wall -Wconversion -Wswitch-enum $(INCLUDE) $(SOURCE) src/test.c $(LDFLAGS) -lefence
+	$(CC) $(CFLAGS) -g -Wpedantic -Wall -Wconversion $(INCLUDE) $(SOURCE) src/test.c $(LDFLAGS) -lefence
 	./tracer
 
 benchmark:

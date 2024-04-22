@@ -8,7 +8,7 @@
 #include <math.h>
 
 void AssignDefaultTestMaterial(Material* m) {
-    m->color = NewColor(255, 255, 255, 255);
+    m->pattern = NewSolidPattern(NewColor(255, 255, 255, 255));
     m->ambient_reflection = 0.1f;
     m->diffuse_reflection = 0.9f;
     m->specular_reflection = 0.9f;
@@ -38,7 +38,7 @@ void DemoCanvas() {
 void DemoSphereScene() {
     Material m;
     AssignDefaultTestMaterial(&m);
-    m.color = NewColor(255, 0, 128, 255);
+    m.pattern = NewSolidPattern(NewColor(255, 0, 128, 255));
 
     Light l;
     l.origin = NewPnt3(1000, 2000, -2000);
@@ -51,7 +51,8 @@ void DemoSphereScene() {
     s.material = m;
 
     Shape s2 = NewSphere(NewPnt3(1, 1, -5), 50);
-    m.color = NewColor(0, 255, 128, 255);
+    m.pattern = NewSolidPattern(NewColor(0, 255, 128, 255));
+
     s2.material = m;
 
     Camera ca = NewCamera(800, 600, 3.1415 / 3);
@@ -81,13 +82,13 @@ void DemoPlane() {
    
     Shape sphere2 = NewSphere(NewPnt3(-0.5, 40, 100), 50);
     AssignDefaultTestMaterial(&(sphere2.material));
-    sphere2.material.color = NewColor(0, 0, 255, 255);
+    sphere2.material.pattern = NewSolidPattern(NewColor(0, 0, 255, 255));
     sphere2.material.general_reflection = 0.5;
     AddShape(&s, sphere2);
 
     Shape sphere = NewSphere(NewPnt3(0, 100, 175), 20);
     AssignDefaultTestMaterial(&(sphere.material));
-    sphere.material.color = NewColor(0, 255, 128, 255);
+    sphere.material.pattern = NewSolidPattern(NewColor(0, 255, 128, 255));
     AddShape(&s, sphere);
 
     Shape plane = NewPlane(NewPnt3(0, -10, 0), NewVec3(0, 1, 0));

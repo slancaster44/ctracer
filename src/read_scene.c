@@ -159,11 +159,43 @@ void GetShapeTransform(Matrix4x4* transform, cJSON* json) {
     GetMatrix(transform, shape_transform_json);
 }
 
+void GetPattern(Material* m, cJSON* json) {
+    cJSON* pattern_json = cJSON_GetObjectItem(json, "pattern");
+    FatalDataCheck(pattern_json, "Shape pattern required");
+
+    GetPoint(&(m->pattern.color_a), pattern_json, "color_a");
+    GetPoint(&(m->pattern.color_b), pattern_json, "color_b");
+    GetShapeTransform(&(m->pattern.transform), pattern_json);
+
+    m->pattern.inverse_transform = MatrixInvert(m->pattern.transform);
+
+    cJSON* pattern_type_json = cJSON_GetObjectItem(pattern_json, "type");
+    FatalDataCheck(pattern_type_json, "Pattern tag not found");
+
+    char* pattern_name = cJSON_GetStringValue(pattern_type_json);
+    FatalDataCheck(pattern_name, "Could get pattern type");
+    if (strncmp(pattern_name, "solid", 5) == 0) {
+        m->pattern.type = SOLID;
+    } else if (strncmp(pattern_name, "striped", 7) == 0) {
+        m->pattern.type = STRIPED;
+    } else if (strncmp(pattern_name, "checkered", 9) == 0) {
+        m->pattern.type = CHECKERED; 
+    } else if (strncmp(pattern_name, "ringed", 6) == 0) {
+        m->pattern.type = RINGED;
+    } else if (strncmp(pattern_name, "gradient", 8) == 0) {
+        m->pattern.type = GRADIENT;
+    } else {
+        printf("Unkown pattern '%s'\n", pattern_name);
+        exit(1);
+    }
+
+}
+
 void GetMaterial(Material* m, cJSON* json) {
     cJSON* shape_material_json = cJSON_GetObjectItem(json, "material");
     FatalDataCheck(shape_material_json, "Shape material not found");
 
-    GetPoint(&(m->color), shape_material_json, "color");
+    GetPattern(m, shape_material_json);
     GetFloatScalar(&(m->ambient_reflection), shape_material_json, "ambient");
     GetFloatScalar(&(m->diffuse_reflection), shape_material_json, "diffuse");
     GetFloatScalar(&(m->specular_reflection), shape_material_json, "specular");

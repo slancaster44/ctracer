@@ -2,7 +2,7 @@
 
 Material NewMaterial(Tuple3 color) {
     Material m;
-    m.color = color;
+    m.pattern = NewSolidPattern(color);
     m.ambient_reflection = 0.1f;
     m.diffuse_reflection = 0.9f;
     m.specular_reflection = 0.9f;
