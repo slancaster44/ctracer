@@ -24,7 +24,7 @@
                 "pattern": {
                     "type": "gradient",
                     "color_a": [0.635, 0, 1],
-                    "color_b": [0.1, 0.0, 0.06],
+                    "color_b": [0.15, 0, 0.8],
                     "transform": [
                         [1, 0, 0, 0],
                         [0, 1, 0, 0],
