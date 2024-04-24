@@ -12,12 +12,16 @@ int MatrixEqual(Matrix4x4 m1, Matrix4x4 m2) {
     __m256d cmp3 = _mm256_cmp_pd(m1.contents[3], m2.contents[3], _CMP_EQ_OQ);
 
 
-    unsigned r0 = (unsigned) _mm256_movemask_pd(cmp0);
-    unsigned r1 = (unsigned) _mm256_movemask_pd(cmp1);
-    unsigned r2 = (unsigned) _mm256_movemask_pd(cmp2);
-    unsigned r3 = (unsigned) _mm256_movemask_pd(cmp3);
+    __m256i r;
+    r[0] = (unsigned) _mm256_movemask_pd(cmp0);
+    r[1] = (unsigned) _mm256_movemask_pd(cmp1);
+    r[2] = (unsigned) _mm256_movemask_pd(cmp2);
+    r[3] = (unsigned) _mm256_movemask_pd(cmp3);
 
-    return (r0 == 0xf) && (r1 == 0xf) && (r2 == 0xf) && (r3 == 0xf); //TODO: Vectorize?
+    __m256i exp = _mm256_set1_epi64x(0xf);
+    __mmask8 cmp_final = _mm256_cmp_epi64_mask(exp, r, _MM_CMPINT_EQ);
+
+    return cmp_final == 0xf;
 }
 
 int MatrixFuzzyEqual(Matrix4x4 m1, Matrix4x4 m2) {
@@ -40,12 +44,16 @@ int MatrixFuzzyEqual(Matrix4x4 m1, Matrix4x4 m2) {
     __m256d cmp2 = _mm256_cmp_pd(diff2, epsilon, _CMP_LT_OQ);
     __m256d cmp3 = _mm256_cmp_pd(diff3, epsilon, _CMP_LT_OQ);
 
-    unsigned r0 = (unsigned) _mm256_movemask_pd(cmp0);
-    unsigned r1 = (unsigned) _mm256_movemask_pd(cmp1);
-    unsigned r2 = (unsigned) _mm256_movemask_pd(cmp2);
-    unsigned r3 = (unsigned) _mm256_movemask_pd(cmp3);
+    __m256i r;
+    r[0] = (unsigned) _mm256_movemask_pd(cmp0);
+    r[1] = (unsigned) _mm256_movemask_pd(cmp1);
+    r[2] = (unsigned) _mm256_movemask_pd(cmp2);
+    r[3] = (unsigned) _mm256_movemask_pd(cmp3);
 
-    return (r0 == 0xf) && (r1 == 0xf) && (r2 == 0xf) && (r3 == 0xf); //TODO: Vectorize?
+    __m256i exp = _mm256_set1_epi64x(0xf);
+    __mmask8 cmp_final = _mm256_cmp_epi64_mask(exp, r, _MM_CMPINT_EQ);
+
+    return cmp_final == 0xf;
 }
 
 static inline __m256d matrixMultHelper(int a, Matrix4x4 m1, Matrix4x4 m2) {
@@ -102,8 +110,8 @@ Tuple3 MatrixTupleMultiply(Matrix4x4 m1, Tuple3 t1) {
     return out;
 }
 
-//a 256d transaltion of _MM_TRANSPOSE4_PS()
-Matrix4x4 MatrixTranspose(Matrix4x4 m1) { //TODO: Optimize
+//a 256d translation of _MM_TRANSPOSE4_PS()
+Matrix4x4 MatrixTranspose(Matrix4x4 m1) {
     
     __m256d tmp0, tmp1, tmp2, tmp3;
     tmp0 = _mm256_unpacklo_pd(m1.contents[0], m1.contents[1]);
@@ -111,25 +119,10 @@ Matrix4x4 MatrixTranspose(Matrix4x4 m1) { //TODO: Optimize
     tmp1 = _mm256_unpackhi_pd(m1.contents[0], m1.contents[1]);
     tmp3 = _mm256_unpackhi_pd(m1.contents[2], m1.contents[3]);
 
-    m1.contents[0][0] = tmp0[0];
-    m1.contents[0][1] = tmp0[1];
-    m1.contents[0][2] = tmp2[0];
-    m1.contents[0][3] = tmp2[1];
-
-    m1.contents[2][0] = tmp0[2];
-    m1.contents[2][1] = tmp0[3];
-    m1.contents[2][2] = tmp2[2];
-    m1.contents[2][3] = tmp2[3];
-
-    m1.contents[1][0] = tmp1[0];
-    m1.contents[1][1] = tmp1[1];
-    m1.contents[1][2] = tmp3[0];
-    m1.contents[1][3] = tmp3[1];
-
-    m1.contents[3][0] = tmp1[2];
-    m1.contents[3][1] = tmp1[3];
-    m1.contents[3][2] = tmp3[2];
-    m1.contents[3][3] = tmp3[3];
+    m1.contents[0] = SHUFFLE_M256(tmp0, tmp2, 0, 1, 0, 1);
+    m1.contents[1] = SHUFFLE_M256(tmp1, tmp3, 0, 1, 0, 1);
+    m1.contents[2] = SHUFFLE_M256(tmp0, tmp2, 2, 3, 2, 3);
+    m1.contents[3] = SHUFFLE_M256(tmp1, tmp3, 2, 3, 2, 3);
 
     return m1; 
 }
