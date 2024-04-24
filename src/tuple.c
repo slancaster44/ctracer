@@ -6,25 +6,25 @@
 #include "equality.h"
 #include "tuple.h"
 
-Tuple3 NewVec3(float x, float y, float z) {
+Tuple3 NewVec3(double x, double y, double z) {
     return NewTuple3(x, y, z, 0.0);
 }
 
-Tuple3 NewPnt3(float x, float y, float z) {
+Tuple3 NewPnt3(double x, double y, double z) {
     return NewTuple3(x, y, z, 1.0);
 }
 
-Tuple3 NewTuple3(float x, float y, float z, float w) {
-    return _mm_set_ps(w, z, y, x);
+Tuple3 NewTuple3(double x, double y, double z, double w) {
+    return _mm256_set_pd(w, z, y, x);
 }
 
 Tuple3 NewColor(uint8_t r, uint8_t g, uint8_t b, uint8_t a) {
-    Tuple3 c = NewTuple3((float) r, (float) g, (float) b, (float) a);
+    Tuple3 c = NewTuple3((double) r, (double) g, (double) b, (double) a);
     return TupleScalarDivide(c, 255);
 }
 
 bool TupleHasNaNs(Tuple3 t1) {
-    return TupleEqual(t1, _mm_set1_ps(NAN));
+    return TupleEqual(t1, _mm256_set1_pd(NAN));
 }
 
 void PrintTuple(Tuple3 t) {
@@ -32,105 +32,107 @@ void PrintTuple(Tuple3 t) {
 }
 
 int TupleEqual(Tuple3 t1, Tuple3 t2) {
-    __m128 res = _mm_cmpeq_ps(t1, t2);
-    unsigned bitmask = (unsigned) _mm_movemask_ps(res);
+    __m256d res = _mm256_cmp_pd(t1, t2, _CMP_EQ_OQ);
+    unsigned bitmask = (unsigned) _mm256_movemask_pd(res);
 
     return (bitmask == 0xf);
 }
 
 int TupleFuzzyEqual(Tuple3 t1, Tuple3 t2) {
-    __m128 diff = _mm_sub_ps(t1, t2);
-    __m128 mask = (__m128) _mm_set1_epi32(0x7FFFFFFF);
-    diff = _mm_and_ps(diff, mask);
+    __m256d diff = _mm256_sub_pd(t1, t2);
+    __m256d mask = (__m256d) _mm256_set1_epi64x(0x7FFFFFFFFFFFFFFF);
+    diff = _mm256_and_pd(diff, mask);
 
-    __m128 epsilon = _mm_set1_ps(EQUALITY_EPSILON);
-    __m128 cmp = _mm_cmp_ps(diff, epsilon, _CMP_LT_OQ);
+    __m256d epsilon = _mm256_set1_pd(EQUALITY_EPSILON);
+    __m256d cmp = _mm256_cmp_pd(diff, epsilon, _CMP_LT_OQ);
 
-    unsigned res = (unsigned) _mm_movemask_ps(cmp);
-
+    unsigned res = (unsigned) _mm256_movemask_pd(cmp);
     return (res == 0xf);
 }
 
-Tuple3 TupleScalarMultiply(Tuple3 t1, float scalar) {
-    return _mm_mul_ps(t1, _mm_set1_ps(scalar));
+Tuple3 TupleScalarMultiply(Tuple3 t1, double scalar) {
+    return _mm256_mul_pd(t1, _mm256_set1_pd(scalar));
 }
 
-Tuple3 TupleScalarDivide(Tuple3 t1, float scalar) {
-    return _mm_div_ps(t1, _mm_set1_ps(scalar));
+Tuple3 TupleScalarDivide(Tuple3 t1, double scalar) {
+    return _mm256_div_pd(t1, _mm256_set1_pd(scalar));
 }
 
-Tuple3 TupleScalarSubtract(Tuple3 t1, float scalar) {
-    return _mm_sub_ps(t1, _mm_set1_ps(scalar));
+Tuple3 TupleScalarSubtract(Tuple3 t1, double scalar) {
+    return _mm256_sub_pd(t1, _mm256_set1_pd(scalar));
 }
 
-Tuple3 TupleScalarAdd(Tuple3 t1, float scalar) {
-    return _mm_add_ps(t1, _mm_set1_ps(scalar));
+Tuple3 TupleScalarAdd(Tuple3 t1, double scalar) {
+    return _mm256_add_pd(t1, _mm256_set1_pd(scalar));
 }
 
 Tuple3 TupleNegate(Tuple3 t1) {
-    return _mm_sub_ps(_mm_set1_ps(0), t1);
+    return _mm256_sub_pd(_mm256_set1_pd(0), t1);
 }
 
-float TupleMagnitude(Tuple3 t1) {
-    Tuple3 r0 = _mm_mul_ps(t1, t1);
-    Tuple3 r1 = _mm_hadd_ps(r0, r0);
-    Tuple3 r2 = _mm_hadd_ps(r1, r1);
-    return sqrtf(r2[0]);
+double TupleMagnitude(Tuple3 t1) {
+    Tuple3 r0 = _mm256_mul_pd(t1, t1);
+    Tuple3 r1 = _mm256_hadd_pd(r0, r0);
+    return sqrt(r1[1] + r1[2]);
 }
 
-float TupleFloorSum(Tuple3 t1) {
-    Tuple3 floor = _mm_floor_ps(t1);
-    Tuple3 r1 = _mm_hadd_ps(floor, floor);
-    Tuple3 r2 = _mm_hadd_ps(r1, r1);
-    return r2[0];
+//TODO: No Tests
+double TupleFloorSum(Tuple3 t1) {
+    Tuple3 floor = _mm256_floor_pd(t1);
+    Tuple3 r1 = _mm256_hadd_pd(floor, floor);
+    return r1[1] + r1[2];
 }
 
-float TupleDotProduct(Tuple3 t1, Tuple3 t2) {
-    return _mm_dp_ps(t1, t2, 0xff)[0];
+double TupleDotProduct(Tuple3 t1, Tuple3 t2) {
+    Tuple3 r0 = TupleMultiply(t1, t2);
+    Tuple3 r1 = _mm256_hadd_pd(r0, r0);
+    return r1[1] + r1[2];
 }
 
 Tuple3 TupleCrossProduct(Tuple3 t1, Tuple3 t2) {
-    Tuple3 r0 = _mm_shuffle_ps(t1, t1, _MM_SHUFFLE(3, 0, 2, 1));
-    Tuple3 r1 = _mm_shuffle_ps(t2, t2, _MM_SHUFFLE(3, 1, 0, 2));
-    Tuple3 s0 = _mm_mul_ps(r0, r1);
+    Tuple3 r0 = SWIZZLE_M256(t1, 1, 2, 0, 3);
+    Tuple3 r1 = SWIZZLE_M256(t2, 2, 0, 1, 3);
+    Tuple3 s0 = _mm256_mul_pd(r0, r1);
 
-    Tuple3 r2 = _mm_shuffle_ps(t1, t1, _MM_SHUFFLE(3, 1, 0, 2));
-    Tuple3 r3 = _mm_shuffle_ps(t2, t2, _MM_SHUFFLE(3, 0, 2, 1));
-    Tuple3 s1 = _mm_mul_ps(r2, r3);
+    Tuple3 r2 = SWIZZLE_M256(t1, 2, 0, 1, 3);
+    Tuple3 r3 = SWIZZLE_M256(t2, 1, 2, 0, 3);
+    Tuple3 s1 = _mm256_mul_pd(r2, r3);
 
-    return _mm_sub_ps(s0, s1);
+    return _mm256_sub_pd(s0, s1);
 }
 
 Tuple3 TupleNormalize(Tuple3 t1) {
-    float mag = TupleMagnitude(t1);
-    return _mm_div_ps(t1, _mm_set1_ps(mag));
+    double mag = TupleMagnitude(t1);
+    return _mm256_div_pd(t1, _mm256_set1_pd(mag));
 }
 
 Tuple3 TupleMultiply(Tuple3 t1, Tuple3 t2) {
-    return _mm_mul_ps(t1, t2);
+    return _mm256_mul_pd(t1, t2);
 }
 
 Tuple3 TupleDivide(Tuple3 t1, Tuple3 t2) {
-    return _mm_div_ps(t1, t2);
+    return _mm256_div_pd(t1, t2);
 }
 
 Tuple3 TupleAdd(Tuple3 t1, Tuple3 t2) {
-    return _mm_add_ps(t1, t2);
+    return _mm256_add_pd(t1, t2);
 }
 
 Tuple3 TupleSubtract(Tuple3 t1, Tuple3 t2) {
-    return _mm_sub_ps(t1, t2);
+    return _mm256_sub_pd(t1, t2);
 }
 
 Tuple3 TupleReflect(Tuple3 t1, Tuple3 normal) {
-    float x = 2 * TupleDotProduct(t1, normal);
+    double x = 2 * TupleDotProduct(t1, normal);
     return TupleSubtract(t1, TupleScalarMultiply(normal, x));
 }
 
-float MinComponent(Tuple3 t1) {
-    return fminf(t1[0], fminf(t1[1], t1[2]));
+//TODO: No Test
+double MinComponent(Tuple3 t1) {
+    return fmin(t1[0], fmin(t1[1], t1[2]));
 }
 
-float MaxComponent(Tuple3 t1) {
-    return fmaxf(t1[0], fmaxf(t1[1], t1[2]));
+//TODO: No test
+double MaxComponent(Tuple3 t1) {
+    return fmax(t1[0], fmax(t1[1], t1[2]));
 }

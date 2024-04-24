@@ -1,7 +1,7 @@
 #include "camera.h"
 #include <math.h>
 
-Camera NewCamera(unsigned width, unsigned height, float fov) {
+Camera NewCamera(unsigned width, unsigned height, double fov) {
     Camera c;
 
     c.width = width;
@@ -11,8 +11,8 @@ Camera NewCamera(unsigned width, unsigned height, float fov) {
     c.view_transformation = IdentityMatrix();
     c.inverse_view_transformation = IdentityMatrix();
 
-    float half_view = tanf(fov / 2);
-    float aspect_ratio = (float) width / (float) height;
+    double half_view = tan(fov / 2);
+    double aspect_ratio = (double) width / (double) height;
 
     if (aspect_ratio >= 1) {
         c.half_width = half_view;
@@ -22,7 +22,7 @@ Camera NewCamera(unsigned width, unsigned height, float fov) {
         c.half_height = half_view;
     }
 
-    c.pixel_size = (c.half_width * 2) / (float) c.width;
+    c.pixel_size = (c.half_width * 2) / (double) c.width;
 
     return c;
 }
@@ -33,11 +33,11 @@ void CameraApplyTransformation(Camera* c, Matrix4x4 t) {
 }
 
 Ray RayForPixel(Camera* c, unsigned x, unsigned y) {
-    float offset_x = ((float) x + 0.5f) * c->pixel_size;
-    float offset_y = ((float) y + 0.5f) * c->pixel_size;
+    double offset_x = ((double) x + 0.5) * c->pixel_size;
+    double offset_y = ((double) y + 0.5) * c->pixel_size;
 
-    float world_x = c->half_width - offset_x;
-    float world_y = c->half_height - offset_y;
+    double world_x = c->half_width - offset_x;
+    double world_y = c->half_height - offset_y;
 
     Tuple3 pixel_location = MatrixTupleMultiply(c->inverse_view_transformation, NewPnt3(world_x, world_y, -1));
     Tuple3 ray_origin = MatrixTupleMultiply(c->inverse_view_transformation, NewPnt3(0, 0, 0));

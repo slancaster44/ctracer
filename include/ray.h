@@ -10,7 +10,7 @@ typedef struct {
 } Ray;
 
 Ray NewRay(Tuple3 origin, Tuple3 direction);
-Tuple3 RayPosition(Ray r, float pos);
+Tuple3 RayPosition(Ray r, double pos);
 Ray RayTransform(Ray r, Matrix4x4 transformation);
 
 #endif

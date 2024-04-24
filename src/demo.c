@@ -9,15 +9,15 @@
 
 void AssignDefaultTestMaterial(Material* m) {
     m->pattern = NewSolidPattern(NewColor(255, 255, 255, 255));
-    m->ambient_reflection = 0.1f;
-    m->diffuse_reflection = 0.9f;
-    m->specular_reflection = 0.9f;
+    m->ambient_reflection = 0.1;
+    m->diffuse_reflection = 0.9;
+    m->specular_reflection = 0.9;
     m->shininess = 200;
 }
 
 void DemoCanvas() {
     Tuple3 start = NewPnt3(0, 1, 0);
-    Tuple3 velocity = TupleScalarMultiply(TupleNormalize(NewVec3(1, 1.8f, 0)), 11.25f);
+    Tuple3 velocity = TupleScalarMultiply(TupleNormalize(NewVec3(1, 1.8, 0)), 11.25);
 
     Tuple3 gravity = NewVec3(0, -0.1, 0);
 
@@ -120,9 +120,23 @@ void DemoJsonScene() {
     DeconstructScene(&s);
 }
 
+void DemoUnthreaded() {
+    Scene s;
+    ReadScene(&s, "./scenes/three_spheres.json");
+
+    Canvas canvas;
+    ConstructCanvas(&canvas, s.camera.width, s.camera.height);
+
+    RenderSceneUnthreaded(&s, &canvas);
+    WriteToPPM(&canvas, "./renderings/three_spheres.ppm");
+
+    DeconstructCanvas(&canvas);
+    DeconstructScene(&s);
+}
+
 int main() {
     DemoCanvas();
-    DemoSphereScene();
-    DemoPlane();
     DemoJsonScene();
+    DemoPlane();
+    DemoSphereScene();
 }

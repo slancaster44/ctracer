@@ -11,11 +11,11 @@ Tuple3 PhongShader(Scene* s, Intersection* i);
 
 typedef struct {
     Pattern pattern;
-    float ambient_reflection;
-    float diffuse_reflection;
-    float specular_reflection;
-    float shininess;
-    float general_reflection;
+    double ambient_reflection;
+    double diffuse_reflection;
+    double specular_reflection;
+    double shininess;
+    double general_reflection;
     Shader shader;
 } Material;
 

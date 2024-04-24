@@ -10,7 +10,7 @@ typedef struct {
     Shape* shape_ptr;
     Ray ray;
 
-    float ray_times[MAX_NUMBER_INTERSECTIONS];
+    double ray_times[MAX_NUMBER_INTERSECTIONS];
     int count;
 } Intersection;
 

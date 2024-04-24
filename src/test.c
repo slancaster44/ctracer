@@ -100,7 +100,7 @@ void TestMatrixEqual() {
         Pass("Matrix Equality");
     }
 
-    m2.contents[0][0] = -1.0001f;
+    m2.contents[0][0] = -1.0001;
     if (MatrixEqual(m1, m2) || !MatrixFuzzyEqual(m1, m2)) {
         Fail("Matrix Fuzzy Equality");
     } else {
@@ -162,6 +162,7 @@ void TestMatrixTranspose() {
         }
     };
 
+
     if (!MatrixEqual(MatrixTranspose(m1), res)) {
         Fail("Matrix Transposition");
     } else {
@@ -169,7 +170,7 @@ void TestMatrixTranspose() {
     }
 }
 
-void TestMatrixInvert() {
+void TestMatrixInvert() { //TODO: More tests?
     Matrix4x4 m1 = {
         .contents = {
             {8, -5, 9, 2},
@@ -181,16 +182,16 @@ void TestMatrixInvert() {
 
     Matrix4x4 m2 = {
         .contents = {
-            {-0.15385f, -0.15385f, -0.28205f, -0.53846f},
-            {-0.07692f, 0.12308f, 0.02564f, 0.03077f},
-            {0.35897f, 0.35897f, 0.43590f, 0.92308f},
-            {-0.69231f, -0.69231f, -0.76923f, -1.92308f}
+            {-0.15385, -0.15385, -0.28205, -0.53846f},
+            {-0.07692, 0.12308, 0.02564, 0.03077f},
+            {0.35897, 0.35897, 0.43590, 0.92308f},
+            {-0.69231, -0.69231, -0.76923, -1.92308f}
         }
     };
 
     if (!MatrixFuzzyEqual(MatrixInvert(m1), m2)) {
-        Fail("Matrix Inversion");
         PrintMatrix(MatrixInvert(m1));
+        Fail("Matrix Inversion");
     } else {
         Pass("Matrix Inversion");
     }
@@ -248,10 +249,10 @@ void TestScalarDivide() {
 }
 
 void TestTupleNegate() {
-    Tuple3 t1 = NewVec3(1, 2, 3);
+    Tuple3 t1 = NewVec3(1, -2, 3);
     Tuple3 result = TupleNegate(t1);
 
-    if (!TupleEqual(result, NewVec3(-1, -2, -3))) {
+    if (!TupleEqual(result, NewVec3(-1, 2, -3))) {
         Fail("Tuple Negation");
     } else {
         Pass("Tuple Negation");
@@ -260,9 +261,9 @@ void TestTupleNegate() {
 
 void TestTupleMagnitude() {
     Tuple3 t1 = NewVec3(1, 2, 3);
-    float result = TupleMagnitude(t1);
+    double result = TupleMagnitude(t1);
 
-    if (!FloatEquality(result, sqrtf(14))) {
+    if (!FloatEquality(result, sqrt(14))) {
         Fail("Tuple Magnitude");
     } else {
         Pass("Tuple Magnitude");
@@ -273,8 +274,9 @@ void TestTupleDotProduct() {
     Tuple3 t1 = NewVec3(1, 2, 3);
     Tuple3 t2 = NewVec3(2, 3, 4);
     
-    float result = TupleDotProduct(t1, t2);
+    double result = TupleDotProduct(t1, t2);
     if (!FloatEquality(result, 20)) {
+        printf("%f\n", result);
         Fail("Tuple Dot Product");
     } else {
         Pass("Tuple Dot Product");
@@ -420,7 +422,7 @@ void TestRaySphereIntersection() {
     }
 
     Ray r5 = {
-        .origin = NewPnt3(1.1f, 1.1f, 0),
+        .origin = NewPnt3(1.1, 1.1, 0),
         .direction = NewVec3(0, 0, 1),
     };
 
@@ -454,8 +456,8 @@ void SphereNormal() {
     Shape s = NewSphere(NewPnt3(0, 0, 0), 1.0);
 
     if (!TupleFuzzyEqual(NormalAt(&s, NewPnt3(1, 0, 0)), NewVec3(1, 0, 0))) {
-        PrintTuple(NormalAt(&s, NewPnt3(1, 0, 0)));
-        PrintTuple(NewVec3(1, 0, 0));
+        
+        
         Fail("Sphere Normal");
     } else {
         Pass("Sphere Normal");
@@ -465,24 +467,24 @@ void SphereNormal() {
     s.transformation = TranslationMatrix(0, 1, 0);
     s.inverse_transform = MatrixInvert(s.transformation); 
 
-    Tuple3 n = NormalAt(&s, NewPnt3(0, 1.70711f, -0.70711f));
-    Tuple3 expected_out = NewVec3(0, 0.70711f, -0.70711f);
+    Tuple3 n = NormalAt(&s, NewPnt3(0, 1.70711, -0.70711));
+    Tuple3 expected_out = NewVec3(0, 0.70711, -0.70711);
 
     if (!TupleFuzzyEqual(n, expected_out)) {
-        PrintTuple(n);
+        
         Fail("Sphere Normal, Translation");
     } else {
         Pass("Sphere Normal, Translation");
     }
 
-    s.transformation = MatrixMultiply(ScalingMatrix(1, 0.5, 1), RotationZMatrix((float) M_PI / 5.0f));
+    s.transformation = MatrixMultiply(ScalingMatrix(1, 0.5, 1), RotationZMatrix((double) M_PI / 5.0));
     s.inverse_transform = MatrixInvert(s.transformation);
 
-    n = NormalAt(&s, NewPnt3(0, sqrtf(2) / 2, -sqrtf(2) / 2));
-    expected_out = NewVec3(0.0f, 0.97014f, -0.24254f);
+    n = NormalAt(&s, NewPnt3(0, sqrt(2) / 2, -sqrt(2) / 2));
+    expected_out = NewVec3(0.0, 0.97014, -0.24254);
 
     if (!TupleFuzzyEqual(n, expected_out)) {
-        PrintTuple(n);
+        
         Fail("Sphere Normal, Scaling & Rotation");
     } else {
         Pass("Sphere Normal, Scaling & Rotation");
@@ -514,7 +516,7 @@ void TestSphereGeometry() {
 
     res = Intersect(&s, r2);
     if (res.ray_times[0] != 2) {
-        PrintTuple(RayPosition(r2, res.ray_times[0]));
+        
         printf("%d: %f", res.count, res.ray_times[0]);
         Fail("Sphere geometry, origin");
     } else {
@@ -524,9 +526,9 @@ void TestSphereGeometry() {
 
 void AssignDefaultTestMaterial(Material* m) {
     m->pattern = NewSolidPattern(NewColor(255, 255, 255, 255));
-    m->ambient_reflection = 0.1f;
-    m->diffuse_reflection = 0.9f;
-    m->specular_reflection = 0.9f;
+    m->ambient_reflection = 0.1;
+    m->diffuse_reflection = 0.9;
+    m->specular_reflection = 0.9;
     m->shininess = 200;
 }
 
@@ -556,8 +558,8 @@ void ConstructDefaultScene(Scene* s) {
     ConstructScene(s, c, l);
     
     Shape s1 = NewSphere(NewPnt3(0, 0, 0), 1.0);
-    s1.material.diffuse_reflection = 0.7f;
-    s1.material.specular_reflection = 0.2f;
+    s1.material.diffuse_reflection = 0.7;
+    s1.material.specular_reflection = 0.2;
 
     Shape s2 = NewSphere(NewPnt3(0, 0, 0), 0.5);
 
@@ -576,7 +578,7 @@ void TestReflection() {
     ApplyTransformation(&new_plane, TranslationMatrix(0, -1, 0));
     AddShape(&reflective_scene, new_plane);
 
-    Ray r2 = NewRay(NewPnt3(0, 0, -3), NewVec3(0, -sqrtf(2.0f) / 2, sqrtf(2.0f) / 2));
+    Ray r2 = NewRay(NewPnt3(0, 0, -3), NewVec3(0, -sqrt(2.0) / 2, sqrt(2.0) / 2));
     Tuple3 result = ColorFor(&reflective_scene, r2);
     PrintTuple(result);
 }
@@ -623,8 +625,8 @@ void TestViewMatrix() {
     Matrix4x4 expected = IdentityMatrix();
 
     if (!MatrixFuzzyEqual(m1, expected)) {
-        Fail("View Matrix, Identity");
         PrintMatrix(m1);
+        Fail("View Matrix, Identity");
     } else {
         Pass("View Matrix, Identity");
     }
@@ -643,9 +645,9 @@ void TestViewMatrix() {
 
     if (!MatrixFuzzyEqual(m3, expected3)) {
         Fail("View Matrix, Translation");
-        PrintMatrix(m3);
+        
         printf("\n");
-        PrintMatrix(expected3);
+        
     } else {
         Pass("View Matrix, Translation");
     }
@@ -653,71 +655,71 @@ void TestViewMatrix() {
     Matrix4x4 m4 = ViewMatrix(NewPnt3(1, 3, 2), NewPnt3(4, -2, 8), NewVec3(1, 1, 0));
     Matrix4x4 expected4 = {
         .contents = {
-            {-0.50709f, 0.50709f, 0.67612f, -2.36643f},
-            {0.76772f, 0.60609f, 0.12122f, -2.82843f},
-            {-0.35857f, 0.59761f, -0.71714f, 0},
+            {-0.50709, 0.50709, 0.67612, -2.36643f},
+            {0.76772, 0.60609, 0.12122, -2.82843f},
+            {-0.35857, 0.59761, -0.71714, 0},
             {0, 0, 0, 1}
         }
     };
 
     if (!MatrixFuzzyEqual(m4, expected4)) {
         Fail("View Matrix, Arbitrary");
-        PrintMatrix(m4);
+        
         printf("\n");
-        PrintMatrix(expected4);
+        
     } else {
         Pass("View Matrix, Arbitrary");
     }
 }
 
 void TestCamera() {
-    Camera c = NewCamera(200, 125, (float) M_PI_2);
+    Camera c = NewCamera(200, 125, (double) M_PI_2);
 
-    if (!FloatEquality(0.01f, c.pixel_size)) {
+    if (!FloatEquality(0.01, c.pixel_size)) {
         Fail("Pixel Size, Horizontal Canvas");
     } else {
         Pass("Pixel Size, Horizontal Canvas");
     }
 
-    c = NewCamera(125, 200, (float) M_PI_2);
+    c = NewCamera(125, 200, (double) M_PI_2);
 
-    if (!FloatEquality(0.01f, c.pixel_size)) {
+    if (!FloatEquality(0.01, c.pixel_size)) {
         Fail("Pixel Size, Vertical Canvas");
     } else {
         Pass("Pixel Size, Vertical Canvas");
     }
  
-    c = NewCamera(201, 101, (float) M_PI_2);
+    c = NewCamera(201, 101, (double) M_PI_2);
     Ray r = RayForPixel(&c, 100, 50);
 
     if (!TupleFuzzyEqual(NewPnt3(0, 0, 0), r.origin) || !TupleFuzzyEqual(NewVec3(0, 0, -1), r.direction)) {
         Fail("Camera, Center of Canvas");
-        PrintTuple(r.origin);
-        PrintTuple(r.direction);
+        
+        
     } else {
         Pass("Camera, Center of Canvas");
     }
 
-    c = NewCamera(201, 101, (float) M_PI_2);
+    c = NewCamera(201, 101, (double) M_PI_2);
     r = RayForPixel(&c, 0, 0);
 
-    if (!TupleFuzzyEqual(NewPnt3(0, 0, 0), r.origin) || !TupleFuzzyEqual(NewVec3(0.66519f, 0.33259f, -0.66851f), r.direction)) {
+    if (!TupleFuzzyEqual(NewPnt3(0, 0, 0), r.origin) || !TupleFuzzyEqual(NewVec3(0.66519, 0.33259, -0.66851), r.direction)) {
         Fail("Camera, Corner of Canvas");
-        PrintTuple(r.origin);
-        PrintTuple(r.direction);
+        
+        
     } else {
         Pass("Camera, Corner of Canvas");
     }
 
-    c = NewCamera(201, 101, (float) M_PI_2);
-    CameraApplyTransformation(&c, MatrixMultiply(RotationYMatrix((float) M_PI_4), TranslationMatrix(0, -2, 5)));
+    c = NewCamera(201, 101, (double) M_PI_2);
+    CameraApplyTransformation(&c, MatrixMultiply(RotationYMatrix((double) M_PI_4), TranslationMatrix(0, -2, 5)));
     r = RayForPixel(&c, 100, 50);
-    float r2_2 = sqrtf(2) / 2;
+    double r2_2 = sqrt(2) / 2;
  
     if (!TupleFuzzyEqual(NewPnt3(0, 2, -5), r.origin) || !TupleFuzzyEqual(NewVec3(r2_2, 0, -r2_2), r.direction)) {
         Fail("Camera, Transformed");
-        PrintTuple(r.origin);
-        PrintTuple(r.direction);
+        
+        
     } else {
         Pass("Camera, Transformed");
     }
@@ -758,9 +760,9 @@ void TestShadow() {
 void TestPlane() {
 
     bool passed = true;
-    for (float x = 0.1f; x < 1; x += 0.1f) {
-        for (float y = 0.0f; y < 1; y += 0.1f) {
-            for (float z = 0.0f; z < 1; z += 0.1f) {
+    for (double x = 0.1; x < 1; x += 0.1) {
+        for (double y = 0.0; y < 1; y += 0.1) {
+            for (double z = 0.0; z < 1; z += 0.1) {
                 Tuple3 normal = TupleNormalize(NewVec3(x, y, z));
                 Shape test_plane = NewPlane(NewPnt3(0, 0, 0), normal);
 
@@ -768,9 +770,9 @@ void TestPlane() {
 
                 if (!TupleFuzzyEqual(result, normal)) {
                     Fail("Plane Normal");
-                    PrintMatrix(test_plane.transformation);
-                    PrintTuple(normal);
-                    PrintTuple(result);
+                    
+                    
+                    
                     passed = false;
                 }
             }
@@ -806,7 +808,7 @@ void TestSceneReading() {
 
     TEST(s.camera.width == 3840, "Reading json, camera width");
     TEST(s.camera.height == 2160, "Reading json, camera height");
-    TEST(s.camera.fov == 1.047f, "Reading json, camera fov");
+    TEST(s.camera.fov == 1.047, "Reading json, camera fov");
     Matrix4x4 expected_camera_transform = ViewMatrix(NewPnt3(0, 1.5, -5), NewPnt3(0, 1, 0), NewVec3(0, 1, 0));
     TEST(MatrixFuzzyEqual(expected_camera_transform, s.camera.view_transformation), "Reading json, camera transform");
 
@@ -818,9 +820,9 @@ void TestSceneReading() {
 
     Matrix4x4 s1_expected = {
         .contents = {
-            {0.33f, 0, 0, -1.4f},
-            {0, 0.33f,  0, 0.33f},
-            {0, 0, 0.33f, -0.75f},
+            {0.33, 0, 0, -1.4f},
+            {0, 0.33,  0, 0.33f},
+            {0, 0, 0.33, -0.75f},
             {0, 0, 0, 1.0f}
         }
     };
@@ -828,9 +830,9 @@ void TestSceneReading() {
     TEST(MatrixFuzzyEqual(MatrixInvert(s1_expected), s1->inverse_transform), "Reading json, inverse transformation");
     TEST(s.shapes.length == 4, "Reading json, shape list length");
 
-    TEST(FloatEquality(s1->material.ambient_reflection, 0.1f), "Reading json, ambient reflection");
-    TEST(FloatEquality(s1->material.diffuse_reflection, 0.9f), "Reading json, diffuse reflection");
-    TEST(FloatEquality(s1->material.specular_reflection, 0.9f), "Reading json, specular reflection");
+    TEST(FloatEquality(s1->material.ambient_reflection, 0.1), "Reading json, ambient reflection");
+    TEST(FloatEquality(s1->material.diffuse_reflection, 0.9), "Reading json, diffuse reflection");
+    TEST(FloatEquality(s1->material.specular_reflection, 0.9), "Reading json, specular reflection");
     TEST(s1->material.general_reflection == 0.0, "Reading json, general reflection");
     TEST(s1->material.shininess == 200, "Reading json, material shininess");
 
@@ -842,7 +844,7 @@ void TestStripePattern() {
     Tuple3 white = NewColor(255, 255, 255, 255);
 
     Pattern p1 = NewStripedPattern(white, black);
-    Shape s1 = NewSphere(NewPnt3(0, 0, 0), 1.0f);
+    Shape s1 = NewSphere(NewPnt3(0, 0, 0), 1.0);
     s1.material.pattern = p1;
     
     Tuple3 r1 = PatternColorAt(&s1, NewPnt3(0, 0, 0));
@@ -858,9 +860,58 @@ void TestStripePattern() {
     TEST(TupleFuzzyEqual(black, r4), "Stripe pattern, alters in x axis");
 }
 
-int main() {
+void TestScalarSubtract() {
+    Tuple3 t1 = NewTuple3(2, 3, 4, 5);
+    Tuple3 expected = NewTuple3(1, 2, 3, 4);
+    Tuple3 result = TupleScalarSubtract(t1, 1);
+
+    TEST(TupleFuzzyEqual(expected, result), "Tuple scalar subtract");
+}
+
+void TestScalarAdd() {
+    Tuple3 t1 = NewTuple3(2, 3, 4, 5);
+    Tuple3 expected = NewTuple3(3, 4, 5, 6);
+    Tuple3 result = TupleScalarAdd(t1, 1);
+
+    TEST(TupleFuzzyEqual(expected, result), "Tuple scalar add");
+}
+
+void TestCrossProduct() {
+    Tuple3 t1 = NewVec3(1, 2, 3);
+    Tuple3 t2 = NewVec3(2, 3, 4);
+
+    Tuple3 expected = NewVec3(-1, 2, -1);
+    TEST(TupleFuzzyEqual(expected, TupleCrossProduct(t1, t2)), "Tuple cross product");
+
+    expected = NewVec3(1, -2, 1);
+    TEST(TupleFuzzyEqual(expected, TupleCrossProduct(t2, t1)), "Tuple cross product, reversed");
+}
+
+void TestVectorReflect() {
+    Tuple3 t1 = NewVec3(1, -1, 0);
+    Tuple3 n1 = NewVec3(0, 1, 0);
+
+    Tuple3 res = TupleReflect(t1, n1);
+    Tuple3 exp = NewVec3(1, 1, 0);
+
+    TEST(TupleFuzzyEqual(exp, res), "Tuple reflection");
+
+    t1 = NewVec3(0, -1, 0);
+    n1 = NewVec3(sqrt(2)/2, sqrt(2)/2, 0);
+
+    res = TupleReflect(t1, n1);
+    exp = NewVec3(1, 0, 0);
+    TEST(TupleFuzzyEqual(exp, res), "Tuple reflection, second test");
+}
+
+int DoTests() {
     num_failed = 0;
     num_passed = 0;
+
+    TestScalarSubtract();
+    TestScalarAdd();
+    TestCrossProduct();
+    TestVectorReflect();
 
     TestSet();
     TestMatrixEqual();
@@ -897,6 +948,12 @@ int main() {
     TestStripePattern();
 
     printf("Test(s) Passed: %d\nTests(s) Failed: %d\n", num_passed, num_failed);
+
+    return 0;
+}
+
+int main() {
+    DoTests();
 
     return 0;
 }

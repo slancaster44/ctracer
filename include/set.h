@@ -2,7 +2,7 @@
 #define SET_H
 
 typedef struct {
-    void* data;
+    void* data __attribute__ ((aligned (32)));
     unsigned long length;
     unsigned long capacity;
     unsigned long data_width;

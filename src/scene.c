@@ -31,7 +31,7 @@ void SetSceneCamera(Scene* s, Camera c) {
 bool IsInShadow(Scene *s, Tuple3 location) {
     Tuple3 pnt_light_vec = TupleSubtract(s->light.origin, location);
 
-    float distance = TupleMagnitude(pnt_light_vec);
+    double distance = TupleMagnitude(pnt_light_vec);
     Tuple3 direction = TupleNormalize(pnt_light_vec);
 
     Ray ray = NewRay(location, direction);
@@ -85,23 +85,23 @@ Tuple3 ColorFor(Scene *s, Ray r) {
     ConstructSet(&intersections, sizeof(Intersection));
     IntersectScene(s, r, &intersections); 
     
-    float curDepth = FLT_MAX;
+    double curDepth = FLT_MAX;
     Tuple3 curColor = NewColor(0, 0, 0, 0);
-
+    
     for (unsigned j = 0; j < intersections.length; j++) {
+
         Intersection* this_intersection = Index(&intersections, j);
         if (this_intersection->ray_times[0] < 0) {
             continue;
         }
         
         Tuple3 pos = RayPosition(this_intersection->ray, this_intersection->ray_times[0]);
-        float depth = TupleMagnitude(TupleSubtract(r.origin, pos));
+        double depth = TupleMagnitude(TupleSubtract(r.origin, pos));
         if (depth > curDepth) {
             continue;
-        } else {
-            curDepth = depth;
         }
-        
+            
+        curDepth = depth;
         curColor = this_intersection->shape_ptr->material.shader(s, this_intersection);
     }
 
@@ -144,4 +144,8 @@ void RenderScene(Scene* s, Canvas* c) {
     if (leftovers_start != canvas_size) {
         RenderSceneSection(s, c, leftovers_start, canvas_size + 1, c->canvas_width);
     }
+}
+
+void RenderSceneUnthreaded(Scene*  s, Canvas* c) {
+    RenderSceneSection(s,  c, 0, c->canvas_height * c->canvas_width -1, c->canvas_width);
 }

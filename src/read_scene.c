@@ -34,10 +34,10 @@ void FatalDataCheck(void* object, const char* msg) {
     }
 }
 
-void GetFloatScalar(float* output, cJSON* json, const char* name) {
+void GetFloatScalar(double* output, cJSON* json, const char* name) {
     cJSON* data = cJSON_GetObjectItem(json, name);
     FatalDataCheck(data, name);
-    *output = (float) cJSON_GetNumberValue(data);
+    *output = (double) cJSON_GetNumberValue(data);
 }
 
 void GetIntegerScalar(int* output, cJSON* json, const char* name) {
@@ -46,10 +46,10 @@ void GetIntegerScalar(int* output, cJSON* json, const char* name) {
     *output = (int) cJSON_GetNumberValue(data);
 }
 
-void GetFloatListItem(float* out, cJSON* json, int index) {
+void GetFloatListItem(double* out, cJSON* json, int index) {
     cJSON* data = cJSON_GetArrayItem(json, index);
     FatalDataCheck(data, "Failed to get list item");
-    *out = (float) cJSON_GetNumberValue(data);
+    *out = (double) cJSON_GetNumberValue(data);
 }
 
 void GetTuple(Tuple3* output, cJSON* json, const char* name) {
@@ -96,7 +96,7 @@ void GetCamera(Camera* c, cJSON* json) {
     int height;
     GetIntegerScalar(&height, camera_data, "height");
 
-    float fov;
+    double fov;
     GetFloatScalar(&fov, camera_data, "fov");
 
     Camera local_camera = NewCamera((unsigned) width, (unsigned) height, fov);

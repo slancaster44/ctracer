@@ -10,14 +10,14 @@ typedef struct {
 
     unsigned width;
     unsigned height;
-    float fov;
+    double fov;
 
-    float half_width;
-    float half_height;
-    float pixel_size;
+    double half_width;
+    double half_height;
+    double pixel_size;
 } Camera;
 
-Camera NewCamera(unsigned width, unsigned height, float fov);
+Camera NewCamera(unsigned width, unsigned height, double fov);
 void CameraApplyTransformation(Camera* c, Matrix4x4 t);
 Ray RayForPixel(Camera* c, unsigned x, unsigned y);
 

@@ -27,7 +27,7 @@ Tuple3 PhongShader(Scene* s, Intersection* i) {
     Tuple3 specular;
 
     Tuple3 light_pos_vector = TupleNormalize(TupleSubtract(s->light.origin, pos));
-    float light_dot_normal = TupleDotProduct(light_pos_vector, normal); //Measure of light to surface angle
+    double light_dot_normal = TupleDotProduct(light_pos_vector, normal); //Measure of light to surface angle
 
     if (light_dot_normal < 0.0 || IsInShadow(s, pos)) {
         diffuse = BLACK;
@@ -38,12 +38,12 @@ Tuple3 PhongShader(Scene* s, Intersection* i) {
         diffuse = TupleScalarMultiply(effective_color, material.diffuse_reflection * light_dot_normal);
 
         Tuple3 reflect_vector = TupleReflect(TupleNegate(light_pos_vector), normal);
-        float reflect_dot_eye = TupleDotProduct(reflect_vector, eyev);
+        double reflect_dot_eye = TupleDotProduct(reflect_vector, eyev);
 
         if (reflect_dot_eye < 0.0) {
             specular = BLACK;
         } else {
-            float factor = powf(reflect_dot_eye, material.shininess);
+            double factor = pow(reflect_dot_eye, material.shininess);
             specular = TupleScalarMultiply(s->light.color, material.specular_reflection * factor);
         }
     }

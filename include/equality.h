@@ -4,7 +4,7 @@
 #include <stdbool.h>
 #include <math.h>
 
-#define EQUALITY_EPSILON 0.001f
+#define EQUALITY_EPSILON 0.001
 
-bool FloatEquality(float f1, float f2);
+bool FloatEquality(double f1, double f2);
 #endif

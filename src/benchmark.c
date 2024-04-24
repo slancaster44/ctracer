@@ -201,7 +201,7 @@ void DemoSphereScene() {
 
     RenderScene(&sc, &c);
 
-    WriteToPPM(&c, "sphere_scene.ppm");
+    WriteToPPM(&c, "renderings/benchmark_sphere_scene.ppm");
 
     DeconstructScene(&sc);
     DeconstructCanvas(&c);

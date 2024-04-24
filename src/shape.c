@@ -4,9 +4,9 @@
 
 #include <math.h>
 
-Shape NewSphere(Tuple3 cp, float radius) {
+Shape NewSphere(Tuple3 cp, double radius) {
     Shape s;
-    s.material = NewMaterial(NewTuple3(0.8f, 1.0f, 0.6f, 1.0f));
+    s.material = NewMaterial(NewTuple3(0.8, 1.0, 0.6, 1.0));
     s.type = SPHERE;
 
     Matrix4x4 center_point_translation = TranslationMatrix(cp[0], cp[1], cp[2]);
@@ -21,7 +21,7 @@ Shape NewSphere(Tuple3 cp, float radius) {
 
 Shape NewPlane(Tuple3 pnt, Tuple3 normal) {
     Shape s;
-    s.material = NewMaterial(NewTuple3(1.0f, 0.8f, 0.6f, 1.0f));
+    s.material = NewMaterial(NewTuple3(1.0, 0.8, 0.6, 1.0));
     s.type = PLANE;
 
     Matrix4x4 translation = TranslationMatrix(pnt[0], pnt[1], pnt[2]);
@@ -29,11 +29,11 @@ Shape NewPlane(Tuple3 pnt, Tuple3 normal) {
     //Find Normal transform
     normal = TupleNormalize(normal);
     Tuple3 cp = TupleCrossProduct(normal, NewVec3(0, 1, 0));
-    float cos_theta = TupleDotProduct(normal, NewVec3(0, 1, 0));
+    double cos_theta = TupleDotProduct(normal, NewVec3(0, 1, 0));
 
     Matrix4x4 v_brack = SkewSymmetricCPMatrix(cp);
     Matrix4x4 v_brack_2 = MatrixMultiply(v_brack, v_brack);
-    float q = 1 / (1 + cos_theta);
+    double q = 1 / (1 + cos_theta);
 
     Matrix4x4 rotation = MatrixAdd(IdentityMatrix(), MatrixAdd(v_brack, MatrixScalarMultiply(v_brack_2, q)));
 

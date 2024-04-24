@@ -42,9 +42,9 @@ void WriteToPPM(Canvas* c, const char* filename) {
     fputs("255\n", fp);
 
     for (unsigned i = 0; i < c->canvas_height * c->canvas_width; i++) {
-        float red = fminf(c->buffer[i][0] * 255, 255);
-        float green = fminf(c->buffer[i][1] * 255, 255);
-        float blue = fminf(c->buffer[i][2] * 255, 255);
+        double red = fmin(c->buffer[i][0] * 255, 255);
+        double green = fmin(c->buffer[i][1] * 255, 255);
+        double blue = fmin(c->buffer[i][2] * 255, 255);
 
 
         char red_str[4];

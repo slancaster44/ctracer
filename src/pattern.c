@@ -15,20 +15,24 @@ Tuple3 PatternColorAt(Shape* s, Tuple3 pos_orig) {
     position = MatrixTupleMultiply(s->material.pattern.inverse_transform, position);
 
     switch (p.type) {
-    case STRIPED:
-        return fmodf(floorf(position[0]), 2) == 0 ? p.color_a : p.color_b;
-    case RINGED:
-        float magn = sqrtf((position[0] * position[0]) + (position[1] * position[1]));
-        return fmodf(floorf(magn), 2.0) == 0 ? p.color_a : p.color_b;
-    case CHECKERED:
+    case STRIPED: ;
+        return fmod(floor(position[0]), 2) == 0 ? p.color_a : p.color_b;
+        break;
+    case RINGED: ;
+        double magn = sqrt((position[0] * position[0]) + (position[1] * position[1]));
+        return fmod(floor(magn), 2.0) == 0 ? p.color_a : p.color_b;
+        break;
+    case CHECKERED: ;
         position[3] = 0.0; //The final element in the vector should not contribute
-        float sum = TupleFloorSum(position);
-        return fmodf(sum, 2.0f) == 0.0f ? p.color_a : p.color_b;
-    case GRADIENT:
-        float position_scalar = (position[0] + 1) / 2.0f; //Distance from -1 to 1
+        double sum = TupleFloorSum(position);
+        return fmod(sum, 2.0) == 0.0 ? p.color_a : p.color_b;
+        break;
+    case GRADIENT: ;
+        double position_scalar = (position[0] + 1) / 2.0; //Distance from -1 to 1
         Tuple3 color_offset = TupleSubtract(p.color_b, p.color_a);
         return TupleAdd(p.color_a, TupleScalarMultiply(color_offset, position_scalar));
-    default:
+        break;
+    default: ;
         printf("Unknown pattern\n");
         exit(1);
     }

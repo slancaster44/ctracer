@@ -1,6 +1,6 @@
 #include "ray.h"
 
-Tuple3 RayPosition(Ray r, float pos) {
+Tuple3 RayPosition(Ray r, double pos) {
     return TupleAdd(r.origin, TupleScalarMultiply(r.direction, pos));
 }
 

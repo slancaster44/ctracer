@@ -20,7 +20,7 @@ typedef struct Shape {
 } Shape;
 
 void ApplyTransformation(Shape* s, Matrix4x4 t);
-Shape NewSphere(Tuple3 center_point, float radius);
+Shape NewSphere(Tuple3 center_point, double radius);
 Shape NewPlane(Tuple3 pnt, Tuple3 normal_vector);
 Tuple3 NormalAt(Shape* s, Tuple3 pnt);
 unsigned long AddShape(Scene* s, Shape sp);
