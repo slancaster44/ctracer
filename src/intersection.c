@@ -32,6 +32,7 @@ Intersection IntersectPlane(Shape* s, Ray r) {
     
     result.count = 1;
     result.ray_times[0] = -r.origin[1] / r.direction[1];
+    result.ray_times[1] = DBL_MAX;
     
     return result;
 }
@@ -52,7 +53,7 @@ Intersection IntersectSphere(Shape* s, Ray r) {
     } else if (discriminant == 0) {
         result.count = 1;
         result.ray_times[0] = -b / (a * 2);
-        result.ray_times[1] = FLT_MAX; //The results get sorted below, need this sorted last
+        result.ray_times[1] = DBL_MAX; //The results get sorted below, need this sorted last
 
     } else {
         result.count = 2;
@@ -63,11 +64,6 @@ Intersection IntersectSphere(Shape* s, Ray r) {
         result.ray_times[0] = (-b - d_sqrt) / a_2;
         result.ray_times[1] = (-b + d_sqrt) / a_2;
     }
-
-    double max = fmax(result.ray_times[0], result.ray_times[1]);
-    double min = fmin(result.ray_times[0], result.ray_times[1]);
-    result.ray_times[0] = min;
-    result.ray_times[1] = max;
 
     return result;
 }
@@ -85,6 +81,12 @@ Intersection Intersect(Shape* s, Ray r) {
     default:
         printf("Cannot intersect shape of type '%d'\n", s->type);
         exit(1);
+    }
+
+    if (result.ray_times[0] > result.ray_times[1]) {
+        double tmp = result.ray_times[1];
+        result.ray_times[1] = result.ray_times[0];
+        result.ray_times[0] = tmp;
     }
 
     return result;

@@ -11,7 +11,6 @@ int MatrixEqual(Matrix4x4 m1, Matrix4x4 m2) {
     __m256d cmp2 = _mm256_cmp_pd(m1.contents[2], m2.contents[2], _CMP_EQ_OQ);
     __m256d cmp3 = _mm256_cmp_pd(m1.contents[3], m2.contents[3], _CMP_EQ_OQ);
 
-
     __m256i r;
     r[0] = (unsigned) _mm256_movemask_pd(cmp0);
     r[1] = (unsigned) _mm256_movemask_pd(cmp1);
@@ -105,7 +104,6 @@ Tuple3 MatrixTupleMultiply(Matrix4x4 m1, Tuple3 t1) {
     out[1] = TupleDotProduct(m1.contents[1], t1);
     out[2] = TupleDotProduct(m1.contents[2], t1);
     out[3] = TupleDotProduct(m1.contents[3], t1);
-
 
     return out;
 }

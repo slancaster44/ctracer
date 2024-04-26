@@ -2,12 +2,12 @@
 #define MATERIAL_H
 
 #include "tuple.h"
-#include "intersection.h"
+#include "set.h"
 #include "pattern.h"
 #include "scene.h"
 
-typedef Tuple3 (*Shader)(Scene* s, Intersection* i);
-Tuple3 PhongShader(Scene* s, Intersection* i);
+typedef Tuple3 (*Shader)(Scene* s, Set* intersections, unsigned long idx);
+Tuple3 PhongShader(Scene* s, Set* intersections, unsigned long idx);
 
 typedef struct {
     Pattern pattern;
@@ -16,6 +16,8 @@ typedef struct {
     double specular_reflection;
     double shininess;
     double general_reflection;
+    double refractive_index;
+    double transparency;
     Shader shader;
 } Material;
 

@@ -37,7 +37,8 @@ Shape NewPlane(Tuple3 pnt, Tuple3 normal) {
 
     Matrix4x4 rotation = MatrixAdd(IdentityMatrix(), MatrixAdd(v_brack, MatrixScalarMultiply(v_brack_2, q)));
 
-    s.transformation = MatrixMultiply(translation, rotation);
+    s.transformation = MatrixMultiply(IdentityMatrix(), translation);
+    s.transformation = MatrixMultiply(s.transformation, rotation);
     s.inverse_transform = MatrixInvert(s.transformation);
 
     return s;

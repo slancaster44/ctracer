@@ -123,8 +123,8 @@ Tuple3 TupleSubtract(Tuple3 t1, Tuple3 t2) {
 }
 
 Tuple3 TupleReflect(Tuple3 t1, Tuple3 normal) {
-    double x = 2 * TupleDotProduct(t1, normal);
-    return TupleSubtract(t1, TupleScalarMultiply(normal, x));
+    double angle = 2 * TupleDotProduct(t1, normal);
+    return TupleSubtract(t1, TupleScalarMultiply(normal, angle));
 }
 
 //TODO: No Test

@@ -4,6 +4,27 @@
 #include <math.h>
 #include <stdio.h>
 
+Tuple3 StripedPatternAt(Tuple3 position, Pattern p) {
+    return fmod(floor(position[0]), 2) == 0 ? p.color_a : p.color_b;
+}
+
+Tuple3 RingedPatternAt(Tuple3 position, Pattern p) {
+    double magn = sqrt((position[0] * position[0]) + (position[1] * position[1]));
+    return fmod(floor(magn), 2.0) == 0 ? p.color_a : p.color_b;
+}
+
+Tuple3 CheckeredPatternAt(Tuple3 position, Pattern p) {
+    position[3] = 0.0; //The final element in the vector should not contribute
+    double sum = TupleFloorSum(position);
+    return fmod(sum, 2.0) == 0.0 ? p.color_a : p.color_b;
+}
+
+Tuple3 GradientPatternAt(Tuple3  position, Pattern p) {
+    double position_scalar = (position[0] + 1) / 2.0; //Distance on [-1..1] scaled to [0..1]
+    Tuple3 color_offset = TupleSubtract(p.color_b, p.color_a);
+    return TupleAdd(p.color_a, TupleScalarMultiply(color_offset, position_scalar));
+}
+
 Tuple3 PatternColorAt(Shape* s, Tuple3 pos_orig) {
 
     Pattern p = s->material.pattern;
@@ -15,24 +36,19 @@ Tuple3 PatternColorAt(Shape* s, Tuple3 pos_orig) {
     position = MatrixTupleMultiply(s->material.pattern.inverse_transform, position);
 
     switch (p.type) {
-    case STRIPED: ;
-        return fmod(floor(position[0]), 2) == 0 ? p.color_a : p.color_b;
+    case STRIPED:
+        return StripedPatternAt(position, p);
         break;
-    case RINGED: ;
-        double magn = sqrt((position[0] * position[0]) + (position[1] * position[1]));
-        return fmod(floor(magn), 2.0) == 0 ? p.color_a : p.color_b;
+    case RINGED:
+        return RingedPatternAt(position, p);
         break;
-    case CHECKERED: ;
-        position[3] = 0.0; //The final element in the vector should not contribute
-        double sum = TupleFloorSum(position);
-        return fmod(sum, 2.0) == 0.0 ? p.color_a : p.color_b;
+    case CHECKERED:
+        return CheckeredPatternAt(position, p);
         break;
-    case GRADIENT: ;
-        double position_scalar = (position[0] + 1) / 2.0; //Distance from -1 to 1
-        Tuple3 color_offset = TupleSubtract(p.color_b, p.color_a);
-        return TupleAdd(p.color_a, TupleScalarMultiply(color_offset, position_scalar));
+    case GRADIENT:
+        return GradientPatternAt(position, p);
         break;
-    default: ;
+    default:
         printf("Unknown pattern\n");
         exit(1);
     }

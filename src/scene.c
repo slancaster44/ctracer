@@ -42,8 +42,7 @@ bool IsInShadow(Scene *s, Tuple3 location) {
 
     for (unsigned i = 0; i < intersections.length; i++){
         Intersection* this_intersection = Index(&intersections, i);
-        if (this_intersection->ray_times[0] < (distance - EQUALITY_EPSILON) && 
-            this_intersection->ray_times[0] > EQUALITY_EPSILON) {
+        if (this_intersection->ray_times[0] < distance && this_intersection->ray_times[0] > 0) {
             DeconstructSet(&intersections);
             return true;
         }
@@ -102,7 +101,7 @@ Tuple3 ColorFor(Scene *s, Ray r) {
         }
             
         curDepth = depth;
-        curColor = this_intersection->shape_ptr->material.shader(s, this_intersection);
+        curColor = this_intersection->shape_ptr->material.shader(s, &intersections, j);
     }
 
     DeconstructSet(&intersections);

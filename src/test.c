@@ -572,15 +572,17 @@ void TestReflection() {
     Scene reflective_scene;
     ConstructDefaultScene(&reflective_scene);
 
-    Shape new_plane = NewPlane(NewPnt3(0, 0, 0), NewVec3(0, 1, 0));
+    Shape new_plane = NewPlane(NewPnt3(0, -1, 0), NewVec3(0, 1, 0));
     new_plane.material = NewMaterial(NewColor(255, 255, 255, 255));
     new_plane.material.general_reflection = 0.5;
     ApplyTransformation(&new_plane, TranslationMatrix(0, -1, 0));
     AddShape(&reflective_scene, new_plane);
 
-    Ray r2 = NewRay(NewPnt3(0, 0, -3), NewVec3(0, -sqrt(2.0) / 2, sqrt(2.0) / 2));
+    Ray r2 = NewRay(NewPnt3(0, 0, -3), NewVec3(0, -(sqrt(2.0) / 2), sqrt(2.0) / 2));
     Tuple3 result = ColorFor(&reflective_scene, r2);
-    PrintTuple(result);
+    TEST(TupleFuzzyEqual(NewTuple3(0.748213, 0.76312, 0.734115, 0.76312), result), "Scene reflection");
+
+    DeconstructScene(&reflective_scene);
 }
 
 void TestScene() {
@@ -833,10 +835,14 @@ void TestSceneReading() {
     TEST(FloatEquality(s1->material.ambient_reflection, 0.1), "Reading json, ambient reflection");
     TEST(FloatEquality(s1->material.diffuse_reflection, 0.9), "Reading json, diffuse reflection");
     TEST(FloatEquality(s1->material.specular_reflection, 0.9), "Reading json, specular reflection");
+    TEST(FloatEquality(s1->material.refractive_index,  1.0), "Reading json, refractive index");
+    TEST(FloatEquality(s1->material.transparency, 0.0), "Reading json, transparency");
     TEST(s1->material.general_reflection == 0.0, "Reading json, general reflection");
     TEST(s1->material.shininess == 200, "Reading json, material shininess");
 
     TEST(PhongShader == s1->material.shader, "Reading json, shader function");
+
+    DeconstructScene(&s);
 }
 
 void TestStripePattern() {
@@ -904,6 +910,93 @@ void TestVectorReflect() {
     TEST(TupleFuzzyEqual(exp, res), "Tuple reflection, second test");
 }
 
+void TestRefraction() {
+    //Test some refraction
+    Scene s;
+    ConstructDefaultScene(&s);
+
+    Shape floor = NewPlane(NewPnt3(0, 0, 0), NewVec3(0, 1, 0));
+    ApplyTransformation(&floor, TranslationMatrix(0, -1, 0));
+    floor.material.transparency = 0.5;
+    floor.material.refractive_index = 1.5;
+    AddShape(&s, floor);
+
+    Shape ball = NewSphere(NewPnt3(0, 0, 0), 1.0);
+    ApplyTransformation(&ball, TranslationMatrix(0, -3.5, -0.5));
+    ball.material.pattern.color_a = NewTuple3(1, 0, 0, 1);
+    ball.material.ambient_reflection = 0.5;
+    AddShape(&s, ball);
+
+    Ray r = NewRay(NewPnt3(0, 0, -3), NewVec3(0, -sqrt(2)/2, sqrt(2)/2));
+    Tuple3 result = ColorFor(&s, r);
+    Tuple3 expect = NewTuple3(0.93642, 0.68642, 0.68642, 1.0);
+
+    TEST(TupleFuzzyEqual(result, expect), "Refraction, shader test");
+    PrintTuple(result);
+
+    DeconstructScene(&s);
+
+    // Test no refraction
+    Scene s2;
+    ConstructDefaultScene(&s2);
+    Shape* shape_1 = Index(&s2.shapes, 0);
+    shape_1->material.transparency = 1.0;
+    shape_1->material.refractive_index = 1.5;
+
+    Ray r2 = NewRay(NewPnt3(0, 0, sqrt(2)/2), NewVec3(0, 1, 0));
+    Tuple3 result2 = ColorFor(&s2, r2);
+    TEST(TupleFuzzyEqual(NewTuple3(0,  0, 0, 0), result2), "Refraction, none");
+}
+
+Shape NewGlassSphere() {
+    Shape sphere = NewSphere(NewPnt3(0, 0, 0), 1.0);
+    sphere.material.transparency = 1.0;
+    sphere.material.refractive_index = 1.5;
+
+    return sphere;
+}
+
+void CalculateRefractionRatio(Set* intersections, unsigned long idx, double* n);
+void TestCalculateRefraction() {
+    Scene s;
+    Camera c;
+    Light l;
+    ConstructScene(&s, c, l);
+
+    Shape sphere_a = NewGlassSphere();
+    ApplyTransformation(&sphere_a, ScalingMatrix(2, 2, 2));
+    sphere_a.material.refractive_index = 1.5;
+    AddShape(&s, sphere_a);
+
+    Shape sphere_b = NewGlassSphere();
+    ApplyTransformation(&sphere_b, TranslationMatrix(0, 0, -0.25));
+    sphere_b.material.refractive_index = 2.0;
+    AddShape(&s, sphere_b);
+
+    Shape sphere_c = NewGlassSphere();
+    ApplyTransformation(&sphere_c, TranslationMatrix(0, 0, 0.25));
+    sphere_c.material.refractive_index = 2.5;
+    AddShape(&s, sphere_c);
+
+    Ray r = NewRay(NewPnt3(0, 0, -4), NewVec3(0, 0, 1));
+    Set intersections;
+    ConstructSet(&intersections, sizeof(Intersection));
+    IntersectScene(&s, r, &intersections);
+
+    double* results = alloca(2 * sizeof(double));
+    CalculateRefractionRatio(&intersections, 0, results);
+    TEST(results[0] == 1.0 && results[1] == 1.5, "Cacluate refraction ratio, 0");
+
+    CalculateRefractionRatio(&intersections, 1, results);
+    TEST(results[0] == 1.5 && results[1] == 2.0, "Calculate refraction ratio, 1");
+
+    CalculateRefractionRatio(&intersections, 2, results);
+    TEST(results[0] == 2.0 && results[1] == 2.5, "Calculate refraction ratio, 2");
+
+    DeconstructSet(&intersections);
+    DeconstructScene(&s);
+}
+
 int DoTests() {
     num_failed = 0;
     num_passed = 0;
@@ -946,6 +1039,8 @@ int DoTests() {
 
     TestSceneReading();
     TestStripePattern();
+    TestRefraction();
+    TestCalculateRefraction();
 
     printf("Test(s) Passed: %d\nTests(s) Failed: %d\n", num_passed, num_failed);
 

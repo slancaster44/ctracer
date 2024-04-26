@@ -1,35 +1,96 @@
 #include <math.h>
+#include <string.h>
 
 #include "scene.h"
 #include "equality.h"
 #include "shape.h"
 #include "intersection.h"
+#include "float.h"
+
 #define BLACK NewColor(0, 0, 0, 0)
 
+bool IsAllFalse(bool* set, size_t length) {
+    for (int i = 0; i < length; i++) {
+        if (set[i]) {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+/* Generates two numbers required for calculating refraction
+ * n[0]: 
+ */
+void CalculateRefractionRatio(Set* intersections, unsigned long idx, double* n) {
+    size_t mapping_size = intersections->length * sizeof(bool);
+    bool* mapping = alloca(mapping_size);
+    memset(mapping, false, mapping_size);
+
+    Shape* last_added = NULL;
+
+    for (unsigned long i = 0; i < intersections->length; i++) {
+        if (i == idx) {
+            if (IsAllFalse(mapping, mapping_size / sizeof(bool))) {
+                n[0] = 1.0;
+            } else {
+                n[0] = last_added->material.refractive_index;
+            }
+        }
+
+        Intersection* intr = Index(intersections, i);
+        if (mapping[i]) {
+            if (last_added == intr->shape_ptr) {
+                intr->shape_ptr = NULL;
+            }
+        } else {
+            last_added = intr->shape_ptr;
+        }
+        mapping[i] = !mapping[i];
+
+        if (i == idx) {
+            if (IsAllFalse(mapping, mapping_size / sizeof(bool))) {
+                n[1] = 1.0;
+            } else {
+                n[1] = last_added->material.refractive_index;
+            }
+
+            break;
+        }
+
+    }
+
+}
+
 static int recursion_count = 0;
-Tuple3 PhongShader(Scene* s, Intersection* i) {
+#define RECURSION_LIMIT 8
+
+Tuple3 PhongShader(Scene* s, Set* intersections, unsigned long idx) {
+    Intersection* i = Index(intersections, idx);
 
     Tuple3 eyev = TupleNegate(i->ray.direction);
     Tuple3 pos = RayPosition(i->ray, i->ray_times[0]);
     Tuple3 normal = NormalAt(i->shape_ptr, pos);
     if (TupleDotProduct(normal, eyev) < 0) {
-        normal = TupleNegate(normal);
+       normal = TupleNegate(normal);
     }
-    Tuple3 reflectv = TupleReflect(i->ray.direction, normal);
+
+    Tuple3 offset_normal = TupleScalarMultiply(normal, EQUALITY_EPSILON);
+    Tuple3 over_pos = TupleAdd(pos, offset_normal); //move the position out a little to handle floating point errors
+    Tuple3 under_pos = TupleSubtract(pos, offset_normal);
+
     Material material = i->shape_ptr->material;
-
     Tuple3 color = PatternColorAt(i->shape_ptr, pos);
-
     Tuple3 effective_color = TupleMultiply(color, s->light.color);
     Tuple3 ambient = TupleScalarMultiply(effective_color, material.ambient_reflection);
 
     Tuple3 diffuse;
     Tuple3 specular;
 
-    Tuple3 light_pos_vector = TupleNormalize(TupleSubtract(s->light.origin, pos));
+    Tuple3 light_pos_vector = TupleNormalize(TupleSubtract(s->light.origin, over_pos));
     double light_dot_normal = TupleDotProduct(light_pos_vector, normal); //Measure of light to surface angle
 
-    if (light_dot_normal < 0.0 || IsInShadow(s, pos)) {
+    if (light_dot_normal < 0.0 || IsInShadow(s, over_pos)) {
         diffuse = BLACK;
         specular = BLACK;
 
@@ -49,16 +110,42 @@ Tuple3 PhongShader(Scene* s, Intersection* i) {
     }
 
     Tuple3 general_reflection = BLACK;
-    if (!FloatEquality(0, material.general_reflection) && s != NULL) {
+    if (material.general_reflection != 0) {
         recursion_count++;
-        if (recursion_count > (1 << 3)) {
+        if (recursion_count > RECURSION_LIMIT) {
             recursion_count = 0;
         } else {
-            general_reflection = ColorFor(s, NewRay(pos, reflectv));
+            Tuple3 reflectv = TupleReflect(i->ray.direction, normal);
+            general_reflection = ColorFor(s, NewRay(over_pos, reflectv));
             general_reflection = TupleScalarMultiply(general_reflection, material.general_reflection);
         }
-
     }
 
-    return TupleAdd(general_reflection, TupleAdd(ambient, TupleAdd(diffuse, specular)));
+    Tuple3 refraction_color = BLACK;
+    if (recursion_count > RECURSION_LIMIT) {
+        recursion_count = 0;
+    } else {
+        recursion_count ++;
+        double* n = alloca(2 * sizeof(double));
+        CalculateRefractionRatio(intersections, idx, n);
+
+        double n_ratio = n[0] / n[1];
+        double cos_i = TupleDotProduct(eyev, normal);
+        double sin2_t = (n_ratio * n_ratio) * (1 - (cos_i * cos_i));
+
+        if (sin2_t < 1.0) {
+            double cos_t = sqrt(1.0 - sin2_t);
+
+            Tuple3 eyev_alt = TupleScalarMultiply(eyev, n_ratio);
+            Tuple3 norm_alt = TupleScalarMultiply(normal, n_ratio * cos_i - cos_t);
+            Tuple3 direction = TupleSubtract(norm_alt, eyev_alt);
+
+            Ray refract_ray = NewRay(under_pos, direction);
+            refraction_color = ColorFor(s, refract_ray);
+            refraction_color = TupleScalarMultiply(refraction_color, material.transparency);
+        }
+    }
+    
+
+    return TupleAdd(refraction_color, TupleAdd(general_reflection, TupleAdd(ambient, TupleAdd(diffuse, specular))));
 }

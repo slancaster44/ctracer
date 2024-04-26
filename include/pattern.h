@@ -2,7 +2,7 @@
 #define PATTERN_H
 
 #include "tuple.h"
-#include "pattern.h"
+#include "matrix.h"
 
 typedef enum {
     SOLID,
@@ -20,6 +20,7 @@ typedef struct {
     Matrix4x4 inverse_transform;
 } Pattern;
 
+typedef struct Shape Shape;
 Tuple3 PatternColorAt(Shape* s, Tuple3 position);
 Pattern NewSolidPattern(Tuple3 color);
 Pattern NewStripedPattern(Tuple3 color_a, Tuple3 color_b);

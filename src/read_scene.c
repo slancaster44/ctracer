@@ -201,6 +201,8 @@ void GetMaterial(Material* m, cJSON* json) {
     GetFloatScalar(&(m->specular_reflection), shape_material_json, "specular");
     GetFloatScalar(&(m->shininess), shape_material_json, "shininess");
     GetFloatScalar(&(m->general_reflection), shape_material_json, "general");
+    GetFloatScalar(&(m->refractive_index), shape_material_json, "refractive_index");
+    GetFloatScalar(&(m->transparency), shape_material_json, "transparency");
 
 
     cJSON* shader_json = cJSON_GetObjectItem(shape_material_json, "shader");
