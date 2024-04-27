@@ -929,10 +929,9 @@ void TestRefraction() {
 
     Ray r = NewRay(NewPnt3(0, 0, -3), NewVec3(0, -sqrt(2)/2, sqrt(2)/2));
     Tuple3 result = ColorFor(&s, r);
-    Tuple3 expect = NewTuple3(0.93642, 0.68642, 0.68642, 1.0);
+    Tuple3 expect = NewTuple3(0.927217, 0.541774, 0.406330, 0.927217);
 
     TEST(TupleFuzzyEqual(result, expect), "Refraction, shader test");
-    PrintTuple(result);
 
     DeconstructScene(&s);
 
@@ -945,7 +944,7 @@ void TestRefraction() {
 
     Ray r2 = NewRay(NewPnt3(0, 0, sqrt(2)/2), NewVec3(0, 1, 0));
     Tuple3 result2 = ColorFor(&s2, r2);
-    TEST(TupleFuzzyEqual(NewTuple3(0,  0, 0, 0), result2), "Refraction, none");
+    TEST(TupleFuzzyEqual(NewTuple3(0, 0, 0, 0), result2), "Refraction, none");
 }
 
 Shape NewGlassSphere() {

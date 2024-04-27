@@ -17,7 +17,7 @@ benchmark:
 demo:
 	clear
 	$(CC) -O2 $(CFLAGS) -g $(INCLUDE) $(SOURCE) src/demo.c $(LDFLAGS)
-	./tracer
+	time ./tracer
 
 profile:
 	clear

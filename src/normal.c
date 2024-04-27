@@ -13,12 +13,12 @@ Tuple3 SphereNormalAt(Shape* s, Tuple3 p) {
 }
 
 Tuple3 PlaneNormalAt(Shape* s, Tuple3 p) {
-   p = MatrixTupleMultiply(s->inverse_transform, p);
+    p = MatrixTupleMultiply(s->inverse_transform, p);
 
     Tuple3 obj_normal = NewVec3(0, 1, 0);
     Tuple3 world_normal = MatrixTupleMultiply(MatrixTranspose(s->inverse_transform), obj_normal);
     world_normal[3] = 0;
-    
+
     return TupleNormalize(world_normal);
 }
 
