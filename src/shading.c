@@ -23,6 +23,7 @@ bool IsAllFalse(bool* set, size_t length) {
  * n[0]: 
  */
 void CalculateRefractionRatio(Set* intersections, unsigned long idx, double* n) {
+    size_t mapping_length = intersections->length;
     size_t mapping_size = intersections->length * sizeof(bool);
     bool* mapping = alloca(mapping_size);
     memset(mapping, false, mapping_size);
@@ -31,7 +32,7 @@ void CalculateRefractionRatio(Set* intersections, unsigned long idx, double* n) 
 
     for (unsigned long i = 0; i < intersections->length; i++) {
         if (i == idx) {
-            if (IsAllFalse(mapping, mapping_size / sizeof(bool))) {
+            if (IsAllFalse(mapping, mapping_length)) {
                 n[0] = 1.0;
             } else {
                 n[0] = last_added->material.refractive_index;
@@ -39,17 +40,11 @@ void CalculateRefractionRatio(Set* intersections, unsigned long idx, double* n) 
         }
 
         Intersection* intr = Index(intersections, i);
-        if (mapping[i]) {
-            if (last_added == intr->shape_ptr) {
-                intr->shape_ptr = NULL;
-            }
-        } else {
-            last_added = intr->shape_ptr;
-        }
+        last_added = mapping[i] && last_added == intr->shape_ptr ? NULL : intr->shape_ptr;
         mapping[i] = !mapping[i];
 
         if (i == idx) {
-            if (IsAllFalse(mapping, mapping_size / sizeof(bool))) {
+            if (IsAllFalse(mapping, mapping_length)) {
                 n[1] = 1.0;
             } else {
                 n[1] = last_added->material.refractive_index;
@@ -161,7 +156,7 @@ Tuple3 PhongShader(Scene* s, Set* intersections, unsigned long idx) {
 
         general_reflection = TupleScalarMultiply(general_reflection, reflectance);
         refraction_color = TupleScalarMultiply(refraction_color, 1 - reflectance);
-     }
+    }
     
     recursion_count = 0;
     return TupleAdd(refraction_color, TupleAdd(general_reflection, TupleAdd(ambient, TupleAdd(diffuse, specular))));
