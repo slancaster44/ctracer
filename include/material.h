@@ -6,8 +6,8 @@
 #include "pattern.h"
 #include "scene.h"
 
-typedef Tuple3 (*Shader)(Scene* s, Set* intersections, unsigned long idx);
-Tuple3 PhongShader(Scene* s, Set* intersections, unsigned long idx);
+typedef Tuple3 (*Shader)(Scene* s, Set* intersections, unsigned long idx, int limit);
+Tuple3 PhongShader(Scene* s, Set* intersections, unsigned long idx, int limit);
 
 typedef struct {
     Pattern pattern;

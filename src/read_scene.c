@@ -124,6 +124,8 @@ void GetShapeType(SHAPE_TYPE* type, cJSON* json) {
         *type = SPHERE;
     } else if (strncmp(shape_type_name, "plane", 5) == 0) {
         *type = PLANE;
+    } else if (strncmp(shape_type_name, "cube", 4) == 0) {
+        *type = CUBE;
     } else {
         printf("Unkown shape type tag\n");
         exit(1);

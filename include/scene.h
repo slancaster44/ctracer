@@ -22,6 +22,7 @@ bool IsInShadow(Scene *s, Tuple3 location);
 
 void ReadScene(Scene* s, const char* filename);
 Tuple3 ColorFor(Scene *s, Ray r);
+Tuple3 ColorForLimited(Scene *s, Ray r, int limit);
 void RenderScene(Scene* s, Canvas* c);
 void RenderSceneUnthreaded(Scene*  s, Canvas* c);
 

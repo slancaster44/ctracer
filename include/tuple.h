@@ -13,6 +13,8 @@ typedef __m256d Tuple3 __attribute__ ((aligned (32)));
     SHUFFLE_M256(val, val, p1, p2, p3, p4)
 #define ADJOINT_M256(val) \
     SWIZZLE_M256(val, 0,2,1,3)
+#define DISTRIBUTE_256(A, B) \
+    _mm512_insertf64x4(_mm512_insertf64x4(_mm512_set1_pd(0.0), A, 0), B, 1)
 
 Tuple3 NewVec3(double x, double y, double z);
 Tuple3 NewPnt3(double x, double y, double z);

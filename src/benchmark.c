@@ -221,16 +221,31 @@ void DemoJsonScene() {
     DeconstructCanvas(&canvas);
     DeconstructScene(&s);
 }
+
+void BenchmarkCubeNormalization() {
+    Shape cube = NewCube(NewPnt3(0, 0, 0), 1.0);
+
+    for (double x = -2.0; x < 2.0; x += 0.1) {
+        for (double y = -2.0; y < 2.0; y += 0.1) {
+            for (double z = -2.0; z < 2.0; z += 0.1) {
+                NormalAt(&cube, NewPnt3(x, y, z));
+            }
+        }
+    }
+}
+
 int main() {
-    BenchmarkMatrixEqual();
-    BenchmarkMatrixFuzzyEqual();
-    BenchmarkMatrixMultiply();
-    BenchmarkMatrixInvert();
-    BenchmarkMatrixTranspose();
-    BenchmarkMatrixTupleMultiply();
-    BenchmarkRaySphereIntersection();
-    BENCHMARK(DemoSphereScene(), 1, 10);
-    BENCHMARK(DemoJsonScene(), 1, 5);
-    BenchmarkScene();
+    // BenchmarkMatrixEqual();
+    // BenchmarkMatrixFuzzyEqual();
+    // BenchmarkMatrixMultiply();
+    // BenchmarkMatrixInvert();
+    // BenchmarkMatrixTranspose();
+    // BenchmarkMatrixTupleMultiply();
+    // BenchmarkRaySphereIntersection();
+    // BENCHMARK(DemoSphereScene(), 1, 10);
+    // BENCHMARK(DemoJsonScene(), 1, 5); //Infinite 
+    BENCHMARK(BenchmarkCubeNormalization(), 1, 5);
+
+    //BenchmarkScene();
     return 0;
 }

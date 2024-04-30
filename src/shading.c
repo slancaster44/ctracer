@@ -57,13 +57,8 @@ void CalculateRefractionRatio(Set* intersections, unsigned long idx, double* n) 
 
 }
 
-static int recursion_count = 0;
-#define RECURSION_LIMIT 8
-
-Tuple3 PhongShader(Scene* s, Set* intersections, unsigned long idx) {
-    recursion_count++;
-    if (recursion_count > RECURSION_LIMIT) {
-        recursion_count = 0;
+Tuple3 PhongShader(Scene* s, Set* intersections, unsigned long idx, int limit) {
+    if (limit == 0) {
         return BLACK;
     }
 
@@ -113,7 +108,7 @@ Tuple3 PhongShader(Scene* s, Set* intersections, unsigned long idx) {
     Tuple3 general_reflection = BLACK;
     if (material.general_reflection != 0) {
         Tuple3 reflectv = TupleReflect(i->ray.direction, normal);
-        general_reflection = ColorFor(s, NewRay(over_pos, reflectv));
+        general_reflection = ColorForLimited(s, NewRay(over_pos, reflectv), limit - 1);
         general_reflection = TupleScalarMultiply(general_reflection, material.general_reflection);
     }
 
@@ -133,7 +128,7 @@ Tuple3 PhongShader(Scene* s, Set* intersections, unsigned long idx) {
         Tuple3 direction = TupleSubtract(norm_alt, eyev_alt);
 
         Ray refract_ray = NewRay(under_pos, direction);
-        refraction_color = ColorFor(s, refract_ray);
+        refraction_color = ColorForLimited(s, refract_ray, limit - 1);
 
         refraction_color = TupleScalarMultiply(refraction_color, material.transparency);
     }
@@ -158,6 +153,5 @@ Tuple3 PhongShader(Scene* s, Set* intersections, unsigned long idx) {
         refraction_color = TupleScalarMultiply(refraction_color, 1 - reflectance);
     }
     
-    recursion_count = 0;
     return TupleAdd(refraction_color, TupleAdd(general_reflection, TupleAdd(ambient, TupleAdd(diffuse, specular))));
 }

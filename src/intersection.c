@@ -12,13 +12,16 @@ Intersection NewIntersection(Shape* s, Ray r) {
     i.count = 0;
     i.shape_ptr = s;
     i.ray = r;
-    memset(i.ray_times, 0, sizeof(double) * MAX_NUMBER_INTERSECTIONS);
+
+    for (int idx = 0; idx < MAX_NUMBER_INTERSECTIONS; idx++) {
+        i.ray_times[idx] = DBL_MAX;
+    }
+    
     return i;
 }
 
 Intersection IntersectPlane(Shape* s, Ray r) {
     Intersection result = NewIntersection(s, r);
-
     r = RayTransform(r, s->inverse_transform);
 
     /* Because the ray has been transformed into "shape space"
@@ -32,7 +35,6 @@ Intersection IntersectPlane(Shape* s, Ray r) {
     
     result.count = 1;
     result.ray_times[0] = -r.origin[1] / r.direction[1];
-    result.ray_times[1] = DBL_MAX;
     
     return result;
 }
@@ -53,7 +55,6 @@ Intersection IntersectSphere(Shape* s, Ray r) {
     } else if (discriminant == 0) {
         result.count = 1;
         result.ray_times[0] = -b / (a * 2);
-        result.ray_times[1] = DBL_MAX; //The results get sorted below, need this sorted last
 
     } else {
         result.count = 2;
@@ -68,6 +69,31 @@ Intersection IntersectSphere(Shape* s, Ray r) {
     return result;
 }
 
+Intersection IntersectCube(Shape* s, Ray r) {
+    Intersection result = NewIntersection(s, r);
+    r = RayTransform(r, s->inverse_transform);
+
+    Tuple3 tmin_numerators = TupleSubtract(_mm256_set1_pd(-1.0), r.origin);
+    Tuple3 tmax_numerators = TupleSubtract(_mm256_set1_pd(1.0), r.origin);
+
+    tmin_numerators = TupleDivide(tmin_numerators, r.direction);
+    tmax_numerators = TupleDivide(tmax_numerators, r.direction);
+
+    Tuple3 tmaxs = _mm256_max_pd(tmin_numerators, tmax_numerators);
+    Tuple3 tmins = _mm256_min_pd(tmin_numerators, tmax_numerators);
+
+    __m512d partial_result = DISTRIBUTE_256(tmins, tmaxs);
+
+    double tmin = _mm512_mask_reduce_max_pd(0x8F, partial_result); //Mask 1000_1111; Exclude 'w' and elements from tmaxs
+    double tmax = _mm512_mask_reduce_min_pd(0xF8, partial_result);
+
+    result.ray_times[0] = tmin;
+    result.ray_times[1] = tmax;
+    result.count = tmin > tmax ? 0 : 2;
+
+    return result;
+}
+
 Intersection Intersect(Shape* s, Ray r) {
     Intersection result;
 
@@ -77,6 +103,9 @@ Intersection Intersect(Shape* s, Ray r) {
         break;
     case PLANE:
         result = IntersectPlane(s, r);
+        break;
+    case CUBE:
+        result = IntersectCube(s, r);
         break;
     default:
         printf("Cannot intersect shape of type '%d'\n", s->type);

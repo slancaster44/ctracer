@@ -471,7 +471,8 @@ void SphereNormal() {
     Tuple3 expected_out = NewVec3(0, 0.70711, -0.70711);
 
     if (!TupleFuzzyEqual(n, expected_out)) {
-        
+        PrintTuple(expected_out);
+        PrintTuple(n);
         Fail("Sphere Normal, Translation");
     } else {
         Pass("Sphere Normal, Translation");
@@ -481,10 +482,11 @@ void SphereNormal() {
     s.inverse_transform = MatrixInvert(s.transformation);
 
     n = NormalAt(&s, NewPnt3(0, sqrt(2) / 2, -sqrt(2) / 2));
-    expected_out = NewVec3(0.0, 0.97014, -0.24254);
+    expected_out = TupleNormalize(NewVec3(0.0, 0.97014, -0.24254));
 
     if (!TupleFuzzyEqual(n, expected_out)) {
-        
+        PrintTuple(expected_out);
+        PrintTuple(n);
         Fail("Sphere Normal, Scaling & Rotation");
     } else {
         Pass("Sphere Normal, Scaling & Rotation");
@@ -996,6 +998,74 @@ void TestCalculateRefraction() {
     DeconstructScene(&s);
 }
 
+void TestCubeIntersection() {
+    Shape cube = NewCube(NewPnt3(0, 0, 0), 1.0); //The unit cube
+
+    Tuple3 tests[7][3] = {
+        { NewPnt3(5, 0.5, 0) , NewVec3(-1, 0, 0), NewTuple3(4, 6, 0, 0) },
+        { NewPnt3(-5, 0.5, 0),  NewVec3(1, 0, 0), NewTuple3(4, 6, 0, 0) },
+        { NewPnt3(0.5, 5, 0) , NewVec3(0, -1, 0), NewTuple3(4, 6, 0, 0) },
+        { NewPnt3(0.5, -5, 0),  NewVec3(0, 1, 0), NewTuple3(4, 6, 0, 0) },
+        { NewPnt3(0.5, 0, 5) , NewVec3(0, 0, -1), NewTuple3(4, 6, 0, 0) },
+        { NewPnt3(0.5, 0, -5),  NewVec3(0, 0, 1), NewTuple3(4, 6, 0, 0) },
+        { NewPnt3(0, 0.5, 0),  NewVec3(0, 0, 1), NewTuple3(-1, 1, 0, 0) },
+    };
+
+    for (int j = 0; j < 7; j++) {
+        Intersection intersect = Intersect(&cube, NewRay(tests[j][0], tests[j][1]));
+
+        double exp_1 = tests[j][2][0];
+        double exp_2 = tests[j][2][1];
+
+        TEST(intersect.count == 2 && intersect.ray_times[0] == exp_1 && intersect.ray_times[1] == exp_2, "Cube intersection");
+    }
+
+    Tuple3 nohits[6][2] = {
+        { NewPnt3(-2, 0, 0), NewVec3(0.2673, 0.5345, 0.8018) },
+        { NewPnt3(0, -2, 0), NewVec3(0.8018, 0.2673, 0.5345) },
+        { NewPnt3(0, 0, -2), NewVec3(0.5345, 0.8018, 0.2673) },
+        { NewPnt3(2, 0, 2), NewVec3(0, 0, -1) },
+        { NewPnt3(0, 2, 2), NewVec3(0, -1, 0) },
+        { NewPnt3(2, 2, 0), NewVec3(-1, 0, 0)}
+    };
+
+    for (int k = 0; k < 6; k++) {
+        Intersection intersect = Intersect(&cube, NewRay(nohits[k][0], nohits[k][1]));
+        TEST(intersect.count == 0, "Cube intersection, no hit");
+    }
+
+}
+
+
+void TestCubeNormal() {
+    Tuple3 tests [11][2] = {
+        { NewPnt3(1, 0.5, -0.8) , NewVec3(1, 0, 0)},
+        { NewPnt3(-1, -0.2, 0.9) , NewVec3(-1, 0, 0) },
+        { NewPnt3(-0.4, 1, -0.1) , NewVec3(0, 1, 0) },
+        { NewPnt3(0.3, -1, -0.7) , NewVec3(0, -1, 0) },
+        { NewPnt3(-0.6, 0.3, 1) , NewVec3(0, 0, 1) },
+        { NewPnt3(0.4, 0.4, -1) , NewVec3(0, 0, -1) },
+        { NewPnt3(1, 1, 1) , NewVec3(1, 0, 0) },
+        { NewPnt3(-1, -1, -1) , NewVec3(-1, 0, 0) },
+        { NewPnt3(-2, -2, -1), NewVec3(-1, 0, 0)},
+        { NewPnt3(-1.9, -1.7, -2.0), NewVec3(0, 0, -1)},
+        { NewPnt3(0.9, 0.9, 0.9), NewVec3(1.0, 0, 0)}
+    };
+
+    Shape cube = NewCube(NewPnt3(0, 0, 0), 1.0);
+
+    for (int i = 0; i < 11; i++) {
+        Tuple3 test_pnt = tests[i][0];
+        Tuple3 expected = tests[i][1];
+        Tuple3 result = NormalAt(&cube, test_pnt);
+
+        TEST(TupleFuzzyEqual(expected, result), "Cube normal test");
+        if (!TupleFuzzyEqual(expected, result)) {
+            PrintTuple(result);
+        }
+    }
+}
+
 int DoTests() {
     num_failed = 0;
     num_passed = 0;
@@ -1040,6 +1110,8 @@ int DoTests() {
     TestStripePattern();
     TestRefraction();
     TestCalculateRefraction();
+    TestCubeIntersection();
+    TestCubeNormal();
 
     printf("Test(s) Passed: %d\nTests(s) Failed: %d\n", num_passed, num_failed);
 
@@ -1048,6 +1120,19 @@ int DoTests() {
 
 int main() {
     DoTests();
+
+    Scene s;
+    ReadScene(&s, "scenes/three_spheres.json");
+    Tuple3 sample = ColorFor(&s, RayForPixel(&s.camera, 2100, 2000));
+    PrintTuple(sample);
+
+    Canvas canvas;
+    ConstructCanvas(&canvas, s.camera.height, s.camera.width);
+    RenderSceneUnthreaded(&s, &canvas);
+    unsigned location = (canvas.canvas_width * 2000) + 2000;
+    Tuple3 canvas_sample = canvas.buffer[location];
+    PrintTuple(canvas_sample);
+
 
     return 0;
 }

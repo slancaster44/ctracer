@@ -57,7 +57,7 @@ void IntersectScene(Scene* s, Ray r, Set* intersection_set) {
         Shape* this_shape = Index(&s->shapes, i);
         Intersection intersection = Intersect(this_shape, r);
         
-        if (intersection.count > 0) {
+        if (intersection.count != 0) {
             AppendValue(intersection_set, &intersection);
         }
     }
@@ -79,7 +79,12 @@ void RenderSceneSection (
     }
 }
 
-Tuple3 ColorFor(Scene *s, Ray r) {
+Tuple3 ColorFor(Scene* s, Ray r) {
+    return ColorForLimited(s, r, 8);
+}
+
+Tuple3 ColorForLimited(Scene *s, Ray r, int limit) {
+
     Set intersections;
     ConstructSet(&intersections, sizeof(Intersection));
     IntersectScene(s, r, &intersections); 
@@ -101,7 +106,7 @@ Tuple3 ColorFor(Scene *s, Ray r) {
         }
             
         curDepth = depth;
-        curColor = this_intersection->shape_ptr->material.shader(s, &intersections, j);
+        curColor = this_intersection->shape_ptr->material.shader(s, &intersections, j, limit);
     }
 
     DeconstructSet(&intersections);

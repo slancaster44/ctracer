@@ -44,6 +44,21 @@ Shape NewPlane(Tuple3 pnt, Tuple3 normal) {
     return s;
 }
 
+Shape NewCube(Tuple3 location, double size) {
+    Shape s;
+    s.material = NewMaterial(NewTuple3(1.0, 0.8, 0.6, 1.0));
+    s.type = CUBE;
+
+    Matrix4x4 center_point_translation = TranslationMatrix(location[0], location[1], location[2]);
+    Tuple3 size_vector = TupleScalarMultiply(NewVec3(1, 1, 1), size);
+    Matrix4x4 size_matrix = ScalingMatrix(size_vector[0], size_vector[1], size_vector[2]);
+
+    s.transformation = MatrixMultiply(center_point_translation, size_matrix);
+    s.inverse_transform = MatrixInvert(s.transformation);
+
+    return s;
+}
+
 void ApplyTransformation(Shape* s, Matrix4x4 t) {
     s->transformation = MatrixMultiply(s->transformation, t);
     s->inverse_transform = MatrixInvert(s->transformation);

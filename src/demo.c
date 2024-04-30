@@ -136,8 +136,8 @@ void DemoUnthreaded() {
 
 int main() {
     //DemoCanvas();
-    DemoJsonScene();
+    //DemoJsonScene();
     //DemoPlane();
     //DemoSphereScene();
-    //DemoUnthreaded();
+    DemoUnthreaded();
 }
