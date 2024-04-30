@@ -1121,18 +1121,5 @@ int DoTests() {
 int main() {
     DoTests();
 
-    Scene s;
-    ReadScene(&s, "scenes/three_spheres.json");
-    Tuple3 sample = ColorFor(&s, RayForPixel(&s.camera, 2100, 2000));
-    PrintTuple(sample);
-
-    Canvas canvas;
-    ConstructCanvas(&canvas, s.camera.height, s.camera.width);
-    RenderSceneUnthreaded(&s, &canvas);
-    unsigned location = (canvas.canvas_width * 2000) + 2000;
-    Tuple3 canvas_sample = canvas.buffer[location];
-    PrintTuple(canvas_sample);
-
-
     return 0;
 }
