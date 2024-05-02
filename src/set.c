@@ -6,6 +6,7 @@
 #define SET_DEFAULT_CAPACITY 4
 
 void ConstructSet(Set* s, unsigned data_width) {
+    memset(s, 0, sizeof(Set));
     s->data = malloc(data_width * SET_DEFAULT_CAPACITY);
     memset(s->data, 0, data_width * SET_DEFAULT_CAPACITY);
 
@@ -15,8 +16,11 @@ void ConstructSet(Set* s, unsigned data_width) {
 }
 
 void DeconstructSet(Set* s) {
+    if (s->data != NULL) {
+        free(s->data);
+    }
+
     s->length = 0;
-    free(s->data);
 }
 
 unsigned long AppendValue(Set* s, void* value) {
@@ -38,4 +42,11 @@ void* Index(Set* s, unsigned long index) {
 void CopyOut(Set* s, unsigned long index, void* out) {
     void* ptr = Index(s, index);
     memcpy(out, ptr, s->data_width);
+}
+
+void CloneSet(Set* dst, Set* src) {
+    ConstructSet(dst, src->data_width);
+    for (unsigned i = 0; i < src->length; i++) {
+        AppendValue(dst, Index(src, i));
+    }
 }

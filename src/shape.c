@@ -39,7 +39,11 @@ Shape NewPlane(Tuple3 pnt, Tuple3 normal) {
 
     s.transformation = MatrixMultiply(IdentityMatrix(), translation);
     s.transformation = MatrixMultiply(s.transformation, rotation);
+    s.transformation.contents[3][3] = fmin(1.0, s.transformation.contents[3][3]); //Investigate, can we just do the math different?
+
     s.inverse_transform = MatrixInvert(s.transformation);
+
+
 
     return s;
 }

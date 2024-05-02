@@ -2,6 +2,7 @@
 #include <math.h>
 
 #include "tuple.h"
+#include "tree.h"
 #include "equality.h"
 #include "matrix.h"
 #include "canvas.h"
@@ -70,6 +71,17 @@ void TestSet() {
         printf("\t%d\n", out);
     } else {
         Pass("Set Copy Out");
+    }
+
+    Set s2;
+    CloneSet(&s2, &s);
+    TEST(s2.length == s.length, "Set cloning, set length");
+
+    for (unsigned i = 0; i < s2.length; i++) {
+        int* exp = Index(&s, i);
+        int* res = Index(&s2, i);
+
+        TEST(*exp == *res && exp != res, "Set cloning")
     }
 
     DeconstructSet(&s);
@@ -582,6 +594,7 @@ void TestReflection() {
 
     Ray r2 = NewRay(NewPnt3(0, 0, -3), NewVec3(0, -(sqrt(2.0) / 2), sqrt(2.0) / 2));
     Tuple3 result = ColorFor(&reflective_scene, r2);
+    PrintTuple(result);
     TEST(TupleFuzzyEqual(NewTuple3(0.748213, 0.76312, 0.734115, 0.76312), result), "Scene reflection");
 
     DeconstructScene(&reflective_scene);
@@ -933,6 +946,7 @@ void TestRefraction() {
     Tuple3 result = ColorFor(&s, r);
     Tuple3 expect = NewTuple3(0.927217, 0.541774, 0.406330, 0.927217);
 
+    PrintTuple(result);
     TEST(TupleFuzzyEqual(result, expect), "Refraction, shader test");
 
     DeconstructScene(&s);
@@ -1066,6 +1080,52 @@ void TestCubeNormal() {
     }
 }
 
+void TestTree() {
+    Tree parent;
+    ConstructTree(&parent);
+
+    Shape sphere = NewSphere(NewPnt3(0, 0, -3), 2.0);
+    AddShapeToTree(&parent, sphere);
+
+    Tree child;
+    ConstructTree(&child);
+
+    Shape plane = NewPlane(NewPnt3(0,  0, 0), NewVec3(0, 1, 0));
+    AddShapeToTree(&child, plane);
+
+    Shape cube = NewCube(NewPnt3(0, -5, 0), 4.0);
+    AddShapeToTree(&child, cube);
+
+    CopyInChild(&parent, &child);
+    DeconstructTree(&child);        
+    //Make sure we can get rid of the original child before referencing the tree's copy
+
+    Node* child_ptr = Index(&parent.start.children, 0);
+    Set* child_shapes = &child_ptr->shapes;
+
+    TEST(child_shapes->length == 2, "Tree test, number of child shapes");
+    
+    Shape* res_plane = Index(child_shapes, 0);
+    TEST(res_plane->type == plane.type, "Tree test, shape 1 type");
+    TEST(MatrixEqual(res_plane->transformation, plane.transformation), "Tree test, shape 1 transform");
+    
+    Shape* res_cube = Index(child_shapes, 1);
+    TEST(res_cube->type == cube.type, "Tree test, shape 2 type");
+    TEST(MatrixEqual(res_cube->transformation, cube.transformation), "Tree test, shape 2 transform");
+    
+
+    Shape* res_sphere = Index(&parent.start.shapes, 0);
+    TEST(res_sphere->type == sphere.type, "Tree test, shape 3 type");
+    TEST(MatrixEqual(res_sphere->transformation, sphere.transformation), "Tree test, shape 3 transform");
+
+    Matrix4x4 test_transform = TranslationMatrix(1, 2, 3);
+    PropogateTransform(&parent, test_transform);
+
+    TEST(MatrixFuzzyEqual(res_plane->transformation, test_transform), "Tree test, transformation propogation");
+
+    DeconstructTree(&parent);
+}
+
 int DoTests() {
     num_failed = 0;
     num_passed = 0;
@@ -1112,6 +1172,8 @@ int DoTests() {
     TestCalculateRefraction();
     TestCubeIntersection();
     TestCubeNormal();
+
+    TestTree();
 
     printf("Test(s) Passed: %d\nTests(s) Failed: %d\n", num_passed, num_failed);
 
