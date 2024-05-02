@@ -22,5 +22,7 @@ typedef struct {
 } Material;
 
 Material NewMaterial(Tuple3 color);
+void PropagateMaterial(Tree* tree, Material material);
+
 
 #endif

@@ -221,8 +221,8 @@ void GetMaterial(Material* m, cJSON* json) {
 
 }
 
-void GetShapes(Set* shapes, cJSON* json) {
-    ConstructSet(shapes, sizeof(Shape));
+void GetShapes(Tree* shapes, cJSON* json) {
+    ConstructTree(shapes);
 
     cJSON* shapes_list = cJSON_GetObjectItem(json, "shapes");
     if (shapes_list == NULL) {
@@ -241,7 +241,7 @@ void GetShapes(Set* shapes, cJSON* json) {
 
         GetMaterial(&this_shape.material, this_shape_json);
 
-        AppendValue(shapes, &this_shape);
+        AddShapeToTree(shapes, this_shape);
     }
 }
 

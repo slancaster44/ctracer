@@ -26,8 +26,7 @@ Shape NewPlane(Tuple3 pnt, Tuple3 normal) {
 
     Matrix4x4 translation = TranslationMatrix(pnt[0], pnt[1], pnt[2]);
 
-    //Find Normal transform -- vec(0, 1, 0) * M = normal
-    //So normal * inv(transpose(M)) = vec(0, 1, 0)
+    //Find transform such that inv(transpose(M)) * vec(0, 1, 0) = normal
     normal = TupleNormalize(normal);
     Matrix4x4 rotation = IdentityMatrix();
 

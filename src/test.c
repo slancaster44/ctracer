@@ -594,7 +594,6 @@ void TestReflection() {
 
     Ray r2 = NewRay(NewPnt3(0, 0, -3), NewVec3(0, -(sqrt(2.0) / 2), sqrt(2.0) / 2));
     Tuple3 result = ColorFor(&reflective_scene, r2);
-    PrintTuple(result);
     TEST(TupleFuzzyEqual(NewTuple3(0.739048, 0.749048, 0.729048, 0.749048), result), "Scene reflection");
 
     DeconstructScene(&reflective_scene);
@@ -831,7 +830,7 @@ void TestSceneReading() {
     TEST(TupleEqual(s.light.origin, NewPnt3(-10, 10, -10)), "Reading json, light origin");
     TEST(TupleEqual(s.light.color, NewColor(255, 255, 255, 255)), "Reading json, light color");
 
-    Shape* s1 = Index(&s.shapes, 0);
+    Shape* s1 = Index(&s.shapes.start.shapes, 0);
     TEST(s1->type == SPHERE, "Reading json, shape type");
 
     Matrix4x4 s1_expected = {
@@ -844,7 +843,7 @@ void TestSceneReading() {
     };
     TEST(MatrixFuzzyEqual(s1_expected, s1->transformation), "Reading json, shape transformation");
     TEST(MatrixFuzzyEqual(MatrixInvert(s1_expected), s1->inverse_transform), "Reading json, inverse transformation");
-    TEST(s.shapes.length == 4, "Reading json, shape list length");
+    TEST(s.shapes.start.shapes.length == 4, "Reading json, shape list length");
 
     TEST(FloatEquality(s1->material.ambient_reflection, 0.1), "Reading json, ambient reflection");
     TEST(FloatEquality(s1->material.diffuse_reflection, 0.9), "Reading json, diffuse reflection");
@@ -953,7 +952,7 @@ void TestRefraction() {
     // Test no refraction
     Scene s2;
     ConstructDefaultScene(&s2);
-    Shape* shape_1 = Index(&s2.shapes, 0);
+    Shape* shape_1 = Index(&s2.shapes.start.shapes, 0);
     shape_1->material.transparency = 1.0;
     shape_1->material.refractive_index = 1.5;
 
@@ -1118,9 +1117,15 @@ void TestTree() {
     TEST(MatrixEqual(res_sphere->transformation, sphere.transformation), "Tree test, shape 3 transform");
 
     Matrix4x4 test_transform = TranslationMatrix(1, 2, 3);
-    PropogateTransform(&parent, test_transform);
+    PropagateTransform(&parent, test_transform);
 
-    TEST(MatrixFuzzyEqual(res_plane->transformation, test_transform), "Tree test, transformation propogation");
+    TEST(MatrixFuzzyEqual(res_plane->transformation, test_transform), "Tree test, transformation propagation");
+
+    Material new_material = NewMaterial(NewColor(255, 123, 221, 255));
+    PropagateMaterial(&parent, new_material);
+
+    TEST(TupleEqual(new_material.pattern.color_a, res_cube->material.pattern.color_a), "Tree test, material propagation");
+    TEST(TupleEqual(new_material.pattern.color_b, res_cube->material.pattern.color_b), "Tree test, material propagation");
 
     DeconstructTree(&parent);
 }

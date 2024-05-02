@@ -2,7 +2,7 @@
 #define TREE_H
 
 #include "set.h"
-#include "shape.h"
+#include "ray.h"
 
 typedef struct Node {
     struct Node* parent;
@@ -19,10 +19,8 @@ void DeconstructTree(Tree* tree);
 void CloneTree(Tree* destination, Tree* source);
 void CopyInChild(Tree* parent, Tree* child);
 
-void AddShapeToTree(Tree* tree, Shape shape);
 void IntersectTree(Tree* tree, Ray r, Set* intersections);
 
-void PropogateTransform(Tree* tree, Matrix4x4 transform);
-void PropogateMaterial(Tree* tree, Material material);
+void PropagateTransform(Tree* tree, Matrix4x4 transform);
 
 #endif

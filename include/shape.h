@@ -27,7 +27,8 @@ Shape NewPlane(Tuple3 pnt, Tuple3 normal_vector);
 Shape NewCube(Tuple3 pnt, double size);
 
 Tuple3 NormalAt(Shape* s, Tuple3 pnt);
-unsigned long AddShape(Scene* s, Shape sp);
+void AddShape(Scene* s, Shape sp);
+void AddShapeToTree(Tree* tree, Shape shape);
 
 
 #endif

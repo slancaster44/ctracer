@@ -13,15 +13,15 @@
 void ConstructScene(Scene* s, Camera c, Light l) {
     s->camera = c;
     s->light = l;
-    ConstructSet(&(s->shapes), sizeof(Shape));
+    ConstructTree(&(s->shapes));
 }
 
 void DeconstructScene(Scene* s) {
-    DeconstructSet(&(s->shapes));
+    DeconstructTree(&s->shapes);
 }
 
-unsigned long AddShape(Scene* s, Shape sp) {
-    return AppendValue(&(s->shapes), &sp);
+void AddShape(Scene* s, Shape sp) {
+    AddShapeToTree(&s->shapes, sp);
 }
 
 void SetSceneCamera(Scene* s, Camera c) {
@@ -53,14 +53,7 @@ bool IsInShadow(Scene *s, Tuple3 location) {
 }
 
 void IntersectScene(Scene* s, Ray r, Set* intersection_set) {
-    for (unsigned i = 0; i < s->shapes.length; i++) {
-        Shape* this_shape = Index(&s->shapes, i);
-        Intersection intersection = Intersect(this_shape, r);
-        
-        if (intersection.count != 0) {
-            AppendValue(intersection_set, &intersection);
-        }
-    }
+    IntersectTree(&s->shapes, r, intersection_set);
 }
 
 void RenderSceneSection (

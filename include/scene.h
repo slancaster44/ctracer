@@ -4,12 +4,12 @@
 #include <stdbool.h>
 
 #include "light.h"
-#include "set.h"
+#include "tree.h"
 #include "camera.h"
 #include "canvas.h"
 
 typedef struct {
-    Set shapes;
+    Tree shapes;
     Light light;
     Camera camera;
 } Scene;
@@ -25,5 +25,7 @@ Tuple3 ColorFor(Scene *s, Ray r);
 Tuple3 ColorForLimited(Scene *s, Ray r, int limit);
 void RenderScene(Scene* s, Canvas* c);
 void RenderSceneUnthreaded(Scene*  s, Canvas* c);
+
+
 
 #endif
