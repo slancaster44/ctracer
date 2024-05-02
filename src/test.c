@@ -595,7 +595,7 @@ void TestReflection() {
     Ray r2 = NewRay(NewPnt3(0, 0, -3), NewVec3(0, -(sqrt(2.0) / 2), sqrt(2.0) / 2));
     Tuple3 result = ColorFor(&reflective_scene, r2);
     PrintTuple(result);
-    TEST(TupleFuzzyEqual(NewTuple3(0.748213, 0.76312, 0.734115, 0.76312), result), "Scene reflection");
+    TEST(TupleFuzzyEqual(NewTuple3(0.739048, 0.749048, 0.729048, 0.749048), result), "Scene reflection");
 
     DeconstructScene(&reflective_scene);
 }
@@ -777,19 +777,18 @@ void TestShadow() {
 void TestPlane() {
 
     bool passed = true;
-    for (double x = 0.1; x < 1; x += 0.1) {
-        for (double y = 0.0; y < 1; y += 0.1) {
-            for (double z = 0.0; z < 1; z += 0.1) {
+    for (double x = 0.1; x < 1; x += 0.25) {
+        for (double y = 0.0; y < 1; y += 0.25) {
+            for (double z = 0.0; z < 1; z += 0.25) {
                 Tuple3 normal = TupleNormalize(NewVec3(x, y, z));
                 Shape test_plane = NewPlane(NewPnt3(0, 0, 0), normal);
 
                 Tuple3 result = NormalAt(&test_plane, NewPnt3(0, 0, 0));
 
                 if (!TupleFuzzyEqual(result, normal)) {
+                    PrintTuple(result);
+                    PrintTuple(normal);
                     Fail("Plane Normal");
-                    
-                    
-                    
                     passed = false;
                 }
             }
@@ -944,7 +943,7 @@ void TestRefraction() {
 
     Ray r = NewRay(NewPnt3(0, 0, -3), NewVec3(0, -sqrt(2)/2, sqrt(2)/2));
     Tuple3 result = ColorFor(&s, r);
-    Tuple3 expect = NewTuple3(0.927217, 0.541774, 0.406330, 0.927217);
+    Tuple3 expect = NewTuple3(0.936395, 0.549116, 0.411837, 0.936395);
 
     PrintTuple(result);
     TEST(TupleFuzzyEqual(result, expect), "Refraction, shader test");

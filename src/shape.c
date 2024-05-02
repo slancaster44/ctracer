@@ -26,24 +26,23 @@ Shape NewPlane(Tuple3 pnt, Tuple3 normal) {
 
     Matrix4x4 translation = TranslationMatrix(pnt[0], pnt[1], pnt[2]);
 
-    //Find Normal transform
+    //Find Normal transform -- vec(0, 1, 0) * M = normal
+    //So normal * inv(transpose(M)) = vec(0, 1, 0)
     normal = TupleNormalize(normal);
-    Tuple3 cp = TupleCrossProduct(normal, NewVec3(0, 1, 0));
-    double cos_theta = TupleDotProduct(normal, NewVec3(0, 1, 0));
+    Matrix4x4 rotation = IdentityMatrix();
 
-    Matrix4x4 v_brack = SkewSymmetricCPMatrix(cp);
-    Matrix4x4 v_brack_2 = MatrixMultiply(v_brack, v_brack);
-    double q = 1 / (1 + cos_theta);
+    rotation.contents[0][1] = normal[0];
+    rotation.contents[1][1] = normal[1] == 0.0 ? EQUALITY_EPSILON : normal[1];
+    rotation.contents[2][1] = normal[2];
+    rotation.contents[3][1] = normal[3];
 
-    Matrix4x4 rotation = MatrixAdd(IdentityMatrix(), MatrixAdd(v_brack, MatrixScalarMultiply(v_brack_2, q)));
+    rotation = MatrixTranspose(rotation);
+    rotation = MatrixInvert(rotation);
 
     s.transformation = MatrixMultiply(IdentityMatrix(), translation);
     s.transformation = MatrixMultiply(s.transformation, rotation);
-    s.transformation.contents[3][3] = fmin(1.0, s.transformation.contents[3][3]); //Investigate, can we just do the math different?
 
     s.inverse_transform = MatrixInvert(s.transformation);
-
-
 
     return s;
 }

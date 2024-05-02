@@ -132,6 +132,7 @@ static inline __m256d invertHelper(__m256d m1) {
     out[2] = -out[2];
     
     if (det == 0) {
+        PrintTuple(m1);
         printf("Warning: Failed to Generate Inverse Matrix\n");
     }
 
@@ -315,4 +316,12 @@ Matrix4x4 SkewSymmetricCPMatrix(Tuple3 t1) {
     };
 
     return result;
+}
+
+Matrix4x4 RectifyMatrix(Matrix4x4 m) {
+    for (int i = 0; i < 4; i++) {
+        m.contents[i][i] = m.contents[i][i] == 0.0 ? EQUALITY_EPSILON : m.contents[i][i];
+    }
+
+    return m;
 }

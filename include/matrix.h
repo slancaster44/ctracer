@@ -32,5 +32,6 @@ void PrintMatrix(Matrix4x4 m1);
 Matrix4x4 IdentityMatrix();
 Matrix4x4 ViewMatrix(Tuple3 from, Tuple3 to, Tuple3 upvec);
 Matrix4x4 SkewSymmetricCPMatrix(Tuple3 t1);
+Matrix4x4 RectifyMatrix(Matrix4x4 m);
 
 #endif
