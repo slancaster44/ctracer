@@ -5,7 +5,6 @@
 #include "ray.h"
 #include "matrix.h"
 #include "material.h"
-#include "scene.h"
 
 typedef enum {
     SPHERE,
@@ -27,8 +26,7 @@ Shape NewPlane(Tuple3 pnt, Tuple3 normal_vector);
 Shape NewCube(Tuple3 pnt, double size);
 
 Tuple3 NormalAt(Shape* s, Tuple3 pnt);
-void AddShape(Scene* s, Shape sp);
-void AddShapeToTree(Tree* tree, Shape shape);
 
+void AddShape(Scene* s, Shape sp);
 
 #endif

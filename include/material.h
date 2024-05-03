@@ -4,8 +4,8 @@
 #include "tuple.h"
 #include "set.h"
 #include "pattern.h"
-#include "scene.h"
 
+typedef struct Scene Scene;
 typedef Tuple3 (*Shader)(Scene* s, Set* intersections, unsigned long idx, int limit);
 Tuple3 PhongShader(Scene* s, Set* intersections, unsigned long idx, int limit);
 
@@ -22,7 +22,6 @@ typedef struct {
 } Material;
 
 Material NewMaterial(Tuple3 color);
-void PropagateMaterial(Tree* tree, Material material);
 
 
 #endif

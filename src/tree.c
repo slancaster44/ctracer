@@ -1,7 +1,9 @@
 #include "tree.h"
 #include "intersection.h"
 #include "shape.h"
+#include "bounding.h"
 #include <string.h>
+#include <math.h>
 
 void ConstructTree(Tree* tree) {
     tree->start.parent = NULL;
@@ -30,7 +32,6 @@ void CloneNode(Node* destination, Node* source) {
     CloneSet(&destination->shapes, &source->shapes);
 
     for (unsigned i = 0; i < source->children.length; i++) {
-        
         Node new_child;
         
         CloneNode(&new_child, Index(&source->children, i));
@@ -49,12 +50,12 @@ void CopyInChild(Tree* parent, Tree* child) {
 
     Node* child_ptr = Index(&parent->start.children, idx);
     CloneNode(child_ptr, &child->start);
-    
     child_ptr->parent = &parent->start;
 }
 
 void AddShapeToTree(Tree* tree, Shape shape) {
     AppendValue(&tree->start.shapes, &shape);
+    CalculateBounds(tree);
 }
 
 void PropagateTransformOnNode(Node* node, Matrix4x4 transform) {
@@ -90,6 +91,15 @@ void PropagateMaterial(Tree* tree, Material material) {
 }
 
 void IntersectNode(Node* n, Ray r, Set* intersections) {
+    for (unsigned i = 0; i < n->children.length; i++) {
+        Node* child = Index(&n->children, i);
+        IntersectNode(child, r, intersections);
+    }
+
+    if (!IsInBounds(n->bounds, r)) {
+        return;
+    }
+
     for (unsigned i = 0; i < n->shapes.length; i++) {
         Shape* this_shape = Index(&n->shapes, i);
         Intersection intersection = Intersect(this_shape, r);
@@ -98,13 +108,40 @@ void IntersectNode(Node* n, Ray r, Set* intersections) {
             AppendValue(intersections, &intersection);
         }
     }
-
-    for (unsigned i = 0; i < n->children.length; i++) {
-        Node* child = Index(&n->children, i);
-        IntersectNode(child, r, intersections);
-    }
 }
 
 void IntersectTree(Tree* tree, Ray r, Set* intersections) {
     IntersectNode(&tree->start, r, intersections);
+}
+
+void TreeNodeBounds(Node* n) {
+    Tuple3 min = NewPnt3(INFINITY, INFINITY, INFINITY);
+    Tuple3 max = NewPnt3(-INFINITY, -INFINITY, -INFINITY);
+
+    for (unsigned i = 0; i < n->shapes.length; i++) {
+        Shape* this_shape = Index(&n->shapes, i);
+        Bounds bounds = ShapeBounds(this_shape);
+
+        min = _mm256_min_pd(bounds.minimum_bound, min);
+        max = _mm256_max_pd(bounds.maximum_bound, max);
+    }
+
+    for (unsigned i = 0; i < n->children.length; i++) {
+        Node* child = Index(&n->children, i);
+        TreeNodeBounds(child);
+
+        min = _mm256_min_pd(child->bounds.minimum_bound, min);
+        max = _mm256_max_pd(child->bounds.maximum_bound, max);
+    }
+
+    Bounds out = {
+        .minimum_bound = _mm256_min_pd(min, max),
+        .maximum_bound = _mm256_max_pd(min, max),
+    };
+
+    n->bounds = out;
+}
+
+void CalculateBounds(Tree* tree) {
+    TreeNodeBounds(&tree->start);
 }

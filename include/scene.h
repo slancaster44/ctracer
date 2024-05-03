@@ -8,7 +8,7 @@
 #include "camera.h"
 #include "canvas.h"
 
-typedef struct {
+typedef struct Scene {
     Tree shapes;
     Light light;
     Camera camera;

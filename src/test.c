@@ -12,6 +12,7 @@
 #include "scene.h"
 #include "intersection.h"
 #include "set.h"
+#include "bounding.h"
 
 static int num_failed;
 static int num_passed;
@@ -1130,6 +1131,48 @@ void TestTree() {
     DeconstructTree(&parent);
 }
 
+void TestBounds() {
+    Shape sphere = NewSphere(NewPnt3(0, 0, 0), 2.0);
+    Bounds sphere_bounds = ShapeBounds(&sphere);
+
+    Tuple3 sphere_exp_min = NewPnt3(-2, -2, -2);
+    Tuple3 sphere_exp_max = NewPnt3(2, 2, 2);
+    Shape sphere_exp_cube = NewCube(NewPnt3(0, 0, 0), 4);
+
+    TEST(TupleFuzzyEqual(sphere_bounds.maximum_bound, sphere_exp_max) && 
+        TupleFuzzyEqual(sphere_bounds.minimum_bound, sphere_exp_min), "Sphere bounding box");
+
+    TEST(MatrixFuzzyEqual(sphere_exp_cube.transformation, sphere_bounds.as_cube.transformation) &&
+        MatrixFuzzyEqual(sphere_exp_cube.inverse_transform, sphere_bounds.as_cube.inverse_transform), "Sphere bounding cube");
+
+    Shape cube = NewCube(NewPnt3(-3, -2, -1), 3.0);
+    Bounds cube_bounds = ShapeBounds(&cube);
+
+    Tuple3 cube_exp_min = NewPnt3(-4.5, -3.5, -2.5);
+    Tuple3 cube_exp_max = NewPnt3(-1.5, -0.5, 0.5);
+
+    TEST(TupleFuzzyEqual(cube_bounds.maximum_bound, cube_exp_max) && 
+        TupleFuzzyEqual(cube_bounds.minimum_bound, cube_exp_min), "Cube bounding box");
+    
+    TEST(MatrixFuzzyEqual(cube.transformation, cube_bounds.as_cube.transformation) &&
+        MatrixFuzzyEqual(cube.inverse_transform, cube_bounds.as_cube.inverse_transform), "Cube bounding cube");
+
+
+    Tree t;
+    ConstructTree(&t);
+
+    AddShapeToTree(&t, cube);
+    AddShapeToTree(&t, sphere);
+    CalculateBounds(&t);
+    Bounds b = t.start.bounds;
+
+    TEST(TupleFuzzyEqual(b.minimum_bound, cube_exp_min) &&
+        TupleFuzzyEqual(b.maximum_bound, sphere_exp_max), "Tree bounding box");
+
+    DeconstructTree(&t);
+
+}
+
 int DoTests() {
     num_failed = 0;
     num_passed = 0;
@@ -1177,7 +1220,10 @@ int DoTests() {
     TestCubeIntersection();
     TestCubeNormal();
 
+
     TestTree();
+    TestBounds();
+
 
     printf("Test(s) Passed: %d\nTests(s) Failed: %d\n", num_passed, num_failed);
 
