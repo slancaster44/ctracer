@@ -1084,16 +1084,16 @@ void TestTree() {
     ConstructTree(&parent);
 
     Shape sphere = NewSphere(NewPnt3(0, 0, -3), 2.0);
-    AddShapeToTree(&parent, sphere);
+    AddShapeToTree(&parent, &sphere);
 
     Tree child;
     ConstructTree(&child);
 
     Shape plane = NewPlane(NewPnt3(0,  0, 0), NewVec3(0, 1, 0));
-    AddShapeToTree(&child, plane);
+    AddShapeToTree(&child, &plane);
 
     Shape cube = NewCube(NewPnt3(0, -5, 0), 4.0);
-    AddShapeToTree(&child, cube);
+    AddShapeToTree(&child, &cube);
 
     CopyInChild(&parent, &child);
     DeconstructTree(&child);        
@@ -1161,8 +1161,8 @@ void TestBounds() {
     Tree t;
     ConstructTree(&t);
 
-    AddShapeToTree(&t, cube);
-    AddShapeToTree(&t, sphere);
+    AddShapeToTree(&t, &cube);
+    AddShapeToTree(&t, &sphere);
     CalculateBounds(&t);
     Bounds b = t.start.bounds;
 
@@ -1171,6 +1171,20 @@ void TestBounds() {
 
     DeconstructTree(&t);
 
+}
+
+void DemoUnthreaded() {
+    Scene s;
+    ReadScene(&s, "./scenes/three_spheres.json");
+
+    Canvas canvas;
+    ConstructCanvas(&canvas, s.camera.width, s.camera.height);
+
+    RenderSceneUnthreaded(&s, &canvas);
+    WriteToPPM(&canvas, "./renderings/three_spheres.ppm");
+
+    DeconstructCanvas(&canvas);
+    DeconstructScene(&s);
 }
 
 int DoTests() {
@@ -1232,6 +1246,6 @@ int DoTests() {
 
 int main() {
     DoTests();
-
+   // DemoUnthreaded();
     return 0;
 }

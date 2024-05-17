@@ -21,6 +21,7 @@ void DeconstructSet(Set* s) {
     }
 
     s->length = 0;
+    s->capacity = 0;
 }
 
 unsigned long AppendValue(Set* s, void* value) {
@@ -50,3 +51,10 @@ void CloneSet(Set* dst, Set* src) {
         AppendValue(dst, Index(src, i));
     }
 }
+
+void ReconstructSet(Set* s) {
+    unsigned width = s->data_width;
+    DeconstructSet(s);
+    ConstructSet(s, width);
+}
+

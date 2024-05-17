@@ -19,6 +19,7 @@ typedef struct Tree {
 } Tree;
 
 void ConstructTree(Tree* tree);
+void ReconstructTree(Tree* tree);
 void DeconstructTree(Tree* tree);
 void CloneTree(Tree* destination, Tree* source);
 void CopyInChild(Tree* parent, Tree* child);
@@ -26,8 +27,9 @@ void CopyInChild(Tree* parent, Tree* child);
 void IntersectTree(Tree* tree, Ray r, Set* intersections);
 void PropagateTransform(Tree* tree, Matrix4x4 transform);
 void PropagateMaterial(Tree* tree, Material material);
-void AddShapeToTree(Tree* tree, Shape shape);
+void AddShapeToTree(Tree* tree, Shape* shape);
 
 void CalculateBounds(Tree* tree);
-
+void GenerateBVH(Tree* dst, Tree* src);
+void PrintTree(Tree* tree);
 #endif

@@ -26,6 +26,5 @@ Tuple3 ColorForLimited(Scene *s, Ray r, int limit);
 void RenderScene(Scene* s, Canvas* c);
 void RenderSceneUnthreaded(Scene*  s, Canvas* c);
 
-
-
+void ReplaceTree(Scene* s, Tree* t);
 #endif

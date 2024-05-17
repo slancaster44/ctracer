@@ -13,6 +13,7 @@ typedef struct {
 Bounds ShapeBounds(Shape* s);
 Bounds TransformBounds(Bounds b, Matrix4x4 m);
 bool IsInBounds(Bounds b, Ray r);
+Tuple3 Centroid(Bounds b);
 
 
 #endif

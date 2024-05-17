@@ -6,6 +6,8 @@
 #include "intersection.h"
 
 #include <math.h>
+#include <time.h>
+#include <stdlib.h>
 
 void AssignDefaultTestMaterial(Material* m) {
     m->pattern = NewSolidPattern(NewColor(255, 255, 255, 255));
@@ -134,10 +136,49 @@ void DemoUnthreaded() {
     DeconstructScene(&s);
 }
 
+#define NUM_RAND_SHAPES 75
+void BusyScene() {
+    Light l = NewLight( NewPnt3(750, 1200, 2000));
+    Camera c = NewCamera(800, 600, 3.1415 / 3);
+    CameraApplyTransformation(&c, ViewMatrix(NewPnt3(0, 100, 250), NewPnt3(0, 0, 0), NewVec3(0, 1, 0)));
+
+    Scene s;
+    ConstructScene(&s, c, l);
+
+    double i = 4.0;
+
+    for (int j = 0; j < NUM_RAND_SHAPES; j++) {
+        i = ((((double) i * -1.0) * 0.66 + j) / 1.0);
+        i = fmodf(i, 20);
+
+        while (i == 0 || fmod(i * i, i) == 0.0) { i += 0.87; }
+
+        double x = i * i;
+        double y = fmod(x, i);
+        double z = pow(i, y);
+
+        Shape sphere = NewSphere(NewPnt3(x, y, z), i);
+        sphere.material.pattern.color_a = NewTuple3(i * 1, i * 2, i * 3, 1.0);
+        sphere.material.general_reflection = 1.34;
+        AddShape(&s, sphere);
+    }
+
+    Canvas canvas;
+    ConstructCanvas(&canvas, 800, 600);
+
+    RenderScene(&s, &canvas);
+    WriteToPPM(&canvas, "./renderings/random_spheres.ppm");
+
+    DeconstructCanvas(&canvas);
+    DeconstructScene(&s);
+}
+
 int main() {
     //DemoCanvas();
     //DemoJsonScene();
     //DemoPlane();
     //DemoSphereScene();
-    DemoUnthreaded();
+    //DemoUnthreaded();
+
+    BusyScene();
 }

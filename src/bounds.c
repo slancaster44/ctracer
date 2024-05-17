@@ -66,6 +66,14 @@ Bounds TransformBounds(Bounds b, Matrix4x4 m) {
     return b;
 }
 
+Tuple3 Centroid(Bounds b) {
+    Tuple3 hwd = TupleSubtract(b.maximum_bound, b.minimum_bound);
+    Tuple3 center_point_offset = TupleScalarDivide(hwd, 2);
+    Tuple3 center_point = TupleSubtract(b.maximum_bound, center_point_offset);
+
+    return center_point;
+}
+
 void GenerateBoundingCube(Bounds* b) {
     //Find cube that matches the bounding box
     Tuple3 hwd = TupleSubtract(b->maximum_bound, b->minimum_bound);

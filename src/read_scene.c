@@ -241,7 +241,7 @@ void GetShapes(Tree* shapes, cJSON* json) {
 
         GetMaterial(&this_shape.material, this_shape_json);
 
-        AddShapeToTree(shapes, this_shape);
+        AddShapeToTree(shapes, &this_shape);
     }
 }
 
