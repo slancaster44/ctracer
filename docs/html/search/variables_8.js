@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['origin_351',['origin',['../structLight.html#a7770a56d3ed1408699da0f0bc3c2a934',1,'Light::origin()'],['../structRay.html#ab6dbe9cec530274f418e1e1abb15e20c',1,'Ray::origin()']]]
+  ['ray_332',['ray',['../structIntersection.html#a9b9d4bb8fe09d1f3d1c2378322648bc6',1,'Intersection']]],
+  ['ray_5ftimes_333',['ray_times',['../structIntersection.html#ac78909e93aff5dc092e6ae11cbe395d8',1,'Intersection']]],
+  ['refractive_5findex_334',['refractive_index',['../structMaterial.html#ad9edb9b8d0cfe914e4dac972bce9d169',1,'Material']]]
 ];

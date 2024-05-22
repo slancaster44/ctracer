@@ -1,13 +1,6 @@
 <map id="Shape" name="Shape">
-<area shape="rect" id="node1" title=" " alt="" coords="188,481,251,508"/>
-<area shape="rect" id="node2" href="$structMaterial.html" title=" " alt="" coords="128,377,204,404"/>
-<area shape="rect" id="node3" href="$structScene.html" title=" " alt="" coords="90,288,151,315"/>
-<area shape="rect" id="node4" href="$structLight.html" title=" " alt="" coords="5,199,60,225"/>
-<area shape="rect" id="node5" href="$structCamera.html" title=" " alt="" coords="84,199,157,225"/>
-<area shape="rect" id="node6" href="$structTree.html" title=" " alt="" coords="181,199,231,225"/>
-<area shape="rect" id="node7" href="$structNode.html" title=" " alt="" coords="178,109,234,136"/>
-<area shape="rect" id="node8" href="$structBounds.html" title=" " alt="" coords="129,5,200,32"/>
-<area shape="rect" id="node9" href="$structSet.html" title=" " alt="" coords="226,5,269,32"/>
-<area shape="rect" id="node10" href="$structPattern.html" title=" " alt="" coords="176,288,244,315"/>
-<area shape="rect" id="node11" href="$unionMatrix4x4.html" title=" " alt="" coords="229,377,317,404"/>
+<area shape="rect" id="node1" title=" " alt="" coords="22,288,85,315"/>
+<area shape="rect" id="node2" href="$structMaterial.html" title=" " alt="" coords="15,199,91,225"/>
+<area shape="rect" id="node3" href="$structPattern.html" title=" " alt="" coords="90,109,158,136"/>
+<area shape="rect" id="node4" href="$structTuple3.html" title=" " alt="" coords="5,5,69,32"/>
 </map>

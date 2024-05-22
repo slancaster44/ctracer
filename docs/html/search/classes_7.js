@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['ray_201',['Ray',['../structRay.html',1,'']]]
+  ['scene_189',['Scene',['../structScene.html',1,'']]],
+  ['set_190',['Set',['../structSet.html',1,'']]],
+  ['shape_191',['Shape',['../structShape.html',1,'']]]
 ];

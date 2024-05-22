@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['ray_354',['ray',['../structIntersection.html#a9b9d4bb8fe09d1f3d1c2378322648bc6',1,'Intersection']]],
-  ['ray_5ftimes_355',['ray_times',['../structIntersection.html#ac78909e93aff5dc092e6ae11cbe395d8',1,'Intersection']]],
-  ['refractive_5findex_356',['refractive_index',['../structMaterial.html#ad9edb9b8d0cfe914e4dac972bce9d169',1,'Material']]]
+  ['transparency_340',['transparency',['../structMaterial.html#a02abe03436775e128e04e1c737d34067',1,'Material']]],
+  ['type_341',['type',['../structPattern.html#a50d29bdcd824c07bcff62482b4fc0c88',1,'Pattern::type()'],['../structShape.html#ab044957df9b03a3c2af7250c32fb3b27',1,'Shape::type()']]]
 ];

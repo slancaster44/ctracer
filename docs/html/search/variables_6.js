@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['length_346',['length',['../structSet.html#a1c3723083ac443ee0270c78f17b8e800',1,'Set']]],
-  ['light_347',['light',['../structScene.html#a936df0a30207c5ad1614c7f9e9b2bb42',1,'Scene']]]
+  ['origin_330',['origin',['../structLight.html#a7770a56d3ed1408699da0f0bc3c2a934',1,'Light::origin()'],['../structRay.html#ab6dbe9cec530274f418e1e1abb15e20c',1,'Ray::origin()']]]
 ];

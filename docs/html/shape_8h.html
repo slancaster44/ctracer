@@ -69,8 +69,7 @@ $(function() {
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#typedef-members">Typedefs</a> &#124;
-<a href="#enum-members">Enumerations</a> &#124;
-<a href="#func-members">Functions</a>  </div>
+<a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
 <div class="title">shape.h File Reference</div>  </div>
 </div><!--header-->
@@ -127,21 +126,6 @@ Enumerations</h2></td></tr>
 , <a class="el" href="shape_8h.html#a733713fb5a6f60fae1f1fe872b3e391bad9ff273a12ff18b3e1b900080aadd1ea">CUBE</a>
  }</td></tr>
 <tr class="separator:a733713fb5a6f60fae1f1fe872b3e391b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:ac47716d97f3670c35f19e4221bf2e09a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="shape_8h.html#ac47716d97f3670c35f19e4221bf2e09a">ApplyTransformation</a> (<a class="el" href="structShape.html">Shape</a> *s, <a class="el" href="unionMatrix4x4.html">Matrix4x4</a> t)</td></tr>
-<tr class="separator:ac47716d97f3670c35f19e4221bf2e09a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a59e78a7a512b8bde0c4e958aac85bbe4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structShape.html">Shape</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="shape_8h.html#a59e78a7a512b8bde0c4e958aac85bbe4">NewSphere</a> (Tuple3 center_point, double radius)</td></tr>
-<tr class="separator:a59e78a7a512b8bde0c4e958aac85bbe4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5291b41cb4cf80d139322971ab9de1c5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structShape.html">Shape</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="shape_8h.html#a5291b41cb4cf80d139322971ab9de1c5">NewPlane</a> (Tuple3 pnt, Tuple3 normal_vector)</td></tr>
-<tr class="separator:a5291b41cb4cf80d139322971ab9de1c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a193a205086804360eeff399a1e015512"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structShape.html">Shape</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="shape_8h.html#a193a205086804360eeff399a1e015512">NewCube</a> (Tuple3 pnt, double size)</td></tr>
-<tr class="separator:a193a205086804360eeff399a1e015512"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a68cdf363351e079d128ed92b0e52c27e"><td class="memItemLeft" align="right" valign="top">Tuple3&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="shape_8h.html#a68cdf363351e079d128ed92b0e52c27e">NormalAt</a> (<a class="el" href="structShape.html">Shape</a> *s, Tuple3 pnt)</td></tr>
-<tr class="separator:a68cdf363351e079d128ed92b0e52c27e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae6d2fc386f7b538e7c0174027a3b3b3e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="shape_8h.html#ae6d2fc386f7b538e7c0174027a3b3b3e">AddShape</a> (<a class="el" href="structScene.html">Scene</a> *s, <a class="el" href="structShape.html">Shape</a> sp)</td></tr>
-<tr class="separator:ae6d2fc386f7b538e7c0174027a3b3b3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Typedef Documentation</h2>
 <a id="af9a178f4454c17dee9f11ea39cd27dbf"></a>
@@ -155,6 +139,7 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Used to represent a shape in a scene </p>
 
 </div>
 </div>
@@ -170,180 +155,15 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Tags to indicate what type of shape is being represented </p>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a733713fb5a6f60fae1f1fe872b3e391baae4f0962d104ea473feec5598689316d"></a>SPHERE&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a733713fb5a6f60fae1f1fe872b3e391ba67572d1492c84d8d417b61e864f13f24"></a>PLANE&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a733713fb5a6f60fae1f1fe872b3e391bad9ff273a12ff18b3e1b900080aadd1ea"></a>CUBE&#160;</td><td class="fielddoc"></td></tr>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a733713fb5a6f60fae1f1fe872b3e391baae4f0962d104ea473feec5598689316d"></a>SPHERE&#160;</td><td class="fielddoc"><p>Untransformed, a shape with this tag will be the unit sphere </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a733713fb5a6f60fae1f1fe872b3e391ba67572d1492c84d8d417b61e864f13f24"></a>PLANE&#160;</td><td class="fielddoc"><p>Untransfromed, a shape with this tag will be an infinite plane on the 'x' plane </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a733713fb5a6f60fae1f1fe872b3e391bad9ff273a12ff18b3e1b900080aadd1ea"></a>CUBE&#160;</td><td class="fielddoc"><p>Untransformed, a shape with this tag will be a cube centered at (0, 0, 0) and a side length of 2.0 </p>
+</td></tr>
 </table>
-
-</div>
-</div>
-<h2 class="groupheader">Function Documentation</h2>
-<a id="ae6d2fc386f7b538e7c0174027a3b3b3e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae6d2fc386f7b538e7c0174027a3b3b3e">&#9670;&nbsp;</a></span>AddShape()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void AddShape </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="structScene.html">Scene</a> *&#160;</td>
-          <td class="paramname"><em>s</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="structShape.html">Shape</a>&#160;</td>
-          <td class="paramname"><em>sp</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="ac47716d97f3670c35f19e4221bf2e09a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac47716d97f3670c35f19e4221bf2e09a">&#9670;&nbsp;</a></span>ApplyTransformation()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void ApplyTransformation </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="structShape.html">Shape</a> *&#160;</td>
-          <td class="paramname"><em>s</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="unionMatrix4x4.html">Matrix4x4</a>&#160;</td>
-          <td class="paramname"><em>t</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a193a205086804360eeff399a1e015512"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a193a205086804360eeff399a1e015512">&#9670;&nbsp;</a></span>NewCube()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="structShape.html">Shape</a> NewCube </td>
-          <td>(</td>
-          <td class="paramtype">Tuple3&#160;</td>
-          <td class="paramname"><em>pnt</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>size</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a5291b41cb4cf80d139322971ab9de1c5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5291b41cb4cf80d139322971ab9de1c5">&#9670;&nbsp;</a></span>NewPlane()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="structShape.html">Shape</a> NewPlane </td>
-          <td>(</td>
-          <td class="paramtype">Tuple3&#160;</td>
-          <td class="paramname"><em>pnt</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">Tuple3&#160;</td>
-          <td class="paramname"><em>normal_vector</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a59e78a7a512b8bde0c4e958aac85bbe4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a59e78a7a512b8bde0c4e958aac85bbe4">&#9670;&nbsp;</a></span>NewSphere()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="structShape.html">Shape</a> NewSphere </td>
-          <td>(</td>
-          <td class="paramtype">Tuple3&#160;</td>
-          <td class="paramname"><em>center_point</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>radius</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a68cdf363351e079d128ed92b0e52c27e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a68cdf363351e079d128ed92b0e52c27e">&#9670;&nbsp;</a></span>NormalAt()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">Tuple3 NormalAt </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="structShape.html">Shape</a> *&#160;</td>
-          <td class="paramname"><em>s</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">Tuple3&#160;</td>
-          <td class="paramname"><em>pnt</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
 
 </div>
 </div>

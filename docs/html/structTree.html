@@ -63,7 +63,7 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#pub-attribs">Public Attributes</a> &#124;
+<a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="structTree-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">Tree Struct Reference</div>  </div>
@@ -71,35 +71,288 @@ $(function() {
 <div class="contents">
 
 <p><code>#include &lt;<a class="el" href="tree_8h_source.html">tree.h</a>&gt;</code></p>
-<div class="dynheader">
-Collaboration diagram for Tree:</div>
-<div class="dyncontent">
-<div class="center"><img src="structTree__coll__graph.png" border="0" usemap="#aTree_coll__map" alt="Collaboration graph"/></div>
-<map name="aTree_coll__map" id="aTree_coll__map">
-<area shape="rect" title=" " alt="" coords="57,199,107,225"/>
-<area shape="rect" href="structNode.html" title=" " alt="" coords="54,109,110,136"/>
-<area shape="rect" href="structBounds.html" title=" " alt="" coords="5,5,76,32"/>
-<area shape="rect" href="structSet.html" title=" " alt="" coords="102,5,145,32"/>
-</map>
-<center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
-Public Attributes</h2></td></tr>
-<tr class="memitem:a71f77955c5f7b71e6393f4e1e7eb516d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structNode.html">Node</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structTree.html#a71f77955c5f7b71e6393f4e1e7eb516d">start</a></td></tr>
-<tr class="separator:a71f77955c5f7b71e6393f4e1e7eb516d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:ae0d64369aac4ec8488d10d8b06e40ad7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structTree.html#ae0d64369aac4ec8488d10d8b06e40ad7">ConstructTree</a> (<a class="el" href="structTree.html">Tree</a> *tree)</td></tr>
+<tr class="separator:ae0d64369aac4ec8488d10d8b06e40ad7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3cfc85dcadc627149f70d8ea467c2efc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structTree.html#a3cfc85dcadc627149f70d8ea467c2efc">ReconstructTree</a> (<a class="el" href="structTree.html">Tree</a> *tree)</td></tr>
+<tr class="separator:a3cfc85dcadc627149f70d8ea467c2efc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aec6c0666b20d03ce96268fa7aa3c7697"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structTree.html#aec6c0666b20d03ce96268fa7aa3c7697">DeconstructTree</a> (<a class="el" href="structTree.html">Tree</a> *tree)</td></tr>
+<tr class="separator:aec6c0666b20d03ce96268fa7aa3c7697"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a52c32c41118dfa730f2b19a05ff00524"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structTree.html#a52c32c41118dfa730f2b19a05ff00524">CloneTree</a> (<a class="el" href="structTree.html">Tree</a> *destination, <a class="el" href="structTree.html">Tree</a> *source)</td></tr>
+<tr class="separator:a52c32c41118dfa730f2b19a05ff00524"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad2250a4cdcfc3396da756dc934b95180"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structTree.html#ad2250a4cdcfc3396da756dc934b95180">CopyInChild</a> (<a class="el" href="structTree.html">Tree</a> *parent, <a class="el" href="structTree.html">Tree</a> *child)</td></tr>
+<tr class="separator:ad2250a4cdcfc3396da756dc934b95180"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a44bf6a2316f61cba22836f721e930613"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structTree.html#a44bf6a2316f61cba22836f721e930613">IntersectTree</a> (<a class="el" href="structTree.html">Tree</a> *tree, <a class="el" href="structRay.html">Ray</a> r, <a class="el" href="structSet.html">Set</a> *intersections)</td></tr>
+<tr class="separator:a44bf6a2316f61cba22836f721e930613"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8d46ab9cad8b87b7db0723689c6976d0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structTree.html#a8d46ab9cad8b87b7db0723689c6976d0">PropagateTransform</a> (<a class="el" href="structTree.html">Tree</a> *tree, <a class="el" href="unionMatrix4x4.html">Matrix4x4</a> transform)</td></tr>
+<tr class="separator:a8d46ab9cad8b87b7db0723689c6976d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aba9bd27c593d7770359297c6af894ab3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structTree.html#aba9bd27c593d7770359297c6af894ab3">PropagateMaterial</a> (<a class="el" href="structTree.html">Tree</a> *tree, <a class="el" href="structMaterial.html">Material</a> material)</td></tr>
+<tr class="separator:aba9bd27c593d7770359297c6af894ab3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3793559eb5c393c3c144b445c0624243"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structTree.html#a3793559eb5c393c3c144b445c0624243">AddShapeToTree</a> (<a class="el" href="structTree.html">Tree</a> *tree, <a class="el" href="structShape.html">Shape</a> *shape)</td></tr>
+<tr class="separator:a3793559eb5c393c3c144b445c0624243"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a59cb91b5898c9bc01c9ae46b56158fb6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structTree.html#a59cb91b5898c9bc01c9ae46b56158fb6">PrintTree</a> (<a class="el" href="structTree.html">Tree</a> *tree)</td></tr>
+<tr class="separator:a59cb91b5898c9bc01c9ae46b56158fb6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Member Data Documentation</h2>
-<a id="a71f77955c5f7b71e6393f4e1e7eb516d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a71f77955c5f7b71e6393f4e1e7eb516d">&#9670;&nbsp;</a></span>start</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>A tree of shapes </p>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="a3793559eb5c393c3c144b445c0624243"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3793559eb5c393c3c144b445c0624243">&#9670;&nbsp;</a></span>AddShapeToTree()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="structNode.html">Node</a> Tree::start</td>
+          <td class="memname">void AddShapeToTree </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structTree.html">Tree</a> *&#160;</td>
+          <td class="paramname"><em>tree</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structShape.html">Shape</a> *&#160;</td>
+          <td class="paramname"><em>shape</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Add the given shape to the root node of the given tree </p>
+
+</div>
+</div>
+<a id="a52c32c41118dfa730f2b19a05ff00524"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a52c32c41118dfa730f2b19a05ff00524">&#9670;&nbsp;</a></span>CloneTree()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void CloneTree </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structTree.html">Tree</a> *&#160;</td>
+          <td class="paramname"><em>destination</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structTree.html">Tree</a> *&#160;</td>
+          <td class="paramname"><em>source</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Copy the source tree to the destination tree, including all shapes and child nodes.</p>
+<p>Note: The destination node should be uninitialized before <a class="el" href="structTree.html#a52c32c41118dfa730f2b19a05ff00524">CloneTree()</a> is called </p>
+
+</div>
+</div>
+<a id="ae0d64369aac4ec8488d10d8b06e40ad7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae0d64369aac4ec8488d10d8b06e40ad7">&#9670;&nbsp;</a></span>ConstructTree()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ConstructTree </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structTree.html">Tree</a> *&#160;</td>
+          <td class="paramname"><em>tree</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Initialize the given tree. This includes allocating memory for the tree's shapes and child nodes </p>
+
+</div>
+</div>
+<a id="ad2250a4cdcfc3396da756dc934b95180"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad2250a4cdcfc3396da756dc934b95180">&#9670;&nbsp;</a></span>CopyInChild()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void CopyInChild </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structTree.html">Tree</a> *&#160;</td>
+          <td class="paramname"><em>parent</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structTree.html">Tree</a> *&#160;</td>
+          <td class="paramname"><em>child</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Clone the child tree, and insert it as a child node to the parent tree's root node </p>
+
+</div>
+</div>
+<a id="aec6c0666b20d03ce96268fa7aa3c7697"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aec6c0666b20d03ce96268fa7aa3c7697">&#9670;&nbsp;</a></span>DeconstructTree()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void DeconstructTree </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structTree.html">Tree</a> *&#160;</td>
+          <td class="paramname"><em>tree</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Deallocate the tree's memory areas. Attempts to manipulate the tree after <a class="el" href="structTree.html#aec6c0666b20d03ce96268fa7aa3c7697">DeconstructTree()</a> is called will likely result in a SEGFAULT </p>
+
+</div>
+</div>
+<a id="a44bf6a2316f61cba22836f721e930613"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a44bf6a2316f61cba22836f721e930613">&#9670;&nbsp;</a></span>IntersectTree()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void IntersectTree </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structTree.html">Tree</a> *&#160;</td>
+          <td class="paramname"><em>tree</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structRay.html">Ray</a>&#160;</td>
+          <td class="paramname"><em>r</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structSet.html">Set</a> *&#160;</td>
+          <td class="paramname"><em>intersections</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Intersect all shapes in the given tree with the given ray. All resulting intersections wil be placed into the intersections set.</p>
+<p>Note: '<a class="el" href="structSet.html">Set</a> *intersections' should be initialized before <a class="el" href="structTree.html#a44bf6a2316f61cba22836f721e930613">IntersectTree()</a> is called. </p>
+
+</div>
+</div>
+<a id="a59cb91b5898c9bc01c9ae46b56158fb6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a59cb91b5898c9bc01c9ae46b56158fb6">&#9670;&nbsp;</a></span>PrintTree()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void PrintTree </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structTree.html">Tree</a> *&#160;</td>
+          <td class="paramname"><em>tree</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Print the given tree to the console </p>
+
+</div>
+</div>
+<a id="aba9bd27c593d7770359297c6af894ab3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aba9bd27c593d7770359297c6af894ab3">&#9670;&nbsp;</a></span>PropagateMaterial()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void PropagateMaterial </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structTree.html">Tree</a> *&#160;</td>
+          <td class="paramname"><em>tree</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structMaterial.html">Material</a>&#160;</td>
+          <td class="paramname"><em>material</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Apply the given material to all shapes in the given tree </p>
+
+</div>
+</div>
+<a id="a8d46ab9cad8b87b7db0723689c6976d0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8d46ab9cad8b87b7db0723689c6976d0">&#9670;&nbsp;</a></span>PropagateTransform()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void PropagateTransform </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structTree.html">Tree</a> *&#160;</td>
+          <td class="paramname"><em>tree</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="unionMatrix4x4.html">Matrix4x4</a>&#160;</td>
+          <td class="paramname"><em>transform</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Apply the given transformation to all shapes in the given tree. </p>
+
+</div>
+</div>
+<a id="a3cfc85dcadc627149f70d8ea467c2efc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3cfc85dcadc627149f70d8ea467c2efc">&#9670;&nbsp;</a></span>ReconstructTree()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ReconstructTree </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structTree.html">Tree</a> *&#160;</td>
+          <td class="paramname"><em>tree</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Empty the tree and reinitialize it. Equivalent to <code> DeconstructTree(tree); ConstructTree(tree); </code> </p>
 
 </div>
 </div>

@@ -74,11 +74,7 @@ void CloneNode(Node *destination, Node *source)
 {
     memset(destination, 0, sizeof(Node));
     CloneSet(&destination->shapes, &source->shapes);
-
-    if (destination->children.data == NULL)
-    {
-        ConstructSet(&destination->children, sizeof(Node));
-    }
+    ConstructSet(&destination->children, sizeof(Node));
 
     for (unsigned i = 0; i < source->children.length; i++)
     {

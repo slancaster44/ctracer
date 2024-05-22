@@ -1,9 +1,27 @@
 var searchData=
 [
-  ['scalingmatrix_298',['ScalingMatrix',['../unionMatrix4x4.html#aaa94b134a6df50deff09482ddc415fba',1,'Matrix4x4']]],
-  ['shapebounds_299',['ShapeBounds',['../structShape.html#aca7b4f5903221378a996d4c6c7069bff',1,'Shape']]],
-  ['shearingmatrix_300',['ShearingMatrix',['../unionMatrix4x4.html#a801a90fe9a4073af86424c50eb79b950',1,'Matrix4x4']]],
-  ['shfree_301',['shfree',['../shmem_8h.html#a3a2319f4bf846027d53e08eab952b989',1,'shmem.h']]],
-  ['shmalloc_302',['shmalloc',['../shmem_8h.html#a364889f80dbb5e64a7a1bdb6f010cc35',1,'shmem.h']]],
-  ['swapelements_303',['SwapElements',['../set_8h.html#ae4c13dbcb74d83494bbc2818bec972bc',1,'set.h']]]
+  ['transformbounds_289',['TransformBounds',['../structBounds.html#a197e32881ec5ed2881e21cf9108d04fa',1,'Bounds']]],
+  ['transformpattern_290',['TransformPattern',['../structPattern.html#a50a7c7c1a4b21a3d692851f8aa23d817',1,'Pattern']]],
+  ['translationmatrix_291',['TranslationMatrix',['../unionMatrix4x4.html#a1c56ddd514a7c51167c757f179f9e306',1,'Matrix4x4']]],
+  ['tupleadd_292',['TupleAdd',['../structTuple3.html#aa883c714f304d060081748082a4af837',1,'Tuple3']]],
+  ['tuplecontains_293',['TupleContains',['../structTuple3.html#af6e509061a134a878c9821ef7103dc77',1,'Tuple3']]],
+  ['tuplecrossproduct_294',['TupleCrossProduct',['../structTuple3.html#a01b890902d67d0370689c7f65521f750',1,'Tuple3']]],
+  ['tupledivide_295',['TupleDivide',['../structTuple3.html#ad4a6da0eda4588ef94847088a14fbfb3',1,'Tuple3']]],
+  ['tupledotproduct_296',['TupleDotProduct',['../structTuple3.html#a9cc549fcb6179ddd909b7e06f9b8b27e',1,'Tuple3']]],
+  ['tupleequal_297',['TupleEqual',['../structTuple3.html#a616cec5fa3747dfca6de3e0e864fdad3',1,'Tuple3']]],
+  ['tuplefloorsum_298',['TupleFloorSum',['../structTuple3.html#a2171ab1311d3366c77e540219667d593',1,'Tuple3']]],
+  ['tuplefuzzyequal_299',['TupleFuzzyEqual',['../structTuple3.html#a98d660c66806a337eb3b50a7c0912862',1,'Tuple3']]],
+  ['tuplehasinf_300',['TupleHasInf',['../structTuple3.html#aaf912b0b347a9d8810784849c4d66093',1,'Tuple3']]],
+  ['tuplehasinfornans_301',['TupleHasInfOrNans',['../structTuple3.html#aacaefe3e1b5f1ab40b44378f8ce8ca7e',1,'Tuple3']]],
+  ['tuplehasnans_302',['TupleHasNaNs',['../structTuple3.html#a2b985dcdd5c10fc72109c28befb476ae',1,'Tuple3']]],
+  ['tuplemagnitude_303',['TupleMagnitude',['../structTuple3.html#ab349cf81fa3a0fc01ca47e2440e75e4d',1,'Tuple3']]],
+  ['tuplemultiply_304',['TupleMultiply',['../structTuple3.html#a3c202d10f151b3aaa1ddde549737467a',1,'Tuple3']]],
+  ['tuplenegate_305',['TupleNegate',['../structTuple3.html#a949d6d8374c9b1bc41540ef7d6992a05',1,'Tuple3']]],
+  ['tuplenormalize_306',['TupleNormalize',['../structTuple3.html#a8328146f6523837eec383fa66c79fbe6',1,'Tuple3']]],
+  ['tuplereflect_307',['TupleReflect',['../structTuple3.html#a1ff0b7c34c856e7847eaca21f5ffd099',1,'Tuple3']]],
+  ['tuplescalaradd_308',['TupleScalarAdd',['../structTuple3.html#a6406ece292db19c2bf0051b3f3d5034d',1,'Tuple3']]],
+  ['tuplescalardivide_309',['TupleScalarDivide',['../structTuple3.html#aa0b051c3210d690dbccb5af2883a8457',1,'Tuple3']]],
+  ['tuplescalarmultiply_310',['TupleScalarMultiply',['../structTuple3.html#ac8f47f9275c0e3116696fa87191fc5e4',1,'Tuple3']]],
+  ['tuplescalarsubtract_311',['TupleScalarSubtract',['../structTuple3.html#ab58e2371abba05c265483e633db608bd',1,'Tuple3']]],
+  ['tuplesubtract_312',['TupleSubtract',['../structTuple3.html#add0849fc8bed787944fdf8b19f3ffd91',1,'Tuple3']]]
 ];

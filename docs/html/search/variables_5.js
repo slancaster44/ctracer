@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['inverse_5ftransform_345',['inverse_transform',['../structShape.html#a89e44869a74033e475b3a5b754db18a6',1,'Shape']]]
+  ['material_327',['material',['../structShape.html#ae61fdac3b1a90dd2e8ee5d6cb5652291',1,'Shape']]],
+  ['maximum_5fbound_328',['maximum_bound',['../structBounds.html#a57662ba6eed965ab541ef3553aa0d4ab',1,'Bounds']]],
+  ['minimum_5fbound_329',['minimum_bound',['../structBounds.html#acea807cb721d62606b8e88b503cd284a',1,'Bounds']]]
 ];

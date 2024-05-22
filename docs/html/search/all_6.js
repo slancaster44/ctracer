@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['floatequality_48',['FloatEquality',['../equality_8h.html#a355558ede7ed4922cf9a27bd4d6bae34',1,'equality.h']]]
+  ['floatequality_42',['FloatEquality',['../equality_8h.html#a355558ede7ed4922cf9a27bd4d6bae34',1,'equality.h']]]
 ];

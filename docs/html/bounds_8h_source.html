@@ -78,9 +78,9 @@ $(function() {
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160; </div>
 <div class="line"><a name="l00011"></a><span class="lineno"><a class="line" href="structBounds.html">   11</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct</span></div>
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;{</div>
-<div class="line"><a name="l00014"></a><span class="lineno"><a class="line" href="structBounds.html#acea807cb721d62606b8e88b503cd284a">   14</a></span>&#160;    Tuple3 <a class="code" href="structBounds.html#acea807cb721d62606b8e88b503cd284a">minimum_bound</a>;  </div>
+<div class="line"><a name="l00014"></a><span class="lineno"><a class="line" href="structBounds.html#acea807cb721d62606b8e88b503cd284a">   14</a></span>&#160;    <a class="code" href="structTuple3.html">Tuple3</a> <a class="code" href="structBounds.html#acea807cb721d62606b8e88b503cd284a">minimum_bound</a>;  </div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160; </div>
-<div class="line"><a name="l00017"></a><span class="lineno"><a class="line" href="structBounds.html#a57662ba6eed965ab541ef3553aa0d4ab">   17</a></span>&#160;    Tuple3 <a class="code" href="structBounds.html#a57662ba6eed965ab541ef3553aa0d4ab">maximum_bound</a>;        </div>
+<div class="line"><a name="l00017"></a><span class="lineno"><a class="line" href="structBounds.html#a57662ba6eed965ab541ef3553aa0d4ab">   17</a></span>&#160;    <a class="code" href="structTuple3.html">Tuple3</a> <a class="code" href="structBounds.html#a57662ba6eed965ab541ef3553aa0d4ab">maximum_bound</a>;        </div>
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;} <a class="code" href="structBounds.html">Bounds</a>;</div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160; </div>
 <div class="line"><a name="l00027"></a><span class="lineno"><a class="line" href="structShape.html#aca7b4f5903221378a996d4c6c7069bff">   27</a></span>&#160;<a class="code" href="structBounds.html">Bounds</a> <a class="code" href="structShape.html#aca7b4f5903221378a996d4c6c7069bff">ShapeBounds</a>(<a class="code" href="structShape.html">Shape</a> *s);</div>
@@ -89,7 +89,7 @@ $(function() {
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160; </div>
 <div class="line"><a name="l00047"></a><span class="lineno"><a class="line" href="structBounds.html#a01f905028209d3dc5a8cfbce53da2531">   47</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="structBounds.html#a01f905028209d3dc5a8cfbce53da2531">IsInBounds</a>(<a class="code" href="structBounds.html">Bounds</a> b, <a class="code" href="structRay.html">Ray</a> r);</div>
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160; </div>
-<div class="line"><a name="l00056"></a><span class="lineno"><a class="line" href="structBounds.html#a8e49ad5064daa1d41da2d36d3fe0f307">   56</a></span>&#160;Tuple3 <a class="code" href="structBounds.html#a8e49ad5064daa1d41da2d36d3fe0f307">Centroid</a>(<a class="code" href="structBounds.html">Bounds</a> b);</div>
+<div class="line"><a name="l00056"></a><span class="lineno"><a class="line" href="structBounds.html#a8e49ad5064daa1d41da2d36d3fe0f307">   56</a></span>&#160;<a class="code" href="structTuple3.html">Tuple3</a> <a class="code" href="structBounds.html#a8e49ad5064daa1d41da2d36d3fe0f307">Centroid</a>(<a class="code" href="structBounds.html">Bounds</a> b);</div>
 <div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160; </div>
 <div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="ttc" id="ashape_8h_html"><div class="ttname"><a href="shape_8h.html">shape.h</a></div></div>
@@ -100,8 +100,9 @@ $(function() {
 <div class="ttc" id="astructBounds_html_a8e49ad5064daa1d41da2d36d3fe0f307"><div class="ttname"><a href="structBounds.html#a8e49ad5064daa1d41da2d36d3fe0f307">Bounds::Centroid</a></div><div class="ttdeci">Tuple3 Centroid(Bounds b)</div></div>
 <div class="ttc" id="astructBounds_html_acea807cb721d62606b8e88b503cd284a"><div class="ttname"><a href="structBounds.html#acea807cb721d62606b8e88b503cd284a">Bounds::minimum_bound</a></div><div class="ttdeci">Tuple3 minimum_bound</div><div class="ttdef"><b>Definition:</b> bounds.h:14</div></div>
 <div class="ttc" id="astructRay_html"><div class="ttname"><a href="structRay.html">Ray</a></div><div class="ttdef"><b>Definition:</b> ray.h:12</div></div>
-<div class="ttc" id="astructShape_html"><div class="ttname"><a href="structShape.html">Shape</a></div><div class="ttdef"><b>Definition:</b> shape.h:17</div></div>
+<div class="ttc" id="astructShape_html"><div class="ttname"><a href="structShape.html">Shape</a></div><div class="ttdef"><b>Definition:</b> shape.h:22</div></div>
 <div class="ttc" id="astructShape_html_aca7b4f5903221378a996d4c6c7069bff"><div class="ttname"><a href="structShape.html#aca7b4f5903221378a996d4c6c7069bff">Shape::ShapeBounds</a></div><div class="ttdeci">Bounds ShapeBounds(Shape *s)</div></div>
+<div class="ttc" id="astructTuple3_html"><div class="ttname"><a href="structTuple3.html">Tuple3</a></div></div>
 <div class="ttc" id="atuple_8h_html"><div class="ttname"><a href="tuple_8h.html">tuple.h</a></div></div>
 <div class="ttc" id="aunionMatrix4x4_html"><div class="ttname"><a href="unionMatrix4x4.html">Matrix4x4</a></div><div class="ttdef"><b>Definition:</b> matrix.h:14</div></div>
 </div><!-- fragment --></div><!-- contents -->

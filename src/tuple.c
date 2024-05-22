@@ -44,7 +44,7 @@ void PrintTuple(Tuple3 t)
     printf("[%f %f %f %f]\n", t[0], t[1], t[2], t[3]);
 }
 
-int TupleEqual(Tuple3 t1, Tuple3 t2)
+bool TupleEqual(Tuple3 t1, Tuple3 t2)
 {
     __m256d res = _mm256_cmp_pd(t1, t2, _CMP_EQ_OQ);
     unsigned bitmask = (unsigned)_mm256_movemask_pd(res);
@@ -70,7 +70,7 @@ bool TupleHasInfOrNans(Tuple3 t1)
     return TupleHasInf(t1) || TupleHasNaNs(t1);
 }
 
-int TupleFuzzyEqual(Tuple3 t1, Tuple3 t2)
+bool TupleFuzzyEqual(Tuple3 t1, Tuple3 t2)
 {
     __m256d diff = _mm256_sub_pd(t1, t2);
     __m256d mask = (__m256d)_mm256_set1_epi64x(0x7FFFFFFFFFFFFFFF);

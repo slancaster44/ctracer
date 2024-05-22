@@ -77,17 +77,10 @@ Collaboration diagram for Shape:</div>
 <div class="dyncontent">
 <div class="center"><img src="structShape__coll__graph.png" border="0" usemap="#aShape_coll__map" alt="Collaboration graph"/></div>
 <map name="aShape_coll__map" id="aShape_coll__map">
-<area shape="rect" title=" " alt="" coords="188,481,251,508"/>
-<area shape="rect" href="structMaterial.html" title=" " alt="" coords="128,377,204,404"/>
-<area shape="rect" href="structScene.html" title=" " alt="" coords="90,288,151,315"/>
-<area shape="rect" href="structLight.html" title=" " alt="" coords="5,199,60,225"/>
-<area shape="rect" href="structCamera.html" title=" " alt="" coords="84,199,157,225"/>
-<area shape="rect" href="structTree.html" title=" " alt="" coords="181,199,231,225"/>
-<area shape="rect" href="structNode.html" title=" " alt="" coords="178,109,234,136"/>
-<area shape="rect" href="structBounds.html" title=" " alt="" coords="129,5,200,32"/>
-<area shape="rect" href="structSet.html" title=" " alt="" coords="226,5,269,32"/>
-<area shape="rect" href="structPattern.html" title=" " alt="" coords="176,288,244,315"/>
-<area shape="rect" href="unionMatrix4x4.html" title=" " alt="" coords="229,377,317,404"/>
+<area shape="rect" title=" " alt="" coords="22,288,85,315"/>
+<area shape="rect" href="structMaterial.html" title=" " alt="" coords="15,199,91,225"/>
+<area shape="rect" href="structPattern.html" title=" " alt="" coords="90,109,158,136"/>
+<area shape="rect" href="structTuple3.html" title=" " alt="" coords="5,5,69,32"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
@@ -97,21 +90,58 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:aca7b4f5903221378a996d4c6c7069bff"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7850e4213f80b10969aaff9bd9c8084e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structIntersection.html">Intersection</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structShape.html#a7850e4213f80b10969aaff9bd9c8084e">Intersect</a> (<a class="el" href="structShape.html">Shape</a> *s, <a class="el" href="structRay.html">Ray</a> r)</td></tr>
 <tr class="separator:a7850e4213f80b10969aaff9bd9c8084e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00e9b20d30c2215e736bfe6b52a56821"><td class="memItemLeft" align="right" valign="top">Tuple3&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structShape.html#a00e9b20d30c2215e736bfe6b52a56821">PatternColorAt</a> (<a class="el" href="structShape.html">Shape</a> *s, Tuple3 position)</td></tr>
+<tr class="memitem:a00e9b20d30c2215e736bfe6b52a56821"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structTuple3.html">Tuple3</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structShape.html#a00e9b20d30c2215e736bfe6b52a56821">PatternColorAt</a> (<a class="el" href="structShape.html">Shape</a> *s, <a class="el" href="structTuple3.html">Tuple3</a> position)</td></tr>
 <tr class="separator:a00e9b20d30c2215e736bfe6b52a56821"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac47716d97f3670c35f19e4221bf2e09a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structShape.html#ac47716d97f3670c35f19e4221bf2e09a">ApplyTransformation</a> (<a class="el" href="structShape.html">Shape</a> *s, <a class="el" href="unionMatrix4x4.html">Matrix4x4</a> t)</td></tr>
+<tr class="separator:ac47716d97f3670c35f19e4221bf2e09a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a59e78a7a512b8bde0c4e958aac85bbe4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structShape.html">Shape</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structShape.html#a59e78a7a512b8bde0c4e958aac85bbe4">NewSphere</a> (<a class="el" href="structTuple3.html">Tuple3</a> center_point, double radius)</td></tr>
+<tr class="separator:a59e78a7a512b8bde0c4e958aac85bbe4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5291b41cb4cf80d139322971ab9de1c5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structShape.html">Shape</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structShape.html#a5291b41cb4cf80d139322971ab9de1c5">NewPlane</a> (<a class="el" href="structTuple3.html">Tuple3</a> pnt, <a class="el" href="structTuple3.html">Tuple3</a> normal_vector)</td></tr>
+<tr class="separator:a5291b41cb4cf80d139322971ab9de1c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a193a205086804360eeff399a1e015512"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structShape.html">Shape</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structShape.html#a193a205086804360eeff399a1e015512">NewCube</a> (<a class="el" href="structTuple3.html">Tuple3</a> pnt, double size)</td></tr>
+<tr class="separator:a193a205086804360eeff399a1e015512"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a68cdf363351e079d128ed92b0e52c27e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structTuple3.html">Tuple3</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structShape.html#a68cdf363351e079d128ed92b0e52c27e">NormalAt</a> (<a class="el" href="structShape.html">Shape</a> *s, <a class="el" href="structTuple3.html">Tuple3</a> pnt)</td></tr>
+<tr class="separator:a68cdf363351e079d128ed92b0e52c27e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:ae09a7e4c6dd3131625ec629c16246d39"><td class="memItemLeft" align="right" valign="top"><a class="el" href="unionMatrix4x4.html">Matrix4x4</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structShape.html#ae09a7e4c6dd3131625ec629c16246d39">transformation</a></td></tr>
-<tr class="separator:ae09a7e4c6dd3131625ec629c16246d39"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a89e44869a74033e475b3a5b754db18a6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="unionMatrix4x4.html">Matrix4x4</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structShape.html#a89e44869a74033e475b3a5b754db18a6">inverse_transform</a></td></tr>
-<tr class="separator:a89e44869a74033e475b3a5b754db18a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae61fdac3b1a90dd2e8ee5d6cb5652291"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structMaterial.html">Material</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structShape.html#ae61fdac3b1a90dd2e8ee5d6cb5652291">material</a></td></tr>
 <tr class="separator:ae61fdac3b1a90dd2e8ee5d6cb5652291"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab044957df9b03a3c2af7250c32fb3b27"><td class="memItemLeft" align="right" valign="top"><a class="el" href="shape_8h.html#a733713fb5a6f60fae1f1fe872b3e391b">SHAPE_TYPE</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structShape.html#ab044957df9b03a3c2af7250c32fb3b27">type</a></td></tr>
 <tr class="separator:ab044957df9b03a3c2af7250c32fb3b27"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Member Function Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Used to represent a shape in a scene </p>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="ac47716d97f3670c35f19e4221bf2e09a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac47716d97f3670c35f19e4221bf2e09a">&#9670;&nbsp;</a></span>ApplyTransformation()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ApplyTransformation </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structShape.html">Shape</a> *&#160;</td>
+          <td class="paramname"><em>s</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="unionMatrix4x4.html">Matrix4x4</a>&#160;</td>
+          <td class="paramname"><em>t</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Transform a given shape using the given transformation matrix </p>
+
+</div>
+</div>
 <a id="a7850e4213f80b10969aaff9bd9c8084e"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a7850e4213f80b10969aaff9bd9c8084e">&#9670;&nbsp;</a></span>Intersect()</h2>
 
@@ -149,14 +179,125 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a00e9b20d30c2215e736bfe6b52a56821"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a00e9b20d30c2215e736bfe6b52a56821">&#9670;&nbsp;</a></span>PatternColorAt()</h2>
+<a id="a193a205086804360eeff399a1e015512"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a193a205086804360eeff399a1e015512">&#9670;&nbsp;</a></span>NewCube()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">Tuple3 PatternColorAt </td>
+          <td class="memname"><a class="el" href="structShape.html">Shape</a> NewCube </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structTuple3.html">Tuple3</a>&#160;</td>
+          <td class="paramname"><em>pnt</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>size</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Generate a new cube</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">'Tuple3</td><td>pnt' The center point of the cube </td></tr>
+    <tr><td class="paramname">'double</td><td>size' The length of all the cube's sides </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A cube centered at the given point and with sides of length 'size' </dd></dl>
+
+</div>
+</div>
+<a id="a5291b41cb4cf80d139322971ab9de1c5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5291b41cb4cf80d139322971ab9de1c5">&#9670;&nbsp;</a></span>NewPlane()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structShape.html">Shape</a> NewPlane </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structTuple3.html">Tuple3</a>&#160;</td>
+          <td class="paramname"><em>pnt</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structTuple3.html">Tuple3</a>&#160;</td>
+          <td class="paramname"><em>normal_vector</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Generate a new plane</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">'Tuple3</td><td>pnt' A point that will exist on generated plane </td></tr>
+    <tr><td class="paramname">'Tuple3</td><td>normal_vector' The surface normal on top of the plane </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A plane on the given point, facing the direction of the given surface normal vector </dd></dl>
+
+</div>
+</div>
+<a id="a59e78a7a512b8bde0c4e958aac85bbe4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a59e78a7a512b8bde0c4e958aac85bbe4">&#9670;&nbsp;</a></span>NewSphere()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structShape.html">Shape</a> NewSphere </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structTuple3.html">Tuple3</a>&#160;</td>
+          <td class="paramname"><em>center_point</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>radius</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Generate a new sphere</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">'Tuple3</td><td>center_point' The center point of the sphere </td></tr>
+    <tr><td class="paramname">'double</td><td>radius' The radius of the sphere </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The sphere with the given center point and radius </dd></dl>
+
+</div>
+</div>
+<a id="a68cdf363351e079d128ed92b0e52c27e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a68cdf363351e079d128ed92b0e52c27e">&#9670;&nbsp;</a></span>NormalAt()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structTuple3.html">Tuple3</a> NormalAt </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="structShape.html">Shape</a> *&#160;</td>
           <td class="paramname"><em>s</em>, </td>
@@ -164,7 +305,36 @@ Public Attributes</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">Tuple3&#160;</td>
+          <td class="paramtype"><a class="el" href="structTuple3.html">Tuple3</a>&#160;</td>
+          <td class="paramname"><em>pnt</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Calculate the surface normal for a given shape at a given point </p>
+
+</div>
+</div>
+<a id="a00e9b20d30c2215e736bfe6b52a56821"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a00e9b20d30c2215e736bfe6b52a56821">&#9670;&nbsp;</a></span>PatternColorAt()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structTuple3.html">Tuple3</a> PatternColorAt </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structShape.html">Shape</a> *&#160;</td>
+          <td class="paramname"><em>s</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structTuple3.html">Tuple3</a>&#160;</td>
           <td class="paramname"><em>position</em>&#160;</td>
         </tr>
         <tr>
@@ -182,7 +352,7 @@ Public Attributes</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>A Tuple3 where the elements represent the red, blue and green channels of a color </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>A <a class="el" href="structTuple3.html">Tuple3</a> where the elements represent the red, blue and green channels of a color </dd></dl>
 
 </div>
 </div>
@@ -212,20 +382,6 @@ Public Attributes</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
-<a id="a89e44869a74033e475b3a5b754db18a6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a89e44869a74033e475b3a5b754db18a6">&#9670;&nbsp;</a></span>inverse_transform</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="unionMatrix4x4.html">Matrix4x4</a> Shape::inverse_transform</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
 <a id="ae61fdac3b1a90dd2e8ee5d6cb5652291"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ae61fdac3b1a90dd2e8ee5d6cb5652291">&#9670;&nbsp;</a></span>material</h2>
 
@@ -237,20 +393,7 @@ Public Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-</div>
-</div>
-<a id="ae09a7e4c6dd3131625ec629c16246d39"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae09a7e4c6dd3131625ec629c16246d39">&#9670;&nbsp;</a></span>transformation</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="unionMatrix4x4.html">Matrix4x4</a> Shape::transformation</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
+<p>The shape's material </p>
 
 </div>
 </div>
@@ -265,6 +408,7 @@ Public Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>The shapes type tag, indicates the type of shape being represented </p>
 
 </div>
 </div>

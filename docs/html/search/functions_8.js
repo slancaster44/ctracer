@@ -1,17 +1,10 @@
 var searchData=
 [
-  ['newcamera_263',['NewCamera',['../structCamera.html#a04d9b8154245ab743e80288a6446ef60',1,'Camera']]],
-  ['newcolor_264',['NewColor',['../tuple_8h.html#adc109e27ac689e9ea7c2632c8cbb358d',1,'tuple.h']]],
-  ['newcube_265',['NewCube',['../shape_8h.html#a193a205086804360eeff399a1e015512',1,'shape.h']]],
-  ['newlight_266',['NewLight',['../structLight.html#a9a1966cb0753efb250c5cc91a3730b6b',1,'Light']]],
-  ['newmaterial_267',['NewMaterial',['../structMaterial.html#a9ff8f6b8e349894a6d86af2717476849',1,'Material']]],
-  ['newpattern_268',['NewPattern',['../structPattern.html#ae2b19d6c07cf1239b1ded6f8a4545ff6',1,'Pattern']]],
-  ['newplane_269',['NewPlane',['../shape_8h.html#a5291b41cb4cf80d139322971ab9de1c5',1,'shape.h']]],
-  ['newpnt3_270',['NewPnt3',['../tuple_8h.html#af1ea27710c6795f4ad49cf158155ed3b',1,'tuple.h']]],
-  ['newray_271',['NewRay',['../structRay.html#a47b32b6d6ec5b306de2558e9f332bc1c',1,'Ray']]],
-  ['newsolidpattern_272',['NewSolidPattern',['../structPattern.html#a998d338e706f38180aefff003470ed4e',1,'Pattern']]],
-  ['newsphere_273',['NewSphere',['../shape_8h.html#a59e78a7a512b8bde0c4e958aac85bbe4',1,'shape.h']]],
-  ['newtuple3_274',['NewTuple3',['../tuple_8h.html#a3bc7acd4f1c8effae6860a04803b842e',1,'tuple.h']]],
-  ['newvec3_275',['NewVec3',['../tuple_8h.html#a4f45eb57df0f416956fbc7a847e833f5',1,'tuple.h']]],
-  ['normalat_276',['NormalAt',['../shape_8h.html#a68cdf363351e079d128ed92b0e52c27e',1,'shape.h']]]
+  ['patterncolorat_264',['PatternColorAt',['../structShape.html#a00e9b20d30c2215e736bfe6b52a56821',1,'Shape']]],
+  ['phongshader_265',['PhongShader',['../material_8h.html#a55f3e3b000b4fae324805fcb7aea5d10',1,'material.h']]],
+  ['printmatrix_266',['PrintMatrix',['../unionMatrix4x4.html#a75f5675a2d726a4ee28819da27b0f666',1,'Matrix4x4']]],
+  ['printtree_267',['PrintTree',['../structTree.html#a59cb91b5898c9bc01c9ae46b56158fb6',1,'Tree']]],
+  ['printtuple_268',['PrintTuple',['../structTuple3.html#aa640a38ea3eef8bab51596ae980a7f52',1,'Tuple3']]],
+  ['propagatematerial_269',['PropagateMaterial',['../structTree.html#aba9bd27c593d7770359297c6af894ab3',1,'Tree']]],
+  ['propagatetransform_270',['PropagateTransform',['../structTree.html#a8d46ab9cad8b87b7db0723689c6976d0',1,'Tree']]]
 ];
