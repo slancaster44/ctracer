@@ -5,7 +5,7 @@
 
 void ConstructCanvas(Canvas *c, unsigned width, unsigned height)
 {
-    c->buffer = (Tuple3 *)shmalloc(width * height * sizeof(Tuple3));
+    c->buffer = (Tuple3 *) shmalloc(width * height * sizeof(Tuple3));
     c->canvas_width = width;
     c->canvas_height = height;
 }

@@ -199,7 +199,6 @@ Bounds SetBounds(Set *s)
         .maximum_bound = max,
     };
 
-    GenerateBoundingCube(&out);
     return out;
 }
 
@@ -216,7 +215,6 @@ void TreeNodeBounds(Node *n)
         out.maximum_bound = _mm256_max_pd(child->bounds.maximum_bound, out.maximum_bound);
     }
 
-    GenerateBoundingCube(&out);
     n->bounds = out;
 }
 

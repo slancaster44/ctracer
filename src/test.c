@@ -1134,6 +1134,7 @@ Shape NewGlassSphere()
 }
 
 void CalculateRefractionRatio(Set *intersections, unsigned long idx, double *n);
+void GenerateSceneBVH(Scene *s);
 void TestCalculateRefraction()
 {
     Scene s;
@@ -1155,6 +1156,8 @@ void TestCalculateRefraction()
     ApplyTransformation(&sphere_c, TranslationMatrix(0, 0, 0.25));
     sphere_c.material.refractive_index = 2.5;
     AddShape(&s, sphere_c);
+
+    GenerateSceneBVH(&s);
 
     Ray r = NewRay(NewPnt3(0, 0, -4), NewVec3(0, 0, 1));
     Set intersections;
@@ -1304,15 +1307,10 @@ void TestBounds()
 
     Tuple3 sphere_exp_min = NewPnt3(-2, -2, -2);
     Tuple3 sphere_exp_max = NewPnt3(2, 2, 2);
-    Shape sphere_exp_cube = NewCube(NewPnt3(0, 0, 0), 4);
 
     TEST(TupleFuzzyEqual(sphere_bounds.maximum_bound, sphere_exp_max) &&
              TupleFuzzyEqual(sphere_bounds.minimum_bound, sphere_exp_min),
          "Sphere bounding box");
-
-    TEST(MatrixFuzzyEqual(sphere_exp_cube.transformation, sphere_bounds.as_cube.transformation) &&
-             MatrixFuzzyEqual(sphere_exp_cube.inverse_transform, sphere_bounds.as_cube.inverse_transform),
-         "Sphere bounding cube");
 
     Shape cube = NewCube(NewPnt3(-3, -2, -1), 3.0);
     Bounds cube_bounds = ShapeBounds(&cube);
@@ -1323,10 +1321,6 @@ void TestBounds()
     TEST(TupleFuzzyEqual(cube_bounds.maximum_bound, cube_exp_max) &&
              TupleFuzzyEqual(cube_bounds.minimum_bound, cube_exp_min),
          "Cube bounding box");
-
-    TEST(MatrixFuzzyEqual(cube.transformation, cube_bounds.as_cube.transformation) &&
-             MatrixFuzzyEqual(cube.inverse_transform, cube_bounds.as_cube.inverse_transform),
-         "Cube bounding cube");
 
     Tree t;
     ConstructTree(&t);

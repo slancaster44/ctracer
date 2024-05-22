@@ -54,8 +54,7 @@ Bounds ShapeBounds(Shape *s)
         printf("Unable to calculate bounding box");
     }
 
-    b = TransformBounds(b, s->inverse_transform);
-    return b;
+    return TransformBounds(b, s->transformation);
 }
 
 bool IsInBounds(Bounds b, Ray r)
@@ -65,8 +64,21 @@ bool IsInBounds(Bounds b, Ray r)
         return true;
     }
 
-    Intersection cube_intersect = Intersect(&b.as_cube, r);
-    return cube_intersect.count > 0;
+    Tuple3 tmin_numerators = TupleSubtract(b.minimum_bound, r.origin);
+    Tuple3 tmax_numerators = TupleSubtract(b.maximum_bound, r.origin);
+
+    tmin_numerators = TupleDivide(tmin_numerators, r.direction);
+    tmax_numerators = TupleDivide(tmax_numerators, r.direction);
+
+    Tuple3 tmaxs = _mm256_max_pd(tmin_numerators, tmax_numerators);
+    Tuple3 tmins = _mm256_min_pd(tmin_numerators, tmax_numerators);
+
+    __m512d partial_result = DISTRIBUTE_256(tmins, tmaxs);
+
+    double tmin = _mm512_mask_reduce_max_pd(0x8F, partial_result); // Mask 1000_1111; Exclude 'w' and elements from tmaxs
+    double tmax = _mm512_mask_reduce_min_pd(0xF8, partial_result);
+
+    return tmax > tmin;
 }
 
 Bounds TransformBounds(Bounds b, Matrix4x4 m)
@@ -96,7 +108,6 @@ Bounds TransformBounds(Bounds b, Matrix4x4 m)
         new_bounds.minimum_bound = _mm256_min_pd(new_bounds.minimum_bound, this_corner);
     }
 
-    GenerateBoundingCube(&new_bounds);
     return new_bounds;
 }
 
@@ -107,38 +118,4 @@ Tuple3 Centroid(Bounds b)
     Tuple3 center_point = TupleSubtract(b.maximum_bound, center_point_offset);
 
     return center_point;
-}
-
-void GenerateBoundingCube(Bounds *b)
-{
-    if (TupleHasInfOrNans(b->maximum_bound) || TupleHasInfOrNans(b->minimum_bound))
-    {
-        b->as_cube = NewCube(NewPnt3(0, 0, 0), DBL_MAX);
-        return;
-    }
-
-    // Find cube that matches the bounding box
-    Tuple3 hwd = TupleSubtract(b->maximum_bound, b->minimum_bound);
-
-    Matrix4x4 cube_scaling_matrix = ScalingMatrix(hwd[0], hwd[1], hwd[2]);
-
-    Tuple3 center_point_offset = TupleScalarDivide(hwd, 2);
-    Tuple3 center_point = TupleSubtract(b->maximum_bound, center_point_offset);
-    Matrix4x4 cube_translation_matrix = TranslationMatrix(center_point[0], center_point[1], center_point[2]);
-
-    Matrix4x4 cube_transform = MatrixMultiply(cube_translation_matrix, cube_scaling_matrix);
-
-    Shape cube = {.type = CUBE, .transformation = IdentityMatrix(), .inverse_transform = IdentityMatrix()};
-    ApplyTransformation(&cube, cube_transform);
-
-    for (int i = 0; i < 4; i++)
-    {
-        if (TupleHasInfOrNans(cube_transform.contents[i]))
-        {
-            cube = NewCube(NewPnt3(0, 0, 0), DBL_MAX);
-            break;
-        }
-    }
-
-    b->as_cube = cube;
 }
