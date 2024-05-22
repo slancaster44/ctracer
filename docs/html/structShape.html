@@ -77,17 +77,17 @@ Collaboration diagram for Shape:</div>
 <div class="dyncontent">
 <div class="center"><img src="structShape__coll__graph.png" border="0" usemap="#aShape_coll__map" alt="Collaboration graph"/></div>
 <map name="aShape_coll__map" id="aShape_coll__map">
-<area shape="rect" title=" " alt="" coords="327,496,389,523"/>
-<area shape="rect" href="structMaterial.html" title=" " alt="" coords="248,407,324,433"/>
-<area shape="rect" href="structScene.html" title=" " alt="" coords="127,303,189,329"/>
+<area shape="rect" title=" " alt="" coords="188,481,251,508"/>
+<area shape="rect" href="structMaterial.html" title=" " alt="" coords="128,377,204,404"/>
+<area shape="rect" href="structScene.html" title=" " alt="" coords="90,288,151,315"/>
 <area shape="rect" href="structLight.html" title=" " alt="" coords="5,199,60,225"/>
 <area shape="rect" href="structCamera.html" title=" " alt="" coords="84,199,157,225"/>
 <area shape="rect" href="structTree.html" title=" " alt="" coords="181,199,231,225"/>
 <area shape="rect" href="structNode.html" title=" " alt="" coords="178,109,234,136"/>
 <area shape="rect" href="structBounds.html" title=" " alt="" coords="129,5,200,32"/>
 <area shape="rect" href="structSet.html" title=" " alt="" coords="226,5,269,32"/>
-<area shape="rect" href="structPattern.html" title=" " alt="" coords="252,303,320,329"/>
-<area shape="rect" href="unionMatrix4x4.html" title=" " alt="" coords="321,199,409,225"/>
+<area shape="rect" href="structPattern.html" title=" " alt="" coords="176,288,244,315"/>
+<area shape="rect" href="unionMatrix4x4.html" title=" " alt="" coords="229,377,317,404"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
@@ -97,6 +97,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:aca7b4f5903221378a996d4c6c7069bff"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7850e4213f80b10969aaff9bd9c8084e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structIntersection.html">Intersection</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structShape.html#a7850e4213f80b10969aaff9bd9c8084e">Intersect</a> (<a class="el" href="structShape.html">Shape</a> *s, <a class="el" href="structRay.html">Ray</a> r)</td></tr>
 <tr class="separator:a7850e4213f80b10969aaff9bd9c8084e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00e9b20d30c2215e736bfe6b52a56821"><td class="memItemLeft" align="right" valign="top">Tuple3&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structShape.html#a00e9b20d30c2215e736bfe6b52a56821">PatternColorAt</a> (<a class="el" href="structShape.html">Shape</a> *s, Tuple3 position)</td></tr>
+<tr class="separator:a00e9b20d30c2215e736bfe6b52a56821"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -144,6 +146,43 @@ Public Attributes</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>'<a class="el" href="structIntersection.html">Intersection</a>' An intersection object containg the 'count' and 'ray_times' of the intersections </dd></dl>
+
+</div>
+</div>
+<a id="a00e9b20d30c2215e736bfe6b52a56821"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a00e9b20d30c2215e736bfe6b52a56821">&#9670;&nbsp;</a></span>PatternColorAt()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Tuple3 PatternColorAt </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structShape.html">Shape</a> *&#160;</td>
+          <td class="paramname"><em>s</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Tuple3&#160;</td>
+          <td class="paramname"><em>position</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Returns the color of the shape's material pattern on a given location. Note: This function is does not do the final color calculation, this is done by a <a class="el" href="material_8h.html#ab3b7b7f843ee497c2fd131301a632827">Shader</a> function. The Shader function will manipulate the color returned by <a class="el" href="structShape.html#a00e9b20d30c2215e736bfe6b52a56821">PatternColorAt()</a> to calculate the final color.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">'Shape</td><td>*s' the shape to find the color for </td></tr>
+    <tr><td class="paramname">'Tuple3</td><td>position' the location to find the color for </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A Tuple3 where the elements represent the red, blue and green channels of a color </dd></dl>
 
 </div>
 </div>
@@ -233,6 +272,7 @@ Public Attributes</h2></td></tr>
 <li>include/<a class="el" href="shape_8h_source.html">shape.h</a></li>
 <li>include/<a class="el" href="bounds_8h_source.html">bounds.h</a></li>
 <li>include/<a class="el" href="intersection_8h_source.html">intersection.h</a></li>
+<li>include/<a class="el" href="pattern_8h_source.html">pattern.h</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->

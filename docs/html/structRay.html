@@ -63,6 +63,7 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="structRay-members.html">List of all members</a>  </div>
   <div class="headertitle">
@@ -72,6 +73,15 @@ $(function() {
 
 <p><code>#include &lt;<a class="el" href="ray_8h_source.html">ray.h</a>&gt;</code></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:a47b32b6d6ec5b306de2558e9f332bc1c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structRay.html">Ray</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structRay.html#a47b32b6d6ec5b306de2558e9f332bc1c">NewRay</a> (Tuple3 <a class="el" href="structRay.html#ab6dbe9cec530274f418e1e1abb15e20c">origin</a>, Tuple3 <a class="el" href="structRay.html#a935f52ae5a770a9f4846ad70fe2aa1dd">direction</a>)</td></tr>
+<tr class="separator:a47b32b6d6ec5b306de2558e9f332bc1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a60f70323e331faabde05a8ec21d0b799"><td class="memItemLeft" align="right" valign="top">Tuple3&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structRay.html#a60f70323e331faabde05a8ec21d0b799">RayPosition</a> (<a class="el" href="structRay.html">Ray</a> r, double pos)</td></tr>
+<tr class="separator:a60f70323e331faabde05a8ec21d0b799"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adc48d6077b5c3393458ac696d6d82b70"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structRay.html">Ray</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structRay.html#adc48d6077b5c3393458ac696d6d82b70">RayTransform</a> (<a class="el" href="structRay.html">Ray</a> r, <a class="el" href="unionMatrix4x4.html">Matrix4x4</a> transformation)</td></tr>
+<tr class="separator:adc48d6077b5c3393458ac696d6d82b70"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
 <tr class="memitem:ab6dbe9cec530274f418e1e1abb15e20c"><td class="memItemLeft" align="right" valign="top">Tuple3&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structRay.html#ab6dbe9cec530274f418e1e1abb15e20c">origin</a></td></tr>
@@ -79,6 +89,104 @@ Public Attributes</h2></td></tr>
 <tr class="memitem:a935f52ae5a770a9f4846ad70fe2aa1dd"><td class="memItemLeft" align="right" valign="top">Tuple3&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structRay.html#a935f52ae5a770a9f4846ad70fe2aa1dd">direction</a></td></tr>
 <tr class="separator:a935f52ae5a770a9f4846ad70fe2aa1dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Represents a ray that can be used to intersect various objects </p>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="a47b32b6d6ec5b306de2558e9f332bc1c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a47b32b6d6ec5b306de2558e9f332bc1c">&#9670;&nbsp;</a></span>NewRay()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structRay.html">Ray</a> NewRay </td>
+          <td>(</td>
+          <td class="paramtype">Tuple3&#160;</td>
+          <td class="paramname"><em>origin</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Tuple3&#160;</td>
+          <td class="paramname"><em>direction</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Constructs a new ray with the given origin and direction </p>
+
+</div>
+</div>
+<a id="a60f70323e331faabde05a8ec21d0b799"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a60f70323e331faabde05a8ec21d0b799">&#9670;&nbsp;</a></span>RayPosition()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Tuple3 RayPosition </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structRay.html">Ray</a>&#160;</td>
+          <td class="paramname"><em>r</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>pos</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Returns the coordinate at a given position along the ray</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">'Ray</td><td>r' The ray to travel along </td></tr>
+    <tr><td class="paramname">'double</td><td>pos' The distance from the ray's origin to travel </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The point at the given position </dd></dl>
+
+</div>
+</div>
+<a id="adc48d6077b5c3393458ac696d6d82b70"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adc48d6077b5c3393458ac696d6d82b70">&#9670;&nbsp;</a></span>RayTransform()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structRay.html">Ray</a> RayTransform </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structRay.html">Ray</a>&#160;</td>
+          <td class="paramname"><em>r</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="unionMatrix4x4.html">Matrix4x4</a>&#160;</td>
+          <td class="paramname"><em>transformation</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Transform the given ray according to the given matrix. Return the result </p>
+
+</div>
+</div>
 <h2 class="groupheader">Member Data Documentation</h2>
 <a id="a935f52ae5a770a9f4846ad70fe2aa1dd"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a935f52ae5a770a9f4846ad70fe2aa1dd">&#9670;&nbsp;</a></span>direction</h2>
@@ -91,6 +199,7 @@ Public Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>The ray's direction vector </p>
 
 </div>
 </div>
@@ -105,6 +214,7 @@ Public Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>The ray's starting point </p>
 
 </div>
 </div>

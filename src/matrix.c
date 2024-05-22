@@ -4,7 +4,7 @@
 #include <math.h>
 #include <stdio.h>
 
-int MatrixEqual(Matrix4x4 m1, Matrix4x4 m2)
+bool MatrixEqual(Matrix4x4 m1, Matrix4x4 m2)
 {
     __m256d cmp0 = _mm256_cmp_pd(m1.contents[0], m2.contents[0], _CMP_EQ_OQ);
     __m256d cmp1 = _mm256_cmp_pd(m1.contents[1], m2.contents[1], _CMP_EQ_OQ);
@@ -23,7 +23,7 @@ int MatrixEqual(Matrix4x4 m1, Matrix4x4 m2)
     return cmp_final == 0xf;
 }
 
-int MatrixFuzzyEqual(Matrix4x4 m1, Matrix4x4 m2)
+bool MatrixFuzzyEqual(Matrix4x4 m1, Matrix4x4 m2)
 {
     __m256d diff0 = _mm256_sub_pd(m1.contents[0], m2.contents[0]);
     __m256d diff1 = _mm256_sub_pd(m1.contents[1], m2.contents[1]);
@@ -311,20 +311,6 @@ Matrix4x4 ViewMatrix(Tuple3 from, Tuple3 to, Tuple3 upvec)
             {0, 0, 0, 1}}};
 
     return MatrixMultiply(result, TranslationMatrix(-from[0], -from[1], -from[2]));
-}
-
-// TODO: No Tests?
-Matrix4x4 SkewSymmetricCPMatrix(Tuple3 t1)
-{
-    Matrix4x4 result = {
-        .contents = {
-            {0, t1[2], -t1[1], 0},
-            {-t1[2], 0, t1[0], 0},
-            {t1[1], -t1[0], 0, 0},
-            {0, 0, 0, 1},
-        }};
-
-    return result;
 }
 
 Matrix4x4 RectifyMatrix(Matrix4x4 m)

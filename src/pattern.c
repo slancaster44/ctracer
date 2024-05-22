@@ -74,12 +74,12 @@ Pattern NewSolidPattern(Tuple3 color)
     return p;
 }
 
-Pattern NewStripedPattern(Tuple3 color_a, Tuple3 color_b)
+Pattern NewPattern(Tuple3 color_a, Tuple3 color_b, PATTERN_TYPE type)
 {
     Pattern p = {
         .color_a = color_a,
         .color_b = color_b,
-        .type = STRIPED,
+        .type = type,
         .transform = IdentityMatrix()};
 
     p = TransformPattern(p, IdentityMatrix());

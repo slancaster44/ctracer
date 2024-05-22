@@ -1017,7 +1017,7 @@ void TestStripePattern()
     Tuple3 black = NewColor(0, 0, 0, 255);
     Tuple3 white = NewColor(255, 255, 255, 255);
 
-    Pattern p1 = NewStripedPattern(white, black);
+    Pattern p1 = NewPattern(white, black, STRIPED);
     Shape s1 = NewSphere(NewPnt3(0, 0, 0), 1.0);
     s1.material.pattern = p1;
 
