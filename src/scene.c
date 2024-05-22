@@ -127,20 +127,23 @@ Tuple3 ColorForLimited(Scene *s, Ray r, int limit)
     return curColor;
 }
 
-void GenerateSceneBVH(Scene *s) {
+void GenerateSceneBVH(Scene *s)
+{
     Tree bvh;
     ConstructTree(&bvh);
 
     GenerateBVH(&bvh, &s->shapes);
     ReplaceTree(s, &bvh);
-    
+
+    CalculateBounds(&s->shapes);
+
     DeconstructTree(&bvh);
 }
 
 void RenderScene(Scene *s, Canvas *c)
 {
-    //GenerateSceneBVH(s); //Test scene with 75 spheres; No BVH: 48 seconds. With BVH: 8 seconds
-    CalculateBounds(&s->shapes);
+    GenerateSceneBVH(s);
+    PrintTree(&s->shapes);
 
     unsigned canvas_size = (c->canvas_height * c->canvas_width);
     unsigned chunk_size = canvas_size / (unsigned)get_nprocs();
@@ -185,6 +188,6 @@ void RenderScene(Scene *s, Canvas *c)
 void RenderSceneUnthreaded(Scene *s, Canvas *c)
 {
     GenerateSceneBVH(s);
-    CalculateBounds(&s->shapes);
+    PrintTree(&s->shapes);
     RenderSceneSection(s, c, 0, c->canvas_height * c->canvas_width - 1, c->canvas_width);
 }

@@ -6,10 +6,11 @@
 #include "pattern.h"
 
 typedef struct Scene Scene;
-typedef Tuple3 (*Shader)(Scene* s, Set* intersections, unsigned long idx, int limit);
-Tuple3 PhongShader(Scene* s, Set* intersections, unsigned long idx, int limit);
+typedef Tuple3 (*Shader)(Scene *s, Set *intersections, unsigned long idx, int limit);
+Tuple3 PhongShader(Scene *s, Set *intersections, unsigned long idx, int limit);
 
-typedef struct {
+typedef struct
+{
     Pattern pattern;
     double ambient_reflection;
     double diffuse_reflection;
@@ -22,6 +23,5 @@ typedef struct {
 } Material;
 
 Material NewMaterial(Tuple3 color);
-
 
 #endif

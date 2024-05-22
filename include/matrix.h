@@ -6,8 +6,9 @@
 
 #include "tuple.h"
 
-typedef union {
-    __m256d contents[4] __attribute__ ((aligned (32)));
+typedef union
+{
+    __m256d contents[4] __attribute__((aligned(sizeof(__m256d))));
 } Matrix4x4;
 
 int MatrixEqual(Matrix4x4 m1, Matrix4x4 m2);

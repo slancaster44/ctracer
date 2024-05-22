@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -o tracer -march=native -Wno-pointer-arith -Wno-unused-result -fpack-struct=1
+CFLAGS = -o tracer -march=native -Wno-pointer-arith -Wno-unused-result -fpack-struct=1 
 INCLUDE = -Iinclude
 SOURCE = `find ./src -name *.c ! -name test.c ! -name demo.c ! -name benchmark.c`
 LDFLAGS = -lm -lcjson

@@ -12,30 +12,37 @@
 #include "scene.h"
 #include "intersection.h"
 #include "set.h"
-#include "bounding.h"
+#include "bounds.h"
 
 static int num_failed;
 static int num_passed;
 
-void Fail(const char* msg) {
-    num_failed ++;
+void Fail(const char *msg)
+{
+    num_failed++;
     printf("\033[0;31m[FAIL]\033[0;37m %s\n", msg);
 }
 
-void Pass(const char* msg) {
-    num_passed ++;
+void Pass(const char *msg)
+{
+    num_passed++;
     printf("\033[0;32m[PASS]\033[0;37m %s\n", msg);
 }
 
-#define TEST(CONDITION, MSG) {  \
-    if (CONDITION) {            \
-        Pass(MSG);              \
-    } else {                    \
-        Fail(MSG);              \
-    }                           \
-}                               \
+#define TEST(CONDITION, MSG) \
+    {                        \
+        if (CONDITION)       \
+        {                    \
+            Pass(MSG);       \
+        }                    \
+        else                 \
+        {                    \
+            Fail(MSG);       \
+        }                    \
+    }
 
-void TestSet() {
+void TestSet()
+{
     Set s;
     ConstructSet(&s, sizeof(int));
 
@@ -47,30 +54,38 @@ void TestSet() {
     AppendValue(&s, &l);
 
     int out = 0;
-    for (unsigned int i = 0; i < s.length; i++) {
-        int* n;
+    for (unsigned int i = 0; i < s.length; i++)
+    {
+        int *n;
         n = Index(&s, i);
         out += *n;
     }
 
-    if (out != 5) {
+    if (out != 5)
+    {
         Fail("Set Indexing");
         printf("\t%d\n", out);
-    } else {
+    }
+    else
+    {
         Pass("Set Indexing");
     }
 
     out = 0;
-    for (unsigned int i = 0; i < s.length; i++) {
+    for (unsigned int i = 0; i < s.length; i++)
+    {
         int n;
         CopyOut(&s, i, &n);
         out += n;
     }
 
-    if (out != 5) {
+    if (out != 5)
+    {
         Fail("Set Copy Out");
         printf("\t%d\n", out);
-    } else {
+    }
+    else
+    {
         Pass("Set Copy Out");
     }
 
@@ -78,9 +93,10 @@ void TestSet() {
     CloneSet(&s2, &s);
     TEST(s2.length == s.length, "Set cloning, set length");
 
-    for (unsigned i = 0; i < s2.length; i++) {
-        int* exp = Index(&s, i);
-        int* res = Index(&s2, i);
+    for (unsigned i = 0; i < s2.length; i++)
+    {
+        int *exp = Index(&s, i);
+        int *res = Index(&s2, i);
 
         TEST(*exp == *res && exp != res, "Set cloning")
     }
@@ -88,15 +104,15 @@ void TestSet() {
     DeconstructSet(&s);
 }
 
-void TestMatrixEqual() {
+void TestMatrixEqual()
+{
     Matrix4x4 m1 = {
         .contents = {
             {-1, 2, 3, 4},
             {2, 4, 4, 2},
             {8, 6, 4, 1},
             {0, 0, 0, 1},
-        }
-    };
+        }};
 
     Matrix4x4 m2 = {
         .contents = {
@@ -104,277 +120,327 @@ void TestMatrixEqual() {
             {2, 4, 4, 2},
             {8, 6, 4, 1},
             {0, 0, 0, 1},
-        }
-    };
+        }};
 
-    if (!MatrixEqual(m1, m2)) {
+    if (!MatrixEqual(m1, m2))
+    {
         Fail("Matrix Equality");
-    } else {
+    }
+    else
+    {
         Pass("Matrix Equality");
     }
 
     m2.contents[0][0] = -1.0001;
-    if (MatrixEqual(m1, m2) || !MatrixFuzzyEqual(m1, m2)) {
+    if (MatrixEqual(m1, m2) || !MatrixFuzzyEqual(m1, m2))
+    {
         Fail("Matrix Fuzzy Equality");
-    } else {
+    }
+    else
+    {
         Pass("Matrix Fuzzy Equality");
     }
 }
 
-void TestMatrixMultiply() {
+void TestMatrixMultiply()
+{
     Matrix4x4 m1 = {
         .contents = {
             {1, 2, 3, 4},
             {5, 6, 7, 8},
-            {9, 8, 7 ,6},
-            {5, 4, 3, 2}
-        }
-    };
+            {9, 8, 7, 6},
+            {5, 4, 3, 2}}};
 
     Matrix4x4 m2 = {
         .contents = {
             {-2, 1, 2, 3},
             {3, 2, 1, -1},
             {4, 3, 6, 5},
-            {1, 2, 7, 8}
-        }
-    };
+            {1, 2, 7, 8}}};
 
     Matrix4x4 res = {
         .contents = {
             {20, 22, 50, 48},
             {44, 54, 114, 108},
             {40, 58, 110, 102},
-            {16, 26, 46, 42}
-        }
-    };
+            {16, 26, 46, 42}}};
 
-    if (!MatrixFuzzyEqual(MatrixMultiply(m1, m2), res)) {
+    if (!MatrixFuzzyEqual(MatrixMultiply(m1, m2), res))
+    {
         Fail("Matrix Multiplication");
-    } else {
+    }
+    else
+    {
         Pass("Matrix Multiplication");
     }
 }
 
-void TestMatrixTranspose() {
+void TestMatrixTranspose()
+{
     Matrix4x4 m1 = {
         .contents = {
             {0, 9, 3, 0},
             {9, 8, 0, 8},
             {1, 8, 5, 3},
-            {0, 0, 5, 8}
-        }
-    };
+            {0, 0, 5, 8}}};
 
     Matrix4x4 res = {
         .contents = {
             {0, 9, 1, 0},
             {9, 8, 8, 0},
             {3, 0, 5, 5},
-            {0, 8, 3, 8}
-        }
-    };
+            {0, 8, 3, 8}}};
 
-
-    if (!MatrixEqual(MatrixTranspose(m1), res)) {
+    if (!MatrixEqual(MatrixTranspose(m1), res))
+    {
         Fail("Matrix Transposition");
-    } else {
+    }
+    else
+    {
         Pass("Matrix Transposition");
     }
 }
 
-void TestMatrixInvert() { //TODO: More tests?
+void TestMatrixInvert()
+{ // TODO: More tests?
     Matrix4x4 m1 = {
         .contents = {
             {8, -5, 9, 2},
             {7, 5, 6, 1},
             {-6, 0, 9, 6},
-            {-3, 0, -9, -4}
-        }
-    };
+            {-3, 0, -9, -4}}};
 
     Matrix4x4 m2 = {
         .contents = {
             {-0.15385, -0.15385, -0.28205, -0.53846f},
             {-0.07692, 0.12308, 0.02564, 0.03077f},
             {0.35897, 0.35897, 0.43590, 0.92308f},
-            {-0.69231, -0.69231, -0.76923, -1.92308f}
-        }
-    };
+            {-0.69231, -0.69231, -0.76923, -1.92308f}}};
 
-    if (!MatrixFuzzyEqual(MatrixInvert(m1), m2)) {
+    if (!MatrixFuzzyEqual(MatrixInvert(m1), m2))
+    {
         PrintMatrix(MatrixInvert(m1));
         Fail("Matrix Inversion");
-    } else {
+    }
+    else
+    {
         Pass("Matrix Inversion");
     }
 }
 
-void TestMatrixVectorMultiply() {
+void TestMatrixVectorMultiply()
+{
     Matrix4x4 m1 = {
         .contents = {
             {1, 2, 3, 4},
             {2, 4, 4, 2},
             {8, 6, 4, 1},
-            {0, 0, 0, 1}
-        }
-    };
+            {0, 0, 0, 1}}};
 
     Tuple3 t1 = NewTuple3(1, 2, 3, 1);
     Tuple3 res = NewTuple3(18, 24, 33, 1);
 
-    if (!TupleEqual(res, MatrixTupleMultiply(m1, t1))) {
+    if (!TupleEqual(res, MatrixTupleMultiply(m1, t1)))
+    {
         Fail("Matrix & Tuple Multiplication");
-    } else {
+    }
+    else
+    {
         Pass("Matrix & Tuple Multiplication");
     }
-
 }
 
-void TestTupleEqual() {
-    if (!TupleEqual(NewVec3(1, 2, 3), NewVec3(1, 2, 3)) || TupleEqual(NewVec3(1, 2, 3), NewVec3(3, 2, 1))) {
+void TestTupleEqual()
+{
+    if (!TupleEqual(NewVec3(1, 2, 3), NewVec3(1, 2, 3)) || TupleEqual(NewVec3(1, 2, 3), NewVec3(3, 2, 1)))
+    {
         Fail("Tuple Equality");
-    } else {
+    }
+    else
+    {
         Pass("Tuple Equality");
     }
 }
 
-void TestScalarMultiply() {
+void TestScalarMultiply()
+{
     Tuple3 t1 = NewVec3(2.0, 4.0, 6.0);
     Tuple3 result = TupleScalarMultiply(t1, 2);
 
-    if (!TupleEqual(result, NewVec3(4, 8, 12))) {
+    if (!TupleEqual(result, NewVec3(4, 8, 12)))
+    {
         Fail("Tuple Scalar Multiplication");
-    } else {
+    }
+    else
+    {
         Pass("Tuple Scalar Multiplication");
     }
 }
 
-void TestScalarDivide() {
+void TestScalarDivide()
+{
     Tuple3 t1 = NewVec3(2.0, 4.0, 6.0);
     Tuple3 result = TupleScalarDivide(t1, 2);
 
-    if (!TupleEqual(result, NewVec3(1, 2, 3))) {
+    if (!TupleEqual(result, NewVec3(1, 2, 3)))
+    {
         Fail("Tuple Scalar Division");
-    } else {
+    }
+    else
+    {
         Pass("Tuple Scalar Division");
     }
 }
 
-void TestTupleNegate() {
+void TestTupleNegate()
+{
     Tuple3 t1 = NewVec3(1, -2, 3);
     Tuple3 result = TupleNegate(t1);
 
-    if (!TupleEqual(result, NewVec3(-1, 2, -3))) {
+    if (!TupleEqual(result, NewVec3(-1, 2, -3)))
+    {
         Fail("Tuple Negation");
-    } else {
+    }
+    else
+    {
         Pass("Tuple Negation");
     }
 }
 
-void TestTupleMagnitude() {
+void TestTupleMagnitude()
+{
     Tuple3 t1 = NewVec3(1, 2, 3);
     double result = TupleMagnitude(t1);
 
-    if (!FloatEquality(result, sqrt(14))) {
+    if (!FloatEquality(result, sqrt(14)))
+    {
         Fail("Tuple Magnitude");
-    } else {
+    }
+    else
+    {
         Pass("Tuple Magnitude");
     }
 }
 
-void TestTupleDotProduct() {
+void TestTupleDotProduct()
+{
     Tuple3 t1 = NewVec3(1, 2, 3);
     Tuple3 t2 = NewVec3(2, 3, 4);
-    
+
     double result = TupleDotProduct(t1, t2);
-    if (!FloatEquality(result, 20)) {
+    if (!FloatEquality(result, 20))
+    {
         printf("%f\n", result);
         Fail("Tuple Dot Product");
-    } else {
+    }
+    else
+    {
         Pass("Tuple Dot Product");
     }
 }
 
-void TestTupleNormalize() {
+void TestTupleNormalize()
+{
     Tuple3 t1 = NewVec3(100, 100, 100);
     Tuple3 result = TupleNormalize(t1);
 
-    if (!FloatEquality(TupleMagnitude(result), 1.0)) {
+    if (!FloatEquality(TupleMagnitude(result), 1.0))
+    {
         Fail("Tuple Normalization");
-    } else {
+    }
+    else
+    {
         Pass("Tuple Normalization");
     }
 }
 
-void TestTupleMultiply() {
+void TestTupleMultiply()
+{
     Tuple3 t1 = NewPnt3(1, 2, 3);
     Tuple3 t2 = NewPnt3(1, 2, 3);
 
     Tuple3 result = TupleMultiply(t1, t2);
 
-    if (!TupleEqual(result, NewPnt3(1, 4, 9))) {
+    if (!TupleEqual(result, NewPnt3(1, 4, 9)))
+    {
         Fail("Tuple Multiplication");
-    } else {
+    }
+    else
+    {
         Pass("Tuple Multiplication");
     }
 }
 
-void TestTupleDivide() {
+void TestTupleDivide()
+{
     Tuple3 t1 = NewPnt3(1, 2, 3);
     Tuple3 t2 = NewPnt3(1, 2, 3);
 
     Tuple3 result = TupleDivide(t1, t2);
 
-    if (!TupleEqual(result, NewPnt3(1, 1, 1))) {
+    if (!TupleEqual(result, NewPnt3(1, 1, 1)))
+    {
         Fail("Tuple Division");
-    } else {
+    }
+    else
+    {
         Pass("Tuple Division");
     }
 }
 
-void TestTupleAdd() {
+void TestTupleAdd()
+{
     Tuple3 t1 = NewVec3(1, 2, 3);
     Tuple3 t2 = NewVec3(1, 2, 3);
 
     Tuple3 result = TupleAdd(t1, t2);
 
-    if (!TupleEqual(result, NewVec3(2, 4, 6))) {
+    if (!TupleEqual(result, NewVec3(2, 4, 6)))
+    {
         Fail("Tuple Addition");
-    } else {
+    }
+    else
+    {
         Pass("Tuple Addition");
     }
 }
 
-void TestTupleSubtract() {
+void TestTupleSubtract()
+{
     Tuple3 t1 = NewVec3(1, 2, 3);
     Tuple3 t2 = NewVec3(1, 2, 3);
 
     Tuple3 result = TupleSubtract(t1, t2);
 
-    if (!TupleEqual(result, NewVec3(0, 0, 0))) {
+    if (!TupleEqual(result, NewVec3(0, 0, 0)))
+    {
         Fail("Tuple Subtraction");
-    } else {
+    }
+    else
+    {
         Pass("Tuple Subtraction");
     }
 }
 
-
-
-void TestRay() {
+void TestRay()
+{
     Ray r = {
         .origin = NewPnt3(2, 3, 4),
         .direction = NewVec3(1, 0, 0),
     };
 
-    if (!TupleEqual(RayPosition(r, 2.5), NewPnt3(4.5, 3, 4))) {
+    if (!TupleEqual(RayPosition(r, 2.5), NewPnt3(4.5, 3, 4)))
+    {
         Fail("Ray Position Finding");
-    } else {
+    }
+    else
+    {
         Pass("Ray Position Finding");
     }
 }
 
-void TestRaySphereIntersection() {
+void TestRaySphereIntersection()
+{
     Shape sphere = NewSphere(NewPnt3(0, 0, 0), 1.0);
 
     Ray r1 = {
@@ -384,10 +450,13 @@ void TestRaySphereIntersection() {
 
     Intersection intersection = Intersect(&sphere, r1);
 
-    if (!FloatEquality(4.0, intersection.ray_times[0]) || !FloatEquality(6.0, intersection.ray_times[1])) {
+    if (!FloatEquality(4.0, intersection.ray_times[0]) || !FloatEquality(6.0, intersection.ray_times[1]))
+    {
         Fail("Ray/Sphere Intersection, Normal");
         printf("\t%f\n", intersection.ray_times[1]);
-    } else {
+    }
+    else
+    {
         Pass("Ray/Sphere Intersection, Normal");
     }
 
@@ -398,13 +467,16 @@ void TestRaySphereIntersection() {
 
     Intersection i2 = Intersect(&sphere, r2);
 
-    if (!FloatEquality(i2.ray_times[0], 5.0) || i2.count != 1) {
+    if (!FloatEquality(i2.ray_times[0], 5.0) || i2.count != 1)
+    {
         Fail("Ray/Sphere Intersection, Tangent");
         printf("\t%f\n", i2.ray_times[0]);
-    } else {
+    }
+    else
+    {
         Pass("Ray/Sphere Intersection, Tangent");
     }
-    
+
     Ray r3 = {
         .origin = NewPnt3(0, 0, 0),
         .direction = NewVec3(0, 0, 1),
@@ -412,13 +484,15 @@ void TestRaySphereIntersection() {
 
     Intersection i3 = Intersect(&sphere, r3);
 
-    if (!FloatEquality(i3.ray_times[0], -1) || !FloatEquality(1.0, i3.ray_times[1])) {
+    if (!FloatEquality(i3.ray_times[0], -1) || !FloatEquality(1.0, i3.ray_times[1]))
+    {
         Fail("Ray/Sphere Intersection, Inside");
         printf("\t%f\n", i3.ray_times[0]);
-    } else {
+    }
+    else
+    {
         Pass("Ray/Sphere Intersection, Inside");
     }
-
 
     Ray r4 = {
         .origin = NewPnt3(0, 0, 5),
@@ -427,10 +501,13 @@ void TestRaySphereIntersection() {
 
     Intersection i4 = Intersect(&sphere, r4);
 
-    if (!FloatEquality(i4.ray_times[0], -6) || !FloatEquality(-4.0, i4.ray_times[1])) {
+    if (!FloatEquality(i4.ray_times[0], -6) || !FloatEquality(-4.0, i4.ray_times[1]))
+    {
         Fail("Ray/Sphere Intersection, Behind");
         printf("\t%f\n", i4.ray_times[0]);
-    } else {
+    }
+    else
+    {
         Pass("Ray/Sphere Intersection, Behind");
     }
 
@@ -441,15 +518,19 @@ void TestRaySphereIntersection() {
 
     Intersection i5 = Intersect(&sphere, r5);
 
-    if (i5.count != 0) {
+    if (i5.count != 0)
+    {
         Fail("Ray/Sphere Intersection, No Hit");
         printf("\t%d\n", i5.count);
-    } else {
+    }
+    else
+    {
         Pass("Ray/Sphere Intersection, No Hit");
     }
 }
 
-void TestRayTransform() {
+void TestRayTransform()
+{
     Ray r = {
         .origin = NewPnt3(1, 2, 3),
         .direction = NewVec3(0, 1, 0),
@@ -458,55 +539,67 @@ void TestRayTransform() {
     Matrix4x4 scaling = ScalingMatrix(2, 3, 4);
     Ray r2 = RayTransform(r, scaling);
 
-    if (!TupleFuzzyEqual(r2.direction, NewVec3(0, 3, 0)) || !TupleFuzzyEqual(r2.origin, NewPnt3(2, 6, 12))) {
+    if (!TupleFuzzyEqual(r2.direction, NewVec3(0, 3, 0)) || !TupleFuzzyEqual(r2.origin, NewPnt3(2, 6, 12)))
+    {
         Fail("Ray Transformation");
-    } else {
+    }
+    else
+    {
         Pass("Ray Transformation");
     }
 }
 
-void SphereNormal() {
+void SphereNormal()
+{
     Shape s = NewSphere(NewPnt3(0, 0, 0), 1.0);
 
-    if (!TupleFuzzyEqual(NormalAt(&s, NewPnt3(1, 0, 0)), NewVec3(1, 0, 0))) {
-        
-        
+    if (!TupleFuzzyEqual(NormalAt(&s, NewPnt3(1, 0, 0)), NewVec3(1, 0, 0)))
+    {
+
         Fail("Sphere Normal");
-    } else {
+    }
+    else
+    {
         Pass("Sphere Normal");
     }
 
-
     s.transformation = TranslationMatrix(0, 1, 0);
-    s.inverse_transform = MatrixInvert(s.transformation); 
+    s.inverse_transform = MatrixInvert(s.transformation);
 
     Tuple3 n = NormalAt(&s, NewPnt3(0, 1.70711, -0.70711));
     Tuple3 expected_out = NewVec3(0, 0.70711, -0.70711);
 
-    if (!TupleFuzzyEqual(n, expected_out)) {
+    if (!TupleFuzzyEqual(n, expected_out))
+    {
         PrintTuple(expected_out);
         PrintTuple(n);
         Fail("Sphere Normal, Translation");
-    } else {
+    }
+    else
+    {
         Pass("Sphere Normal, Translation");
     }
 
-    s.transformation = MatrixMultiply(ScalingMatrix(1, 0.5, 1), RotationZMatrix((double) M_PI / 5.0));
+    s.transformation = MatrixMultiply(ScalingMatrix(1, 0.5, 1), RotationZMatrix((double)M_PI / 5.0));
     s.inverse_transform = MatrixInvert(s.transformation);
 
     n = NormalAt(&s, NewPnt3(0, sqrt(2) / 2, -sqrt(2) / 2));
     expected_out = TupleNormalize(NewVec3(0.0, 0.97014, -0.24254));
 
-    if (!TupleFuzzyEqual(n, expected_out)) {
+    if (!TupleFuzzyEqual(n, expected_out))
+    {
         PrintTuple(expected_out);
         PrintTuple(n);
         Fail("Sphere Normal, Scaling & Rotation");
-    } else {
+    }
+    else
+    {
         Pass("Sphere Normal, Scaling & Rotation");
     }
 }
 
-void TestSphereGeometry() {
+void TestSphereGeometry()
+{
     Shape s = NewSphere(NewPnt3(0, 0, 0), 6.0);
 
     Ray r = {
@@ -516,10 +609,13 @@ void TestSphereGeometry() {
 
     Intersection res = Intersect(&s, r);
 
-    if (res.ray_times[0] != 0) {
+    if (res.ray_times[0] != 0)
+    {
         Fail("Sphere geometry, radius");
         printf("\t%d: %f, %f\n", res.count, res.ray_times[0], res.ray_times[1]);
-    } else {
+    }
+    else
+    {
         Pass("Sphere geometry, radius");
     }
 
@@ -530,16 +626,20 @@ void TestSphereGeometry() {
     };
 
     res = Intersect(&s, r2);
-    if (res.ray_times[0] != 2) {
-        
+    if (res.ray_times[0] != 2)
+    {
+
         printf("%d: %f", res.count, res.ray_times[0]);
         Fail("Sphere geometry, origin");
-    } else {
+    }
+    else
+    {
         Pass("Sphere geometry, origin");
     }
 }
 
-void AssignDefaultTestMaterial(Material* m) {
+void AssignDefaultTestMaterial(Material *m)
+{
     m->pattern = NewSolidPattern(NewColor(255, 255, 255, 255));
     m->ambient_reflection = 0.1;
     m->diffuse_reflection = 0.9;
@@ -547,7 +647,8 @@ void AssignDefaultTestMaterial(Material* m) {
     m->shininess = 200;
 }
 
-void TestSceneCreation() {
+void TestSceneCreation()
+{
     Camera c;
     Light l;
 
@@ -558,7 +659,7 @@ void TestSceneCreation() {
     Pass("Deconstruct Empty Scene");
 
     ConstructScene(&s, c, l);
-    
+
     Shape sphere = NewSphere(NewPnt3(0, 0, 0), 1.0);
     AddShape(&s, sphere);
 
@@ -567,11 +668,12 @@ void TestSceneCreation() {
     Pass("Deconstruct Scene with Shapes");
 }
 
-void ConstructDefaultScene(Scene* s) {
+void ConstructDefaultScene(Scene *s)
+{
     Camera c;
     Light l = NewLight(NewPnt3(-10, 10, -10));
     ConstructScene(s, c, l);
-    
+
     Shape s1 = NewSphere(NewPnt3(0, 0, 0), 1.0);
     s1.material.diffuse_reflection = 0.7;
     s1.material.specular_reflection = 0.2;
@@ -580,10 +682,13 @@ void ConstructDefaultScene(Scene* s) {
 
     AddShape(s, s1);
     AddShape(s, s2);
+
+    CalculateBounds(&s->shapes);
 }
 
-void TestReflection() {
-    //Reflective surface
+void TestReflection()
+{
+    // Reflective surface
     Scene reflective_scene;
     ConstructDefaultScene(&reflective_scene);
 
@@ -594,13 +699,15 @@ void TestReflection() {
     AddShape(&reflective_scene, new_plane);
 
     Ray r2 = NewRay(NewPnt3(0, 0, -3), NewVec3(0, -(sqrt(2.0) / 2), sqrt(2.0) / 2));
+    CalculateBounds(&reflective_scene.shapes);
     Tuple3 result = ColorFor(&reflective_scene, r2);
     TEST(TupleFuzzyEqual(NewTuple3(0.739048, 0.749048, 0.729048, 0.749048), result), "Scene reflection");
 
     DeconstructScene(&reflective_scene);
 }
 
-void TestScene() {
+void TestScene()
+{
     Scene s;
     ConstructDefaultScene(&s);
 
@@ -611,25 +718,35 @@ void TestScene() {
 
     IntersectScene(&s, r, &is);
 
-    if (is.length != 2) {
+    if (is.length != 2)
+    {
         Fail("Scene, Number of Intersections");
+        printf("\tNumber of intersections: %ld\n", is.length);
         return;
-    } else {
+    }
+    else
+    {
         Pass("Scene, Number of Intersections");
     }
 
-    Intersection* i = Index(&is, 0);
-    Intersection* i2 = Index(&is, 1);
+    Intersection *i = Index(&is, 0);
+    Intersection *i2 = Index(&is, 1);
 
-    if (!FloatEquality(i->ray_times[0], 4.0) || !FloatEquality(i->ray_times[1], 6.0)) {
+    if (!FloatEquality(i->ray_times[0], 4.0) || !FloatEquality(i->ray_times[1], 6.0))
+    {
         Fail("Scene, First Object");
-    } else {
+    }
+    else
+    {
         Pass("Scene, First Object");
     }
 
-    if (!FloatEquality(i2->ray_times[0], 4.5) || !FloatEquality(i2->ray_times[1], 5.5)) {
+    if (!FloatEquality(i2->ray_times[0], 4.5) || !FloatEquality(i2->ray_times[1], 5.5))
+    {
         Fail("Scene, Second Object");
-    } else {
+    }
+    else
+    {
         Pass("Scene, Second Object");
     }
 
@@ -637,35 +754,44 @@ void TestScene() {
     DeconstructScene(&s);
 }
 
-void TestViewMatrix() {
+void TestViewMatrix()
+{
     Matrix4x4 m1 = ViewMatrix(NewPnt3(0, 0, 0), NewPnt3(0, 0, -1), NewVec3(0, 1, 0));
     Matrix4x4 expected = IdentityMatrix();
 
-    if (!MatrixFuzzyEqual(m1, expected)) {
+    if (!MatrixFuzzyEqual(m1, expected))
+    {
         PrintMatrix(m1);
         Fail("View Matrix, Identity");
-    } else {
+    }
+    else
+    {
         Pass("View Matrix, Identity");
     }
 
     Matrix4x4 m2 = ViewMatrix(NewPnt3(0, 0, 0), NewPnt3(0, 0, 1), NewVec3(0, 1, 0));
     Matrix4x4 expected2 = ScalingMatrix(-1, 1, -1);
 
-    if (!MatrixFuzzyEqual(m2, expected2)) {
+    if (!MatrixFuzzyEqual(m2, expected2))
+    {
         Fail("View Matrix, Scaling");
-    } else {
+    }
+    else
+    {
         Pass("View Matrix, Scaling");
     }
 
     Matrix4x4 m3 = ViewMatrix(NewPnt3(0, 0, 8), NewPnt3(0, 0, 0), NewVec3(0, 1, 0));
     Matrix4x4 expected3 = TranslationMatrix(0, 0, -8);
 
-    if (!MatrixFuzzyEqual(m3, expected3)) {
+    if (!MatrixFuzzyEqual(m3, expected3))
+    {
         Fail("View Matrix, Translation");
-        
+
         printf("\n");
-        
-    } else {
+    }
+    else
+    {
         Pass("View Matrix, Translation");
     }
 
@@ -675,117 +801,145 @@ void TestViewMatrix() {
             {-0.50709, 0.50709, 0.67612, -2.36643f},
             {0.76772, 0.60609, 0.12122, -2.82843f},
             {-0.35857, 0.59761, -0.71714, 0},
-            {0, 0, 0, 1}
-        }
-    };
+            {0, 0, 0, 1}}};
 
-    if (!MatrixFuzzyEqual(m4, expected4)) {
+    if (!MatrixFuzzyEqual(m4, expected4))
+    {
         Fail("View Matrix, Arbitrary");
-        
+
         printf("\n");
-        
-    } else {
+    }
+    else
+    {
         Pass("View Matrix, Arbitrary");
     }
 }
 
-void TestCamera() {
-    Camera c = NewCamera(200, 125, (double) M_PI_2);
+void TestCamera()
+{
+    Camera c = NewCamera(200, 125, (double)M_PI_2);
 
-    if (!FloatEquality(0.01, c.pixel_size)) {
+    if (!FloatEquality(0.01, c.pixel_size))
+    {
         Fail("Pixel Size, Horizontal Canvas");
-    } else {
+    }
+    else
+    {
         Pass("Pixel Size, Horizontal Canvas");
     }
 
-    c = NewCamera(125, 200, (double) M_PI_2);
+    c = NewCamera(125, 200, (double)M_PI_2);
 
-    if (!FloatEquality(0.01, c.pixel_size)) {
+    if (!FloatEquality(0.01, c.pixel_size))
+    {
         Fail("Pixel Size, Vertical Canvas");
-    } else {
+    }
+    else
+    {
         Pass("Pixel Size, Vertical Canvas");
     }
- 
-    c = NewCamera(201, 101, (double) M_PI_2);
+
+    c = NewCamera(201, 101, (double)M_PI_2);
     Ray r = RayForPixel(&c, 100, 50);
 
-    if (!TupleFuzzyEqual(NewPnt3(0, 0, 0), r.origin) || !TupleFuzzyEqual(NewVec3(0, 0, -1), r.direction)) {
+    if (!TupleFuzzyEqual(NewPnt3(0, 0, 0), r.origin) || !TupleFuzzyEqual(NewVec3(0, 0, -1), r.direction))
+    {
         Fail("Camera, Center of Canvas");
-        
-        
-    } else {
+    }
+    else
+    {
         Pass("Camera, Center of Canvas");
     }
 
-    c = NewCamera(201, 101, (double) M_PI_2);
+    c = NewCamera(201, 101, (double)M_PI_2);
     r = RayForPixel(&c, 0, 0);
 
-    if (!TupleFuzzyEqual(NewPnt3(0, 0, 0), r.origin) || !TupleFuzzyEqual(NewVec3(0.66519, 0.33259, -0.66851), r.direction)) {
+    if (!TupleFuzzyEqual(NewPnt3(0, 0, 0), r.origin) || !TupleFuzzyEqual(NewVec3(0.66519, 0.33259, -0.66851), r.direction))
+    {
         Fail("Camera, Corner of Canvas");
-        
-        
-    } else {
+    }
+    else
+    {
         Pass("Camera, Corner of Canvas");
     }
 
-    c = NewCamera(201, 101, (double) M_PI_2);
-    CameraApplyTransformation(&c, MatrixMultiply(RotationYMatrix((double) M_PI_4), TranslationMatrix(0, -2, 5)));
+    c = NewCamera(201, 101, (double)M_PI_2);
+    CameraApplyTransformation(&c, MatrixMultiply(RotationYMatrix((double)M_PI_4), TranslationMatrix(0, -2, 5)));
     r = RayForPixel(&c, 100, 50);
     double r2_2 = sqrt(2) / 2;
- 
-    if (!TupleFuzzyEqual(NewPnt3(0, 2, -5), r.origin) || !TupleFuzzyEqual(NewVec3(r2_2, 0, -r2_2), r.direction)) {
+
+    if (!TupleFuzzyEqual(NewPnt3(0, 2, -5), r.origin) || !TupleFuzzyEqual(NewVec3(r2_2, 0, -r2_2), r.direction))
+    {
         Fail("Camera, Transformed");
-        
-        
-    } else {
+    }
+    else
+    {
         Pass("Camera, Transformed");
     }
 }
 
-void TestShadow() {
+void TestShadow()
+{
 
     Scene sc;
     ConstructDefaultScene(&sc);
 
-    if (IsInShadow(&sc, NewPnt3(0, 10, 0))) {
+    if (IsInShadow(&sc, NewPnt3(0, 10, 0)))
+    {
         Fail("Shadow Test, Out of Shadow");
-    } else {
+    }
+    else
+    {
         Pass("Shadow Test, Out of Shadow");
     }
 
-    if (!IsInShadow(&sc, NewPnt3(10, -10, 10))) {
+    if (!IsInShadow(&sc, NewPnt3(10, -10, 10)))
+    {
         Fail("Shadow Test, In Shadow");
-    } else {
+    }
+    else
+    {
         Pass("Shadow Test, In Shadow");
     }
 
-    if (IsInShadow(&sc, NewPnt3(-20, 20, -20))) {
+    if (IsInShadow(&sc, NewPnt3(-20, 20, -20)))
+    {
         Fail("Shadow Test, Object behind light");
-    } else {
+    }
+    else
+    {
         Pass("Shadow Test, Object behind light");
     }
 
-    if (IsInShadow(&sc, NewPnt3(-2, 2, -2))) {
+    if (IsInShadow(&sc, NewPnt3(-2, 2, -2)))
+    {
         Fail("Shadow Test, Object behind point");
-    } else {
+    }
+    else
+    {
         Pass("Shadow Test, Object behind point");
     }
 
     DeconstructScene(&sc);
 }
 
-void TestPlane() {
+void TestPlane()
+{
 
     bool passed = true;
-    for (double x = 0.1; x < 1; x += 0.25) {
-        for (double y = 0.0; y < 1; y += 0.25) {
-            for (double z = 0.0; z < 1; z += 0.25) {
+    for (double x = 0.1; x < 1; x += 0.25)
+    {
+        for (double y = 0.0; y < 1; y += 0.25)
+        {
+            for (double z = 0.0; z < 1; z += 0.25)
+            {
                 Tuple3 normal = TupleNormalize(NewVec3(x, y, z));
                 Shape test_plane = NewPlane(NewPnt3(0, 0, 0), normal);
 
                 Tuple3 result = NormalAt(&test_plane, NewPnt3(0, 0, 0));
 
-                if (!TupleFuzzyEqual(result, normal)) {
+                if (!TupleFuzzyEqual(result, normal))
+                {
                     PrintTuple(result);
                     PrintTuple(normal);
                     Fail("Plane Normal");
@@ -795,7 +949,8 @@ void TestPlane() {
         }
     }
 
-    if (passed) {
+    if (passed)
+    {
         Pass("Plane Normal");
     }
 
@@ -812,13 +967,13 @@ void TestPlane() {
     result = Intersect(&plane, r);
     TEST(FloatEquality(1.0, result.ray_times[0]), "Plane Intersection, Intersecting from above");
 
-
     r = NewRay(NewPnt3(0, -1, 0), NewVec3(0, 1, 0));
     result = Intersect(&plane, r);
     TEST(FloatEquality(1.0, result.ray_times[0]), "Plane Intersection, Intersecting from above");
 }
 
-void TestSceneReading() {
+void TestSceneReading()
+{
     Scene s;
     ReadScene(&s, "./scenes/three_spheres.json");
 
@@ -831,17 +986,15 @@ void TestSceneReading() {
     TEST(TupleEqual(s.light.origin, NewPnt3(-10, 10, -10)), "Reading json, light origin");
     TEST(TupleEqual(s.light.color, NewColor(255, 255, 255, 255)), "Reading json, light color");
 
-    Shape* s1 = Index(&s.shapes.start.shapes, 0);
+    Shape *s1 = Index(&s.shapes.start.shapes, 0);
     TEST(s1->type == SPHERE, "Reading json, shape type");
 
     Matrix4x4 s1_expected = {
         .contents = {
             {0.33, 0, 0, -1.4f},
-            {0, 0.33,  0, 0.33f},
+            {0, 0.33, 0, 0.33f},
             {0, 0, 0.33, -0.75f},
-            {0, 0, 0, 1.0f}
-        }
-    };
+            {0, 0, 0, 1.0f}}};
     TEST(MatrixFuzzyEqual(s1_expected, s1->transformation), "Reading json, shape transformation");
     TEST(MatrixFuzzyEqual(MatrixInvert(s1_expected), s1->inverse_transform), "Reading json, inverse transformation");
     TEST(s.shapes.start.shapes.length == 4, "Reading json, shape list length");
@@ -849,7 +1002,7 @@ void TestSceneReading() {
     TEST(FloatEquality(s1->material.ambient_reflection, 0.1), "Reading json, ambient reflection");
     TEST(FloatEquality(s1->material.diffuse_reflection, 0.9), "Reading json, diffuse reflection");
     TEST(FloatEquality(s1->material.specular_reflection, 0.9), "Reading json, specular reflection");
-    TEST(FloatEquality(s1->material.refractive_index,  1.0), "Reading json, refractive index");
+    TEST(FloatEquality(s1->material.refractive_index, 1.0), "Reading json, refractive index");
     TEST(FloatEquality(s1->material.transparency, 0.0), "Reading json, transparency");
     TEST(s1->material.general_reflection == 0.0, "Reading json, general reflection");
     TEST(s1->material.shininess == 200, "Reading json, material shininess");
@@ -859,14 +1012,15 @@ void TestSceneReading() {
     DeconstructScene(&s);
 }
 
-void TestStripePattern() {
+void TestStripePattern()
+{
     Tuple3 black = NewColor(0, 0, 0, 255);
     Tuple3 white = NewColor(255, 255, 255, 255);
 
     Pattern p1 = NewStripedPattern(white, black);
     Shape s1 = NewSphere(NewPnt3(0, 0, 0), 1.0);
     s1.material.pattern = p1;
-    
+
     Tuple3 r1 = PatternColorAt(&s1, NewPnt3(0, 0, 0));
     TEST(TupleFuzzyEqual(white, r1), "Stripe pattern, white stripe")
 
@@ -880,7 +1034,8 @@ void TestStripePattern() {
     TEST(TupleFuzzyEqual(black, r4), "Stripe pattern, alters in x axis");
 }
 
-void TestScalarSubtract() {
+void TestScalarSubtract()
+{
     Tuple3 t1 = NewTuple3(2, 3, 4, 5);
     Tuple3 expected = NewTuple3(1, 2, 3, 4);
     Tuple3 result = TupleScalarSubtract(t1, 1);
@@ -888,7 +1043,8 @@ void TestScalarSubtract() {
     TEST(TupleFuzzyEqual(expected, result), "Tuple scalar subtract");
 }
 
-void TestScalarAdd() {
+void TestScalarAdd()
+{
     Tuple3 t1 = NewTuple3(2, 3, 4, 5);
     Tuple3 expected = NewTuple3(3, 4, 5, 6);
     Tuple3 result = TupleScalarAdd(t1, 1);
@@ -896,7 +1052,8 @@ void TestScalarAdd() {
     TEST(TupleFuzzyEqual(expected, result), "Tuple scalar add");
 }
 
-void TestCrossProduct() {
+void TestCrossProduct()
+{
     Tuple3 t1 = NewVec3(1, 2, 3);
     Tuple3 t2 = NewVec3(2, 3, 4);
 
@@ -907,7 +1064,8 @@ void TestCrossProduct() {
     TEST(TupleFuzzyEqual(expected, TupleCrossProduct(t2, t1)), "Tuple cross product, reversed");
 }
 
-void TestVectorReflect() {
+void TestVectorReflect()
+{
     Tuple3 t1 = NewVec3(1, -1, 0);
     Tuple3 n1 = NewVec3(0, 1, 0);
 
@@ -917,15 +1075,16 @@ void TestVectorReflect() {
     TEST(TupleFuzzyEqual(exp, res), "Tuple reflection");
 
     t1 = NewVec3(0, -1, 0);
-    n1 = NewVec3(sqrt(2)/2, sqrt(2)/2, 0);
+    n1 = NewVec3(sqrt(2) / 2, sqrt(2) / 2, 0);
 
     res = TupleReflect(t1, n1);
     exp = NewVec3(1, 0, 0);
     TEST(TupleFuzzyEqual(exp, res), "Tuple reflection, second test");
 }
 
-void TestRefraction() {
-    //Test some refraction
+void TestRefraction()
+{
+    // Test some refraction
     Scene s;
     ConstructDefaultScene(&s);
 
@@ -941,11 +1100,12 @@ void TestRefraction() {
     ball.material.ambient_reflection = 0.5;
     AddShape(&s, ball);
 
-    Ray r = NewRay(NewPnt3(0, 0, -3), NewVec3(0, -sqrt(2)/2, sqrt(2)/2));
+    CalculateBounds(&s.shapes);
+
+    Ray r = NewRay(NewPnt3(0, 0, -3), NewVec3(0, -sqrt(2) / 2, sqrt(2) / 2));
     Tuple3 result = ColorFor(&s, r);
     Tuple3 expect = NewTuple3(0.936395, 0.549116, 0.411837, 0.936395);
 
-    PrintTuple(result);
     TEST(TupleFuzzyEqual(result, expect), "Refraction, shader test");
 
     DeconstructScene(&s);
@@ -953,16 +1113,19 @@ void TestRefraction() {
     // Test no refraction
     Scene s2;
     ConstructDefaultScene(&s2);
-    Shape* shape_1 = Index(&s2.shapes.start.shapes, 0);
+    Shape *shape_1 = Index(&s2.shapes.start.shapes, 0);
     shape_1->material.transparency = 1.0;
     shape_1->material.refractive_index = 1.5;
 
-    Ray r2 = NewRay(NewPnt3(0, 0, sqrt(2)/2), NewVec3(0, 1, 0));
+    CalculateBounds(&s2.shapes);
+
+    Ray r2 = NewRay(NewPnt3(0, 0, sqrt(2) / 2), NewVec3(0, 1, 0));
     Tuple3 result2 = ColorFor(&s2, r2);
     TEST(TupleFuzzyEqual(NewTuple3(0, 0, 0, 0), result2), "Refraction, none");
 }
 
-Shape NewGlassSphere() {
+Shape NewGlassSphere()
+{
     Shape sphere = NewSphere(NewPnt3(0, 0, 0), 1.0);
     sphere.material.transparency = 1.0;
     sphere.material.refractive_index = 1.5;
@@ -970,8 +1133,9 @@ Shape NewGlassSphere() {
     return sphere;
 }
 
-void CalculateRefractionRatio(Set* intersections, unsigned long idx, double* n);
-void TestCalculateRefraction() {
+void CalculateRefractionRatio(Set *intersections, unsigned long idx, double *n);
+void TestCalculateRefraction()
+{
     Scene s;
     Camera c;
     Light l;
@@ -997,7 +1161,7 @@ void TestCalculateRefraction() {
     ConstructSet(&intersections, sizeof(Intersection));
     IntersectScene(&s, r, &intersections);
 
-    double* results = alloca(2 * sizeof(double));
+    double *results = alloca(2 * sizeof(double));
     CalculateRefractionRatio(&intersections, 0, results);
     TEST(results[0] == 1.0 && results[1] == 1.5, "Cacluate refraction ratio, 0");
 
@@ -1011,20 +1175,22 @@ void TestCalculateRefraction() {
     DeconstructScene(&s);
 }
 
-void TestCubeIntersection() {
-    Shape cube = NewCube(NewPnt3(0, 0, 0), 1.0); //The unit cube
+void TestCubeIntersection()
+{
+    Shape cube = NewCube(NewPnt3(0, 0, 0), 1.0); // The unit cube
 
     Tuple3 tests[7][3] = {
-        { NewPnt3(5, 0.5, 0) , NewVec3(-1, 0, 0), NewTuple3(4, 6, 0, 0) },
-        { NewPnt3(-5, 0.5, 0),  NewVec3(1, 0, 0), NewTuple3(4, 6, 0, 0) },
-        { NewPnt3(0.5, 5, 0) , NewVec3(0, -1, 0), NewTuple3(4, 6, 0, 0) },
-        { NewPnt3(0.5, -5, 0),  NewVec3(0, 1, 0), NewTuple3(4, 6, 0, 0) },
-        { NewPnt3(0.5, 0, 5) , NewVec3(0, 0, -1), NewTuple3(4, 6, 0, 0) },
-        { NewPnt3(0.5, 0, -5),  NewVec3(0, 0, 1), NewTuple3(4, 6, 0, 0) },
-        { NewPnt3(0, 0.5, 0),  NewVec3(0, 0, 1), NewTuple3(-1, 1, 0, 0) },
+        {NewPnt3(5, 0.5, 0), NewVec3(-1, 0, 0), NewTuple3(4, 6, 0, 0)},
+        {NewPnt3(-5, 0.5, 0), NewVec3(1, 0, 0), NewTuple3(4, 6, 0, 0)},
+        {NewPnt3(0.5, 5, 0), NewVec3(0, -1, 0), NewTuple3(4, 6, 0, 0)},
+        {NewPnt3(0.5, -5, 0), NewVec3(0, 1, 0), NewTuple3(4, 6, 0, 0)},
+        {NewPnt3(0.5, 0, 5), NewVec3(0, 0, -1), NewTuple3(4, 6, 0, 0)},
+        {NewPnt3(0.5, 0, -5), NewVec3(0, 0, 1), NewTuple3(4, 6, 0, 0)},
+        {NewPnt3(0, 0.5, 0), NewVec3(0, 0, 1), NewTuple3(-1, 1, 0, 0)},
     };
 
-    for (int j = 0; j < 7; j++) {
+    for (int j = 0; j < 7; j++)
+    {
         Intersection intersect = Intersect(&cube, NewRay(tests[j][0], tests[j][1]));
 
         double exp_1 = tests[j][2][0];
@@ -1034,52 +1200,53 @@ void TestCubeIntersection() {
     }
 
     Tuple3 nohits[6][2] = {
-        { NewPnt3(-2, 0, 0), NewVec3(0.2673, 0.5345, 0.8018) },
-        { NewPnt3(0, -2, 0), NewVec3(0.8018, 0.2673, 0.5345) },
-        { NewPnt3(0, 0, -2), NewVec3(0.5345, 0.8018, 0.2673) },
-        { NewPnt3(2, 0, 2), NewVec3(0, 0, -1) },
-        { NewPnt3(0, 2, 2), NewVec3(0, -1, 0) },
-        { NewPnt3(2, 2, 0), NewVec3(-1, 0, 0)}
-    };
+        {NewPnt3(-2, 0, 0), NewVec3(0.2673, 0.5345, 0.8018)},
+        {NewPnt3(0, -2, 0), NewVec3(0.8018, 0.2673, 0.5345)},
+        {NewPnt3(0, 0, -2), NewVec3(0.5345, 0.8018, 0.2673)},
+        {NewPnt3(2, 0, 2), NewVec3(0, 0, -1)},
+        {NewPnt3(0, 2, 2), NewVec3(0, -1, 0)},
+        {NewPnt3(2, 2, 0), NewVec3(-1, 0, 0)}};
 
-    for (int k = 0; k < 6; k++) {
+    for (int k = 0; k < 6; k++)
+    {
         Intersection intersect = Intersect(&cube, NewRay(nohits[k][0], nohits[k][1]));
         TEST(intersect.count == 0, "Cube intersection, no hit");
     }
-
 }
 
-
-void TestCubeNormal() {
-    Tuple3 tests [11][2] = {
-        { NewPnt3(1, 0.5, -0.8) , NewVec3(1, 0, 0)},
-        { NewPnt3(-1, -0.2, 0.9) , NewVec3(-1, 0, 0) },
-        { NewPnt3(-0.4, 1, -0.1) , NewVec3(0, 1, 0) },
-        { NewPnt3(0.3, -1, -0.7) , NewVec3(0, -1, 0) },
-        { NewPnt3(-0.6, 0.3, 1) , NewVec3(0, 0, 1) },
-        { NewPnt3(0.4, 0.4, -1) , NewVec3(0, 0, -1) },
-        { NewPnt3(1, 1, 1) , NewVec3(1, 0, 0) },
-        { NewPnt3(-1, -1, -1) , NewVec3(-1, 0, 0) },
-        { NewPnt3(-2, -2, -1), NewVec3(-1, 0, 0)},
-        { NewPnt3(-1.9, -1.7, -2.0), NewVec3(0, 0, -1)},
-        { NewPnt3(0.9, 0.9, 0.9), NewVec3(1.0, 0, 0)}
-    };
+void TestCubeNormal()
+{
+    Tuple3 tests[11][2] = {
+        {NewPnt3(1, 0.5, -0.8), NewVec3(1, 0, 0)},
+        {NewPnt3(-1, -0.2, 0.9), NewVec3(-1, 0, 0)},
+        {NewPnt3(-0.4, 1, -0.1), NewVec3(0, 1, 0)},
+        {NewPnt3(0.3, -1, -0.7), NewVec3(0, -1, 0)},
+        {NewPnt3(-0.6, 0.3, 1), NewVec3(0, 0, 1)},
+        {NewPnt3(0.4, 0.4, -1), NewVec3(0, 0, -1)},
+        {NewPnt3(1, 1, 1), NewVec3(1, 0, 0)},
+        {NewPnt3(-1, -1, -1), NewVec3(-1, 0, 0)},
+        {NewPnt3(-2, -2, -1), NewVec3(-1, 0, 0)},
+        {NewPnt3(-1.9, -1.7, -2.0), NewVec3(0, 0, -1)},
+        {NewPnt3(0.9, 0.9, 0.9), NewVec3(1.0, 0, 0)}};
 
     Shape cube = NewCube(NewPnt3(0, 0, 0), 1.0);
 
-    for (int i = 0; i < 11; i++) {
+    for (int i = 0; i < 11; i++)
+    {
         Tuple3 test_pnt = tests[i][0];
         Tuple3 expected = tests[i][1];
         Tuple3 result = NormalAt(&cube, test_pnt);
 
         TEST(TupleFuzzyEqual(expected, result), "Cube normal test");
-        if (!TupleFuzzyEqual(expected, result)) {
+        if (!TupleFuzzyEqual(expected, result))
+        {
             PrintTuple(result);
         }
     }
 }
 
-void TestTree() {
+void TestTree()
+{
     Tree parent;
     ConstructTree(&parent);
 
@@ -1089,31 +1256,30 @@ void TestTree() {
     Tree child;
     ConstructTree(&child);
 
-    Shape plane = NewPlane(NewPnt3(0,  0, 0), NewVec3(0, 1, 0));
+    Shape plane = NewPlane(NewPnt3(0, 0, 0), NewVec3(0, 1, 0));
     AddShapeToTree(&child, &plane);
 
     Shape cube = NewCube(NewPnt3(0, -5, 0), 4.0);
     AddShapeToTree(&child, &cube);
 
     CopyInChild(&parent, &child);
-    DeconstructTree(&child);        
-    //Make sure we can get rid of the original child before referencing the tree's copy
+    DeconstructTree(&child);
+    // Make sure we can get rid of the original child before referencing the tree's copy
 
-    Node* child_ptr = Index(&parent.start.children, 0);
-    Set* child_shapes = &child_ptr->shapes;
+    Node *child_ptr = Index(&parent.start.children, 0);
+    Set *child_shapes = &child_ptr->shapes;
 
     TEST(child_shapes->length == 2, "Tree test, number of child shapes");
-    
-    Shape* res_plane = Index(child_shapes, 0);
+
+    Shape *res_plane = Index(child_shapes, 0);
     TEST(res_plane->type == plane.type, "Tree test, shape 1 type");
     TEST(MatrixEqual(res_plane->transformation, plane.transformation), "Tree test, shape 1 transform");
-    
-    Shape* res_cube = Index(child_shapes, 1);
+
+    Shape *res_cube = Index(child_shapes, 1);
     TEST(res_cube->type == cube.type, "Tree test, shape 2 type");
     TEST(MatrixEqual(res_cube->transformation, cube.transformation), "Tree test, shape 2 transform");
-    
 
-    Shape* res_sphere = Index(&parent.start.shapes, 0);
+    Shape *res_sphere = Index(&parent.start.shapes, 0);
     TEST(res_sphere->type == sphere.type, "Tree test, shape 3 type");
     TEST(MatrixEqual(res_sphere->transformation, sphere.transformation), "Tree test, shape 3 transform");
 
@@ -1131,7 +1297,8 @@ void TestTree() {
     DeconstructTree(&parent);
 }
 
-void TestBounds() {
+void TestBounds()
+{
     Shape sphere = NewSphere(NewPnt3(0, 0, 0), 2.0);
     Bounds sphere_bounds = ShapeBounds(&sphere);
 
@@ -1139,11 +1306,13 @@ void TestBounds() {
     Tuple3 sphere_exp_max = NewPnt3(2, 2, 2);
     Shape sphere_exp_cube = NewCube(NewPnt3(0, 0, 0), 4);
 
-    TEST(TupleFuzzyEqual(sphere_bounds.maximum_bound, sphere_exp_max) && 
-        TupleFuzzyEqual(sphere_bounds.minimum_bound, sphere_exp_min), "Sphere bounding box");
+    TEST(TupleFuzzyEqual(sphere_bounds.maximum_bound, sphere_exp_max) &&
+             TupleFuzzyEqual(sphere_bounds.minimum_bound, sphere_exp_min),
+         "Sphere bounding box");
 
     TEST(MatrixFuzzyEqual(sphere_exp_cube.transformation, sphere_bounds.as_cube.transformation) &&
-        MatrixFuzzyEqual(sphere_exp_cube.inverse_transform, sphere_bounds.as_cube.inverse_transform), "Sphere bounding cube");
+             MatrixFuzzyEqual(sphere_exp_cube.inverse_transform, sphere_bounds.as_cube.inverse_transform),
+         "Sphere bounding cube");
 
     Shape cube = NewCube(NewPnt3(-3, -2, -1), 3.0);
     Bounds cube_bounds = ShapeBounds(&cube);
@@ -1151,12 +1320,13 @@ void TestBounds() {
     Tuple3 cube_exp_min = NewPnt3(-4.5, -3.5, -2.5);
     Tuple3 cube_exp_max = NewPnt3(-1.5, -0.5, 0.5);
 
-    TEST(TupleFuzzyEqual(cube_bounds.maximum_bound, cube_exp_max) && 
-        TupleFuzzyEqual(cube_bounds.minimum_bound, cube_exp_min), "Cube bounding box");
-    
-    TEST(MatrixFuzzyEqual(cube.transformation, cube_bounds.as_cube.transformation) &&
-        MatrixFuzzyEqual(cube.inverse_transform, cube_bounds.as_cube.inverse_transform), "Cube bounding cube");
+    TEST(TupleFuzzyEqual(cube_bounds.maximum_bound, cube_exp_max) &&
+             TupleFuzzyEqual(cube_bounds.minimum_bound, cube_exp_min),
+         "Cube bounding box");
 
+    TEST(MatrixFuzzyEqual(cube.transformation, cube_bounds.as_cube.transformation) &&
+             MatrixFuzzyEqual(cube.inverse_transform, cube_bounds.as_cube.inverse_transform),
+         "Cube bounding cube");
 
     Tree t;
     ConstructTree(&t);
@@ -1167,13 +1337,28 @@ void TestBounds() {
     Bounds b = t.start.bounds;
 
     TEST(TupleFuzzyEqual(b.minimum_bound, cube_exp_min) &&
-        TupleFuzzyEqual(b.maximum_bound, sphere_exp_max), "Tree bounding box");
+             TupleFuzzyEqual(b.maximum_bound, sphere_exp_max),
+         "Tree bounding box");
 
     DeconstructTree(&t);
 
+    Bounds b2 = {
+        .minimum_bound = NewPnt3(-1, -1, -1),
+        .maximum_bound = NewPnt3(1, 1, 1)};
+
+    Matrix4x4 bt = MatrixMultiply(RotationXMatrix(M_PI / 4.0), RotationYMatrix(M_PI / 4.0));
+    Bounds result = TransformBounds(b2, bt);
+
+    Tuple3 exp_min = NewPnt3(-1.4142, -1.7071, -1.7071);
+    Tuple3 exp_max = NewPnt3(1.4142, 1.7071, 1.7071);
+
+    TEST(TupleFuzzyEqual(exp_min, result.minimum_bound) &&
+             TupleFuzzyEqual(exp_max, result.maximum_bound),
+         "Bounds transformation");
 }
 
-void DemoUnthreaded() {
+void DemoUnthreaded()
+{
     Scene s;
     ReadScene(&s, "./scenes/three_spheres.json");
 
@@ -1187,7 +1372,69 @@ void DemoUnthreaded() {
     DeconstructScene(&s);
 }
 
-int DoTests() {
+void TestTupleHasNans()
+{
+    Tuple3 t1 = NewTuple3(NAN, 0, 0, 0);
+    bool r1 = TupleHasNaNs(t1);
+    TEST(r1, "Has nans, single nan")
+
+    Tuple3 t2 = NewTuple3(-NAN, 0, 0, 0);
+    bool r2 = TupleHasNaNs(t2);
+    TEST(r2, "Has nans, single negative nan")
+
+    Tuple3 t3 = NewTuple3(NAN, NAN, NAN, NAN);
+    bool r3 = TupleHasNaNs(t3);
+    TEST(r3, "Has nans, all nans")
+
+    Tuple3 t4 = NewTuple3(1, 1, 1, 1);
+    bool r4 = TupleHasNaNs(t4);
+    TEST(!r4, "Has nans, no nans")
+}
+
+void TestTupleHasInf()
+{
+    Tuple3 t1 = NewTuple3(INFINITY, 0, 0, 0);
+    bool r1 = TupleHasInf(t1);
+    TEST(r1, "Has infinties, single infinity")
+
+    Tuple3 t2 = NewTuple3(-INFINITY, 0, 0, 0);
+    bool r2 = TupleHasInf(t2);
+    TEST(r2, "Has inf, single negative infinity")
+
+    Tuple3 t3 = NewTuple3(INFINITY, INFINITY, INFINITY, INFINITY);
+    bool r3 = TupleHasInf(t3);
+    TEST(r3, "Has inf, only infinities")
+
+    Tuple3 t4 = NewTuple3(1, 1, 1, 1);
+    bool r4 = TupleHasInf(t4);
+    TEST(!r4, "Has inf, no infinities")
+}
+
+void TestPlaneScene()
+{
+    Scene s;
+    ConstructScene(&s, NewCamera(55, 55, 55), NewLight(NewPnt3(16, 6, 6)));
+
+    Shape plane = NewPlane(NewPnt3(0, 0, 0), NewVec3(0, 1, 0));
+    AddShape(&s, plane);
+
+    Shape sphere = NewSphere(NewPnt3(0, 0, 0), 1.0);
+    AddShape(&s, sphere);
+
+    CalculateBounds(&s.shapes);
+
+    Set intersections;
+    ConstructSet(&intersections, sizeof(Intersection));
+
+    Ray r = NewRay(NewPnt3(0, 1, 0), NewVec3(0, -1, 0));
+    IntersectScene(&s, r, &intersections);
+
+    Intersection *result = Index(&intersections, 0);
+    TEST(FloatEquality(1.0, result->ray_times[0]), "Scene Intersection for plances");
+}
+
+int DoTests()
+{
     num_failed = 0;
     num_passed = 0;
 
@@ -1234,18 +1481,21 @@ int DoTests() {
     TestCubeIntersection();
     TestCubeNormal();
 
-
     TestTree();
     TestBounds();
+    TestPlaneScene();
 
+    TestTupleHasNans();
+    TestTupleHasInf();
 
     printf("Test(s) Passed: %d\nTests(s) Failed: %d\n", num_passed, num_failed);
 
     return 0;
 }
 
-int main() {
+int main()
+{
     DoTests();
-   // DemoUnthreaded();
+    // DemoUnthreaded();
     return 0;
 }

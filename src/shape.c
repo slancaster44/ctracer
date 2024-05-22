@@ -4,7 +4,8 @@
 
 #include <math.h>
 
-Shape NewSphere(Tuple3 cp, double radius) {
+Shape NewSphere(Tuple3 cp, double radius)
+{
     Shape s;
     s.material = NewMaterial(NewTuple3(0.8, 1.0, 0.6, 1.0));
     s.type = SPHERE;
@@ -19,14 +20,15 @@ Shape NewSphere(Tuple3 cp, double radius) {
     return s;
 }
 
-Shape NewPlane(Tuple3 pnt, Tuple3 normal) {
+Shape NewPlane(Tuple3 pnt, Tuple3 normal)
+{
     Shape s;
     s.material = NewMaterial(NewTuple3(1.0, 0.8, 0.6, 1.0));
     s.type = PLANE;
 
     Matrix4x4 translation = TranslationMatrix(pnt[0], pnt[1], pnt[2]);
 
-    //Find transform such that inv(transpose(M)) * vec(0, 1, 0) = normal
+    // Find transform such that inv(transpose(M)) * vec(0, 1, 0) = normal
     normal = TupleNormalize(normal);
     Matrix4x4 rotation = IdentityMatrix();
 
@@ -46,7 +48,8 @@ Shape NewPlane(Tuple3 pnt, Tuple3 normal) {
     return s;
 }
 
-Shape NewCube(Tuple3 location, double size) {
+Shape NewCube(Tuple3 location, double size)
+{
     Shape s;
     s.material = NewMaterial(NewTuple3(1.0, 0.8, 0.6, 1.0));
     s.type = CUBE;
@@ -61,7 +64,8 @@ Shape NewCube(Tuple3 location, double size) {
     return s;
 }
 
-void ApplyTransformation(Shape* s, Matrix4x4 t) {
+void ApplyTransformation(Shape *s, Matrix4x4 t)
+{
     s->transformation = MatrixMultiply(s->transformation, t);
     s->inverse_transform = MatrixInvert(s->transformation);
 }

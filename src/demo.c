@@ -9,7 +9,8 @@
 #include <time.h>
 #include <stdlib.h>
 
-void AssignDefaultTestMaterial(Material* m) {
+void AssignDefaultTestMaterial(Material *m)
+{
     m->pattern = NewSolidPattern(NewColor(255, 255, 255, 255));
     m->ambient_reflection = 0.1;
     m->diffuse_reflection = 0.9;
@@ -17,7 +18,8 @@ void AssignDefaultTestMaterial(Material* m) {
     m->shininess = 200;
 }
 
-void DemoCanvas() {
+void DemoCanvas()
+{
     Tuple3 start = NewPnt3(0, 1, 0);
     Tuple3 velocity = TupleScalarMultiply(TupleNormalize(NewVec3(1, 1.8, 0)), 11.25);
 
@@ -26,9 +28,10 @@ void DemoCanvas() {
     Canvas c;
     ConstructCanvas(&c, 900, 550);
 
-    while (start[1] > 0) {
-        WritePixel(&c, NewColor(255, 255, 255, 255), (int) start[0], (int) start[1]);
-        
+    while (start[1] > 0)
+    {
+        WritePixel(&c, NewColor(255, 255, 255, 255), (int)start[0], (int)start[1]);
+
         start = TupleAdd(start, velocity);
         velocity = TupleAdd(velocity, gravity);
     }
@@ -37,7 +40,8 @@ void DemoCanvas() {
     DeconstructCanvas(&c);
 }
 
-void DemoSphereScene() {
+void DemoSphereScene()
+{
     Material m;
     AssignDefaultTestMaterial(&m);
     m.pattern = NewSolidPattern(NewColor(255, 0, 128, 255));
@@ -45,11 +49,11 @@ void DemoSphereScene() {
     Light l;
     l.origin = NewPnt3(1000, 2000, -2000);
     l.color = NewColor(255, 255, 255, 255);
-    
+
     Canvas c;
     ConstructCanvas(&c, 800, 600);
 
-    Shape s = NewSphere(NewPnt3(0, 0, 2), 500); 
+    Shape s = NewSphere(NewPnt3(0, 0, 2), 500);
     s.material = m;
 
     Shape s2 = NewSphere(NewPnt3(1, 1, -5), 50);
@@ -73,15 +77,16 @@ void DemoSphereScene() {
     DeconstructCanvas(&c);
 }
 
-void DemoPlane() {
+void DemoPlane()
+{
     Camera c = NewCamera(800, 600, 3.1415 / 3);
     CameraApplyTransformation(&c, ViewMatrix(NewPnt3(0, 100, 250), NewPnt3(0, 0, 0), NewVec3(0, 1, 0)));
 
-    Light l = NewLight( NewPnt3(750, 1200, 2000));
+    Light l = NewLight(NewPnt3(750, 1200, 2000));
 
     Scene s;
     ConstructScene(&s, c, l);
-   
+
     Shape sphere2 = NewSphere(NewPnt3(-0.5, 40, 100), 50);
     AssignDefaultTestMaterial(&(sphere2.material));
     sphere2.material.pattern = NewSolidPattern(NewColor(0, 0, 255, 255));
@@ -97,7 +102,6 @@ void DemoPlane() {
     AssignDefaultTestMaterial(&(plane.material));
     AddShape(&s, plane);
 
-
     Canvas canvas;
     ConstructCanvas(&canvas, 800, 600);
 
@@ -108,7 +112,8 @@ void DemoPlane() {
     DeconstructScene(&s);
 }
 
-void DemoJsonScene() {
+void DemoJsonScene()
+{
     Scene s;
     ReadScene(&s, "./scenes/three_spheres.json");
 
@@ -122,7 +127,8 @@ void DemoJsonScene() {
     DeconstructScene(&s);
 }
 
-void DemoUnthreaded() {
+void DemoUnthreaded()
+{
     Scene s;
     ReadScene(&s, "./scenes/three_spheres.json");
 
@@ -136,35 +142,45 @@ void DemoUnthreaded() {
     DeconstructScene(&s);
 }
 
-#define NUM_RAND_SHAPES 75
-void BusyScene() {
-    Light l = NewLight( NewPnt3(750, 1200, 2000));
+double prng()
+{
+    static double seed = 1.4;
+    double m = 66.22;
+    double a = m * 25.1231234;
+    double b = m / 234.234;
+
+    seed = fmod(a * seed + b, m);
+
+    if (fmod(seed, 10) < 5)
+    {
+        seed *= -1.0;
+    }
+
+    return seed;
+}
+
+#define NUM_RAND_SHAPES 128
+void BusyScene()
+{
+    Light l = NewLight(NewPnt3(750, 1200, 2000));
     Camera c = NewCamera(800, 600, 3.1415 / 3);
     CameraApplyTransformation(&c, ViewMatrix(NewPnt3(0, 100, 250), NewPnt3(0, 0, 0), NewVec3(0, 1, 0)));
 
     Scene s;
     ConstructScene(&s, c, l);
 
-    double i = 4.0;
+    for (int j = 0; j < NUM_RAND_SHAPES; j++)
+    {
+        Tuple3 center = NewPnt3(prng(), prng(), prng());
+        Shape sphere = NewSphere(center, prng() / 5);
 
-    for (int j = 0; j < NUM_RAND_SHAPES; j++) {
-        i = ((((double) i * -1.0) * 0.66 + j) / 1.0);
-        i = fmodf(i, 20);
+        ApplyTransformation(&sphere, RotationMatrix(prng(), prng(), prng()));
 
-        while (i == 0 || fmod(i * i, i) == 0.0) { i += 0.87; }
-
-        double x = i * i;
-        double y = fmod(x, i);
-        double z = pow(i, y);
-
-        Shape sphere = NewSphere(NewPnt3(x, y, z), i);
-        sphere.material.pattern.color_a = NewTuple3(i * 1, i * 2, i * 3, 1.0);
-        sphere.material.general_reflection = 1.34;
         AddShape(&s, sphere);
     }
 
     Canvas canvas;
-    ConstructCanvas(&canvas, 800, 600);
+    ConstructCanvas(&canvas, 1920, 1080);
 
     RenderScene(&s, &canvas);
     WriteToPPM(&canvas, "./renderings/random_spheres.ppm");
@@ -173,12 +189,13 @@ void BusyScene() {
     DeconstructScene(&s);
 }
 
-int main() {
-    //DemoCanvas();
-    //DemoJsonScene();
-    //DemoPlane();
-    //DemoSphereScene();
-    //DemoUnthreaded();
+int main()
+{
+    // DemoCanvas();
+    DemoJsonScene();
+    // DemoPlane();
+    // DemoSphereScene();
+    // DemoUnthreaded();
 
-    BusyScene();
+    //BusyScene();
 }

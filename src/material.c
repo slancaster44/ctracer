@@ -1,6 +1,7 @@
 #include "material.h"
 
-Material NewMaterial(Tuple3 color) {
+Material NewMaterial(Tuple3 color)
+{
     Material m;
     m.pattern = NewSolidPattern(color);
     m.ambient_reflection = 0.1;

@@ -7,20 +7,23 @@
 #include <float.h>
 #include <string.h>
 
-Intersection NewIntersection(Shape* s, Ray r) {
+Intersection NewIntersection(Shape *s, Ray r)
+{
     Intersection i;
     i.count = 0;
     i.shape_ptr = s;
     i.ray = r;
 
-    for (int idx = 0; idx < MAX_NUMBER_INTERSECTIONS; idx++) {
+    for (int idx = 0; idx < MAX_NUMBER_INTERSECTIONS; idx++)
+    {
         i.ray_times[idx] = DBL_MAX;
     }
-    
+
     return i;
 }
 
-Intersection IntersectPlane(Shape* s, Ray r) {
+Intersection IntersectPlane(Shape *s, Ray r)
+{
     Intersection result = NewIntersection(s, r);
     r = RayTransform(r, s->inverse_transform);
 
@@ -29,18 +32,20 @@ Intersection IntersectPlane(Shape* s, Ray r) {
      * a y value near zero indcates the ray is either on the plane, or
      * it is parallel to the plane
      */
-    if (FloatEquality(r.direction[1], 0)) {
+    if (FloatEquality(r.direction[1], 0))
+    {
         return result;
     }
-    
+
     result.count = 1;
     result.ray_times[0] = -r.origin[1] / r.direction[1];
-    
+
     return result;
 }
 
-Intersection IntersectSphere(Shape* s, Ray r) {
-    Intersection result = NewIntersection(s, r);   
+Intersection IntersectSphere(Shape *s, Ray r)
+{
+    Intersection result = NewIntersection(s, r);
     r = RayTransform(r, s->inverse_transform);
 
     Tuple3 sphere_to_ray = TupleSubtract(r.origin, NewPnt3(0, 0, 0));
@@ -48,15 +53,18 @@ Intersection IntersectSphere(Shape* s, Ray r) {
     double b = 2 * TupleDotProduct(r.direction, sphere_to_ray);
     double c = TupleDotProduct(sphere_to_ray, sphere_to_ray) - 1;
     double discriminant = (b * b) - 4 * a * c;
-    
-    if (discriminant < 0) {
+
+    if (discriminant < 0)
+    {
         return result;
-        
-    } else if (discriminant == 0) {
+    }
+    else if (discriminant == 0)
+    {
         result.count = 1;
         result.ray_times[0] = -b / (a * 2);
-
-    } else {
+    }
+    else
+    {
         result.count = 2;
 
         double a_2 = a * 2;
@@ -69,7 +77,8 @@ Intersection IntersectSphere(Shape* s, Ray r) {
     return result;
 }
 
-Intersection IntersectCube(Shape* s, Ray r) {
+Intersection IntersectCube(Shape *s, Ray r)
+{
     Intersection result = NewIntersection(s, r);
     r = RayTransform(r, s->inverse_transform);
 
@@ -84,7 +93,7 @@ Intersection IntersectCube(Shape* s, Ray r) {
 
     __m512d partial_result = DISTRIBUTE_256(tmins, tmaxs);
 
-    double tmin = _mm512_mask_reduce_max_pd(0x8F, partial_result); //Mask 1000_1111; Exclude 'w' and elements from tmaxs
+    double tmin = _mm512_mask_reduce_max_pd(0x8F, partial_result); // Mask 1000_1111; Exclude 'w' and elements from tmaxs
     double tmax = _mm512_mask_reduce_min_pd(0xF8, partial_result);
 
     result.ray_times[0] = tmin;
@@ -94,10 +103,12 @@ Intersection IntersectCube(Shape* s, Ray r) {
     return result;
 }
 
-Intersection Intersect(Shape* s, Ray r) {
+Intersection Intersect(Shape *s, Ray r)
+{
     Intersection result;
 
-    switch (s->type) {
+    switch (s->type)
+    {
     case SPHERE:
         result = IntersectSphere(s, r);
         break;
@@ -112,7 +123,8 @@ Intersection Intersect(Shape* s, Ray r) {
         exit(1);
     }
 
-    if (result.ray_times[0] > result.ray_times[1]) {
+    if (result.ray_times[0] > result.ray_times[1])
+    {
         double tmp = result.ray_times[1];
         result.ray_times[1] = result.ray_times[0];
         result.ray_times[0] = tmp;
@@ -120,4 +132,3 @@ Intersection Intersect(Shape* s, Ray r) {
 
     return result;
 }
-

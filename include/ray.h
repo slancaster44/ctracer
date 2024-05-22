@@ -4,7 +4,8 @@
 #include "tuple.h"
 #include "matrix.h"
 
-typedef struct {
+typedef struct
+{
     Tuple3 origin;
     Tuple3 direction;
 } Ray;

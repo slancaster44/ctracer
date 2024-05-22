@@ -3,7 +3,8 @@
 
 #include "tuple.h"
 
-typedef struct {
+typedef struct
+{
     Tuple3 origin;
     Tuple3 color;
 } Light;

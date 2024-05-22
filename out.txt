@@ -1,117 +1,60 @@
-clear
-[H[2J[3Jgcc -O0 -o tracer -march=native -Wno-pointer-arith -Wno-unused-result -fpack-struct=1 -g -Wpedantic -Wall -Wconversion -Iinclude `find ./src -name *.c ! -name test.c ! -name demo.c ! -name benchmark.c` src/test.c -lm -lcjson 
-./tracer
-[0;32m[PASS][0;37m Tuple scalar subtract
-[0;32m[PASS][0;37m Tuple scalar add
-[0;32m[PASS][0;37m Tuple cross product
-[0;32m[PASS][0;37m Tuple cross product, reversed
-[0;32m[PASS][0;37m Tuple reflection
-[0;32m[PASS][0;37m Tuple reflection, second test
-[0;32m[PASS][0;37m Set Indexing
-[0;32m[PASS][0;37m Set Copy Out
-[0;32m[PASS][0;37m Matrix Equality
-[0;32m[PASS][0;37m Matrix Fuzzy Equality
-[0;32m[PASS][0;37m Matrix Multiplication
-[0;32m[PASS][0;37m Matrix Transposition
-[0;32m[PASS][0;37m Matrix Inversion
-[0;32m[PASS][0;37m Matrix & Tuple Multiplication
-[0;32m[PASS][0;37m Tuple Equality
-[0;32m[PASS][0;37m Tuple Scalar Multiplication
-[0;32m[PASS][0;37m Tuple Scalar Division
-[0;32m[PASS][0;37m Tuple Negation
-[0;32m[PASS][0;37m Tuple Magnitude
-[0;32m[PASS][0;37m Tuple Dot Product
-[0;32m[PASS][0;37m Tuple Normalization
-[0;32m[PASS][0;37m Tuple Multiplication
-[0;32m[PASS][0;37m Tuple Division
-[0;32m[PASS][0;37m Tuple Addition
-[0;32m[PASS][0;37m Tuple Subtraction
-[0;32m[PASS][0;37m Ray Position Finding
-[0;32m[PASS][0;37m Ray/Sphere Intersection, Normal
-[0;32m[PASS][0;37m Ray/Sphere Intersection, Tangent
-[0;32m[PASS][0;37m Ray/Sphere Intersection, Inside
-[0;32m[PASS][0;37m Ray/Sphere Intersection, Behind
-[0;32m[PASS][0;37m Ray/Sphere Intersection, No Hit
-[0;32m[PASS][0;37m Ray Transformation
-[0;32m[PASS][0;37m Sphere Normal
-[0;32m[PASS][0;37m Sphere Normal, Translation
-[0;31m[FAIL][0;37m Sphere Normal, Scaling & Rotation
-[0;32m[PASS][0;37m Sphere geometry, radius
-[0;32m[PASS][0;37m Sphere geometry, origin
-[0;32m[PASS][0;37m Deconstruct Empty Scene
-[0;32m[PASS][0;37m Deconstruct Scene with Shapes
-[0;32m[PASS][0;37m Scene, Number of Intersections
-[0;32m[PASS][0;37m Scene, First Object
-[0;32m[PASS][0;37m Scene, Second Object
-[0;32m[PASS][0;37m View Matrix, Identity
-[0;32m[PASS][0;37m View Matrix, Scaling
-[0;32m[PASS][0;37m View Matrix, Translation
-[0;32m[PASS][0;37m View Matrix, Arbitrary
-[0;32m[PASS][0;37m Pixel Size, Horizontal Canvas
-[0;32m[PASS][0;37m Pixel Size, Vertical Canvas
-[0;32m[PASS][0;37m Camera, Center of Canvas
-[0;32m[PASS][0;37m Camera, Corner of Canvas
-[0;32m[PASS][0;37m Camera, Transformed
-[0;32m[PASS][0;37m Shadow Test, Out of Shadow
-[0;32m[PASS][0;37m Shadow Test, In Shadow
-[0;32m[PASS][0;37m Shadow Test, Object behind light
-[0;32m[PASS][0;37m Shadow Test, Object behind point
-[0;32m[PASS][0;37m Plane Normal
-[0;32m[PASS][0;37m Plane Intersection, parallel ray
-[0;32m[PASS][0;37m Plane Intersection, coplanar ray
-[0;32m[PASS][0;37m Plane Intersection, Intersecting from above
-[0;32m[PASS][0;37m Plane Intersection, Intersecting from above
-[0;32m[PASS][0;37m Scene reflection
-[0;32m[PASS][0;37m Reading json, camera width
-[0;32m[PASS][0;37m Reading json, camera height
-[0;32m[PASS][0;37m Reading json, camera fov
-[0;32m[PASS][0;37m Reading json, camera transform
-[0;32m[PASS][0;37m Reading json, light origin
-[0;32m[PASS][0;37m Reading json, light color
-[0;32m[PASS][0;37m Reading json, shape type
-[0;32m[PASS][0;37m Reading json, shape transformation
-[0;32m[PASS][0;37m Reading json, inverse transformation
-[0;32m[PASS][0;37m Reading json, shape list length
-[0;32m[PASS][0;37m Reading json, ambient reflection
-[0;32m[PASS][0;37m Reading json, diffuse reflection
-[0;32m[PASS][0;37m Reading json, specular reflection
-[0;32m[PASS][0;37m Reading json, refractive index
-[0;32m[PASS][0;37m Reading json, transparency
-[0;32m[PASS][0;37m Reading json, general reflection
-[0;32m[PASS][0;37m Reading json, material shininess
-[0;32m[PASS][0;37m Reading json, shader function
-[0;32m[PASS][0;37m Stripe pattern, white stripe
-[0;32m[PASS][0;37m Stripe pattern, constant in y axis
-[0;32m[PASS][0;37m Stripe pattern. constant in z axis
-[0;32m[PASS][0;37m Stripe pattern, alters in x axis
-[0;32m[PASS][0;37m Refraction, shader test
-[0;32m[PASS][0;37m Refraction, none
-[0;32m[PASS][0;37m Cacluate refraction ratio, 0
-[0;32m[PASS][0;37m Calculate refraction ratio, 1
-[0;32m[PASS][0;37m Calculate refraction ratio, 2
-[0;32m[PASS][0;37m Cube intersection
-[0;32m[PASS][0;37m Cube intersection
-[0;32m[PASS][0;37m Cube intersection
-[0;32m[PASS][0;37m Cube intersection
-[0;32m[PASS][0;37m Cube intersection
-[0;32m[PASS][0;37m Cube intersection
-[0;32m[PASS][0;37m Cube intersection
-[0;32m[PASS][0;37m Cube intersection, no hit
-[0;32m[PASS][0;37m Cube intersection, no hit
-[0;32m[PASS][0;37m Cube intersection, no hit
-[0;32m[PASS][0;37m Cube intersection, no hit
-[0;32m[PASS][0;37m Cube intersection, no hit
-[0;32m[PASS][0;37m Cube intersection, no hit
-[0;32m[PASS][0;37m Cube normal test
-[0;32m[PASS][0;37m Cube normal test
-[0;32m[PASS][0;37m Cube normal test
-[0;32m[PASS][0;37m Cube normal test
-[0;32m[PASS][0;37m Cube normal test
-[0;32m[PASS][0;37m Cube normal test
-[0;32m[PASS][0;37m Cube normal test
-[0;32m[PASS][0;37m Cube normal test
-[0;32m[PASS][0;37m Cube normal test
-[0;32m[PASS][0;37m Cube normal test
-[0;32m[PASS][0;37m Cube normal test
-Test(s) Passed: 111
-Tests(s) Failed: 1
+./src/set.c:38:20: warning: arithmetic on a pointer to void is a GNU extension [-Wpointer-arith]
+    memcpy(s->data + (s->data_width * s->length), value, s->data_width);
+           ~~~~~~~ ^
+./src/set.c:46:20: warning: arithmetic on a pointer to void is a GNU extension [-Wpointer-arith]
+    return s->data + (index * s->data_width);
+           ~~~~~~~ ^
+2 warnings generated.
+./src/read_scene.c:77:26: warning: incompatible pointer types passing 'float *' to parameter of type 'double *' [-Wincompatible-pointer-types]
+        GetFloatListItem(&out, data, i);
+                         ^~~~
+./src/read_scene.c:55:31: note: passing argument to parameter 'out' here
+void GetFloatListItem(double *out, cJSON *json, int index)
+                              ^
+1 warning generated.
+./src/shading.c:162:13: warning: variable 'reflectance' is used uninitialized whenever 'if' condition is false [-Wsometimes-uninitialized]
+        if (n[0] > n[1])
+            ^~~~~~~~~~~
+./src/shading.c:178:70: note: uninitialized use occurs here
+        general_reflection = TupleScalarMultiply(general_reflection, reflectance);
+                                                                     ^~~~~~~~~~~
+./src/shading.c:162:9: note: remove the 'if' if its condition is always true
+        if (n[0] > n[1])
+        ^~~~~~~~~~~~~~~~
+./src/shading.c:160:27: note: initialize the variable 'reflectance' to silence this warning
+        double reflectance;
+                          ^
+                           = 0.0
+1 warning generated.
+src/test.c:656:24: warning: variable 'c' is uninitialized when used here [-Wuninitialized]
+    ConstructScene(&s, c, l);
+                       ^
+src/test.c:652:5: note: variable 'c' is declared here
+    Camera c;
+    ^
+src/test.c:656:27: warning: variable 'l' is uninitialized when used here [-Wuninitialized]
+    ConstructScene(&s, c, l);
+                          ^
+src/test.c:653:5: note: variable 'l' is declared here
+    Light l;
+    ^
+src/test.c:675:23: warning: variable 'c' is uninitialized when used here [-Wuninitialized]
+    ConstructScene(s, c, l);
+                      ^
+src/test.c:673:5: note: variable 'c' is declared here
+    Camera c;
+    ^
+src/test.c:1142:24: warning: variable 'c' is uninitialized when used here [-Wuninitialized]
+    ConstructScene(&s, c, l);
+                       ^
+src/test.c:1140:5: note: variable 'c' is declared here
+    Camera c;
+    ^
+src/test.c:1142:27: warning: variable 'l' is uninitialized when used here [-Wuninitialized]
+    ConstructScene(&s, c, l);
+                          ^
+src/test.c:1141:5: note: variable 'l' is declared here
+    Light l;
+    ^
+5 warnings generated.
+make: *** [Makefile:10: test] Segmentation fault (core dumped)

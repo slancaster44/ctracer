@@ -5,14 +5,14 @@
 #include <stdbool.h>
 
 typedef unsigned char uint8_t;
-typedef __m256d Tuple3 __attribute__ ((aligned (32)));
+typedef __m256d Tuple3 __attribute__((aligned(sizeof(__m256d))));
 
 #define SHUFFLE_M256(v1, v2, p1, p2, p3, p4) \
     _mm256_permutex2var_pd(v1, _mm256_set_epi64x((p4 + 4), (p3 + 4), (p2), (p1)), v2)
 #define SWIZZLE_M256(val, p1, p2, p3, p4) \
     SHUFFLE_M256(val, val, p1, p2, p3, p4)
 #define ADJOINT_M256(val) \
-    SWIZZLE_M256(val, 0,2,1,3)
+    SWIZZLE_M256(val, 0, 2, 1, 3)
 #define DISTRIBUTE_256(A, B) \
     _mm512_insertf64x4(_mm512_insertf64x4(_mm512_set1_pd(0.0), A, 0), B, 1)
 
@@ -39,8 +39,10 @@ Tuple3 TupleScalarSubtract(Tuple3 t, double n);
 Tuple3 TupleScalarAdd(Tuple3 t, double n);
 double TupleFloorSum(Tuple3 t1);
 bool TupleHasNaNs(Tuple3 t1);
-double MaxComponent(Tuple3 t1); 
-double MinComponent(Tuple3 t1); 
-
+bool TupleHasInf(Tuple3 t1);
+bool TupleHasInfOrNans(Tuple3 t1);
+bool TupleContains(Tuple3 t1, double n);
+double MaxComponent(Tuple3 t1);
+double MinComponent(Tuple3 t1);
 
 #endif
