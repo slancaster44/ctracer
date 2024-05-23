@@ -106,6 +106,16 @@ double TupleMagnitude(Tuple3 t1);
 */
 double TupleDotProduct(Tuple3 t1, Tuple3 t2);
 
+
+/**
+ * @memberof Tuple3
+ * Assuming 't1' and 't2' are vectors, the return value will be
+ * the dot product of 't1' and 't2.'
+ * 
+ * @note Values of +/- infinity will remain unchanged
+*/
+double TupleDotProductPreserveInf(Tuple3 t1, Tuple3 t2);
+
 /**
  * @memberof Tuple3
  * Assuming 't1' and 't2' are vectors, the return value will be
@@ -125,6 +135,16 @@ Tuple3 TupleNormalize(Tuple3 t1);
  * <code> result[n] = t1[n] * t2[n] </code>
 */
 Tuple3 TupleMultiply(Tuple3 t1, Tuple3 t2);
+
+/**
+ * @memberof Tuple3
+ * Returns a result such that, for every index 'n' in 't1' and 't2,'
+ * <code> result[n] = t1[n] * t2[n] </code>
+ * 
+ * @note All values of +/- inifinity will remain uncahnged
+*/
+Tuple3 TupleMultiplyPreserveInf(Tuple3 t1, Tuple3 t2);
+
 
 /**
  * @memberof Tuple3

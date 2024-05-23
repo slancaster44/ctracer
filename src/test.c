@@ -232,13 +232,13 @@ void TestMatrixVectorMultiply()
 {
     Matrix4x4 m1 = {
         .contents = {
-            {1, 2, 3, 4},
-            {2, 4, 4, 2},
-            {8, 6, 4, 1},
-            {0, 0, 0, 1}}};
+            {0, 2, 3, -47},
+            {4, 5, 6, 26},
+            {7, -8, 9, 15},
+            {12, 11, 10, 14}}};
 
-    Tuple3 t1 = NewTuple3(1, 2, 3, 1);
-    Tuple3 res = NewTuple3(18, 24, 33, 1);
+    Tuple3 t1 = NewTuple3(19, 28, -37, 16);
+    Tuple3 res = NewTuple3(-807, 410, -184, 390);
 
     if (!TupleEqual(res, MatrixTupleMultiply(m1, t1)))
     {
@@ -701,6 +701,7 @@ void TestReflection()
     Ray r2 = NewRay(NewPnt3(0, 0, -3), NewVec3(0, -(sqrt(2.0) / 2), sqrt(2.0) / 2));
     CalculateBounds(&reflective_scene.shapes);
     Tuple3 result = ColorFor(&reflective_scene, r2);
+    PrintTuple(result);
     TEST(TupleFuzzyEqual(NewTuple3(0.739048, 0.749048, 0.729048, 0.749048), result), "Scene reflection");
 
     DeconstructScene(&reflective_scene);

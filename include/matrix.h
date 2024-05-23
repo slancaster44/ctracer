@@ -191,6 +191,19 @@ Matrix4x4 ShearingMatrix(double xy, double xz, double yx, double yz, double zx, 
 Tuple3 MatrixTupleMultiply(Matrix4x4 m1, Tuple3 t1);
 
 /**
+ * @memberof Tuple3
+ * Multiply the given matrix by the given tuple, return the result. Used to apply transformation
+ * matricies to tuples
+ * 
+ * @note Slightly slower than @ref MatrixTupleMultply(), but preserves infinities
+ * 
+ * @param 'Matrix4x4 m1' The transformation to manipulate 't1' by
+ * @param 'Tuple3 t1' The tuple to transform
+ * @returns The transformed tuple
+*/
+Tuple3 MatrixTupleMultiplyPerserveInf(Matrix4x4 m1, Tuple3 t1);
+
+/**
  * @memberof Matrix4x4
  * Print the given matrix to the console 
  */

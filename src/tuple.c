@@ -130,6 +130,13 @@ double TupleDotProduct(Tuple3 t1, Tuple3 t2)
     return r1[1] + r1[2];
 }
 
+double TupleDotProductPreserveInf(Tuple3 t1, Tuple3 t2)
+{
+    Tuple3 r0 = TupleMultiplyPreserveInf(t1, t2);
+    Tuple3 r1 = _mm256_hadd_pd(r0, r0);
+    return r1[1] + r1[2];
+}
+
 Tuple3 TupleCrossProduct(Tuple3 t1, Tuple3 t2)
 {
     Tuple3 r0 = SWIZZLE_M256(t1, 1, 2, 0, 3);
@@ -158,7 +165,7 @@ void InfinitiesMask(Tuple3 t1, __mmask8 *infs, __mmask8 *neg_infs)
     *neg_infs |= (__mmask8)_mm256_movemask_pd(neg_infinity_cmp);
 }
 
-Tuple3 TupleMultiply(Tuple3 t1, Tuple3 t2)
+Tuple3 TupleMultiplyPreserveInf(Tuple3 t1, Tuple3 t2)
 {
     __mmask8 neg_infs = 0;
     __mmask8 infs = 0;
@@ -169,6 +176,11 @@ Tuple3 TupleMultiply(Tuple3 t1, Tuple3 t2)
     Tuple3 src = _mm256_mask_mov_pd(_mm256_set1_pd(INFINITY), neg_infs, _mm256_set1_pd(-INFINITY));
 
     return _mm256_mask_mul_pd(src, ~(neg_infs | infs), t1, t2); // Preserve inifinites
+}
+
+Tuple3 TupleMultiply(Tuple3 t1, Tuple3 t2)
+{
+    return _mm256_mul_pd(t1, t2);
 }
 
 Tuple3 TupleDivide(Tuple3 t1, Tuple3 t2)

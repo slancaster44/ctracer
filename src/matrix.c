@@ -6,54 +6,27 @@
 
 bool MatrixEqual(Matrix4x4 m1, Matrix4x4 m2)
 {
-    __m256d cmp0 = _mm256_cmp_pd(m1.contents[0], m2.contents[0], _CMP_EQ_OQ);
-    __m256d cmp1 = _mm256_cmp_pd(m1.contents[1], m2.contents[1], _CMP_EQ_OQ);
-    __m256d cmp2 = _mm256_cmp_pd(m1.contents[2], m2.contents[2], _CMP_EQ_OQ);
-    __m256d cmp3 = _mm256_cmp_pd(m1.contents[3], m2.contents[3], _CMP_EQ_OQ);
+    __mmask8 cmp0 = _mm512_cmp_pd_mask(m1.chunks[0], m2.chunks[0], _CMP_EQ_OQ);
+    __mmask8 cmp1 = _mm512_cmp_pd_mask(m1.chunks[1], m2.chunks[1], _CMP_EQ_OQ);
 
-    __m256i r;
-    r[0] = (unsigned)_mm256_movemask_pd(cmp0);
-    r[1] = (unsigned)_mm256_movemask_pd(cmp1);
-    r[2] = (unsigned)_mm256_movemask_pd(cmp2);
-    r[3] = (unsigned)_mm256_movemask_pd(cmp3);
-
-    __m256i exp = _mm256_set1_epi64x(0xf);
-    __mmask8 cmp_final = _mm256_cmp_epi64_mask(exp, r, _MM_CMPINT_EQ);
-
-    return cmp_final == 0xf;
+    return cmp1 == 0xff && cmp0 == 0xff;
 }
 
 bool MatrixFuzzyEqual(Matrix4x4 m1, Matrix4x4 m2)
 {
-    __m256d diff0 = _mm256_sub_pd(m1.contents[0], m2.contents[0]);
-    __m256d diff1 = _mm256_sub_pd(m1.contents[1], m2.contents[1]);
-    __m256d diff2 = _mm256_sub_pd(m1.contents[2], m2.contents[2]);
-    __m256d diff3 = _mm256_sub_pd(m1.contents[3], m2.contents[3]);
+    __m512d diff0 = _mm512_sub_pd(m1.chunks[0], m2.chunks[0]);
+    __m512d diff1 = _mm512_sub_pd(m1.chunks[1], m2.chunks[1]);
 
-    // Mask Out Sign Bits
-    __m256d mask = (__m256d)_mm256_set1_epi64x(0x7FFFFFFFFFFFFFFF);
-    diff0 = _mm256_and_pd(diff0, mask);
-    diff1 = _mm256_and_pd(diff1, mask);
-    diff2 = _mm256_and_pd(diff2, mask);
-    diff3 = _mm256_and_pd(diff3, mask);
+    __m512d abs0 = _mm512_abs_pd(diff0);
+    __m512d abs1 = _mm512_abs_pd(diff1);
 
-    // Compare
-    __m256d epsilon = _mm256_set1_pd(EQUALITY_EPSILON);
-    __m256d cmp0 = _mm256_cmp_pd(diff0, epsilon, _CMP_LT_OQ);
-    __m256d cmp1 = _mm256_cmp_pd(diff1, epsilon, _CMP_LT_OQ);
-    __m256d cmp2 = _mm256_cmp_pd(diff2, epsilon, _CMP_LT_OQ);
-    __m256d cmp3 = _mm256_cmp_pd(diff3, epsilon, _CMP_LT_OQ);
+    __m512d epsilon = _mm512_set1_pd(EQUALITY_EPSILON);
 
-    __m256i r;
-    r[0] = (unsigned)_mm256_movemask_pd(cmp0);
-    r[1] = (unsigned)_mm256_movemask_pd(cmp1);
-    r[2] = (unsigned)_mm256_movemask_pd(cmp2);
-    r[3] = (unsigned)_mm256_movemask_pd(cmp3);
+    __mmask8 cmp0 = _mm512_cmp_pd_mask(abs0, epsilon, _CMP_LT_OQ);
+    __mmask8 cmp1 = _mm512_cmp_pd_mask(abs1, epsilon, _CMP_LT_OQ);
 
-    __m256i exp = _mm256_set1_epi64x(0xf);
-    __mmask8 cmp_final = _mm256_cmp_epi64_mask(exp, r, _MM_CMPINT_EQ);
+    return cmp1 == 0xff && cmp0 == 0xff;
 
-    return cmp_final == 0xf;
 }
 
 static inline __m256d matrixMultHelper(int a, Matrix4x4 m1, Matrix4x4 m2)
@@ -77,16 +50,13 @@ Matrix4x4 MatrixMultiply(Matrix4x4 m1, Matrix4x4 m2)
     return out;
 }
 
-// TODO: No Test
 Matrix4x4 MatrixScalarMultiply(Matrix4x4 m1, double f1)
 {
-    __m256d scale = _mm256_set1_pd(f1);
+    __m512d scale = _mm512_set1_pd(f1);
 
     Matrix4x4 m2;
-    m2.contents[0] = _mm256_mul_pd(m1.contents[0], scale);
-    m2.contents[1] = _mm256_mul_pd(m1.contents[1], scale);
-    m2.contents[2] = _mm256_mul_pd(m1.contents[2], scale);
-    m2.contents[3] = _mm256_mul_pd(m1.contents[3], scale);
+    m2.chunks[0] = _mm512_mul_pd(m1.chunks[0], scale);
+    m2.chunks[1] = _mm512_mul_pd(m1.chunks[1], scale);
 
     return m2;
 }
@@ -95,24 +65,38 @@ Matrix4x4 MatrixScalarMultiply(Matrix4x4 m1, double f1)
 Matrix4x4 MatrixAdd(Matrix4x4 m1, Matrix4x4 m2)
 {
     Matrix4x4 out;
-    out.contents[0] = _mm256_add_pd(m1.contents[0], m2.contents[0]);
-    out.contents[1] = _mm256_add_pd(m1.contents[1], m2.contents[1]);
-    out.contents[2] = _mm256_add_pd(m1.contents[2], m2.contents[2]);
-    out.contents[3] = _mm256_add_pd(m1.contents[3], m2.contents[3]);
+    out.chunks[0] = _mm512_add_pd(m1.chunks[0], m2.chunks[0]);
+    out.chunks[1] = _mm512_add_pd(m1.chunks[1], m2.chunks[1]);
 
     return out;
 }
 
 Tuple3 MatrixTupleMultiply(Matrix4x4 m1, Tuple3 t1)
 {
+    __m512d factor = DISTRIBUTE_256(t1, t1);
+    __m512d r0 = _mm512_mul_pd(m1.chunks[0], factor);
+    __m512d r1 = _mm512_mul_pd(m1.chunks[1], factor);
+
     Tuple3 out;
-    out[0] = TupleDotProduct(m1.contents[0], t1);
-    out[1] = TupleDotProduct(m1.contents[1], t1);
-    out[2] = TupleDotProduct(m1.contents[2], t1);
-    out[3] = TupleDotProduct(m1.contents[3], t1);
+    out[0] = r0[0] + r0[1] + r0[2] + r0[3];
+    out[1] = r0[4] + r0[5] + r0[6] + r0[7];
+    out[2] = r1[0] + r1[1] + r1[2] + r1[3];
+    out[3] = r1[4] + r1[5] + r1[6] + r1[7];
 
     return out;
 }
+
+Tuple3 MatrixTupleMultiplyPerserveInf(Matrix4x4 m1, Tuple3 t1)
+{
+    Tuple3 out;
+    out[0] = TupleDotProductPreserveInf(m1.contents[0], t1);
+    out[1] = TupleDotProductPreserveInf(m1.contents[1], t1);
+    out[2] = TupleDotProductPreserveInf(m1.contents[2], t1);
+    out[3] = TupleDotProductPreserveInf(m1.contents[3], t1);
+
+    return out;
+}
+
 
 // a 256d translation of _MM_TRANSPOSE4_PS()
 Matrix4x4 MatrixTranspose(Matrix4x4 m1)

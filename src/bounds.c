@@ -102,7 +102,7 @@ Bounds TransformBounds(Bounds b, Matrix4x4 m)
     for (int i = 0; i < 8; i++)
     {
         Tuple3 this_corner = points[i];
-        this_corner = MatrixTupleMultiply(m, this_corner);
+        this_corner = MatrixTupleMultiplyPerserveInf(m, this_corner);
 
         new_bounds.maximum_bound = _mm256_max_pd(new_bounds.maximum_bound, this_corner);
         new_bounds.minimum_bound = _mm256_min_pd(new_bounds.minimum_bound, this_corner);

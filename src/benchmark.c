@@ -250,11 +250,11 @@ int main()
     // BenchmarkMatrixMultiply();
     // BenchmarkMatrixInvert();
     // BenchmarkMatrixTranspose();
-    // BenchmarkMatrixTupleMultiply();
+    BenchmarkMatrixTupleMultiply();
     // BenchmarkRaySphereIntersection();
     // BENCHMARK(DemoSphereScene(), 1, 10);
     // BENCHMARK(DemoJsonScene(), 1, 5); //Infinite
-    BENCHMARK(BenchmarkCubeNormalization(), 1, 5);
+    //BENCHMARK(BenchmarkCubeNormalization(), 1, 5);
 
     // BenchmarkScene();
     return 0;
