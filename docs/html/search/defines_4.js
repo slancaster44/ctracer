@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['shuffle_5fm256_362',['SHUFFLE_M256',['../tuple_8h.html#a3f00241bbcd093ffb95ba1fbaa3101cf',1,'tuple.h']]],
-  ['swizzle_5fm256_363',['SWIZZLE_M256',['../tuple_8h.html#abbce64f438d17674cdb7b31e522d667a',1,'tuple.h']]]
+  ['max_5fnumber_5fintersections_647',['MAX_NUMBER_INTERSECTIONS',['../intersection_8h.html#abb35f0d46d679a3c74bad65fcbcbb6ad',1,'intersection.h']]]
 ];

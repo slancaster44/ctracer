@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['uint8_5ft_176',['uint8_t',['../tuple_8h.html#aba7bc1797add20fe3efdf37ced1182c5',1,'tuple.h']]]
+  ['viewmatrix_322',['ViewMatrix',['../unionMatrix4x4.html#aa2acb094a10e1cae9bfe06e59c3acf5a',1,'Matrix4x4::ViewMatrix()'],['../matrix_8c.html#aa2acb094a10e1cae9bfe06e59c3acf5a',1,'ViewMatrix():&#160;matrix.c']]]
 ];

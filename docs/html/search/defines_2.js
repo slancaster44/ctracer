@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['equality_5fepsilon_360',['EQUALITY_EPSILON',['../equality_8h.html#a29343452c83edae63be06e5002ed2d8a',1,'equality.h']]]
+  ['distribute_5f256_645',['DISTRIBUTE_256',['../tuple_8h.html#af493ae32601147f3cf0236cfde4f3b82',1,'tuple.h']]]
 ];

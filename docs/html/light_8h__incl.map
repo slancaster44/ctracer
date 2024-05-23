@@ -1,6 +1,7 @@
 <map id="include/light.h" name="include/light.h">
-<area shape="rect" id="node1" title=" " alt="" coords="55,5,169,32"/>
-<area shape="rect" id="node2" href="$tuple_8h.html" title=" " alt="" coords="79,80,145,107"/>
+<area shape="rect" id="node1" title=" " alt="" coords="112,5,227,32"/>
+<area shape="rect" id="node2" href="$tuple_8h.html" title=" " alt="" coords="136,80,203,107"/>
 <area shape="rect" id="node3" title=" " alt="" coords="5,155,104,181"/>
 <area shape="rect" id="node4" title=" " alt="" coords="128,155,211,181"/>
+<area shape="rect" id="node5" href="$alignment_8h.html" title=" " alt="" coords="235,155,335,181"/>
 </map>

@@ -74,8 +74,6 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a1185839730146517d56b4e038ae1b022"><td class="memItemLeft" align="right" valign="top">__m256d contents[4]&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="unionMatrix4x4.html#a1185839730146517d56b4e038ae1b022">__attribute__</a> ((aligned(sizeof(__m256d))))</td></tr>
-<tr class="separator:a1185839730146517d56b4e038ae1b022"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9506ea1c1d2ce44938d7e4f9af4d0389"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="unionMatrix4x4.html#a9506ea1c1d2ce44938d7e4f9af4d0389">MatrixEqual</a> (<a class="el" href="unionMatrix4x4.html">Matrix4x4</a> m1, <a class="el" href="unionMatrix4x4.html">Matrix4x4</a> m2)</td></tr>
 <tr class="separator:a9506ea1c1d2ce44938d7e4f9af4d0389"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a76b0cfdb1576f56454793ef875708b1a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="unionMatrix4x4.html#a76b0cfdb1576f56454793ef875708b1a">MatrixFuzzyEqual</a> (<a class="el" href="unionMatrix4x4.html">Matrix4x4</a> m1, <a class="el" href="unionMatrix4x4.html">Matrix4x4</a> m2)</td></tr>
@@ -112,29 +110,25 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:aa2acb094a10e1cae9bfe06e59c3acf5a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a156a1e3c339504aa252c2ce719089f5f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="unionMatrix4x4.html">Matrix4x4</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="unionMatrix4x4.html#a156a1e3c339504aa252c2ce719089f5f">RectifyMatrix</a> (<a class="el" href="unionMatrix4x4.html">Matrix4x4</a> m)</td></tr>
 <tr class="separator:a156a1e3c339504aa252c2ce719089f5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
+Public Attributes</h2></td></tr>
+<tr><td colspan="2"><div class="groupHeader">contents</div></td></tr>
+<tr><td colspan="2"><div class="groupText"><p>The contents of the matrix represented as 4 256-bit vectors of four doubles </p>
+</div></td></tr>
+<tr class="memitem:a5aa146cc859f7ad9fd67964ad1092586"><td class="memItemLeft" align="right" valign="top">__m256d contents[4]&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="unionMatrix4x4.html#a5aa146cc859f7ad9fd67964ad1092586">align</a></td></tr>
+<tr class="separator:a5aa146cc859f7ad9fd67964ad1092586"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr><td colspan="2"><div class="groupHeader">chunks</div></td></tr>
+<tr><td colspan="2"><div class="groupText"><p>The contents of the matrix represented as 2 512-bit vectors of eight doubles </p>
+</div></td></tr>
+<tr class="memitem:a6c9eaa132633cd5df3f34c90dffa7150"><td class="memItemLeft" align="right" valign="top">__m512d chunks[2]&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="unionMatrix4x4.html#a6c9eaa132633cd5df3f34c90dffa7150">align</a></td></tr>
+<tr class="separator:a6c9eaa132633cd5df3f34c90dffa7150"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A union representing a 4 by 4 matrix </p>
+
+<p class="definition">Definition at line <a class="el" href="matrix_8h_source.html#l00014">14</a> of file <a class="el" href="matrix_8h_source.html">matrix.h</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="a1185839730146517d56b4e038ae1b022"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1185839730146517d56b4e038ae1b022">&#9670;&nbsp;</a></span>__attribute__()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">__m256d contents [4] Matrix4x4::__attribute__ </td>
-          <td>(</td>
-          <td class="paramtype">(aligned(sizeof(__m256d)))&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>The contents of the matrix represented as 4 256-bit vectors of four doubles </p>
-
-</div>
-</div>
 <a id="ab9b969f2f092e2442cb25c1e91659830"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ab9b969f2f092e2442cb25c1e91659830">&#9670;&nbsp;</a></span>IdentityMatrix()</h2>
 
@@ -150,6 +144,8 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <dl class="section return"><dt>Returns</dt><dd>The identity matrix </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="matrix_8c_source.html#l00286">286</a> of file <a class="el" href="matrix_8c_source.html">matrix.c</a>.</p>
 
 </div>
 </div>
@@ -188,6 +184,8 @@ Public Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Returns a <a class="el" href="unionMatrix4x4.html">Matrix4x4</a> where for every element n, <code> result[n] = m1[n] + m2[n] </code> </dd></dl>
 
+<p class="definition">Definition at line <a class="el" href="matrix_8c_source.html#l00095">95</a> of file <a class="el" href="matrix_8c_source.html">matrix.c</a>.</p>
+
 </div>
 </div>
 <a id="a9506ea1c1d2ce44938d7e4f9af4d0389"></a>
@@ -224,6 +222,8 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Returns 'true' if every element in m1 is exactly equal to every element in m2 </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="matrix_8c_source.html#l00007">7</a> of file <a class="el" href="matrix_8c_source.html">matrix.c</a>.</p>
 
 </div>
 </div>
@@ -262,6 +262,8 @@ Public Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Returns 'true' if every element in m1 is close enough to m2 to be considered equal </dd></dl>
 
+<p class="definition">Definition at line <a class="el" href="matrix_8c_source.html#l00026">26</a> of file <a class="el" href="matrix_8c_source.html">matrix.c</a>.</p>
+
 </div>
 </div>
 <a id="a2e1607b1290de644fc71c32b02aad965"></a>
@@ -287,6 +289,8 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The inverted result </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="matrix_8c_source.html#l00161">161</a> of file <a class="el" href="matrix_8c_source.html">matrix.c</a>.</p>
 
 </div>
 </div>
@@ -325,6 +329,8 @@ Public Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>'m1' multiplied by 'm2' </dd></dl>
 
+<p class="definition">Definition at line <a class="el" href="matrix_8c_source.html#l00069">69</a> of file <a class="el" href="matrix_8c_source.html">matrix.c</a>.</p>
+
 </div>
 </div>
 <a id="a240274216c6c9a9251956b93335d1f4e"></a>
@@ -362,6 +368,8 @@ Public Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Returns a <a class="el" href="unionMatrix4x4.html">Matrix4x4</a> where for ever element n, <code> result[n] = m1[n] * f1 </code> </dd></dl>
 
+<p class="definition">Definition at line <a class="el" href="matrix_8c_source.html#l00081">81</a> of file <a class="el" href="matrix_8c_source.html">matrix.c</a>.</p>
+
 </div>
 </div>
 <a id="ae8d3bae8c6b2db4675779999fa585be9"></a>
@@ -388,6 +396,8 @@ Public Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The transposed result </dd></dl>
 
+<p class="definition">Definition at line <a class="el" href="matrix_8c_source.html#l00118">118</a> of file <a class="el" href="matrix_8c_source.html">matrix.c</a>.</p>
+
 </div>
 </div>
 <a id="a75f5675a2d726a4ee28819da27b0f666"></a>
@@ -406,6 +416,8 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Print the given matrix to the console </p>
+
+<p class="definition">Definition at line <a class="el" href="matrix_8c_source.html#l00191">191</a> of file <a class="el" href="matrix_8c_source.html">matrix.c</a>.</p>
 
 </div>
 </div>
@@ -432,6 +444,8 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The rectified matrix </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="matrix_8c_source.html#l00316">316</a> of file <a class="el" href="matrix_8c_source.html">matrix.c</a>.</p>
 
 </div>
 </div>
@@ -477,6 +491,8 @@ Public Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The matrix given by: <code> RotationXMatrix(rot_x) * RotationYMatrix(rot_y) * RotationZMatrix(rot_z) </code> </dd></dl>
 
+<p class="definition">Definition at line <a class="el" href="matrix_8c_source.html#l00265">265</a> of file <a class="el" href="matrix_8c_source.html">matrix.c</a>.</p>
+
 </div>
 </div>
 <a id="a17f8c90e7e10fdb739ab76af54ce3aae"></a>
@@ -502,6 +518,8 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The matrix representing the given rotation </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="matrix_8c_source.html#l00229">229</a> of file <a class="el" href="matrix_8c_source.html">matrix.c</a>.</p>
 
 </div>
 </div>
@@ -529,6 +547,8 @@ Public Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The matrix representing the given rotation </dd></dl>
 
+<p class="definition">Definition at line <a class="el" href="matrix_8c_source.html#l00241">241</a> of file <a class="el" href="matrix_8c_source.html">matrix.c</a>.</p>
+
 </div>
 </div>
 <a id="af0fae5dcbb5829679539e355337f63b7"></a>
@@ -554,6 +574,8 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The matrix representing the given rotation </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="matrix_8c_source.html#l00253">253</a> of file <a class="el" href="matrix_8c_source.html">matrix.c</a>.</p>
 
 </div>
 </div>
@@ -598,6 +620,8 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The matrix representing the given scaling </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="matrix_8c_source.html#l00216">216</a> of file <a class="el" href="matrix_8c_source.html">matrix.c</a>.</p>
 
 </div>
 </div>
@@ -664,6 +688,8 @@ Public Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The resulting shearing matrix </dd></dl>
 
+<p class="definition">Definition at line <a class="el" href="matrix_8c_source.html#l00274">274</a> of file <a class="el" href="matrix_8c_source.html">matrix.c</a>.</p>
+
 </div>
 </div>
 <a id="a1c56ddd514a7c51167c757f179f9e306"></a>
@@ -708,6 +734,8 @@ Public Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The matrix representing the given translation </dd></dl>
 
+<p class="definition">Definition at line <a class="el" href="matrix_8c_source.html#l00203">203</a> of file <a class="el" href="matrix_8c_source.html">matrix.c</a>.</p>
+
 </div>
 </div>
 <a id="aa2acb094a10e1cae9bfe06e59c3acf5a"></a>
@@ -751,6 +779,41 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A transformation matrix to correctly orient a camera </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="matrix_8c_source.html#l00299">299</a> of file <a class="el" href="matrix_8c_source.html">matrix.c</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="a5aa146cc859f7ad9fd67964ad1092586"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5aa146cc859f7ad9fd67964ad1092586">&#9670;&nbsp;</a></span>align <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">__m256d contents [4] Matrix4x4::align</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="matrix_8h_source.html#l00020">20</a> of file <a class="el" href="matrix_8h_source.html">matrix.h</a>.</p>
+
+</div>
+</div>
+<a id="a6c9eaa132633cd5df3f34c90dffa7150"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6c9eaa132633cd5df3f34c90dffa7150">&#9670;&nbsp;</a></span>align <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">__m512d chunks [2] Matrix4x4::align</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="matrix_8h_source.html#l00026">26</a> of file <a class="el" href="matrix_8h_source.html">matrix.h</a>.</p>
 
 </div>
 </div>

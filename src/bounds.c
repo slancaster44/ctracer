@@ -87,7 +87,7 @@ Bounds TransformBounds(Bounds b, Matrix4x4 m)
         .minimum_bound = NewPnt3(INFINITY, INFINITY, INFINITY),
         .maximum_bound = NewPnt3(-INFINITY, -INFINITY, -INFINITY)};
 
-    Tuple3 points[8] __attribute__((aligned(sizeof(Tuple3)))) = {
+    Tuple3 points[8] align = {
         // 'k' must be an immediate, so this cannot be inside the loop
         _mm256_blend_pd(b.maximum_bound, b.minimum_bound, 0),
         _mm256_blend_pd(b.maximum_bound, b.minimum_bound, 1),

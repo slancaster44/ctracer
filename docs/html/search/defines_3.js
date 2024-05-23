@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['max_5fnumber_5fintersections_361',['MAX_NUMBER_INTERSECTIONS',['../intersection_8h.html#abb35f0d46d679a3c74bad65fcbcbb6ad',1,'intersection.h']]]
+  ['equality_5fepsilon_646',['EQUALITY_EPSILON',['../equality_8h.html#a29343452c83edae63be06e5002ed2d8a',1,'equality.h']]]
 ];

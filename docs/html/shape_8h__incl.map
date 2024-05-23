@@ -1,12 +1,13 @@
 <map id="include/shape.h" name="include/shape.h">
-<area shape="rect" id="node1" title=" " alt="" coords="225,5,349,32"/>
-<area shape="rect" id="node2" href="$tuple_8h.html" title=" " alt="" coords="187,304,254,331"/>
-<area shape="rect" id="node5" href="$ray_8h.html" title=" " alt="" coords="293,155,346,181"/>
-<area shape="rect" id="node6" href="$matrix_8h.html" title=" " alt="" coords="343,229,421,256"/>
-<area shape="rect" id="node8" href="$material_8h.html" title=" " alt="" coords="91,80,180,107"/>
+<area shape="rect" id="node1" title=" " alt="" coords="159,5,283,32"/>
+<area shape="rect" id="node2" href="$tuple_8h.html" title=" " alt="" coords="94,304,161,331"/>
+<area shape="rect" id="node6" href="$ray_8h.html" title=" " alt="" coords="258,155,312,181"/>
+<area shape="rect" id="node7" href="$matrix_8h.html" title=" " alt="" coords="253,229,330,256"/>
+<area shape="rect" id="node9" href="$material_8h.html" title=" " alt="" coords="91,80,180,107"/>
 <area shape="rect" id="node3" title=" " alt="" coords="334,379,433,405"/>
-<area shape="rect" id="node4" title=" " alt="" coords="179,379,262,405"/>
-<area shape="rect" id="node7" title=" " alt="" coords="278,304,345,331"/>
-<area shape="rect" id="node9" href="$set_8h.html" title=" " alt="" coords="5,229,60,256"/>
-<area shape="rect" id="node10" href="$pattern_8h.html" title=" " alt="" coords="136,155,217,181"/>
+<area shape="rect" id="node4" title=" " alt="" coords="86,379,169,405"/>
+<area shape="rect" id="node5" href="$alignment_8h.html" title=" " alt="" coords="204,379,304,405"/>
+<area shape="rect" id="node8" title=" " alt="" coords="185,304,252,331"/>
+<area shape="rect" id="node10" href="$set_8h.html" title=" " alt="" coords="22,229,76,256"/>
+<area shape="rect" id="node11" href="$pattern_8h.html" title=" " alt="" coords="152,155,234,181"/>
 </map>

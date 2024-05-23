@@ -6,6 +6,7 @@
 #include <stdbool.h>
 
 #include "tuple.h"
+#include "alignment.h"
 
 /**
  * A union representing a 4 by 4 matrix
@@ -13,9 +14,16 @@
 typedef union
 {
     /** 
+     * @name contents
      *  The contents of the matrix represented as 4 256-bit vectors of four doubles 
      */
-    __m256d contents[4] __attribute__((aligned(sizeof(__m256d))));
+    __m256d contents[4] align;
+
+    /**
+     * @name chunks
+     * The contents of the matrix represented as 2 512-bit vectors of eight doubles
+    */
+   __m512d chunks[2] align;
 } Matrix4x4;
 
 /**

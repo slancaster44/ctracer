@@ -4,6 +4,8 @@
 #include <immintrin.h>
 #include <stdbool.h>
 
+#include "alignment.h"
+
 typedef unsigned char uint8_t;
 
 /**
@@ -14,7 +16,7 @@ typedef unsigned char uint8_t;
  * - Vectors in 3D space (x, y, z, 0.0)
  * - Colors (r, g, b, _)
 */
-typedef __m256d Tuple3 __attribute__((aligned(sizeof(__m256d))));
+typedef __m256d Tuple3 align;
 
 #define SHUFFLE_M256(v1, v2, p1, p2, p3, p4) \
     _mm256_permutex2var_pd(v1, _mm256_set_epi64x((p4 + 4), (p3 + 4), (p2), (p1)), v2)

@@ -3,6 +3,7 @@
 
 #include "set.h"
 #include "tuple.h"
+#include "alignment.h"
 
 #define SET_DEFAULT_CAPACITY 4
 
@@ -74,7 +75,7 @@ void SwapElements(Set *s, unsigned long ix, unsigned long iy)
     void* x = Index(s, ix);
     void* y = Index(s, iy);
 
-    unsigned char tmp[s->data_width] __attribute__((aligned(__BIGGEST_ALIGNMENT__)));
+    unsigned char tmp[s->data_width] align;
     memcpy(tmp, x, s->data_width);
 
     memcpy(x, y, s->data_width); //This memcpy is generating the issue
