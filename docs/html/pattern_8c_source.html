@@ -113,58 +113,59 @@ $(function() {
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    <a class="code" href="structTuple3.html">Tuple3</a> position = <a class="code" href="structTuple3.html#a6ba74e56e9031ec0b2ee9aa0db862b5f">MatrixTupleMultiply</a>(s-&gt;inverse_transform, pos_orig);</div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    position = <a class="code" href="structTuple3.html#a6ba74e56e9031ec0b2ee9aa0db862b5f">MatrixTupleMultiply</a>(s-&gt;<a class="code" href="structShape.html#ae61fdac3b1a90dd2e8ee5d6cb5652291">material</a>.<a class="code" href="structMaterial.html#a9106901058eaabe2ccf7389107f54ded">pattern</a>.inverse_transform, position);</div>
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160; </div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    <span class="keywordflow">switch</span> (p.<a class="code" href="structPattern.html#a50d29bdcd824c07bcff62482b4fc0c88">type</a>)</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    {</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    <span class="keywordflow">case</span> <a class="code" href="pattern_8h.html#a05e443f79340006d4a8ad3ffaf13f7ffa41e022ca5414595c876e3a6adbd8481b">STRIPED</a>:</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;        <span class="keywordflow">return</span> <a class="code" href="pattern_8c.html#adf6f298d2fff62b82e18edae3fbf795d">StripedPatternAt</a>(position, p);</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;        <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    <span class="keywordflow">case</span> <a class="code" href="pattern_8h.html#a05e443f79340006d4a8ad3ffaf13f7ffaf5ed59f726bc8dcf0b9056b1333d0efe">RINGED</a>:</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        <span class="keywordflow">return</span> <a class="code" href="pattern_8c.html#a57fe25a7e364a579d3d86c3cff642c3b">RingedPatternAt</a>(position, p);</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;        <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    <span class="keywordflow">case</span> <a class="code" href="pattern_8h.html#a05e443f79340006d4a8ad3ffaf13f7ffa76893d689c5bc36fabfc6a5e65854259">CHECKERED</a>:</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;        <span class="keywordflow">return</span> <a class="code" href="pattern_8c.html#a32500619a3eb37c40e887c42ec7a1bb4">CheckeredPatternAt</a>(position, p);</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;        <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    <span class="keywordflow">case</span> <a class="code" href="pattern_8h.html#a05e443f79340006d4a8ad3ffaf13f7ffaf12f85c0222e6f70a307308793fe473c">GRADIENT</a>:</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;        <span class="keywordflow">return</span> <a class="code" href="pattern_8c.html#a677cac91491e46c11f78018838090ec4">GradientPatternAt</a>(position, p);</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;        <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    <span class="keywordflow">default</span>:</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        printf(<span class="stringliteral">&quot;Unknown pattern\n&quot;</span>);</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;        exit(1);</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    }</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;}</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160; </div>
-<div class="line"><a name="l00064"></a><span class="lineno"><a class="line" href="structPattern.html#a998d338e706f38180aefff003470ed4e">   64</a></span>&#160;<a class="code" href="structPattern.html">Pattern</a> <a class="code" href="structPattern.html#a998d338e706f38180aefff003470ed4e">NewSolidPattern</a>(<a class="code" href="structTuple3.html">Tuple3</a> color)</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;{</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    <a class="code" href="structPattern.html">Pattern</a> p = {</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        .<a class="code" href="structPattern.html#a0297deb64ab0823ee8b1e186874c3a8d">color_a</a> = color,</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;        .color_b = <a class="code" href="structTuple3.html#adc109e27ac689e9ea7c2632c8cbb358d">NewColor</a>(0, 0, 0, 0),</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        .type = <a class="code" href="pattern_8h.html#a05e443f79340006d4a8ad3ffaf13f7ffa1b45f84e1f6603b52e5ef442836df9af">SOLID</a>,</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    };</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160; </div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    p = <a class="code" href="structPattern.html#a50a7c7c1a4b21a3d692851f8aa23d817">TransformPattern</a>(p, <a class="code" href="unionMatrix4x4.html#ab9b969f2f092e2442cb25c1e91659830">IdentityMatrix</a>());</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160; </div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    <span class="keywordflow">return</span> p;</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;}</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160; </div>
-<div class="line"><a name="l00077"></a><span class="lineno"><a class="line" href="structPattern.html#ae2b19d6c07cf1239b1ded6f8a4545ff6">   77</a></span>&#160;<a class="code" href="structPattern.html">Pattern</a> <a class="code" href="structPattern.html#ae2b19d6c07cf1239b1ded6f8a4545ff6">NewPattern</a>(<a class="code" href="structTuple3.html">Tuple3</a> color_a, <a class="code" href="structTuple3.html">Tuple3</a> color_b, <a class="code" href="pattern_8h.html#a05e443f79340006d4a8ad3ffaf13f7ff">PATTERN_TYPE</a> type)</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;{</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    <a class="code" href="structPattern.html">Pattern</a> p = {</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;        .<a class="code" href="structPattern.html#a0297deb64ab0823ee8b1e186874c3a8d">color_a</a> = color_a,</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;        .color_b = color_b,</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;        .type = type,</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;        .transform = <a class="code" href="unionMatrix4x4.html#ab9b969f2f092e2442cb25c1e91659830">IdentityMatrix</a>()};</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160; </div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    p = <a class="code" href="structPattern.html#a50a7c7c1a4b21a3d692851f8aa23d817">TransformPattern</a>(p, <a class="code" href="unionMatrix4x4.html#ab9b969f2f092e2442cb25c1e91659830">IdentityMatrix</a>());</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160; </div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;    <span class="keywordflow">return</span> p;</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;}</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160; </div>
-<div class="line"><a name="l00090"></a><span class="lineno"><a class="line" href="structPattern.html#a50a7c7c1a4b21a3d692851f8aa23d817">   90</a></span>&#160;<a class="code" href="structPattern.html">Pattern</a> <a class="code" href="structPattern.html#a50a7c7c1a4b21a3d692851f8aa23d817">TransformPattern</a>(<a class="code" href="structPattern.html">Pattern</a> p, <a class="code" href="unionMatrix4x4.html">Matrix4x4</a> m)</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;{</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;    p.transform = m;</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;    p.inverse_transform = <a class="code" href="unionMatrix4x4.html#a2e1607b1290de644fc71c32b02aad965">MatrixInvert</a>(m);</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    <span class="keywordflow">return</span> p;</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;}</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="preprocessor">    #pragma GCC diagnostic ignored &quot;-Wswitch-enum&quot;</span></div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <span class="keywordflow">switch</span> (p.<a class="code" href="structPattern.html#a50d29bdcd824c07bcff62482b4fc0c88">type</a>)</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    {</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    <span class="keywordflow">case</span> <a class="code" href="pattern_8h.html#a05e443f79340006d4a8ad3ffaf13f7ffa41e022ca5414595c876e3a6adbd8481b">STRIPED</a>:</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;        <span class="keywordflow">return</span> <a class="code" href="pattern_8c.html#adf6f298d2fff62b82e18edae3fbf795d">StripedPatternAt</a>(position, p);</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    <span class="keywordflow">case</span> <a class="code" href="pattern_8h.html#a05e443f79340006d4a8ad3ffaf13f7ffaf5ed59f726bc8dcf0b9056b1333d0efe">RINGED</a>:</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;        <span class="keywordflow">return</span> <a class="code" href="pattern_8c.html#a57fe25a7e364a579d3d86c3cff642c3b">RingedPatternAt</a>(position, p);</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;        <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    <span class="keywordflow">case</span> <a class="code" href="pattern_8h.html#a05e443f79340006d4a8ad3ffaf13f7ffa76893d689c5bc36fabfc6a5e65854259">CHECKERED</a>:</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;        <span class="keywordflow">return</span> <a class="code" href="pattern_8c.html#a32500619a3eb37c40e887c42ec7a1bb4">CheckeredPatternAt</a>(position, p);</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;        <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    <span class="keywordflow">case</span> <a class="code" href="pattern_8h.html#a05e443f79340006d4a8ad3ffaf13f7ffaf12f85c0222e6f70a307308793fe473c">GRADIENT</a>:</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;        <span class="keywordflow">return</span> <a class="code" href="pattern_8c.html#a677cac91491e46c11f78018838090ec4">GradientPatternAt</a>(position, p);</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;        <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    <span class="keywordflow">default</span>:</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;        printf(<span class="stringliteral">&quot;Unknown pattern\n&quot;</span>);</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;        exit(1);</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    }</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;}</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160; </div>
+<div class="line"><a name="l00065"></a><span class="lineno"><a class="line" href="structPattern.html#a998d338e706f38180aefff003470ed4e">   65</a></span>&#160;<a class="code" href="structPattern.html">Pattern</a> <a class="code" href="structPattern.html#a998d338e706f38180aefff003470ed4e">NewSolidPattern</a>(<a class="code" href="structTuple3.html">Tuple3</a> color)</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;{</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    <a class="code" href="structPattern.html">Pattern</a> p = {</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;        .<a class="code" href="structPattern.html#a0297deb64ab0823ee8b1e186874c3a8d">color_a</a> = color,</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        .color_b = <a class="code" href="structTuple3.html#adc109e27ac689e9ea7c2632c8cbb358d">NewColor</a>(0, 0, 0, 0),</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;        .type = <a class="code" href="pattern_8h.html#a05e443f79340006d4a8ad3ffaf13f7ffa1b45f84e1f6603b52e5ef442836df9af">SOLID</a>,</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    };</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160; </div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    p = <a class="code" href="structPattern.html#a50a7c7c1a4b21a3d692851f8aa23d817">TransformPattern</a>(p, <a class="code" href="unionMatrix4x4.html#ab9b969f2f092e2442cb25c1e91659830">IdentityMatrix</a>());</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160; </div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    <span class="keywordflow">return</span> p;</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;}</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160; </div>
+<div class="line"><a name="l00078"></a><span class="lineno"><a class="line" href="structPattern.html#ae2b19d6c07cf1239b1ded6f8a4545ff6">   78</a></span>&#160;<a class="code" href="structPattern.html">Pattern</a> <a class="code" href="structPattern.html#ae2b19d6c07cf1239b1ded6f8a4545ff6">NewPattern</a>(<a class="code" href="structTuple3.html">Tuple3</a> color_a, <a class="code" href="structTuple3.html">Tuple3</a> color_b, <a class="code" href="pattern_8h.html#a05e443f79340006d4a8ad3ffaf13f7ff">PATTERN_TYPE</a> type)</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;{</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    <a class="code" href="structPattern.html">Pattern</a> p = {</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;        .<a class="code" href="structPattern.html#a0297deb64ab0823ee8b1e186874c3a8d">color_a</a> = color_a,</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;        .color_b = color_b,</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;        .type = type,</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;        .transform = <a class="code" href="unionMatrix4x4.html#ab9b969f2f092e2442cb25c1e91659830">IdentityMatrix</a>()};</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160; </div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    p = <a class="code" href="structPattern.html#a50a7c7c1a4b21a3d692851f8aa23d817">TransformPattern</a>(p, <a class="code" href="unionMatrix4x4.html#ab9b969f2f092e2442cb25c1e91659830">IdentityMatrix</a>());</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160; </div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    <span class="keywordflow">return</span> p;</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;}</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160; </div>
+<div class="line"><a name="l00091"></a><span class="lineno"><a class="line" href="structPattern.html#a50a7c7c1a4b21a3d692851f8aa23d817">   91</a></span>&#160;<a class="code" href="structPattern.html">Pattern</a> <a class="code" href="structPattern.html#a50a7c7c1a4b21a3d692851f8aa23d817">TransformPattern</a>(<a class="code" href="structPattern.html">Pattern</a> p, <a class="code" href="unionMatrix4x4.html">Matrix4x4</a> m)</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;{</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;    p.transform = m;</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    p.inverse_transform = <a class="code" href="unionMatrix4x4.html#a2e1607b1290de644fc71c32b02aad965">MatrixInvert</a>(m);</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;    <span class="keywordflow">return</span> p;</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;}</div>
 <div class="ttc" id="aequality_8h_html"><div class="ttname"><a href="equality_8h.html">equality.h</a></div></div>
 <div class="ttc" id="apattern_8c_html_a32500619a3eb37c40e887c42ec7a1bb4"><div class="ttname"><a href="pattern_8c.html#a32500619a3eb37c40e887c42ec7a1bb4">CheckeredPatternAt</a></div><div class="ttdeci">Tuple3 CheckeredPatternAt(Tuple3 position, Pattern p)</div><div class="ttdef"><b>Definition:</b> <a href="pattern_8c_source.html#l00018">pattern.c:18</a></div></div>
 <div class="ttc" id="apattern_8c_html_a57fe25a7e364a579d3d86c3cff642c3b"><div class="ttname"><a href="pattern_8c.html#a57fe25a7e364a579d3d86c3cff642c3b">RingedPatternAt</a></div><div class="ttdeci">Tuple3 RingedPatternAt(Tuple3 position, Pattern p)</div><div class="ttdef"><b>Definition:</b> <a href="pattern_8c_source.html#l00012">pattern.c:12</a></div></div>
@@ -182,13 +183,13 @@ $(function() {
 <div class="ttc" id="astructPattern_html"><div class="ttname"><a href="structPattern.html">Pattern</a></div><div class="ttdef"><b>Definition:</b> <a href="pattern_8h_source.html#l00028">pattern.h:29</a></div></div>
 <div class="ttc" id="astructPattern_html_a0297deb64ab0823ee8b1e186874c3a8d"><div class="ttname"><a href="structPattern.html#a0297deb64ab0823ee8b1e186874c3a8d">Pattern::color_a</a></div><div class="ttdeci">Tuple3 color_a</div><div class="ttdef"><b>Definition:</b> <a href="pattern_8h_source.html#l00034">pattern.h:34</a></div></div>
 <div class="ttc" id="astructPattern_html_a49a86d012bf0a1fc9cced03690190a1d"><div class="ttname"><a href="structPattern.html#a49a86d012bf0a1fc9cced03690190a1d">Pattern::color_b</a></div><div class="ttdeci">Tuple3 color_b</div><div class="ttdef"><b>Definition:</b> <a href="pattern_8h_source.html#l00040">pattern.h:40</a></div></div>
-<div class="ttc" id="astructPattern_html_a50a7c7c1a4b21a3d692851f8aa23d817"><div class="ttname"><a href="structPattern.html#a50a7c7c1a4b21a3d692851f8aa23d817">Pattern::TransformPattern</a></div><div class="ttdeci">Pattern TransformPattern(Pattern p, Matrix4x4 m)</div><div class="ttdef"><b>Definition:</b> <a href="pattern_8c_source.html#l00090">pattern.c:90</a></div></div>
+<div class="ttc" id="astructPattern_html_a50a7c7c1a4b21a3d692851f8aa23d817"><div class="ttname"><a href="structPattern.html#a50a7c7c1a4b21a3d692851f8aa23d817">Pattern::TransformPattern</a></div><div class="ttdeci">Pattern TransformPattern(Pattern p, Matrix4x4 m)</div><div class="ttdef"><b>Definition:</b> <a href="pattern_8c_source.html#l00091">pattern.c:91</a></div></div>
 <div class="ttc" id="astructPattern_html_a50d29bdcd824c07bcff62482b4fc0c88"><div class="ttname"><a href="structPattern.html#a50d29bdcd824c07bcff62482b4fc0c88">Pattern::type</a></div><div class="ttdeci">PATTERN_TYPE type</div><div class="ttdef"><b>Definition:</b> <a href="pattern_8h_source.html#l00043">pattern.h:43</a></div></div>
-<div class="ttc" id="astructPattern_html_a998d338e706f38180aefff003470ed4e"><div class="ttname"><a href="structPattern.html#a998d338e706f38180aefff003470ed4e">Pattern::NewSolidPattern</a></div><div class="ttdeci">Pattern NewSolidPattern(Tuple3 color)</div><div class="ttdef"><b>Definition:</b> <a href="pattern_8c_source.html#l00064">pattern.c:64</a></div></div>
-<div class="ttc" id="astructPattern_html_ae2b19d6c07cf1239b1ded6f8a4545ff6"><div class="ttname"><a href="structPattern.html#ae2b19d6c07cf1239b1ded6f8a4545ff6">Pattern::NewPattern</a></div><div class="ttdeci">Pattern NewPattern(Tuple3 color_a, Tuple3 color_b, PATTERN_TYPE type)</div><div class="ttdef"><b>Definition:</b> <a href="pattern_8c_source.html#l00077">pattern.c:77</a></div></div>
-<div class="ttc" id="astructShape_html"><div class="ttname"><a href="structShape.html">Shape</a></div><div class="ttdef"><b>Definition:</b> <a href="shape_8h_source.html#l00021">shape.h:22</a></div></div>
+<div class="ttc" id="astructPattern_html_a998d338e706f38180aefff003470ed4e"><div class="ttname"><a href="structPattern.html#a998d338e706f38180aefff003470ed4e">Pattern::NewSolidPattern</a></div><div class="ttdeci">Pattern NewSolidPattern(Tuple3 color)</div><div class="ttdef"><b>Definition:</b> <a href="pattern_8c_source.html#l00065">pattern.c:65</a></div></div>
+<div class="ttc" id="astructPattern_html_ae2b19d6c07cf1239b1ded6f8a4545ff6"><div class="ttname"><a href="structPattern.html#ae2b19d6c07cf1239b1ded6f8a4545ff6">Pattern::NewPattern</a></div><div class="ttdeci">Pattern NewPattern(Tuple3 color_a, Tuple3 color_b, PATTERN_TYPE type)</div><div class="ttdef"><b>Definition:</b> <a href="pattern_8c_source.html#l00078">pattern.c:78</a></div></div>
+<div class="ttc" id="astructShape_html"><div class="ttname"><a href="structShape.html">Shape</a></div><div class="ttdef"><b>Definition:</b> <a href="shape_8h_source.html#l00024">shape.h:25</a></div></div>
 <div class="ttc" id="astructShape_html_a00e9b20d30c2215e736bfe6b52a56821"><div class="ttname"><a href="structShape.html#a00e9b20d30c2215e736bfe6b52a56821">Shape::PatternColorAt</a></div><div class="ttdeci">Tuple3 PatternColorAt(Shape *s, Tuple3 position)</div><div class="ttdef"><b>Definition:</b> <a href="pattern_8c_source.html#l00032">pattern.c:32</a></div></div>
-<div class="ttc" id="astructShape_html_ae61fdac3b1a90dd2e8ee5d6cb5652291"><div class="ttname"><a href="structShape.html#ae61fdac3b1a90dd2e8ee5d6cb5652291">Shape::material</a></div><div class="ttdeci">Material material</div><div class="ttdef"><b>Definition:</b> <a href="shape_8h_source.html#l00029">shape.h:29</a></div></div>
+<div class="ttc" id="astructShape_html_ae61fdac3b1a90dd2e8ee5d6cb5652291"><div class="ttname"><a href="structShape.html#ae61fdac3b1a90dd2e8ee5d6cb5652291">Shape::material</a></div><div class="ttdeci">Material material</div><div class="ttdef"><b>Definition:</b> <a href="shape_8h_source.html#l00032">shape.h:32</a></div></div>
 <div class="ttc" id="astructTuple3_html"><div class="ttname"><a href="structTuple3.html">Tuple3</a></div></div>
 <div class="ttc" id="astructTuple3_html_a2171ab1311d3366c77e540219667d593"><div class="ttname"><a href="structTuple3.html#a2171ab1311d3366c77e540219667d593">Tuple3::TupleFloorSum</a></div><div class="ttdeci">double TupleFloorSum(Tuple3 t1)</div><div class="ttdef"><b>Definition:</b> <a href="tuple_8c_source.html#l00119">tuple.c:119</a></div></div>
 <div class="ttc" id="astructTuple3_html_a6ba74e56e9031ec0b2ee9aa0db862b5f"><div class="ttname"><a href="structTuple3.html#a6ba74e56e9031ec0b2ee9aa0db862b5f">Tuple3::MatrixTupleMultiply</a></div><div class="ttdeci">Tuple3 MatrixTupleMultiply(Matrix4x4 m1, Tuple3 t1)</div><div class="ttdef"><b>Definition:</b> <a href="matrix_8c_source.html#l00074">matrix.c:74</a></div></div>

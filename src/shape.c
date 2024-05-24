@@ -64,6 +64,65 @@ Shape NewCube(Tuple3 location, double size)
     return s;
 }
 
+Shape NewTriangle(Tuple3 p1, Tuple3 p2, Tuple3 p3)
+{
+    Shape s;
+    s.material = NewMaterial(NewTuple3(1.0, 0.8, 0.6, 1.0));
+    s.type = TRIANGLE;
+
+    /* Inverse of the matrix 'E' such that
+     * The columns are three edges of a tetrahedron that shares
+     * three corners with the unit triangle
+     * 
+     * Belowe we will solve a systems of equations for the
+     * necessary matrix to transform the unit triangle into
+     * the given triangle, and we need more information
+     * than a simple triangle will give us. So we imagine
+     * a tetrahedron that shares corners with our triangle.
+     * This imaginary extra corner gives use enough 
+     * information to solve the systems of equestions.
+     */
+    Matrix4x4 E = {
+        .contents = {
+            UNIT_TRI_E1,
+            UNIT_TRI_E2,
+            UNIT_TRI_E3,
+            {0, 0, 0, 1}
+        }
+    };
+    E = MatrixTranspose(E);
+
+    Matrix4x4 E_inv = MatrixInvert(E);
+
+    Tuple3 f1 = TupleSubtract(p2, p1);
+    Tuple3 f2 = TupleSubtract(p3, p1);
+    Tuple3 f3 = TupleCrossProduct(f1, f2);
+
+    Matrix4x4 F = {
+        .contents  = {
+            {f1[0], f2[0], f3[0], 0},
+            {f1[1], f2[1], f3[1], 0},
+            {f1[2], f2[2], f3[3], 0},
+            {0, 0, 0, 1}
+        }
+    };
+
+    F = RectifyMatrix(F); 
+    Matrix4x4 M = MatrixMultiply(F, E_inv);
+    
+    //Rotation and scaling are handled by F * E_inv, we need a translation
+    //in the last column of the transformation matrix
+    Tuple3 m3 = TupleSubtract(p1, MatrixTupleMultiply(M, NewPnt3(1, 0, 0)));
+    M.contents[0][3] = m3[0];
+    M.contents[1][3] = m3[1];
+    M.contents[2][3] = m3[2];
+
+    s.transformation = RectifyMatrix(M);
+    s.inverse_transform = MatrixInvert(s.transformation);
+
+    return s;
+}
+
 void ApplyTransformation(Shape *s, Matrix4x4 t)
 {
     s->transformation = MatrixMultiply(s->transformation, t);

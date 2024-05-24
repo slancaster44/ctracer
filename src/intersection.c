@@ -103,6 +103,41 @@ Intersection IntersectCube(Shape *s, Ray r)
     return result;
 }
 
+Intersection IntersectTriangle(Shape *s, Ray r)
+{
+    Intersection result = NewIntersection(s, r);
+    r = RayTransform(r, s->inverse_transform);
+
+    Tuple3 dir_cross_e2 = TupleCrossProduct(r.direction, UNIT_TRI_E2);
+    double det = TupleDotProduct(UNIT_TRI_E1, dir_cross_e2);
+
+    if (fabs(det) < EQUALITY_EPSILON)
+    {
+        return result;
+    }
+
+    double f = 1.0 / det;
+    Tuple3 p1_to_origin = TupleSubtract(r.origin, UNIT_TRI_P1);
+    double u = f * TupleDotProduct(p1_to_origin, dir_cross_e2);
+
+    if (u < 0 || u > 1) 
+    {
+        return result;
+    }
+
+    Tuple3 origin_cross_e1 = TupleCrossProduct(p1_to_origin, UNIT_TRI_E1);
+    double v = f * TupleDotProduct(r.direction, origin_cross_e1);
+    if (v < 0 || u + v > 1)
+    {
+        return result;
+    }
+
+    result.count = 1;
+    result.ray_times[0] = f * TupleDotProduct(UNIT_TRI_E2, origin_cross_e1);
+
+    return result;
+}
+
 Intersection Intersect(Shape *s, Ray r)
 {
     Intersection result;
@@ -117,6 +152,9 @@ Intersection Intersect(Shape *s, Ray r)
         break;
     case CUBE:
         result = IntersectCube(s, r);
+        break;
+    case TRIANGLE:
+        result = IntersectTriangle(s, r);
         break;
     default:
         printf("Cannot intersect shape of type '%d'\n", s->type);

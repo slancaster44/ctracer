@@ -1428,6 +1428,37 @@ void TestPlaneScene()
     TEST(FloatEquality(1.0, result->ray_times[0]), "Scene Intersection for plances");
 }
 
+void TestTriangle() {
+    //Triangle Normal tests
+    Shape triangle = NewTriangle(NewPnt3(0, 1, 0), NewPnt3(-1, 0, 0), NewPnt3(1, 0, 0));
+
+    TEST(TupleFuzzyEqual(NormalAt(&triangle, NewPnt3(0, 0, 0)), NewVec3(0, 0, -1)), "Triangle Normal 1");
+    TEST(TupleFuzzyEqual(NormalAt(&triangle, NewPnt3(0, 0.5, 0)), NewVec3(0, 0, -1)), "Triangle Normal 2");
+    TEST(TupleFuzzyEqual(NormalAt(&triangle, NewPnt3(-0.5, 0.75, 0)), NewVec3(0, 0, -1)), "Triangle Normal 3");
+    TEST(TupleFuzzyEqual(NormalAt(&triangle, NewPnt3(0.5, 0.25, 0)), NewVec3(0, 0, -1)), "Triangle Normal 4");
+
+    //Triangle intersection tests
+    Ray r0 = NewRay(NewPnt3(0, -1, -2), NewVec3(0, 1, 0));
+    Intersection i0 = Intersect(&triangle, r0);
+    TEST(i0.count == 0, "Triangle intersection, ray misses");
+
+    Ray r1 = NewRay(NewPnt3(1, 1, -2), NewVec3(0, 0, 1));
+    Intersection i1 = Intersect(&triangle, r1);
+    TEST(i1.count == 0, "Triangle intersection, ray misses p1-p3 edge");
+
+    Ray r2 = NewRay(NewPnt3(-1, 1, -2), NewVec3(0, 0, 1));
+    Intersection i2 = Intersect(&triangle, r2);
+    TEST(i2.count == 0, "Triangle intersection, ray misses p1-p2 edge");
+
+    Ray r3 = NewRay(NewPnt3(0, -1, -2), NewVec3(0, 0, 1));
+    Intersection i3 = Intersect(&triangle, r3);
+    TEST(i3.count == 0, "Triangle intersection, ray misses p2-p3 edge");
+
+    Ray r4 = NewRay(NewPnt3(0, 0.5, -2), NewVec3(0, 0, 1));
+    Intersection i4 = Intersect(&triangle, r4);
+    TEST(i4.count == 1 && FloatEquality(i4.ray_times[0], 2.0), "Triangle intersection, ray strikes triangle");
+}
+
 int DoTests()
 {
     num_failed = 0;
@@ -1483,6 +1514,8 @@ int DoTests()
     TestTupleHasNans();
     TestTupleHasInf();
 
+    TestTriangle();
+
     printf("Test(s) Passed: %d\nTests(s) Failed: %d\n", num_passed, num_failed);
 
     return 0;
@@ -1491,6 +1524,5 @@ int DoTests()
 int main()
 {
     DoTests();
-    // DemoUnthreaded();
     return 0;
 }

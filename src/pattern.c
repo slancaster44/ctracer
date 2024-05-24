@@ -41,6 +41,7 @@ Tuple3 PatternColorAt(Shape *s, Tuple3 pos_orig)
     Tuple3 position = MatrixTupleMultiply(s->inverse_transform, pos_orig);
     position = MatrixTupleMultiply(s->material.pattern.inverse_transform, position);
 
+    #pragma GCC diagnostic ignored "-Wswitch-enum"
     switch (p.type)
     {
     case STRIPED:

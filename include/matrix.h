@@ -217,6 +217,12 @@ Matrix4x4 IdentityMatrix();
 
 /**
  * @memberof Matrix4x4
+ * @returns A matrix of all zero values
+ */
+Matrix4x4 ZeroMatrix();
+
+/**
+ * @memberof Matrix4x4
  * Generate a view transformation matrix. These are often applied to a camera to
  * correctly orient the camera
  * 

@@ -13,7 +13,8 @@ var searchData=
   ['intersectscene_110',['IntersectScene',['../structScene.html#a3a423131fb98ea41600cc9e22cdd19cb',1,'Scene::IntersectScene()'],['../scene_8c.html#a3a423131fb98ea41600cc9e22cdd19cb',1,'IntersectScene(Scene *s, Ray r, Set *intersection_set):&#160;scene.c']]],
   ['intersectsphere_111',['IntersectSphere',['../intersection_8c.html#a2db8fe356a8483ba68687fe376c713cc',1,'intersection.c']]],
   ['intersecttree_112',['IntersectTree',['../structTree.html#a44bf6a2316f61cba22836f721e930613',1,'Tree::IntersectTree()'],['../tree_8c.html#a44bf6a2316f61cba22836f721e930613',1,'IntersectTree(Tree *tree, Ray r, Set *intersections):&#160;tree.c']]],
-  ['isallfalse_113',['IsAllFalse',['../shading_8c.html#ab0cff92e185a27d9ff99e7f682569682',1,'shading.c']]],
-  ['isinbounds_114',['IsInBounds',['../structBounds.html#a01f905028209d3dc5a8cfbce53da2531',1,'Bounds::IsInBounds()'],['../bounds_8c.html#a01f905028209d3dc5a8cfbce53da2531',1,'IsInBounds():&#160;bounds.c']]],
-  ['isinshadow_115',['IsInShadow',['../structScene.html#a9604a20907b2a30f02745ad10935332d',1,'Scene::IsInShadow()'],['../scene_8c.html#a9604a20907b2a30f02745ad10935332d',1,'IsInShadow():&#160;scene.c']]]
+  ['intersecttriangle_113',['IntersectTriangle',['../intersection_8c.html#a9de4af64364bcdc7774b93d84385628f',1,'intersection.c']]],
+  ['isallfalse_114',['IsAllFalse',['../shading_8c.html#ab0cff92e185a27d9ff99e7f682569682',1,'shading.c']]],
+  ['isinbounds_115',['IsInBounds',['../structBounds.html#a01f905028209d3dc5a8cfbce53da2531',1,'Bounds::IsInBounds()'],['../bounds_8c.html#a01f905028209d3dc5a8cfbce53da2531',1,'IsInBounds():&#160;bounds.c']]],
+  ['isinshadow_116',['IsInShadow',['../structScene.html#a9604a20907b2a30f02745ad10935332d',1,'Scene::IsInShadow()'],['../scene_8c.html#a9604a20907b2a30f02745ad10935332d',1,'IsInShadow():&#160;scene.c']]]
 ];

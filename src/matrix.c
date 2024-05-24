@@ -280,6 +280,19 @@ Matrix4x4 IdentityMatrix()
     return result;
 }
 
+Matrix4x4 ZeroMatrix()
+{
+        Matrix4x4 result = {
+        .contents = {
+            {0, 0, 0, 0},
+            {0, 0, 0, 0},
+            {0, 0, 0, 0},
+            {0, 0, 0, 0},
+        }};
+
+    return result;
+}
+
 Matrix4x4 ViewMatrix(Tuple3 from, Tuple3 to, Tuple3 upvec)
 {
     Tuple3 forward = TupleNormalize(TupleSubtract(to, from));

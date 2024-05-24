@@ -15,6 +15,9 @@ typedef enum
     PLANE,
     /** Untransformed, a shape with this tag will be a cube centered at (0, 0, 0) and a side length of 2.0 */
     CUBE,
+
+    /** Untransformed, a shape with this tag will be a triangle with corners at (1, 0, 0) (0, 1, 0) (0, 0, 1) */
+    TRIANGLE,
 } SHAPE_TYPE;
 
 /** Used to represent a shape in a scene */
@@ -70,9 +73,28 @@ Shape NewCube(Tuple3 pnt, double size);
 
 /**
  * @memberof Shape
+ * Generate a new triangle
+ * @param 'Tuple3 p1, p2, p3' The three corners of the cube
+ * @returns A triangle with corners at the given poinnts
+ */
+Shape NewTriangle(Tuple3 p1, Tuple3 p2, Tuple3 p3);
+
+#define UNIT_TRI_P1 NewPnt3(1, 0, 0)
+#define UNIT_TRI_P2 NewPnt3(0, 1, 0)
+#define UNIT_TRI_P3 NewPnt3(0, 0, 1)
+
+#define UNIT_TRI_E1 TupleSubtract(UNIT_TRI_P2, UNIT_TRI_P1)
+#define UNIT_TRI_E2 TupleSubtract(UNIT_TRI_P3, UNIT_TRI_P1)
+#define UNIT_TRI_E3 TupleCrossProduct(UNIT_TRI_E1, UNIT_TRI_E2)
+
+
+/**
+ * @memberof Shape
  * Calculate the surface normal for a given shape at a given point 
  */
 Tuple3 NormalAt(Shape *s, Tuple3 pnt);
+
+
 
 /**
  * @memberof Scene
