@@ -1,20 +1,12 @@
 var searchData=
 [
-  ['benchmark_9',['BENCHMARK',['../benchmark_8c.html#a12c442c1b7ac565ac5123fa31d5b3903',1,'benchmark.c']]],
-  ['benchmark_2ec_10',['benchmark.c',['../benchmark_8c.html',1,'']]],
-  ['benchmark_5fcycles_11',['BENCHMARK_CYCLES',['../benchmark_8c.html#a5bedbe4eac3959a823af011adb97e7c9',1,'benchmark.c']]],
-  ['benchmarkcubenormalization_12',['BenchmarkCubeNormalization',['../benchmark_8c.html#afa951ede918f8f8702a8aa88a4e6d6b4',1,'benchmark.c']]],
-  ['benchmarkmatrixequal_13',['BenchmarkMatrixEqual',['../benchmark_8c.html#ad7161fe29ea51f911fe9a0fc8a2209e9',1,'benchmark.c']]],
-  ['benchmarkmatrixfuzzyequal_14',['BenchmarkMatrixFuzzyEqual',['../benchmark_8c.html#af5c6a21b152fdc70ade41e0e59b99bbc',1,'benchmark.c']]],
-  ['benchmarkmatrixinvert_15',['BenchmarkMatrixInvert',['../benchmark_8c.html#a44a2ecd336f18dc5e740906770a6d7d1',1,'benchmark.c']]],
-  ['benchmarkmatrixmultiply_16',['BenchmarkMatrixMultiply',['../benchmark_8c.html#aee77939a59b4aa540680b508ff9e4360',1,'benchmark.c']]],
-  ['benchmarkmatrixtranspose_17',['BenchmarkMatrixTranspose',['../benchmark_8c.html#abecd336fe90641c7456da8756c0e11d5',1,'benchmark.c']]],
-  ['benchmarkmatrixtuplemultiply_18',['BenchmarkMatrixTupleMultiply',['../benchmark_8c.html#aa5e59886b8977ffb8d6e4e4430be5517',1,'benchmark.c']]],
-  ['benchmarkraysphereintersection_19',['BenchmarkRaySphereIntersection',['../benchmark_8c.html#a9a98165cea3111854c88c7dfe0cd30db',1,'benchmark.c']]],
-  ['benchmarkscene_20',['BenchmarkScene',['../benchmark_8c.html#ab645e8464fa15c56830eed2b3bbfe938',1,'benchmark.c']]],
-  ['black_21',['BLACK',['../shading_8c.html#a7b3b25cba33b07c303f3060fe41887f6',1,'shading.c']]],
-  ['bounds_22',['Bounds',['../structBounds.html',1,'']]],
-  ['bounds_2ec_23',['bounds.c',['../bounds_8c.html',1,'']]],
-  ['bounds_2eh_24',['bounds.h',['../bounds_8h.html',1,'']]],
-  ['busyscene_25',['BusyScene',['../demo_8c.html#a616c893c9c3ad4f44e06e3d3e9ba02cb',1,'demo.c']]]
+  ['addshape_1',['AddShape',['../structScene.html#ae6d2fc386f7b538e7c0174027a3b3b3e',1,'Scene::AddShape()'],['../scene_8c.html#ae6d2fc386f7b538e7c0174027a3b3b3e',1,'AddShape(Scene *s, Shape sp):&#160;scene.c']]],
+  ['addshapetotree_2',['AddShapeToTree',['../tree_8c.html#a3793559eb5c393c3c144b445c0624243',1,'AddShapeToTree():&#160;tree.c'],['../structTree.html#a3793559eb5c393c3c144b445c0624243',1,'Tree::AddShapeToTree()']]],
+  ['adjoint_5fm256_3',['ADJOINT_M256',['../tuple_8h.html#a91b753f79983c7ece52c19f2befa81de',1,'tuple.h']]],
+  ['align_4',['align',['../unionMatrix4x4.html#a5aa146cc859f7ad9fd67964ad1092586',1,'Matrix4x4::align()'],['../unionMatrix4x4.html#a6c9eaa132633cd5df3f34c90dffa7150',1,'Matrix4x4::align()'],['../alignment_8h.html#a5151b2f6da2e90a5dd1b1afc4092a3a2',1,'align():&#160;alignment.h'],['../tuple_8h.html#a1255f9c7d5727ae686dc3f49aef35c7c',1,'align():&#160;tuple.h']]],
+  ['alignment_2eh_5',['alignment.h',['../alignment_8h.html',1,'']]],
+  ['ambient_5freflection_6',['ambient_reflection',['../structMaterial.html#a5685167efaf9afe36eafbb4aae70391a',1,'Material']]],
+  ['appendvalue_7',['AppendValue',['../structSet.html#a0100e6a67d1ce12b93a4f96370c62774',1,'Set::AppendValue()'],['../set_8c.html#a0100e6a67d1ce12b93a4f96370c62774',1,'AppendValue():&#160;set.c']]],
+  ['applytransformation_8',['ApplyTransformation',['../structShape.html#ac47716d97f3670c35f19e4221bf2e09a',1,'Shape::ApplyTransformation()'],['../shape_8c.html#ac47716d97f3670c35f19e4221bf2e09a',1,'ApplyTransformation(Shape *s, Matrix4x4 t):&#160;shape.c']]],
+  ['assigndefaulttestmaterial_9',['AssignDefaultTestMaterial',['../benchmark_8c.html#aa862e63343e411c0a2bcc48d5b413297',1,'AssignDefaultTestMaterial(Material *m):&#160;benchmark.c'],['../demo_8c.html#aa862e63343e411c0a2bcc48d5b413297',1,'AssignDefaultTestMaterial(Material *m):&#160;demo.c'],['../test_8c.html#aa862e63343e411c0a2bcc48d5b413297',1,'AssignDefaultTestMaterial(Material *m):&#160;test.c']]]
 ];

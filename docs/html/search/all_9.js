@@ -1,25 +1,8 @@
 var searchData=
 [
-  ['main_122',['main',['../benchmark_8c.html#ae66f6b31b5ad750f1fe042a706a4e3d4',1,'main():&#160;benchmark.c'],['../demo_8c.html#ae66f6b31b5ad750f1fe042a706a4e3d4',1,'main():&#160;demo.c'],['../test_8c.html#ae66f6b31b5ad750f1fe042a706a4e3d4',1,'main():&#160;test.c']]],
-  ['material_123',['Material',['../structMaterial.html',1,'']]],
-  ['material_124',['material',['../structShape.html#ae61fdac3b1a90dd2e8ee5d6cb5652291',1,'Shape']]],
-  ['material_2ec_125',['material.c',['../material_8c.html',1,'']]],
-  ['material_2eh_126',['material.h',['../material_8h.html',1,'']]],
-  ['matrix_2ec_127',['matrix.c',['../matrix_8c.html',1,'']]],
-  ['matrix_2eh_128',['matrix.h',['../matrix_8h.html',1,'']]],
-  ['matrix4x4_129',['Matrix4x4',['../unionMatrix4x4.html',1,'']]],
-  ['matrixadd_130',['MatrixAdd',['../matrix_8c.html#a31f0160e8d7a8edf0f62db8f2da7e0d3',1,'MatrixAdd():&#160;matrix.c'],['../unionMatrix4x4.html#a31f0160e8d7a8edf0f62db8f2da7e0d3',1,'Matrix4x4::MatrixAdd()']]],
-  ['matrixequal_131',['MatrixEqual',['../matrix_8c.html#a9506ea1c1d2ce44938d7e4f9af4d0389',1,'MatrixEqual():&#160;matrix.c'],['../unionMatrix4x4.html#a9506ea1c1d2ce44938d7e4f9af4d0389',1,'Matrix4x4::MatrixEqual()']]],
-  ['matrixfuzzyequal_132',['MatrixFuzzyEqual',['../matrix_8c.html#a76b0cfdb1576f56454793ef875708b1a',1,'MatrixFuzzyEqual():&#160;matrix.c'],['../unionMatrix4x4.html#a76b0cfdb1576f56454793ef875708b1a',1,'Matrix4x4::MatrixFuzzyEqual()']]],
-  ['matrixinvert_133',['MatrixInvert',['../matrix_8c.html#a2e1607b1290de644fc71c32b02aad965',1,'MatrixInvert():&#160;matrix.c'],['../unionMatrix4x4.html#a2e1607b1290de644fc71c32b02aad965',1,'Matrix4x4::MatrixInvert()']]],
-  ['matrixmultiply_134',['MatrixMultiply',['../matrix_8c.html#af8ce61d7c07da3010f7a47c9f56608c8',1,'MatrixMultiply():&#160;matrix.c'],['../unionMatrix4x4.html#af8ce61d7c07da3010f7a47c9f56608c8',1,'Matrix4x4::MatrixMultiply()']]],
-  ['matrixscalarmultiply_135',['MatrixScalarMultiply',['../matrix_8c.html#a240274216c6c9a9251956b93335d1f4e',1,'MatrixScalarMultiply():&#160;matrix.c'],['../unionMatrix4x4.html#a240274216c6c9a9251956b93335d1f4e',1,'Matrix4x4::MatrixScalarMultiply()']]],
-  ['matrixtranspose_136',['MatrixTranspose',['../matrix_8c.html#ae8d3bae8c6b2db4675779999fa585be9',1,'MatrixTranspose():&#160;matrix.c'],['../unionMatrix4x4.html#ae8d3bae8c6b2db4675779999fa585be9',1,'Matrix4x4::MatrixTranspose()']]],
-  ['matrixtuplemultiply_137',['MatrixTupleMultiply',['../matrix_8c.html#a6ba74e56e9031ec0b2ee9aa0db862b5f',1,'MatrixTupleMultiply():&#160;matrix.c'],['../structTuple3.html#a6ba74e56e9031ec0b2ee9aa0db862b5f',1,'Tuple3::MatrixTupleMultiply()']]],
-  ['matrixtuplemultiplyperserveinf_138',['MatrixTupleMultiplyPerserveInf',['../matrix_8c.html#ad76be81a84c6343beab1d79b171c509d',1,'MatrixTupleMultiplyPerserveInf():&#160;matrix.c'],['../structTuple3.html#ad76be81a84c6343beab1d79b171c509d',1,'Tuple3::MatrixTupleMultiplyPerserveInf()']]],
-  ['max_5fnumber_5fintersections_139',['MAX_NUMBER_INTERSECTIONS',['../intersection_8h.html#abb35f0d46d679a3c74bad65fcbcbb6ad',1,'intersection.h']]],
-  ['maxcomponent_140',['MaxComponent',['../tuple_8c.html#a0fd318bcd44431b652cdcf220c93dc12',1,'MaxComponent():&#160;tuple.c'],['../structTuple3.html#a0fd318bcd44431b652cdcf220c93dc12',1,'Tuple3::MaxComponent()']]],
-  ['maximum_5fbound_141',['maximum_bound',['../structBounds.html#a57662ba6eed965ab541ef3553aa0d4ab',1,'Bounds']]],
-  ['mincomponent_142',['MinComponent',['../structTuple3.html#a48b743a717cfe7f303207e9c9d591f23',1,'Tuple3::MinComponent()'],['../tuple_8c.html#a48b743a717cfe7f303207e9c9d591f23',1,'MinComponent():&#160;tuple.c']]],
-  ['minimum_5fbound_143',['minimum_bound',['../structBounds.html#acea807cb721d62606b8e88b503cd284a',1,'Bounds']]]
+  ['length_118',['length',['../structSet.html#a1c3723083ac443ee0270c78f17b8e800',1,'Set']]],
+  ['light_119',['Light',['../structLight.html',1,'']]],
+  ['light_120',['light',['../structScene.html#a936df0a30207c5ad1614c7f9e9b2bb42',1,'Scene']]],
+  ['light_2ec_121',['light.c',['../light_8c.html',1,'']]],
+  ['light_2eh_122',['light.h',['../light_8h.html',1,'']]]
 ];

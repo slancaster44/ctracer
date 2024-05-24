@@ -35,6 +35,16 @@ Bounds PlaneBounds()
     return b;
 }
 
+Bounds TriangleBounds()
+{
+    Bounds b = {
+        .minimum_bound = NewPnt3(0, 0, 0),
+        .maximum_bound = NewPnt3(1, 1, 1),
+    };
+
+    return b;
+}
+
 Bounds ShapeBounds(Shape *s)
 {
     Bounds b;
@@ -49,6 +59,9 @@ Bounds ShapeBounds(Shape *s)
         break;
     case SPHERE:
         b = SphereBounds();
+        break;
+    case TRIANGLE:
+        b = TriangleBounds();
         break;
     default:
         printf("Unable to calculate bounding box");

@@ -12,7 +12,7 @@ Tuple3 PlaneNormalAt(Shape *s, Tuple3 p)
 
 Tuple3 TriangleNormalAt(Shape *s, Tuple3 p)
 {
-    return TupleNormalize(TupleCrossProduct(UNIT_TRI_E2, UNIT_TRI_E1));
+    return UNIT_TRI_NORM;
 }
 
 Tuple3 CubeNormalAt(Shape *s, Tuple3 p)

@@ -64,24 +64,28 @@ Shape NewCube(Tuple3 location, double size)
     return s;
 }
 
-Shape NewTriangle(Tuple3 p1, Tuple3 p2, Tuple3 p3)
-{
-    Shape s;
-    s.material = NewMaterial(NewTuple3(1.0, 0.8, 0.6, 1.0));
-    s.type = TRIANGLE;
+Tuple3 UNIT_TRI_P1;
+Tuple3 UNIT_TRI_P2;
+Tuple3 UNIT_TRI_P3;
 
-    /* Inverse of the matrix 'E' such that
-     * The columns are three edges of a tetrahedron that shares
-     * three corners with the unit triangle
-     * 
-     * Belowe we will solve a systems of equations for the
-     * necessary matrix to transform the unit triangle into
-     * the given triangle, and we need more information
-     * than a simple triangle will give us. So we imagine
-     * a tetrahedron that shares corners with our triangle.
-     * This imaginary extra corner gives use enough 
-     * information to solve the systems of equestions.
-     */
+Tuple3 UNIT_TRI_E1;
+Tuple3 UNIT_TRI_E2;
+Tuple3 UNIT_TRI_E3;
+
+Matrix4x4 UNIT_TRI_EINV;
+Tuple3 UNIT_TRI_NORM;
+
+void __attribute__ ((constructor)) InitializeUnitTriangle() {
+    UNIT_TRI_P1 = NewPnt3(1, 0, 0);
+    UNIT_TRI_P2 = NewPnt3(0, 1, 0);
+    UNIT_TRI_P3 = NewPnt3(0, 0, 1);
+
+    UNIT_TRI_E1 = TupleSubtract(UNIT_TRI_P2, UNIT_TRI_P1);
+    UNIT_TRI_E2 = TupleSubtract(UNIT_TRI_P3, UNIT_TRI_P1);
+    UNIT_TRI_E3 = TupleCrossProduct(UNIT_TRI_E1, UNIT_TRI_E2);
+
+    UNIT_TRI_NORM = TupleNormalize(TupleCrossProduct(UNIT_TRI_E2, UNIT_TRI_E1));
+
     Matrix4x4 E = {
         .contents = {
             UNIT_TRI_E1,
@@ -92,7 +96,15 @@ Shape NewTriangle(Tuple3 p1, Tuple3 p2, Tuple3 p3)
     };
     E = MatrixTranspose(E);
 
-    Matrix4x4 E_inv = MatrixInvert(E);
+    UNIT_TRI_EINV = MatrixInvert(E);
+}
+
+Shape NewTriangle(Tuple3 p1, Tuple3 p2, Tuple3 p3)
+{
+    Shape s;
+    s.material = NewMaterial(NewTuple3(1.0, 0.8, 0.6, 1.0));
+    s.type = TRIANGLE;
+
 
     Tuple3 f1 = TupleSubtract(p2, p1);
     Tuple3 f2 = TupleSubtract(p3, p1);
@@ -108,7 +120,7 @@ Shape NewTriangle(Tuple3 p1, Tuple3 p2, Tuple3 p3)
     };
 
     F = RectifyMatrix(F); 
-    Matrix4x4 M = MatrixMultiply(F, E_inv);
+    Matrix4x4 M = MatrixMultiply(F, UNIT_TRI_EINV);
     
     //Rotation and scaling are handled by F * E_inv, we need a translation
     //in the last column of the transformation matrix

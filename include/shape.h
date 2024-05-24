@@ -79,14 +79,24 @@ Shape NewCube(Tuple3 pnt, double size);
  */
 Shape NewTriangle(Tuple3 p1, Tuple3 p2, Tuple3 p3);
 
-#define UNIT_TRI_P1 NewPnt3(1, 0, 0)
-#define UNIT_TRI_P2 NewPnt3(0, 1, 0)
-#define UNIT_TRI_P3 NewPnt3(0, 0, 1)
+/** @private */
+extern Tuple3 UNIT_TRI_P1;
+/** @private */
+extern Tuple3 UNIT_TRI_P2;
+/** @private */
+extern Tuple3 UNIT_TRI_P3;
 
-#define UNIT_TRI_E1 TupleSubtract(UNIT_TRI_P2, UNIT_TRI_P1)
-#define UNIT_TRI_E2 TupleSubtract(UNIT_TRI_P3, UNIT_TRI_P1)
-#define UNIT_TRI_E3 TupleCrossProduct(UNIT_TRI_E1, UNIT_TRI_E2)
+/** @private */
+extern Tuple3 UNIT_TRI_E1;
+/** @private */
+extern Tuple3 UNIT_TRI_E2;
+/** @private */
+extern Tuple3 UNIT_TRI_E3;
 
+/** @private */
+extern Matrix4x4 UNIT_TRI_EINV;
+/** @private */
+extern Tuple3 UNIT_TRI_NORM;
 
 /**
  * @memberof Shape

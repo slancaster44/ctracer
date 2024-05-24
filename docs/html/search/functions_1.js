@@ -1,13 +1,8 @@
 var searchData=
 [
-  ['benchmarkcubenormalization_397',['BenchmarkCubeNormalization',['../benchmark_8c.html#afa951ede918f8f8702a8aa88a4e6d6b4',1,'benchmark.c']]],
-  ['benchmarkmatrixequal_398',['BenchmarkMatrixEqual',['../benchmark_8c.html#ad7161fe29ea51f911fe9a0fc8a2209e9',1,'benchmark.c']]],
-  ['benchmarkmatrixfuzzyequal_399',['BenchmarkMatrixFuzzyEqual',['../benchmark_8c.html#af5c6a21b152fdc70ade41e0e59b99bbc',1,'benchmark.c']]],
-  ['benchmarkmatrixinvert_400',['BenchmarkMatrixInvert',['../benchmark_8c.html#a44a2ecd336f18dc5e740906770a6d7d1',1,'benchmark.c']]],
-  ['benchmarkmatrixmultiply_401',['BenchmarkMatrixMultiply',['../benchmark_8c.html#aee77939a59b4aa540680b508ff9e4360',1,'benchmark.c']]],
-  ['benchmarkmatrixtranspose_402',['BenchmarkMatrixTranspose',['../benchmark_8c.html#abecd336fe90641c7456da8756c0e11d5',1,'benchmark.c']]],
-  ['benchmarkmatrixtuplemultiply_403',['BenchmarkMatrixTupleMultiply',['../benchmark_8c.html#aa5e59886b8977ffb8d6e4e4430be5517',1,'benchmark.c']]],
-  ['benchmarkraysphereintersection_404',['BenchmarkRaySphereIntersection',['../benchmark_8c.html#a9a98165cea3111854c88c7dfe0cd30db',1,'benchmark.c']]],
-  ['benchmarkscene_405',['BenchmarkScene',['../benchmark_8c.html#ab645e8464fa15c56830eed2b3bbfe938',1,'benchmark.c']]],
-  ['busyscene_406',['BusyScene',['../demo_8c.html#a616c893c9c3ad4f44e06e3d3e9ba02cb',1,'demo.c']]]
+  ['addshape_397',['AddShape',['../structScene.html#ae6d2fc386f7b538e7c0174027a3b3b3e',1,'Scene::AddShape()'],['../scene_8c.html#ae6d2fc386f7b538e7c0174027a3b3b3e',1,'AddShape():&#160;scene.c']]],
+  ['addshapetotree_398',['AddShapeToTree',['../structTree.html#a3793559eb5c393c3c144b445c0624243',1,'Tree::AddShapeToTree()'],['../tree_8c.html#a3793559eb5c393c3c144b445c0624243',1,'AddShapeToTree():&#160;tree.c']]],
+  ['appendvalue_399',['AppendValue',['../structSet.html#a0100e6a67d1ce12b93a4f96370c62774',1,'Set::AppendValue()'],['../set_8c.html#a0100e6a67d1ce12b93a4f96370c62774',1,'AppendValue():&#160;set.c']]],
+  ['applytransformation_400',['ApplyTransformation',['../structShape.html#ac47716d97f3670c35f19e4221bf2e09a',1,'Shape::ApplyTransformation()'],['../shape_8c.html#ac47716d97f3670c35f19e4221bf2e09a',1,'ApplyTransformation(Shape *s, Matrix4x4 t):&#160;shape.c']]],
+  ['assigndefaulttestmaterial_401',['AssignDefaultTestMaterial',['../benchmark_8c.html#aa862e63343e411c0a2bcc48d5b413297',1,'AssignDefaultTestMaterial(Material *m):&#160;benchmark.c'],['../demo_8c.html#aa862e63343e411c0a2bcc48d5b413297',1,'AssignDefaultTestMaterial(Material *m):&#160;demo.c'],['../test_8c.html#aa862e63343e411c0a2bcc48d5b413297',1,'AssignDefaultTestMaterial(Material *m):&#160;test.c']]]
 ];

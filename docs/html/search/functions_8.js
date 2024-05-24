@@ -1,21 +1,15 @@
 var searchData=
 [
-  ['newcamera_485',['NewCamera',['../structCamera.html#a04d9b8154245ab743e80288a6446ef60',1,'Camera::NewCamera()'],['../camera_8c.html#a04d9b8154245ab743e80288a6446ef60',1,'NewCamera():&#160;camera.c']]],
-  ['newcolor_486',['NewColor',['../structTuple3.html#adc109e27ac689e9ea7c2632c8cbb358d',1,'Tuple3::NewColor()'],['../tuple_8c.html#adc109e27ac689e9ea7c2632c8cbb358d',1,'NewColor(uint8_t r, uint8_t g, uint8_t b, uint8_t a):&#160;tuple.c']]],
-  ['newcube_487',['NewCube',['../shape_8c.html#a4a3dc243e48e25b6cf3def0445416f36',1,'NewCube():&#160;shape.c'],['../structShape.html#a193a205086804360eeff399a1e015512',1,'Shape::NewCube()']]],
-  ['newglasssphere_488',['NewGlassSphere',['../test_8c.html#a5c9477f11aaca7caf25975fbb5513094',1,'test.c']]],
-  ['newintersection_489',['NewIntersection',['../intersection_8c.html#abd9f722a66c770cff69630104e985d2a',1,'intersection.c']]],
-  ['newlight_490',['NewLight',['../light_8c.html#a9a1966cb0753efb250c5cc91a3730b6b',1,'NewLight():&#160;light.c'],['../structLight.html#a9a1966cb0753efb250c5cc91a3730b6b',1,'Light::NewLight()']]],
-  ['newmaterial_491',['NewMaterial',['../structMaterial.html#a9ff8f6b8e349894a6d86af2717476849',1,'Material::NewMaterial()'],['../material_8c.html#a9ff8f6b8e349894a6d86af2717476849',1,'NewMaterial():&#160;material.c']]],
-  ['newpattern_492',['NewPattern',['../structPattern.html#ae2b19d6c07cf1239b1ded6f8a4545ff6',1,'Pattern::NewPattern()'],['../pattern_8c.html#ae2b19d6c07cf1239b1ded6f8a4545ff6',1,'NewPattern():&#160;pattern.c']]],
-  ['newplane_493',['NewPlane',['../structShape.html#a5291b41cb4cf80d139322971ab9de1c5',1,'Shape::NewPlane()'],['../shape_8c.html#a433c4563c6d7bdd91f8fee611b4066ae',1,'NewPlane():&#160;shape.c']]],
-  ['newpnt3_494',['NewPnt3',['../structTuple3.html#af1ea27710c6795f4ad49cf158155ed3b',1,'Tuple3::NewPnt3()'],['../tuple_8c.html#af1ea27710c6795f4ad49cf158155ed3b',1,'NewPnt3():&#160;tuple.c']]],
-  ['newray_495',['NewRay',['../structRay.html#a47b32b6d6ec5b306de2558e9f332bc1c',1,'Ray::NewRay()'],['../ray_8c.html#a47b32b6d6ec5b306de2558e9f332bc1c',1,'NewRay():&#160;ray.c']]],
-  ['newsolidpattern_496',['NewSolidPattern',['../structPattern.html#a998d338e706f38180aefff003470ed4e',1,'Pattern::NewSolidPattern()'],['../pattern_8c.html#a998d338e706f38180aefff003470ed4e',1,'NewSolidPattern():&#160;pattern.c']]],
-  ['newsphere_497',['NewSphere',['../structShape.html#a59e78a7a512b8bde0c4e958aac85bbe4',1,'Shape::NewSphere()'],['../shape_8c.html#ae49b789922317543047e20dae68619fc',1,'NewSphere():&#160;shape.c']]],
-  ['newtriangle_498',['NewTriangle',['../structShape.html#a8dc5ba9f8414864dd49ac9e44cfaa872',1,'Shape::NewTriangle()'],['../shape_8c.html#a8dc5ba9f8414864dd49ac9e44cfaa872',1,'NewTriangle():&#160;shape.c']]],
-  ['newtuple3_499',['NewTuple3',['../structTuple3.html#a3bc7acd4f1c8effae6860a04803b842e',1,'Tuple3::NewTuple3()'],['../tuple_8c.html#a3bc7acd4f1c8effae6860a04803b842e',1,'NewTuple3():&#160;tuple.c']]],
-  ['newvec3_500',['NewVec3',['../structTuple3.html#a4f45eb57df0f416956fbc7a847e833f5',1,'Tuple3::NewVec3()'],['../tuple_8c.html#a4f45eb57df0f416956fbc7a847e833f5',1,'NewVec3():&#160;tuple.c']]],
-  ['normalat_501',['NormalAt',['../structShape.html#a68cdf363351e079d128ed92b0e52c27e',1,'Shape::NormalAt()'],['../normal_8c.html#a68cdf363351e079d128ed92b0e52c27e',1,'NormalAt(Shape *s, Tuple3 pnt):&#160;normal.c']]],
-  ['numberofparents_502',['NumberOfParents',['../tree_8c.html#ad0bfb0f5344d524268533d3463a76b72',1,'tree.c']]]
+  ['main_478',['main',['../test_8c.html#ae66f6b31b5ad750f1fe042a706a4e3d4',1,'main():&#160;test.c'],['../demo_8c.html#ae66f6b31b5ad750f1fe042a706a4e3d4',1,'main():&#160;demo.c'],['../benchmark_8c.html#ae66f6b31b5ad750f1fe042a706a4e3d4',1,'main():&#160;benchmark.c']]],
+  ['matrixadd_479',['MatrixAdd',['../unionMatrix4x4.html#a31f0160e8d7a8edf0f62db8f2da7e0d3',1,'Matrix4x4::MatrixAdd()'],['../matrix_8c.html#a31f0160e8d7a8edf0f62db8f2da7e0d3',1,'MatrixAdd():&#160;matrix.c']]],
+  ['matrixequal_480',['MatrixEqual',['../unionMatrix4x4.html#a9506ea1c1d2ce44938d7e4f9af4d0389',1,'Matrix4x4::MatrixEqual()'],['../matrix_8c.html#a9506ea1c1d2ce44938d7e4f9af4d0389',1,'MatrixEqual():&#160;matrix.c']]],
+  ['matrixfuzzyequal_481',['MatrixFuzzyEqual',['../unionMatrix4x4.html#a76b0cfdb1576f56454793ef875708b1a',1,'Matrix4x4::MatrixFuzzyEqual()'],['../matrix_8c.html#a76b0cfdb1576f56454793ef875708b1a',1,'MatrixFuzzyEqual():&#160;matrix.c']]],
+  ['matrixinvert_482',['MatrixInvert',['../unionMatrix4x4.html#a2e1607b1290de644fc71c32b02aad965',1,'Matrix4x4::MatrixInvert()'],['../matrix_8c.html#a2e1607b1290de644fc71c32b02aad965',1,'MatrixInvert():&#160;matrix.c']]],
+  ['matrixmultiply_483',['MatrixMultiply',['../unionMatrix4x4.html#af8ce61d7c07da3010f7a47c9f56608c8',1,'Matrix4x4::MatrixMultiply()'],['../matrix_8c.html#af8ce61d7c07da3010f7a47c9f56608c8',1,'MatrixMultiply():&#160;matrix.c']]],
+  ['matrixscalarmultiply_484',['MatrixScalarMultiply',['../unionMatrix4x4.html#a240274216c6c9a9251956b93335d1f4e',1,'Matrix4x4::MatrixScalarMultiply()'],['../matrix_8c.html#a240274216c6c9a9251956b93335d1f4e',1,'MatrixScalarMultiply():&#160;matrix.c']]],
+  ['matrixtranspose_485',['MatrixTranspose',['../unionMatrix4x4.html#ae8d3bae8c6b2db4675779999fa585be9',1,'Matrix4x4::MatrixTranspose()'],['../matrix_8c.html#ae8d3bae8c6b2db4675779999fa585be9',1,'MatrixTranspose():&#160;matrix.c']]],
+  ['matrixtuplemultiply_486',['MatrixTupleMultiply',['../structTuple3.html#a6ba74e56e9031ec0b2ee9aa0db862b5f',1,'Tuple3::MatrixTupleMultiply()'],['../matrix_8c.html#a6ba74e56e9031ec0b2ee9aa0db862b5f',1,'MatrixTupleMultiply():&#160;matrix.c']]],
+  ['matrixtuplemultiplyperserveinf_487',['MatrixTupleMultiplyPerserveInf',['../structTuple3.html#ad76be81a84c6343beab1d79b171c509d',1,'Tuple3::MatrixTupleMultiplyPerserveInf()'],['../matrix_8c.html#ad76be81a84c6343beab1d79b171c509d',1,'MatrixTupleMultiplyPerserveInf():&#160;matrix.c']]],
+  ['maxcomponent_488',['MaxComponent',['../structTuple3.html#a0fd318bcd44431b652cdcf220c93dc12',1,'Tuple3::MaxComponent()'],['../tuple_8c.html#a0fd318bcd44431b652cdcf220c93dc12',1,'MaxComponent():&#160;tuple.c']]],
+  ['mincomponent_489',['MinComponent',['../structTuple3.html#a48b743a717cfe7f303207e9c9d591f23',1,'Tuple3::MinComponent()'],['../tuple_8c.html#a48b743a717cfe7f303207e9c9d591f23',1,'MinComponent():&#160;tuple.c']]]
 ];
