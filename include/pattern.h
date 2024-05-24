@@ -52,7 +52,7 @@ typedef struct Shape Shape; //For prevent circular dependencies
 
 /**
  * @memberof Shape
- * Returns the color of the shape's material pattern on a given location. Note: This function
+ * Returns the color of the shape's material pattern on a given location. @note This function
  * is does not do the final color calculation, this is done by a @ref Shader function. The Shader function
  * will manipulate the color returned by PatternColorAt() to calculate the final color.
  * 

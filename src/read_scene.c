@@ -1,28 +1,12 @@
 #include "scene.h"
 #include "shape.h"
 #include "material.h"
+#include "read_file.h"
 
 #include <stdio.h>
 #include <string.h>
 #include <cjson/cJSON.h>
 
-#define READ_FILE(BUFFER, FILE_NAME)                                         \
-    FILE *fp = fopen(FILE_NAME, "r");                                        \
-    if (fp == NULL)                                                          \
-    {                                                                        \
-        printf("Error: unable to open file '%s'\n", file);                   \
-        exit(1);                                                             \
-    }                                                                        \
-                                                                             \
-    fseek(fp, 0L, SEEK_END);                                                 \
-    unsigned long file_size = sizeof(char) * ((unsigned long)ftell(fp) + 1); \
-    rewind(fp);                                                              \
-                                                                             \
-    BUFFER = alloca(file_size);                                              \
-    fread(BUFFER, 1, file_size, fp);                                         \
-    fclose(fp);                                                              \
-                                                                             \
-    BUFFER[file_size - 1] = '\0';
 
 void FatalDataCheck(void *object, const char *msg)
 {
@@ -296,7 +280,8 @@ void GetShapes(Tree *shapes, cJSON *json)
 void ReadScene(Scene *s, const char *file)
 {
     char *file_contents;
-    READ_FILE(file_contents, file);
+    unsigned long file_size;
+    READ_FILE(file_contents, file_size, file);
 
     cJSON *json = cJSON_Parse(file_contents);
     FatalDataCheck(json, "Could not parse json");

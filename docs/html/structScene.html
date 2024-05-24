@@ -97,6 +97,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a9604a20907b2a30f02745ad10935332d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a163f7789c536bcdd81260ebf6a2b7fc0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structScene.html#a163f7789c536bcdd81260ebf6a2b7fc0">ReadScene</a> (<a class="el" href="structScene.html">Scene</a> *s, const char *filename)</td></tr>
 <tr class="separator:a163f7789c536bcdd81260ebf6a2b7fc0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a072d21d910f09733c5d16fea4e680ace"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structScene.html#a072d21d910f09733c5d16fea4e680ace">ReadObj</a> (<a class="el" href="structScene.html">Scene</a> *s, const char *filename)</td></tr>
+<tr class="separator:a072d21d910f09733c5d16fea4e680ace"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad8f2142e84c3d96730a95eb05aa5be0a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structTuple3.html">Tuple3</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structScene.html#ad8f2142e84c3d96730a95eb05aa5be0a">ColorFor</a> (<a class="el" href="structScene.html">Scene</a> *s, <a class="el" href="structRay.html">Ray</a> r)</td></tr>
 <tr class="separator:ad8f2142e84c3d96730a95eb05aa5be0a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae8139beaff7ebe59f3c21c4702f6cfd1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structTuple3.html">Tuple3</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structScene.html#ae8139beaff7ebe59f3c21c4702f6cfd1">ColorForLimited</a> (<a class="el" href="structScene.html">Scene</a> *s, <a class="el" href="structRay.html">Ray</a> r, int limit)</td></tr>
@@ -322,7 +324,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Intersect the given scene with the given ray. All resulting intersection objects will be added to the intersection_set.</p>
-<p>Note: intersection_set must be initalized with <code> ConstructSet(&amp;my_intersections, sizeof(Intersection)) </code> before attempting to intersect the scene </p>
+<dl class="section note"><dt>Note</dt><dd>intersection_set must be initalized with <code> ConstructSet(&amp;my_intersections, sizeof(Intersection)) </code> before attempting to intersect the scene </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="scene_8c_source.html#l00069">69</a> of file <a class="el" href="scene_8c_source.html">scene.c</a>.</p>
 
@@ -359,6 +361,38 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
+<a id="a072d21d910f09733c5d16fea4e680ace"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a072d21d910f09733c5d16fea4e680ace">&#9670;&nbsp;</a></span>ReadObj()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ReadObj </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structScene.html">Scene</a> *&#160;</td>
+          <td class="paramname"><em>s</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>filename</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Read an object from the given metadata file, append the object to the shape tree</p>
+<dl class="section note"><dt>Note</dt><dd>This is a NOT replacement for <a class="el" href="structScene.html#ac9ad693a5dfd168f287fa97ea0c71892">ConstructScene()</a>. <a class="el" href="structScene.html#ac9ad693a5dfd168f287fa97ea0c71892">ConstructScene()</a> should be called on the scene <em>before</em> <a class="el" href="structScene.html#a072d21d910f09733c5d16fea4e680ace">ReadObj()</a> is </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="read__obj_8c_source.html#l00004">4</a> of file <a class="el" href="read__obj_8c_source.html">read_obj.c</a>.</p>
+
+</div>
+</div>
 <a id="a163f7789c536bcdd81260ebf6a2b7fc0"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a163f7789c536bcdd81260ebf6a2b7fc0">&#9670;&nbsp;</a></span>ReadScene()</h2>
 
@@ -385,9 +419,9 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Read a scene from the given metadata file</p>
-<p>Note: This is a replacement for <a class="el" href="structScene.html#ac9ad693a5dfd168f287fa97ea0c71892">ConstructScene()</a>. <a class="el" href="structScene.html#ac9ad693a5dfd168f287fa97ea0c71892">ConstructScene()</a> should not be called on the scene before or after <a class="el" href="structScene.html#a163f7789c536bcdd81260ebf6a2b7fc0">ReadScene()</a> is </p>
+<dl class="section note"><dt>Note</dt><dd>This is a replacement for <a class="el" href="structScene.html#ac9ad693a5dfd168f287fa97ea0c71892">ConstructScene()</a>. <a class="el" href="structScene.html#ac9ad693a5dfd168f287fa97ea0c71892">ConstructScene()</a> should not be called on the scene before or after <a class="el" href="structScene.html#a163f7789c536bcdd81260ebf6a2b7fc0">ReadScene()</a> is </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="read__scene_8c_source.html#l00296">296</a> of file <a class="el" href="read__scene_8c_source.html">read_scene.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="read__scene_8c_source.html#l00280">280</a> of file <a class="el" href="read__scene_8c_source.html">read_scene.c</a>.</p>
 
 </div>
 </div>

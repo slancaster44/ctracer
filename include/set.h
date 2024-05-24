@@ -11,7 +11,7 @@ typedef struct
     /** @private */
     void* data;
 
-    /** The number of elements in the set */
+    /** The number of elements in the set. @note Don't mutate this value */
     unsigned long length;
 
     /** @private */
@@ -81,7 +81,7 @@ void CopyOut(Set *s, unsigned long index, void *out);
  * @param 'Set *destination' The set to copy data to
  * @param 'Set *source' The set to copy from
  * 
- * Note: The destination set should not be initialized before calling CloneSet()
+ * @note The destination set should not be initialized before calling CloneSet()
  */
 void CloneSet(Set *destination, Set *source);
 

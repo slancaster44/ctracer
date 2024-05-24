@@ -44,7 +44,7 @@ void DeconstructScene(Scene *s);
  * Intersect the given scene with the given ray. All resulting intersection
  * objects will be added to the intersection_set.
  * 
- * Note: intersection_set must be initalized with 
+ * @note intersection_set must be initalized with 
  * <code> ConstructSet(&my_intersections, sizeof(Intersection)) </code>
  * before attempting to intersect the scene
  */
@@ -61,10 +61,20 @@ bool IsInShadow(Scene *s, Tuple3 location);
  * @memberof Scene
  * Read a scene from the given metadata file
  * 
- * Note: This is a replacement for ConstructScene(). ConstructScene() should
+ * @note This is a replacement for ConstructScene(). ConstructScene() should
  * not be called on the scene before or after ReadScene() is
  */
 void ReadScene(Scene *s, const char *filename);
+
+/**
+ * @memberof Scene
+ * Read an object from the given metadata file,
+ * append the object to the shape tree
+ * 
+ * @note This is a NOT replacement for ConstructScene(). ConstructScene() should
+ * be called on the scene *before* ReadObj() is
+*/
+void ReadObj(Scene *s, const char *filename);
 
 /**
  * @memberof Scene

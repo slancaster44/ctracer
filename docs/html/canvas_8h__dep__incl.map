@@ -1,11 +1,12 @@
 <map id="include/canvas.h" name="include/canvas.h">
-<area shape="rect" id="node1" title=" " alt="" coords="277,5,407,32"/>
-<area shape="rect" id="node2" href="$scene_8h.html" title=" " alt="" coords="281,80,403,107"/>
+<area shape="rect" id="node1" title=" " alt="" coords="345,5,475,32"/>
+<area shape="rect" id="node2" href="$scene_8h.html" title=" " alt="" coords="349,80,471,107"/>
 <area shape="rect" id="node3" href="$benchmark_8c.html" title=" " alt="" coords="5,155,135,181"/>
 <area shape="rect" id="node4" href="$demo_8c.html" title=" " alt="" coords="159,155,253,181"/>
-<area shape="rect" id="node8" href="$test_8c.html" title=" " alt="" coords="683,155,764,181"/>
-<area shape="rect" id="node9" href="$canvas_8c.html" title=" " alt="" coords="479,80,581,107"/>
-<area shape="rect" id="node5" href="$read__scene_8c.html" title=" " alt="" coords="277,155,407,181"/>
-<area shape="rect" id="node6" href="$scene_8c.html" title=" " alt="" coords="432,155,527,181"/>
-<area shape="rect" id="node7" href="$shading_8c.html" title=" " alt="" coords="551,155,658,181"/>
+<area shape="rect" id="node9" href="$test_8c.html" title=" " alt="" coords="819,155,900,181"/>
+<area shape="rect" id="node10" href="$canvas_8c.html" title=" " alt="" coords="547,80,649,107"/>
+<area shape="rect" id="node5" href="$read__obj_8c.html" title=" " alt="" coords="682,155,794,181"/>
+<area shape="rect" id="node6" href="$read__scene_8c.html" title=" " alt="" coords="277,155,407,181"/>
+<area shape="rect" id="node7" href="$scene_8c.html" title=" " alt="" coords="432,155,527,181"/>
+<area shape="rect" id="node8" href="$shading_8c.html" title=" " alt="" coords="551,155,658,181"/>
 </map>

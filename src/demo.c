@@ -189,10 +189,33 @@ void BusyScene()
     DeconstructScene(&s);
 }
 
+void DemoTriangle()
+{
+    Light l = NewLight(NewPnt3(-10, 10, -10));
+    Camera c = NewCamera(3840, 2160, 1.047);
+    CameraApplyTransformation(&c, ViewMatrix(NewPnt3(0, 1.5, -5), NewPnt3(0, 0, 0), NewVec3(0, 1, 0)));
+
+    Scene s;
+    ConstructScene(&s, c, l);
+
+    Canvas canvas;
+    ConstructCanvas(&canvas, s.camera.width, s.camera.height);
+
+    Shape triangle = NewTriangle(NewPnt3(-1, 0, 0), NewPnt3(0, 1, 0), NewPnt3(1, 0, 0));
+    AddShape(&s, triangle);
+
+    RenderSceneUnthreaded(&s, &canvas);
+    WriteToPPM(&canvas, "./renderings/triangle_demo.ppm");
+
+    DeconstructCanvas(&canvas);
+    DeconstructScene(&s);
+}
+
 int main()
 {
     // DemoCanvas();
-    DemoJsonScene();
+    //DemoJsonScene();
+    DemoTriangle();
     // DemoPlane();
     // DemoSphereScene();
     // DemoUnthreaded();

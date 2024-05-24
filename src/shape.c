@@ -102,9 +102,8 @@ void __attribute__ ((constructor)) InitializeUnitTriangle() {
 Shape NewTriangle(Tuple3 p1, Tuple3 p2, Tuple3 p3)
 {
     Shape s;
-    s.material = NewMaterial(NewTuple3(1.0, 0.8, 0.6, 1.0));
+    s.material = NewMaterial(NewTuple3(0.0, 0.8, 0.6, 1.0));
     s.type = TRIANGLE;
-
 
     Tuple3 f1 = TupleSubtract(p2, p1);
     Tuple3 f2 = TupleSubtract(p3, p1);

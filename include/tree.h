@@ -57,7 +57,7 @@ void DeconstructTree(Tree *tree);
  * Copy the source tree to the destination tree, including all
  * shapes and child nodes.
  * 
- * Note: The destination node should be uninitialized before 
+ * @note The destination node should be uninitialized before 
  * CloneTree() is called
  */
 void CloneTree(Tree *destination, Tree *source);
@@ -75,7 +75,7 @@ void CopyInChild(Tree *parent, Tree *child);
  * ray. All resulting intersections wil be placed into the
  * intersections set.
  * 
- * Note: 'Set *intersections' should be initialized before
+ * @note 'Set *intersections' should be initialized before
  * IntersectTree() is called.
 */
 void IntersectTree(Tree *tree, Ray r, Set *intersections);

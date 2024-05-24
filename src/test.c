@@ -1425,7 +1425,7 @@ void TestPlaneScene()
     IntersectScene(&s, r, &intersections);
 
     Intersection *result = Index(&intersections, 0);
-    TEST(FloatEquality(1.0, result->ray_times[0]), "Scene Intersection for plances");
+    TEST(FloatEquality(1.0, result->ray_times[0]), "Scene Intersection for planes");
 }
 
 void TestTriangle() {
@@ -1457,6 +1457,18 @@ void TestTriangle() {
     Ray r4 = NewRay(NewPnt3(0, 0.5, -2), NewVec3(0, 0, 1));
     Intersection i4 = Intersect(&triangle, r4);
     TEST(i4.count == 1 && FloatEquality(i4.ray_times[0], 2.0), "Triangle intersection, ray strikes triangle");
+}
+
+void TestReadObj() { 
+    Light l = NewLight(NewPnt3(-10, 10, -10));
+    Camera c = NewCamera(3840, 2160, 1.047);
+    CameraApplyTransformation(&c, ViewMatrix(NewPnt3(0, 1.5, -5), NewPnt3(0, 0, 0), NewVec3(0, 1, 0)));
+
+    Scene s;
+    ConstructScene(&s, c, l);
+
+    ReadObj(&s, "scenes/teapot.obj");
+    TEST(s.shapes.start.shapes.length == 6320, "Read object file, number of faces");
 }
 
 int DoTests()
@@ -1515,6 +1527,7 @@ int DoTests()
     TestTupleHasInf();
 
     TestTriangle();
+    TestReadObj();
 
     printf("Test(s) Passed: %d\nTests(s) Failed: %d\n", num_passed, num_failed);
 

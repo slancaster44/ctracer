@@ -1497,7 +1497,7 @@ $(function() {
 <div class="line"><a name="l01425"></a><span class="lineno"> 1425</span>&#160;    <a class="code" href="structScene.html#a3a423131fb98ea41600cc9e22cdd19cb">IntersectScene</a>(&amp;s, r, &amp;intersections);</div>
 <div class="line"><a name="l01426"></a><span class="lineno"> 1426</span>&#160; </div>
 <div class="line"><a name="l01427"></a><span class="lineno"> 1427</span>&#160;    <a class="code" href="structIntersection.html">Intersection</a> *result = <a class="code" href="structSet.html#a348902dbdef184c563a3463ea618409d">Index</a>(&amp;intersections, 0);</div>
-<div class="line"><a name="l01428"></a><span class="lineno"> 1428</span>&#160;    <a class="code" href="test_8c.html#a0e4c020507905cb8b4f757d7ea2f50fd">TEST</a>(<a class="code" href="equality_8h.html#a355558ede7ed4922cf9a27bd4d6bae34">FloatEquality</a>(1.0, result-&gt;<a class="code" href="structIntersection.html#ac78909e93aff5dc092e6ae11cbe395d8">ray_times</a>[0]), <span class="stringliteral">&quot;Scene Intersection for plances&quot;</span>);</div>
+<div class="line"><a name="l01428"></a><span class="lineno"> 1428</span>&#160;    <a class="code" href="test_8c.html#a0e4c020507905cb8b4f757d7ea2f50fd">TEST</a>(<a class="code" href="equality_8h.html#a355558ede7ed4922cf9a27bd4d6bae34">FloatEquality</a>(1.0, result-&gt;<a class="code" href="structIntersection.html#ac78909e93aff5dc092e6ae11cbe395d8">ray_times</a>[0]), <span class="stringliteral">&quot;Scene Intersection for planes&quot;</span>);</div>
 <div class="line"><a name="l01429"></a><span class="lineno"> 1429</span>&#160;}</div>
 <div class="line"><a name="l01430"></a><span class="lineno"> 1430</span>&#160; </div>
 <div class="line"><a name="l01431"></a><span class="lineno"><a class="line" href="test_8c.html#aad5f41b7cec10235fae4ce8f0c6073c5"> 1431</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="test_8c.html#aad5f41b7cec10235fae4ce8f0c6073c5">TestTriangle</a>() {</div>
@@ -1531,73 +1531,86 @@ $(function() {
 <div class="line"><a name="l01459"></a><span class="lineno"> 1459</span>&#160;    <a class="code" href="test_8c.html#a0e4c020507905cb8b4f757d7ea2f50fd">TEST</a>(i4.<a class="code" href="structIntersection.html#ac9f9884a2935063928631214ae6b6970">count</a> == 1 &amp;&amp; <a class="code" href="equality_8h.html#a355558ede7ed4922cf9a27bd4d6bae34">FloatEquality</a>(i4.<a class="code" href="structIntersection.html#ac78909e93aff5dc092e6ae11cbe395d8">ray_times</a>[0], 2.0), <span class="stringliteral">&quot;Triangle intersection, ray strikes triangle&quot;</span>);</div>
 <div class="line"><a name="l01460"></a><span class="lineno"> 1460</span>&#160;}</div>
 <div class="line"><a name="l01461"></a><span class="lineno"> 1461</span>&#160; </div>
-<div class="line"><a name="l01462"></a><span class="lineno"><a class="line" href="test_8c.html#af8e648b7558da91c27f35560108e531c"> 1462</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="test_8c.html#af8e648b7558da91c27f35560108e531c">DoTests</a>()</div>
-<div class="line"><a name="l01463"></a><span class="lineno"> 1463</span>&#160;{</div>
-<div class="line"><a name="l01464"></a><span class="lineno"> 1464</span>&#160;    num_failed = 0;</div>
-<div class="line"><a name="l01465"></a><span class="lineno"> 1465</span>&#160;    num_passed = 0;</div>
+<div class="line"><a name="l01462"></a><span class="lineno"><a class="line" href="test_8c.html#a137d6d5579bd507014579cb28f654602"> 1462</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="test_8c.html#a137d6d5579bd507014579cb28f654602">TestReadObj</a>() { </div>
+<div class="line"><a name="l01463"></a><span class="lineno"> 1463</span>&#160;    <a class="code" href="structLight.html">Light</a> l = <a class="code" href="structLight.html#a9a1966cb0753efb250c5cc91a3730b6b">NewLight</a>(<a class="code" href="structTuple3.html#af1ea27710c6795f4ad49cf158155ed3b">NewPnt3</a>(-10, 10, -10));</div>
+<div class="line"><a name="l01464"></a><span class="lineno"> 1464</span>&#160;    <a class="code" href="structCamera.html">Camera</a> c = <a class="code" href="structCamera.html#a04d9b8154245ab743e80288a6446ef60">NewCamera</a>(3840, 2160, 1.047);</div>
+<div class="line"><a name="l01465"></a><span class="lineno"> 1465</span>&#160;    <a class="code" href="structCamera.html#a61171814a74fbc6d406fee261e90a167">CameraApplyTransformation</a>(&amp;c, <a class="code" href="unionMatrix4x4.html#aa2acb094a10e1cae9bfe06e59c3acf5a">ViewMatrix</a>(<a class="code" href="structTuple3.html#af1ea27710c6795f4ad49cf158155ed3b">NewPnt3</a>(0, 1.5, -5), <a class="code" href="structTuple3.html#af1ea27710c6795f4ad49cf158155ed3b">NewPnt3</a>(0, 0, 0), <a class="code" href="structTuple3.html#a4f45eb57df0f416956fbc7a847e833f5">NewVec3</a>(0, 1, 0)));</div>
 <div class="line"><a name="l01466"></a><span class="lineno"> 1466</span>&#160; </div>
-<div class="line"><a name="l01467"></a><span class="lineno"> 1467</span>&#160;    <a class="code" href="test_8c.html#a34d3da49d428feb478f9fa25da1eff48">TestScalarSubtract</a>();</div>
-<div class="line"><a name="l01468"></a><span class="lineno"> 1468</span>&#160;    <a class="code" href="test_8c.html#a8727af10337f35ca0eb535b30ab87975">TestScalarAdd</a>();</div>
-<div class="line"><a name="l01469"></a><span class="lineno"> 1469</span>&#160;    <a class="code" href="test_8c.html#ad6b97a58eabf31bc383c061b85025ae9">TestCrossProduct</a>();</div>
-<div class="line"><a name="l01470"></a><span class="lineno"> 1470</span>&#160;    <a class="code" href="test_8c.html#a0169f0e21714126ee77265eba1279b5b">TestVectorReflect</a>();</div>
-<div class="line"><a name="l01471"></a><span class="lineno"> 1471</span>&#160; </div>
-<div class="line"><a name="l01472"></a><span class="lineno"> 1472</span>&#160;    <a class="code" href="test_8c.html#a1e9169fcd3b6c9e243faea60faa894a3">TestSet</a>();</div>
-<div class="line"><a name="l01473"></a><span class="lineno"> 1473</span>&#160;    <a class="code" href="test_8c.html#a6f8ef8af44d9c28b81e04e3197777f40">TestMatrixEqual</a>();</div>
-<div class="line"><a name="l01474"></a><span class="lineno"> 1474</span>&#160;    <a class="code" href="test_8c.html#aacb2106f9f248f3bcfd14662c5d46346">TestMatrixMultiply</a>();</div>
-<div class="line"><a name="l01475"></a><span class="lineno"> 1475</span>&#160;    <a class="code" href="test_8c.html#a81ff1022120fa073d577f53baa8c489b">TestMatrixTranspose</a>();</div>
-<div class="line"><a name="l01476"></a><span class="lineno"> 1476</span>&#160;    <a class="code" href="test_8c.html#a045712ff2df8f2d28d977cee25c2cd21">TestMatrixInvert</a>();</div>
-<div class="line"><a name="l01477"></a><span class="lineno"> 1477</span>&#160;    <a class="code" href="test_8c.html#a49704f42e29750b667586da18f6e9d0b">TestMatrixVectorMultiply</a>();</div>
-<div class="line"><a name="l01478"></a><span class="lineno"> 1478</span>&#160;    <a class="code" href="test_8c.html#ad1193cfa31a25396d2a2ef5f402ab960">TestTupleEqual</a>();</div>
-<div class="line"><a name="l01479"></a><span class="lineno"> 1479</span>&#160;    <a class="code" href="test_8c.html#ab7cb6e3505a414e2c99090fc48e9e6c7">TestScalarMultiply</a>();</div>
-<div class="line"><a name="l01480"></a><span class="lineno"> 1480</span>&#160;    <a class="code" href="test_8c.html#a2b232af2eca59bb924f778d95ef2f625">TestScalarDivide</a>();</div>
-<div class="line"><a name="l01481"></a><span class="lineno"> 1481</span>&#160;    <a class="code" href="test_8c.html#ac13e4d450c40a75af8c38f703b0a67e7">TestTupleNegate</a>();</div>
-<div class="line"><a name="l01482"></a><span class="lineno"> 1482</span>&#160;    <a class="code" href="test_8c.html#a2f7e680137c01cc3f6134e870816151a">TestTupleMagnitude</a>();</div>
-<div class="line"><a name="l01483"></a><span class="lineno"> 1483</span>&#160;    <a class="code" href="test_8c.html#a6247f8bb3f3ff31ad5e78ba719253e83">TestTupleDotProduct</a>();</div>
-<div class="line"><a name="l01484"></a><span class="lineno"> 1484</span>&#160;    <a class="code" href="test_8c.html#aa661c59a1da73cbdb5217f14af56bce3">TestTupleNormalize</a>();</div>
-<div class="line"><a name="l01485"></a><span class="lineno"> 1485</span>&#160;    <a class="code" href="test_8c.html#a154681a8023d4a4eb184947905a2a385">TestTupleMultiply</a>();</div>
-<div class="line"><a name="l01486"></a><span class="lineno"> 1486</span>&#160;    <a class="code" href="test_8c.html#aeddc36e8dd000ebc7a799e8863865418">TestTupleDivide</a>();</div>
-<div class="line"><a name="l01487"></a><span class="lineno"> 1487</span>&#160;    <a class="code" href="test_8c.html#aa625894a16f433a5b1bc9c3f7fc96305">TestTupleAdd</a>();</div>
-<div class="line"><a name="l01488"></a><span class="lineno"> 1488</span>&#160;    <a class="code" href="test_8c.html#aa5069bb5e52c5e2229b0786862d30a96">TestTupleSubtract</a>();</div>
-<div class="line"><a name="l01489"></a><span class="lineno"> 1489</span>&#160; </div>
-<div class="line"><a name="l01490"></a><span class="lineno"> 1490</span>&#160;    <a class="code" href="test_8c.html#a57bd4dfc262e8b2309e7fcc8a520d4fe">TestRay</a>();</div>
-<div class="line"><a name="l01491"></a><span class="lineno"> 1491</span>&#160;    <a class="code" href="test_8c.html#a94cecd2b7a22d85dbc3106854c3d148e">TestRaySphereIntersection</a>();</div>
-<div class="line"><a name="l01492"></a><span class="lineno"> 1492</span>&#160;    <a class="code" href="test_8c.html#a0b038c41b1b5eb9f94e9f912ea6d86cb">TestRayTransform</a>();</div>
-<div class="line"><a name="l01493"></a><span class="lineno"> 1493</span>&#160;    <a class="code" href="test_8c.html#aee8988dcbed44c70b70671de02b67846">SphereNormal</a>();</div>
-<div class="line"><a name="l01494"></a><span class="lineno"> 1494</span>&#160;    <a class="code" href="test_8c.html#aec7fca301803cccf315bf1f852013bc6">TestSphereGeometry</a>();</div>
-<div class="line"><a name="l01495"></a><span class="lineno"> 1495</span>&#160;    <a class="code" href="test_8c.html#aa98ec1fb42adf8e0901a41f9eea94982">TestSceneCreation</a>();</div>
-<div class="line"><a name="l01496"></a><span class="lineno"> 1496</span>&#160;    <a class="code" href="test_8c.html#a4eec90581e0a4cd1444c9760a8c8f005">TestScene</a>();</div>
-<div class="line"><a name="l01497"></a><span class="lineno"> 1497</span>&#160;    <a class="code" href="test_8c.html#a8c8b34c8700ed1d8d9a5c78c23a23e50">TestViewMatrix</a>();</div>
-<div class="line"><a name="l01498"></a><span class="lineno"> 1498</span>&#160;    <a class="code" href="test_8c.html#a069ff07a9a636a9e4ae57a8f554e1167">TestCamera</a>();</div>
-<div class="line"><a name="l01499"></a><span class="lineno"> 1499</span>&#160;    <a class="code" href="test_8c.html#aa7cce3d83878d7086e15fea2e06e98a5">TestShadow</a>();</div>
-<div class="line"><a name="l01500"></a><span class="lineno"> 1500</span>&#160;    <a class="code" href="test_8c.html#aea52455314bb55a64516cfc6178f135c">TestPlane</a>();</div>
-<div class="line"><a name="l01501"></a><span class="lineno"> 1501</span>&#160;    <a class="code" href="test_8c.html#a8e07092f07ab19f1c7244ab12c5970cc">TestReflection</a>();</div>
-<div class="line"><a name="l01502"></a><span class="lineno"> 1502</span>&#160; </div>
-<div class="line"><a name="l01503"></a><span class="lineno"> 1503</span>&#160;    <a class="code" href="test_8c.html#a76ca872107d6fd251f5517dd27482f07">TestSceneReading</a>();</div>
-<div class="line"><a name="l01504"></a><span class="lineno"> 1504</span>&#160;    <a class="code" href="test_8c.html#ae210511ad4211cc00fe977c4c3bca46e">TestStripePattern</a>();</div>
-<div class="line"><a name="l01505"></a><span class="lineno"> 1505</span>&#160;    <a class="code" href="test_8c.html#a61be41a72b2d879959e97831be1618f9">TestRefraction</a>();</div>
-<div class="line"><a name="l01506"></a><span class="lineno"> 1506</span>&#160;    <a class="code" href="test_8c.html#aef4a257801709ca92b53c09b88e81050">TestCalculateRefraction</a>();</div>
-<div class="line"><a name="l01507"></a><span class="lineno"> 1507</span>&#160;    <a class="code" href="test_8c.html#a5471381caef65312d8abe3bd87bdab57">TestCubeIntersection</a>();</div>
-<div class="line"><a name="l01508"></a><span class="lineno"> 1508</span>&#160;    <a class="code" href="test_8c.html#a9ec16ea19ce0288abb9a50e1b31b597d">TestCubeNormal</a>();</div>
-<div class="line"><a name="l01509"></a><span class="lineno"> 1509</span>&#160; </div>
-<div class="line"><a name="l01510"></a><span class="lineno"> 1510</span>&#160;    <a class="code" href="test_8c.html#af0c449a2c69a24a2b253ee8dd91cf10d">TestTree</a>();</div>
-<div class="line"><a name="l01511"></a><span class="lineno"> 1511</span>&#160;    <a class="code" href="test_8c.html#acc9a69d7a977973af955a3bf69796294">TestBounds</a>();</div>
-<div class="line"><a name="l01512"></a><span class="lineno"> 1512</span>&#160;    <a class="code" href="test_8c.html#a4816a73e27f7f871f4d6e791c0b91b4c">TestPlaneScene</a>();</div>
-<div class="line"><a name="l01513"></a><span class="lineno"> 1513</span>&#160; </div>
-<div class="line"><a name="l01514"></a><span class="lineno"> 1514</span>&#160;    <a class="code" href="test_8c.html#a7826402eedf43a22c8cf06bb956a74e5">TestTupleHasNans</a>();</div>
-<div class="line"><a name="l01515"></a><span class="lineno"> 1515</span>&#160;    <a class="code" href="test_8c.html#a1e7985e00e20c7d2965655261a4c32a7">TestTupleHasInf</a>();</div>
-<div class="line"><a name="l01516"></a><span class="lineno"> 1516</span>&#160; </div>
-<div class="line"><a name="l01517"></a><span class="lineno"> 1517</span>&#160;    <a class="code" href="test_8c.html#aad5f41b7cec10235fae4ce8f0c6073c5">TestTriangle</a>();</div>
-<div class="line"><a name="l01518"></a><span class="lineno"> 1518</span>&#160; </div>
-<div class="line"><a name="l01519"></a><span class="lineno"> 1519</span>&#160;    printf(<span class="stringliteral">&quot;Test(s) Passed: %d\nTests(s) Failed: %d\n&quot;</span>, num_passed, num_failed);</div>
-<div class="line"><a name="l01520"></a><span class="lineno"> 1520</span>&#160; </div>
-<div class="line"><a name="l01521"></a><span class="lineno"> 1521</span>&#160;    <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l01522"></a><span class="lineno"> 1522</span>&#160;}</div>
-<div class="line"><a name="l01523"></a><span class="lineno"> 1523</span>&#160; </div>
-<div class="line"><a name="l01524"></a><span class="lineno"><a class="line" href="test_8c.html#ae66f6b31b5ad750f1fe042a706a4e3d4"> 1524</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="test_8c.html#ae66f6b31b5ad750f1fe042a706a4e3d4">main</a>()</div>
-<div class="line"><a name="l01525"></a><span class="lineno"> 1525</span>&#160;{</div>
-<div class="line"><a name="l01526"></a><span class="lineno"> 1526</span>&#160;    <a class="code" href="test_8c.html#af8e648b7558da91c27f35560108e531c">DoTests</a>();</div>
-<div class="line"><a name="l01527"></a><span class="lineno"> 1527</span>&#160;    <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l01528"></a><span class="lineno"> 1528</span>&#160;}</div>
+<div class="line"><a name="l01467"></a><span class="lineno"> 1467</span>&#160;    <a class="code" href="structScene.html">Scene</a> s;</div>
+<div class="line"><a name="l01468"></a><span class="lineno"> 1468</span>&#160;    <a class="code" href="structScene.html#ac9ad693a5dfd168f287fa97ea0c71892">ConstructScene</a>(&amp;s, c, l);</div>
+<div class="line"><a name="l01469"></a><span class="lineno"> 1469</span>&#160; </div>
+<div class="line"><a name="l01470"></a><span class="lineno"> 1470</span>&#160;    <a class="code" href="structScene.html#a072d21d910f09733c5d16fea4e680ace">ReadObj</a>(&amp;s, <span class="stringliteral">&quot;scenes/teapot.obj&quot;</span>);</div>
+<div class="line"><a name="l01471"></a><span class="lineno"> 1471</span>&#160;    <a class="code" href="test_8c.html#a0e4c020507905cb8b4f757d7ea2f50fd">TEST</a>(s.<a class="code" href="structScene.html#a8f330dbcefc3f1afaa60c9a3229fb7c5">shapes</a>.start.shapes.length == 6320, <span class="stringliteral">&quot;Read object file, number of faces&quot;</span>);</div>
+<div class="line"><a name="l01472"></a><span class="lineno"> 1472</span>&#160;}</div>
+<div class="line"><a name="l01473"></a><span class="lineno"> 1473</span>&#160; </div>
+<div class="line"><a name="l01474"></a><span class="lineno"><a class="line" href="test_8c.html#af8e648b7558da91c27f35560108e531c"> 1474</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="test_8c.html#af8e648b7558da91c27f35560108e531c">DoTests</a>()</div>
+<div class="line"><a name="l01475"></a><span class="lineno"> 1475</span>&#160;{</div>
+<div class="line"><a name="l01476"></a><span class="lineno"> 1476</span>&#160;    num_failed = 0;</div>
+<div class="line"><a name="l01477"></a><span class="lineno"> 1477</span>&#160;    num_passed = 0;</div>
+<div class="line"><a name="l01478"></a><span class="lineno"> 1478</span>&#160; </div>
+<div class="line"><a name="l01479"></a><span class="lineno"> 1479</span>&#160;    <a class="code" href="test_8c.html#a34d3da49d428feb478f9fa25da1eff48">TestScalarSubtract</a>();</div>
+<div class="line"><a name="l01480"></a><span class="lineno"> 1480</span>&#160;    <a class="code" href="test_8c.html#a8727af10337f35ca0eb535b30ab87975">TestScalarAdd</a>();</div>
+<div class="line"><a name="l01481"></a><span class="lineno"> 1481</span>&#160;    <a class="code" href="test_8c.html#ad6b97a58eabf31bc383c061b85025ae9">TestCrossProduct</a>();</div>
+<div class="line"><a name="l01482"></a><span class="lineno"> 1482</span>&#160;    <a class="code" href="test_8c.html#a0169f0e21714126ee77265eba1279b5b">TestVectorReflect</a>();</div>
+<div class="line"><a name="l01483"></a><span class="lineno"> 1483</span>&#160; </div>
+<div class="line"><a name="l01484"></a><span class="lineno"> 1484</span>&#160;    <a class="code" href="test_8c.html#a1e9169fcd3b6c9e243faea60faa894a3">TestSet</a>();</div>
+<div class="line"><a name="l01485"></a><span class="lineno"> 1485</span>&#160;    <a class="code" href="test_8c.html#a6f8ef8af44d9c28b81e04e3197777f40">TestMatrixEqual</a>();</div>
+<div class="line"><a name="l01486"></a><span class="lineno"> 1486</span>&#160;    <a class="code" href="test_8c.html#aacb2106f9f248f3bcfd14662c5d46346">TestMatrixMultiply</a>();</div>
+<div class="line"><a name="l01487"></a><span class="lineno"> 1487</span>&#160;    <a class="code" href="test_8c.html#a81ff1022120fa073d577f53baa8c489b">TestMatrixTranspose</a>();</div>
+<div class="line"><a name="l01488"></a><span class="lineno"> 1488</span>&#160;    <a class="code" href="test_8c.html#a045712ff2df8f2d28d977cee25c2cd21">TestMatrixInvert</a>();</div>
+<div class="line"><a name="l01489"></a><span class="lineno"> 1489</span>&#160;    <a class="code" href="test_8c.html#a49704f42e29750b667586da18f6e9d0b">TestMatrixVectorMultiply</a>();</div>
+<div class="line"><a name="l01490"></a><span class="lineno"> 1490</span>&#160;    <a class="code" href="test_8c.html#ad1193cfa31a25396d2a2ef5f402ab960">TestTupleEqual</a>();</div>
+<div class="line"><a name="l01491"></a><span class="lineno"> 1491</span>&#160;    <a class="code" href="test_8c.html#ab7cb6e3505a414e2c99090fc48e9e6c7">TestScalarMultiply</a>();</div>
+<div class="line"><a name="l01492"></a><span class="lineno"> 1492</span>&#160;    <a class="code" href="test_8c.html#a2b232af2eca59bb924f778d95ef2f625">TestScalarDivide</a>();</div>
+<div class="line"><a name="l01493"></a><span class="lineno"> 1493</span>&#160;    <a class="code" href="test_8c.html#ac13e4d450c40a75af8c38f703b0a67e7">TestTupleNegate</a>();</div>
+<div class="line"><a name="l01494"></a><span class="lineno"> 1494</span>&#160;    <a class="code" href="test_8c.html#a2f7e680137c01cc3f6134e870816151a">TestTupleMagnitude</a>();</div>
+<div class="line"><a name="l01495"></a><span class="lineno"> 1495</span>&#160;    <a class="code" href="test_8c.html#a6247f8bb3f3ff31ad5e78ba719253e83">TestTupleDotProduct</a>();</div>
+<div class="line"><a name="l01496"></a><span class="lineno"> 1496</span>&#160;    <a class="code" href="test_8c.html#aa661c59a1da73cbdb5217f14af56bce3">TestTupleNormalize</a>();</div>
+<div class="line"><a name="l01497"></a><span class="lineno"> 1497</span>&#160;    <a class="code" href="test_8c.html#a154681a8023d4a4eb184947905a2a385">TestTupleMultiply</a>();</div>
+<div class="line"><a name="l01498"></a><span class="lineno"> 1498</span>&#160;    <a class="code" href="test_8c.html#aeddc36e8dd000ebc7a799e8863865418">TestTupleDivide</a>();</div>
+<div class="line"><a name="l01499"></a><span class="lineno"> 1499</span>&#160;    <a class="code" href="test_8c.html#aa625894a16f433a5b1bc9c3f7fc96305">TestTupleAdd</a>();</div>
+<div class="line"><a name="l01500"></a><span class="lineno"> 1500</span>&#160;    <a class="code" href="test_8c.html#aa5069bb5e52c5e2229b0786862d30a96">TestTupleSubtract</a>();</div>
+<div class="line"><a name="l01501"></a><span class="lineno"> 1501</span>&#160; </div>
+<div class="line"><a name="l01502"></a><span class="lineno"> 1502</span>&#160;    <a class="code" href="test_8c.html#a57bd4dfc262e8b2309e7fcc8a520d4fe">TestRay</a>();</div>
+<div class="line"><a name="l01503"></a><span class="lineno"> 1503</span>&#160;    <a class="code" href="test_8c.html#a94cecd2b7a22d85dbc3106854c3d148e">TestRaySphereIntersection</a>();</div>
+<div class="line"><a name="l01504"></a><span class="lineno"> 1504</span>&#160;    <a class="code" href="test_8c.html#a0b038c41b1b5eb9f94e9f912ea6d86cb">TestRayTransform</a>();</div>
+<div class="line"><a name="l01505"></a><span class="lineno"> 1505</span>&#160;    <a class="code" href="test_8c.html#aee8988dcbed44c70b70671de02b67846">SphereNormal</a>();</div>
+<div class="line"><a name="l01506"></a><span class="lineno"> 1506</span>&#160;    <a class="code" href="test_8c.html#aec7fca301803cccf315bf1f852013bc6">TestSphereGeometry</a>();</div>
+<div class="line"><a name="l01507"></a><span class="lineno"> 1507</span>&#160;    <a class="code" href="test_8c.html#aa98ec1fb42adf8e0901a41f9eea94982">TestSceneCreation</a>();</div>
+<div class="line"><a name="l01508"></a><span class="lineno"> 1508</span>&#160;    <a class="code" href="test_8c.html#a4eec90581e0a4cd1444c9760a8c8f005">TestScene</a>();</div>
+<div class="line"><a name="l01509"></a><span class="lineno"> 1509</span>&#160;    <a class="code" href="test_8c.html#a8c8b34c8700ed1d8d9a5c78c23a23e50">TestViewMatrix</a>();</div>
+<div class="line"><a name="l01510"></a><span class="lineno"> 1510</span>&#160;    <a class="code" href="test_8c.html#a069ff07a9a636a9e4ae57a8f554e1167">TestCamera</a>();</div>
+<div class="line"><a name="l01511"></a><span class="lineno"> 1511</span>&#160;    <a class="code" href="test_8c.html#aa7cce3d83878d7086e15fea2e06e98a5">TestShadow</a>();</div>
+<div class="line"><a name="l01512"></a><span class="lineno"> 1512</span>&#160;    <a class="code" href="test_8c.html#aea52455314bb55a64516cfc6178f135c">TestPlane</a>();</div>
+<div class="line"><a name="l01513"></a><span class="lineno"> 1513</span>&#160;    <a class="code" href="test_8c.html#a8e07092f07ab19f1c7244ab12c5970cc">TestReflection</a>();</div>
+<div class="line"><a name="l01514"></a><span class="lineno"> 1514</span>&#160; </div>
+<div class="line"><a name="l01515"></a><span class="lineno"> 1515</span>&#160;    <a class="code" href="test_8c.html#a76ca872107d6fd251f5517dd27482f07">TestSceneReading</a>();</div>
+<div class="line"><a name="l01516"></a><span class="lineno"> 1516</span>&#160;    <a class="code" href="test_8c.html#ae210511ad4211cc00fe977c4c3bca46e">TestStripePattern</a>();</div>
+<div class="line"><a name="l01517"></a><span class="lineno"> 1517</span>&#160;    <a class="code" href="test_8c.html#a61be41a72b2d879959e97831be1618f9">TestRefraction</a>();</div>
+<div class="line"><a name="l01518"></a><span class="lineno"> 1518</span>&#160;    <a class="code" href="test_8c.html#aef4a257801709ca92b53c09b88e81050">TestCalculateRefraction</a>();</div>
+<div class="line"><a name="l01519"></a><span class="lineno"> 1519</span>&#160;    <a class="code" href="test_8c.html#a5471381caef65312d8abe3bd87bdab57">TestCubeIntersection</a>();</div>
+<div class="line"><a name="l01520"></a><span class="lineno"> 1520</span>&#160;    <a class="code" href="test_8c.html#a9ec16ea19ce0288abb9a50e1b31b597d">TestCubeNormal</a>();</div>
+<div class="line"><a name="l01521"></a><span class="lineno"> 1521</span>&#160; </div>
+<div class="line"><a name="l01522"></a><span class="lineno"> 1522</span>&#160;    <a class="code" href="test_8c.html#af0c449a2c69a24a2b253ee8dd91cf10d">TestTree</a>();</div>
+<div class="line"><a name="l01523"></a><span class="lineno"> 1523</span>&#160;    <a class="code" href="test_8c.html#acc9a69d7a977973af955a3bf69796294">TestBounds</a>();</div>
+<div class="line"><a name="l01524"></a><span class="lineno"> 1524</span>&#160;    <a class="code" href="test_8c.html#a4816a73e27f7f871f4d6e791c0b91b4c">TestPlaneScene</a>();</div>
+<div class="line"><a name="l01525"></a><span class="lineno"> 1525</span>&#160; </div>
+<div class="line"><a name="l01526"></a><span class="lineno"> 1526</span>&#160;    <a class="code" href="test_8c.html#a7826402eedf43a22c8cf06bb956a74e5">TestTupleHasNans</a>();</div>
+<div class="line"><a name="l01527"></a><span class="lineno"> 1527</span>&#160;    <a class="code" href="test_8c.html#a1e7985e00e20c7d2965655261a4c32a7">TestTupleHasInf</a>();</div>
+<div class="line"><a name="l01528"></a><span class="lineno"> 1528</span>&#160; </div>
+<div class="line"><a name="l01529"></a><span class="lineno"> 1529</span>&#160;    <a class="code" href="test_8c.html#aad5f41b7cec10235fae4ce8f0c6073c5">TestTriangle</a>();</div>
+<div class="line"><a name="l01530"></a><span class="lineno"> 1530</span>&#160;    <a class="code" href="test_8c.html#a137d6d5579bd507014579cb28f654602">TestReadObj</a>();</div>
+<div class="line"><a name="l01531"></a><span class="lineno"> 1531</span>&#160; </div>
+<div class="line"><a name="l01532"></a><span class="lineno"> 1532</span>&#160;    printf(<span class="stringliteral">&quot;Test(s) Passed: %d\nTests(s) Failed: %d\n&quot;</span>, num_passed, num_failed);</div>
+<div class="line"><a name="l01533"></a><span class="lineno"> 1533</span>&#160; </div>
+<div class="line"><a name="l01534"></a><span class="lineno"> 1534</span>&#160;    <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l01535"></a><span class="lineno"> 1535</span>&#160;}</div>
+<div class="line"><a name="l01536"></a><span class="lineno"> 1536</span>&#160; </div>
+<div class="line"><a name="l01537"></a><span class="lineno"><a class="line" href="test_8c.html#ae66f6b31b5ad750f1fe042a706a4e3d4"> 1537</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="test_8c.html#ae66f6b31b5ad750f1fe042a706a4e3d4">main</a>()</div>
+<div class="line"><a name="l01538"></a><span class="lineno"> 1538</span>&#160;{</div>
+<div class="line"><a name="l01539"></a><span class="lineno"> 1539</span>&#160;    <a class="code" href="test_8c.html#af8e648b7558da91c27f35560108e531c">DoTests</a>();</div>
+<div class="line"><a name="l01540"></a><span class="lineno"> 1540</span>&#160;    <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l01541"></a><span class="lineno"> 1541</span>&#160;}</div>
 <div class="ttc" id="abounds_8h_html"><div class="ttname"><a href="bounds_8h.html">bounds.h</a></div></div>
 <div class="ttc" id="acanvas_8h_html"><div class="ttname"><a href="canvas_8h.html">canvas.h</a></div></div>
 <div class="ttc" id="aequality_8h_html"><div class="ttname"><a href="equality_8h.html">equality.h</a></div></div>
@@ -1654,7 +1667,8 @@ $(function() {
 <div class="ttc" id="astructRay_html_ab6dbe9cec530274f418e1e1abb15e20c"><div class="ttname"><a href="structRay.html#ab6dbe9cec530274f418e1e1abb15e20c">Ray::origin</a></div><div class="ttdeci">Tuple3 origin</div><div class="ttdef"><b>Definition:</b> <a href="ray_8h_source.html#l00014">ray.h:14</a></div></div>
 <div class="ttc" id="astructRay_html_adc48d6077b5c3393458ac696d6d82b70"><div class="ttname"><a href="structRay.html#adc48d6077b5c3393458ac696d6d82b70">Ray::RayTransform</a></div><div class="ttdeci">Ray RayTransform(Ray r, Matrix4x4 transformation)</div><div class="ttdef"><b>Definition:</b> <a href="ray_8c_source.html#l00008">ray.c:8</a></div></div>
 <div class="ttc" id="astructScene_html"><div class="ttname"><a href="structScene.html">Scene</a></div><div class="ttdef"><b>Definition:</b> <a href="scene_8h_source.html#l00014">scene.h:15</a></div></div>
-<div class="ttc" id="astructScene_html_a163f7789c536bcdd81260ebf6a2b7fc0"><div class="ttname"><a href="structScene.html#a163f7789c536bcdd81260ebf6a2b7fc0">Scene::ReadScene</a></div><div class="ttdeci">void ReadScene(Scene *s, const char *filename)</div><div class="ttdef"><b>Definition:</b> <a href="read__scene_8c_source.html#l00296">read_scene.c:296</a></div></div>
+<div class="ttc" id="astructScene_html_a072d21d910f09733c5d16fea4e680ace"><div class="ttname"><a href="structScene.html#a072d21d910f09733c5d16fea4e680ace">Scene::ReadObj</a></div><div class="ttdeci">void ReadObj(Scene *s, const char *filename)</div><div class="ttdef"><b>Definition:</b> <a href="read__obj_8c_source.html#l00004">read_obj.c:4</a></div></div>
+<div class="ttc" id="astructScene_html_a163f7789c536bcdd81260ebf6a2b7fc0"><div class="ttname"><a href="structScene.html#a163f7789c536bcdd81260ebf6a2b7fc0">Scene::ReadScene</a></div><div class="ttdeci">void ReadScene(Scene *s, const char *filename)</div><div class="ttdef"><b>Definition:</b> <a href="read__scene_8c_source.html#l00280">read_scene.c:280</a></div></div>
 <div class="ttc" id="astructScene_html_a3a423131fb98ea41600cc9e22cdd19cb"><div class="ttname"><a href="structScene.html#a3a423131fb98ea41600cc9e22cdd19cb">Scene::IntersectScene</a></div><div class="ttdeci">void IntersectScene(Scene *s, Ray r, Set *intersection_set)</div><div class="ttdef"><b>Definition:</b> <a href="scene_8c_source.html#l00069">scene.c:69</a></div></div>
 <div class="ttc" id="astructScene_html_a8f330dbcefc3f1afaa60c9a3229fb7c5"><div class="ttname"><a href="structScene.html#a8f330dbcefc3f1afaa60c9a3229fb7c5">Scene::shapes</a></div><div class="ttdeci">Tree shapes</div><div class="ttdef"><b>Definition:</b> <a href="scene_8h_source.html#l00019">scene.h:19</a></div></div>
 <div class="ttc" id="astructScene_html_a936df0a30207c5ad1614c7f9e9b2bb42"><div class="ttname"><a href="structScene.html#a936df0a30207c5ad1614c7f9e9b2bb42">Scene::light</a></div><div class="ttdeci">Light light</div><div class="ttdef"><b>Definition:</b> <a href="scene_8h_source.html#l00022">scene.h:22</a></div></div>
@@ -1682,7 +1696,7 @@ $(function() {
 <div class="ttc" id="astructShape_html_a7850e4213f80b10969aaff9bd9c8084e"><div class="ttname"><a href="structShape.html#a7850e4213f80b10969aaff9bd9c8084e">Shape::Intersect</a></div><div class="ttdeci">Intersection Intersect(Shape *s, Ray r)</div><div class="ttdef"><b>Definition:</b> <a href="intersection_8c_source.html#l00141">intersection.c:141</a></div></div>
 <div class="ttc" id="astructShape_html_a8dc5ba9f8414864dd49ac9e44cfaa872"><div class="ttname"><a href="structShape.html#a8dc5ba9f8414864dd49ac9e44cfaa872">Shape::NewTriangle</a></div><div class="ttdeci">Shape NewTriangle(Tuple3 p1, Tuple3 p2, Tuple3 p3)</div><div class="ttdef"><b>Definition:</b> <a href="shape_8c_source.html#l00102">shape.c:102</a></div></div>
 <div class="ttc" id="astructShape_html_ab044957df9b03a3c2af7250c32fb3b27"><div class="ttname"><a href="structShape.html#ab044957df9b03a3c2af7250c32fb3b27">Shape::type</a></div><div class="ttdeci">SHAPE_TYPE type</div><div class="ttdef"><b>Definition:</b> <a href="shape_8h_source.html#l00035">shape.h:35</a></div></div>
-<div class="ttc" id="astructShape_html_ac47716d97f3670c35f19e4221bf2e09a"><div class="ttname"><a href="structShape.html#ac47716d97f3670c35f19e4221bf2e09a">Shape::ApplyTransformation</a></div><div class="ttdeci">void ApplyTransformation(Shape *s, Matrix4x4 t)</div><div class="ttdef"><b>Definition:</b> <a href="shape_8c_source.html#l00138">shape.c:138</a></div></div>
+<div class="ttc" id="astructShape_html_ac47716d97f3670c35f19e4221bf2e09a"><div class="ttname"><a href="structShape.html#ac47716d97f3670c35f19e4221bf2e09a">Shape::ApplyTransformation</a></div><div class="ttdeci">void ApplyTransformation(Shape *s, Matrix4x4 t)</div><div class="ttdef"><b>Definition:</b> <a href="shape_8c_source.html#l00137">shape.c:137</a></div></div>
 <div class="ttc" id="astructShape_html_aca7b4f5903221378a996d4c6c7069bff"><div class="ttname"><a href="structShape.html#aca7b4f5903221378a996d4c6c7069bff">Shape::ShapeBounds</a></div><div class="ttdeci">Bounds ShapeBounds(Shape *s)</div><div class="ttdef"><b>Definition:</b> <a href="bounds_8c_source.html#l00048">bounds.c:48</a></div></div>
 <div class="ttc" id="astructShape_html_ae61fdac3b1a90dd2e8ee5d6cb5652291"><div class="ttname"><a href="structShape.html#ae61fdac3b1a90dd2e8ee5d6cb5652291">Shape::material</a></div><div class="ttdeci">Material material</div><div class="ttdef"><b>Definition:</b> <a href="shape_8h_source.html#l00032">shape.h:32</a></div></div>
 <div class="ttc" id="astructTree_html"><div class="ttname"><a href="structTree.html">Tree</a></div><div class="ttdef"><b>Definition:</b> <a href="tree_8h_source.html#l00027">tree.h:28</a></div></div>
@@ -1722,6 +1736,7 @@ $(function() {
 <div class="ttc" id="atest_8c_html_a069ff07a9a636a9e4ae57a8f554e1167"><div class="ttname"><a href="test_8c.html#a069ff07a9a636a9e4ae57a8f554e1167">TestCamera</a></div><div class="ttdeci">void TestCamera()</div><div class="ttdef"><b>Definition:</b> <a href="test_8c_source.html#l00819">test.c:819</a></div></div>
 <div class="ttc" id="atest_8c_html_a0b038c41b1b5eb9f94e9f912ea6d86cb"><div class="ttname"><a href="test_8c.html#a0b038c41b1b5eb9f94e9f912ea6d86cb">TestRayTransform</a></div><div class="ttdeci">void TestRayTransform()</div><div class="ttdef"><b>Definition:</b> <a href="test_8c_source.html#l00532">test.c:532</a></div></div>
 <div class="ttc" id="atest_8c_html_a0e4c020507905cb8b4f757d7ea2f50fd"><div class="ttname"><a href="test_8c.html#a0e4c020507905cb8b4f757d7ea2f50fd">TEST</a></div><div class="ttdeci">#define TEST(CONDITION, MSG)</div><div class="ttdef"><b>Definition:</b> <a href="test_8c_source.html#l00032">test.c:32</a></div></div>
+<div class="ttc" id="atest_8c_html_a137d6d5579bd507014579cb28f654602"><div class="ttname"><a href="test_8c.html#a137d6d5579bd507014579cb28f654602">TestReadObj</a></div><div class="ttdeci">void TestReadObj()</div><div class="ttdef"><b>Definition:</b> <a href="test_8c_source.html#l01462">test.c:1462</a></div></div>
 <div class="ttc" id="atest_8c_html_a154681a8023d4a4eb184947905a2a385"><div class="ttname"><a href="test_8c.html#a154681a8023d4a4eb184947905a2a385">TestTupleMultiply</a></div><div class="ttdeci">void TestTupleMultiply()</div><div class="ttdef"><b>Definition:</b> <a href="test_8c_source.html#l00357">test.c:357</a></div></div>
 <div class="ttc" id="atest_8c_html_a1e7985e00e20c7d2965655261a4c32a7"><div class="ttname"><a href="test_8c.html#a1e7985e00e20c7d2965655261a4c32a7">TestTupleHasInf</a></div><div class="ttdeci">void TestTupleHasInf()</div><div class="ttdef"><b>Definition:</b> <a href="test_8c_source.html#l01389">test.c:1389</a></div></div>
 <div class="ttc" id="atest_8c_html_a1e9169fcd3b6c9e243faea60faa894a3"><div class="ttname"><a href="test_8c.html#a1e9169fcd3b6c9e243faea60faa894a3">TestSet</a></div><div class="ttdeci">void TestSet()</div><div class="ttdef"><b>Definition:</b> <a href="test_8c_source.html#l00044">test.c:44</a></div></div>
@@ -1765,14 +1780,14 @@ $(function() {
 <div class="ttc" id="atest_8c_html_ad6b97a58eabf31bc383c061b85025ae9"><div class="ttname"><a href="test_8c.html#ad6b97a58eabf31bc383c061b85025ae9">TestCrossProduct</a></div><div class="ttdeci">void TestCrossProduct()</div><div class="ttdef"><b>Definition:</b> <a href="test_8c_source.html#l01056">test.c:1056</a></div></div>
 <div class="ttc" id="atest_8c_html_ae210511ad4211cc00fe977c4c3bca46e"><div class="ttname"><a href="test_8c.html#ae210511ad4211cc00fe977c4c3bca46e">TestStripePattern</a></div><div class="ttdeci">void TestStripePattern()</div><div class="ttdef"><b>Definition:</b> <a href="test_8c_source.html#l01016">test.c:1016</a></div></div>
 <div class="ttc" id="atest_8c_html_ae272ed0722c2d1e4ffd07dc1c86e920d"><div class="ttname"><a href="test_8c.html#ae272ed0722c2d1e4ffd07dc1c86e920d">DemoUnthreaded</a></div><div class="ttdeci">void DemoUnthreaded()</div><div class="ttdef"><b>Definition:</b> <a href="test_8c_source.html#l01355">test.c:1355</a></div></div>
-<div class="ttc" id="atest_8c_html_ae66f6b31b5ad750f1fe042a706a4e3d4"><div class="ttname"><a href="test_8c.html#ae66f6b31b5ad750f1fe042a706a4e3d4">main</a></div><div class="ttdeci">int main()</div><div class="ttdef"><b>Definition:</b> <a href="test_8c_source.html#l01524">test.c:1524</a></div></div>
+<div class="ttc" id="atest_8c_html_ae66f6b31b5ad750f1fe042a706a4e3d4"><div class="ttname"><a href="test_8c.html#ae66f6b31b5ad750f1fe042a706a4e3d4">main</a></div><div class="ttdeci">int main()</div><div class="ttdef"><b>Definition:</b> <a href="test_8c_source.html#l01537">test.c:1537</a></div></div>
 <div class="ttc" id="atest_8c_html_aea52455314bb55a64516cfc6178f135c"><div class="ttname"><a href="test_8c.html#aea52455314bb55a64516cfc6178f135c">TestPlane</a></div><div class="ttdeci">void TestPlane()</div><div class="ttdef"><b>Definition:</b> <a href="test_8c_source.html#l00927">test.c:927</a></div></div>
 <div class="ttc" id="atest_8c_html_aec7fca301803cccf315bf1f852013bc6"><div class="ttname"><a href="test_8c.html#aec7fca301803cccf315bf1f852013bc6">TestSphereGeometry</a></div><div class="ttdeci">void TestSphereGeometry()</div><div class="ttdef"><b>Definition:</b> <a href="test_8c_source.html#l00601">test.c:601</a></div></div>
 <div class="ttc" id="atest_8c_html_aeddc36e8dd000ebc7a799e8863865418"><div class="ttname"><a href="test_8c.html#aeddc36e8dd000ebc7a799e8863865418">TestTupleDivide</a></div><div class="ttdeci">void TestTupleDivide()</div><div class="ttdef"><b>Definition:</b> <a href="test_8c_source.html#l00374">test.c:374</a></div></div>
 <div class="ttc" id="atest_8c_html_aee8988dcbed44c70b70671de02b67846"><div class="ttname"><a href="test_8c.html#aee8988dcbed44c70b70671de02b67846">SphereNormal</a></div><div class="ttdeci">void SphereNormal()</div><div class="ttdef"><b>Definition:</b> <a href="test_8c_source.html#l00552">test.c:552</a></div></div>
 <div class="ttc" id="atest_8c_html_aef4a257801709ca92b53c09b88e81050"><div class="ttname"><a href="test_8c.html#aef4a257801709ca92b53c09b88e81050">TestCalculateRefraction</a></div><div class="ttdeci">void TestCalculateRefraction()</div><div class="ttdef"><b>Definition:</b> <a href="test_8c_source.html#l01139">test.c:1139</a></div></div>
 <div class="ttc" id="atest_8c_html_af0c449a2c69a24a2b253ee8dd91cf10d"><div class="ttname"><a href="test_8c.html#af0c449a2c69a24a2b253ee8dd91cf10d">TestTree</a></div><div class="ttdeci">void TestTree()</div><div class="ttdef"><b>Definition:</b> <a href="test_8c_source.html#l01252">test.c:1252</a></div></div>
-<div class="ttc" id="atest_8c_html_af8e648b7558da91c27f35560108e531c"><div class="ttname"><a href="test_8c.html#af8e648b7558da91c27f35560108e531c">DoTests</a></div><div class="ttdeci">int DoTests()</div><div class="ttdef"><b>Definition:</b> <a href="test_8c_source.html#l01462">test.c:1462</a></div></div>
+<div class="ttc" id="atest_8c_html_af8e648b7558da91c27f35560108e531c"><div class="ttname"><a href="test_8c.html#af8e648b7558da91c27f35560108e531c">DoTests</a></div><div class="ttdeci">int DoTests()</div><div class="ttdef"><b>Definition:</b> <a href="test_8c_source.html#l01474">test.c:1474</a></div></div>
 <div class="ttc" id="atree_8c_html_a37b0c7cd131c14bedca7a64e66a12923"><div class="ttname"><a href="tree_8c.html#a37b0c7cd131c14bedca7a64e66a12923">CalculateBounds</a></div><div class="ttdeci">void CalculateBounds(Tree *tree)</div><div class="ttdef"><b>Definition:</b> <a href="tree_8c_source.html#l00217">tree.c:217</a></div></div>
 <div class="ttc" id="atree_8h_html"><div class="ttname"><a href="tree_8h.html">tree.h</a></div></div>
 <div class="ttc" id="atuple_8h_html"><div class="ttname"><a href="tuple_8h.html">tuple.h</a></div></div>
