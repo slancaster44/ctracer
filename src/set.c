@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <string.h>
+#include <stdio.h>
 
 #include "set.h"
 #include "tuple.h"
@@ -45,6 +46,12 @@ unsigned long AppendValue(Set *s, void* value)
 
 void* Index(Set *s, unsigned long index)
 {
+    if (s->length <= index)
+    {
+        printf("Index '%ld' out of range on set of length '%ld'\n", index, s->length);
+        exit(1);
+    }
+
     return s->data + (index * s->data_width);
 }
 

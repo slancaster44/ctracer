@@ -204,10 +204,33 @@ void DemoTriangle()
     Shape triangle = NewTriangle(NewPnt3(-1, 0, 0), NewPnt3(0, 1, 0), NewPnt3(1, 0, 0));
     AddShape(&s, triangle);
 
-    RenderSceneUnthreaded(&s, &canvas);
+    RenderScene(&s, &canvas);
     WriteToPPM(&canvas, "./renderings/triangle_demo.ppm");
 
     DeconstructCanvas(&canvas);
+    DeconstructScene(&s);
+}
+
+void DemoTeapot()
+{
+    Light l = NewLight(NewPnt3(-10, 10, -10));
+    Camera c = NewCamera(3840, 2160, 1.047);
+    CameraApplyTransformation(&c, ViewMatrix(NewPnt3(-2.0, 6.0, -10), NewPnt3(0, 0, 0), NewVec3(0, 1, 0)));
+
+    Scene s;
+    ConstructScene(&s, c, l);
+    ReadObj(&s, "scenes/teapot.obj");
+
+    Shape floor = NewPlane(NewPnt3(0, 0, 0), NewVec3(0, 1, 0));
+    floor.material.pattern.color_a = NewColor(0xDB, 0x60, 0x79, 0xFF);
+    AddShape(&s, floor);
+
+    Canvas canvas;
+    ConstructCanvas(&canvas, s.camera.width, s.camera.height);
+
+    RenderScene(&s, &canvas);
+    WriteToPPM(&canvas, "./renderings/teapot.ppm");
+
     DeconstructScene(&s);
 }
 
@@ -215,10 +238,11 @@ int main()
 {
     // DemoCanvas();
     //DemoJsonScene();
-    DemoTriangle();
+    //DemoTriangle();
     // DemoPlane();
     // DemoSphereScene();
     // DemoUnthreaded();
 
     //BusyScene();
+    DemoTeapot();
 }

@@ -701,7 +701,6 @@ void TestReflection()
     Ray r2 = NewRay(NewPnt3(0, 0, -3), NewVec3(0, -(sqrt(2.0) / 2), sqrt(2.0) / 2));
     CalculateBounds(&reflective_scene.shapes);
     Tuple3 result = ColorFor(&reflective_scene, r2);
-    PrintTuple(result);
     TEST(TupleFuzzyEqual(NewTuple3(0.739048, 0.749048, 0.729048, 0.749048), result), "Scene reflection");
 
     DeconstructScene(&reflective_scene);
@@ -1469,6 +1468,8 @@ void TestReadObj() {
 
     ReadObj(&s, "scenes/teapot.obj");
     TEST(s.shapes.start.shapes.length == 6320, "Read object file, number of faces");
+
+    DeconstructScene(&s);
 }
 
 int DoTests()

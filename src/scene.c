@@ -143,7 +143,6 @@ void GenerateSceneBVH(Scene *s)
 void RenderScene(Scene *s, Canvas *c)
 {
     GenerateSceneBVH(s);
-    PrintTree(&s->shapes);
 
     unsigned canvas_size = (c->canvas_height * c->canvas_width);
     unsigned chunk_size = canvas_size / (unsigned)get_nprocs();
@@ -188,6 +187,5 @@ void RenderScene(Scene *s, Canvas *c)
 void RenderSceneUnthreaded(Scene *s, Canvas *c)
 {
     GenerateSceneBVH(s);
-    PrintTree(&s->shapes);
     RenderSceneSection(s, c, 0, c->canvas_height * c->canvas_width - 1, c->canvas_width);
 }

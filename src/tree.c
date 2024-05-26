@@ -290,7 +290,7 @@ void GenerateBVH(Tree *dst, Tree *src)
     ConstructSet(&bound_shapes, sizeof(Shape));
 
     GetShapeSets(&bound_shapes, &dst->start.shapes, &src->start);
-    SortByXCoord(&bound_shapes, 0, bound_shapes.length);
+    SortByXCoord(&bound_shapes, 0, bound_shapes.length - 1);
 
     unsigned long num_groups = bound_shapes.length / SHAPES_PER_CHILD;
     for (unsigned long i = 0; i < num_groups; i++)
