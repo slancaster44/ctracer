@@ -220,6 +220,12 @@ bool TupleContains(Tuple3 t1, double n);
 
 /**
  * @memberof Tuple3
+ * Returns true if any element of 't1' is less than an element in 't2'
+*/
+bool TupleLessThan(Tuple3 t1, Tuple3 t2);
+
+/**
+ * @memberof Tuple3
  * Returns the largest element in 't1'
 */
 double MaxComponent(Tuple3 t1);

@@ -23,6 +23,12 @@ typedef struct
 
 /**
  * @memberof Set
+ * Compare two set elements for sorted insert
+*/
+typedef bool (*Comparator)(void* v1, void* v2);
+
+/**
+ * @memberof Set
  * Constructs a set
  * 
  * @param 'Set *s' The set to initialize
@@ -91,5 +97,21 @@ void CloneSet(Set *destination, Set *source);
  * at offset 'iy.'
  */
 void SwapElements(Set *s, unsigned long ix, unsigned long iy);
+
+/**
+ * @memberof Set
+ * Assuming 's' is sorted, insert value into the set in order
+ * 
+ * @param Set *s set to insert into
+ * @param void *value the value to insert
+ * @param Comparator c the function to compare values with
+*/
+void InsertSorted(Set *s, void* value, Comparator c);
+
+/**
+ * @memberof Set
+ * Sort the given set according to the given comparator
+*/
+void QuickSort(Set *s, Comparator cmp);
 
 #endif

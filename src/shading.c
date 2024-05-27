@@ -133,50 +133,53 @@ Tuple3 PhongShader(Scene *s, Set *intersections, unsigned long idx, int limit)
     }
 
     Tuple3 refraction_color = BLACK;
-    double *n = alloca(2 * sizeof(double));
-    CalculateRefractionRatio(intersections, idx, n);
-
-    double n_ratio = n[0] / n[1];
-    double cos_i = TupleDotProduct(eyev, normal);
-    double sin2_t = (n_ratio * n_ratio) * (1 - (cos_i * cos_i));
-    double cos_t = sqrt(1.0 - sin2_t);
-
-    if (sin2_t < (1.0 + EQUALITY_EPSILON))
+    if (i->shape_ptr->material.transparency > EQUALITY_EPSILON)
     {
+        double *n = alloca(2 * sizeof(double));
+        CalculateRefractionRatio(intersections, idx, n);
 
-        Tuple3 eyev_alt = TupleScalarMultiply(eyev, n_ratio);
-        Tuple3 norm_alt = TupleScalarMultiply(normal, n_ratio * cos_i - cos_t);
-        Tuple3 direction = TupleSubtract(norm_alt, eyev_alt);
+        double n_ratio = n[0] / n[1];
+        double cos_i = TupleDotProduct(eyev, normal);
+        double sin2_t = (n_ratio * n_ratio) * (1 - (cos_i * cos_i));
+        double cos_t = sqrt(1.0 - sin2_t);
 
-        Ray refract_ray = NewRay(under_pos, direction);
-        refraction_color = ColorForLimited(s, refract_ray, limit - 1);
-
-        refraction_color = TupleScalarMultiply(refraction_color, material.transparency);
-    }
-
-    if (material.general_reflection > 0 && material.transparency > 0)
-    {
-        double cos = cos_i;
-        double reflectance;
-
-        if (n[0] > n[1])
+        if (sin2_t < (1.0 + EQUALITY_EPSILON))
         {
-            if (sin2_t > 1.0)
-            {
-                reflectance = 1.0;
-            }
-            else
-            {
-                cos = cos_t;
-                double r0 = (n[0] - n[1]) / (n[0] + n[2]);
-                r0 = r0 * r0;
 
-                reflectance = pow(r0 + (1 - r0) * (1 - cos), 5);
-            }
+            Tuple3 eyev_alt = TupleScalarMultiply(eyev, n_ratio);
+            Tuple3 norm_alt = TupleScalarMultiply(normal, n_ratio * cos_i - cos_t);
+            Tuple3 direction = TupleSubtract(norm_alt, eyev_alt);
+
+            Ray refract_ray = NewRay(under_pos, direction);
+            refraction_color = ColorForLimited(s, refract_ray, limit - 1);
+
+            refraction_color = TupleScalarMultiply(refraction_color, material.transparency);
         }
 
-        general_reflection = TupleScalarMultiply(general_reflection, reflectance);
-        refraction_color = TupleScalarMultiply(refraction_color, 1 - reflectance);
+        if (material.general_reflection > 0 && material.transparency > 0)
+        {
+            double cos = cos_i;
+            double reflectance;
+
+            if (n[0] > n[1])
+            {
+                if (sin2_t > 1.0)
+                {
+                    reflectance = 1.0;
+                }
+                else
+                {
+                    cos = cos_t;
+                    double r0 = (n[0] - n[1]) / (n[0] + n[2]);
+                    r0 = r0 * r0;
+
+                    reflectance = pow(r0 + (1 - r0) * (1 - cos), 5);
+                }
+            }
+
+            general_reflection = TupleScalarMultiply(general_reflection, reflectance);
+            refraction_color = TupleScalarMultiply(refraction_color, 1 - reflectance);
+        }
     }
 
     return TupleAdd(refraction_color, TupleAdd(general_reflection, TupleAdd(ambient, TupleAdd(diffuse, specular))));

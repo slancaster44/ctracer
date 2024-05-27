@@ -19,7 +19,7 @@ Tuple3 CheckeredPatternAt(Tuple3 position, Pattern p)
 {
     position[3] = 0.0; // The final element in the vector should not contribute
     double sum = TupleFloorSum(position);
-    return fmod(sum, 2.0) == 0.0 ? p.color_a : p.color_b;
+    return (int) sum % 2 == 0 ? p.color_a : p.color_b;
 }
 
 Tuple3 GradientPatternAt(Tuple3 position, Pattern p)

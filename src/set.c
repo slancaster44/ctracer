@@ -46,7 +46,7 @@ unsigned long AppendValue(Set *s, void* value)
 
 void* Index(Set *s, unsigned long index)
 {
-    if (s->length <= index)
+    if (index >= s->length)
     {
         printf("Index '%ld' out of range on set of length '%ld'\n", index, s->length);
         exit(1);
@@ -87,4 +87,50 @@ void SwapElements(Set *s, unsigned long ix, unsigned long iy)
 
     memcpy(x, y, s->data_width); //This memcpy is generating the issue
     memcpy(y, tmp, s->data_width);
+}
+
+void InsertSorted(Set *s, void *value, Comparator cmp)
+{
+    AppendValue(s, value);
+
+    if (s->length == 1)
+    {
+        return;
+    }
+
+    //Move element down until it is in place
+    for (unsigned long i = s->length - 1; i > 0 && cmp(Index(s, i), Index(s, i-1)); i--) 
+    {
+        SwapElements(s, i, i-1);
+    }
+}
+
+void QuickSortHelper(Set *s, Comparator cmp, long lo, long hi)
+{
+    if (lo >= hi || lo < 0)
+    {
+        return;
+    }
+
+    void *pivot = Index(s, (unsigned long) hi);
+
+    long i = lo;
+    for (long j = lo; j <= hi - 1; j++)
+    {
+        void *value = Index(s, (unsigned long) j);
+        if (!cmp(pivot, value))
+        {
+            SwapElements(s, (unsigned long) i, (unsigned long) j);
+            i++;
+        }
+    }
+
+    SwapElements(s, (unsigned long) i, (unsigned long) hi);
+    QuickSortHelper(s, cmp, lo, i - 1);
+    QuickSortHelper(s, cmp, i + 1, hi);
+}
+
+void QuickSort(Set *s, Comparator cmp)
+{
+    QuickSortHelper(s, cmp, 0, (long) s->length - 1);
 }

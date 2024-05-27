@@ -7,7 +7,7 @@
 /**
  * An EPSILON value to be used in testing floating point equalites
  */
-#define EQUALITY_EPSILON 0.001
+#define EQUALITY_EPSILON 0.00003
 
 /**
  * 'f1' and 'f2' will be considered equal to each other if 'f1' less

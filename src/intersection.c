@@ -38,6 +38,11 @@ Intersection IntersectPlane(Shape *s, Ray r)
     }
 
     result.count = 1;
+
+    if (r.direction[1] == 0.0)
+    {
+        r.direction[1] += EQUALITY_EPSILON;
+    }
     result.ray_times[0] = -r.origin[1] / r.direction[1];
 
     return result;
@@ -169,4 +174,9 @@ Intersection Intersect(Shape *s, Ray r)
     }
 
     return result;
+}
+
+bool CompareIntersections(Intersection *i1, Intersection *i2)
+{
+    return i1->count > 0 && i2->count > 0 && i1->ray_times[0] < i2->ray_times[0];
 }

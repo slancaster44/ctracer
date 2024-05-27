@@ -131,7 +131,7 @@ void TestMatrixEqual()
         Pass("Matrix Equality");
     }
 
-    m2.contents[0][0] = -1.0001;
+    m2.contents[0][0] += EQUALITY_EPSILON;
     if (MatrixEqual(m1, m2) || !MatrixFuzzyEqual(m1, m2))
     {
         Fail("Matrix Fuzzy Equality");
@@ -1164,15 +1164,17 @@ void TestCalculateRefraction()
     ConstructSet(&intersections, sizeof(Intersection));
     IntersectScene(&s, r, &intersections);
 
+    TEST(intersections.length == 3, "Refraction, intersection count");
+
     double *results = alloca(2 * sizeof(double));
     CalculateRefractionRatio(&intersections, 0, results);
-    TEST(results[0] == 1.0 && results[1] == 1.5, "Cacluate refraction ratio, 0");
+    TEST(results[0] == 1.0 && results[1] == 1.5, "Cacluate refraction ratio, 0"); //1 2.5
 
     CalculateRefractionRatio(&intersections, 1, results);
-    TEST(results[0] == 1.5 && results[1] == 2.0, "Calculate refraction ratio, 1");
+    TEST(results[0] == 1.5 && results[1] == 2.0, "Calculate refraction ratio, 1"); //2.5 1.5
 
     CalculateRefractionRatio(&intersections, 2, results);
-    TEST(results[0] == 2.0 && results[1] == 2.5, "Calculate refraction ratio, 2");
+    TEST(results[0] == 2.0 && results[1] == 2.5, "Calculate refraction ratio, 2"); //1.5 2.0
 
     DeconstructSet(&intersections);
     DeconstructScene(&s);
@@ -1423,7 +1425,7 @@ void TestPlaneScene()
     Ray r = NewRay(NewPnt3(0, 1, 0), NewVec3(0, -1, 0));
     IntersectScene(&s, r, &intersections);
 
-    Intersection *result = Index(&intersections, 0);
+    Intersection *result = Index(&intersections, 1);
     TEST(FloatEquality(1.0, result->ray_times[0]), "Scene Intersection for planes");
 }
 

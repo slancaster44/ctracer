@@ -114,4 +114,10 @@ Tuple3 NormalAt(Shape *s, Tuple3 pnt);
  */
 void AddShape(Scene *s, Shape sp);
 
+
+/**
+ * @memberof Shape
+ * Compare two shapes for sorting
+*/
+bool CompareShapes(Shape* s1, Shape* s2);
 #endif

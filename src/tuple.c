@@ -83,6 +83,12 @@ bool TupleFuzzyEqual(Tuple3 t1, Tuple3 t2)
     return (res == 0xf);
 }
 
+bool TupleLessThan(Tuple3 t1, Tuple3 t2)
+{
+    __mmask8 cmp = _mm256_cmp_pd_mask(t1, t2, _CMP_LT_OQ);
+    return (cmp != 0);
+}
+
 Tuple3 TupleScalarMultiply(Tuple3 t1, double scalar)
 {
     return _mm256_mul_pd(t1, _mm256_set1_pd(scalar));

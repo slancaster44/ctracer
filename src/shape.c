@@ -1,6 +1,7 @@
 #include "shape.h"
 #include "intersection.h"
 #include "equality.h"
+#include "bounds.h"
 
 #include <math.h>
 
@@ -123,7 +124,7 @@ Shape NewTriangle(Tuple3 p1, Tuple3 p2, Tuple3 p3)
     
     //Rotation and scaling are handled by F * E_inv, we need a translation
     //in the last column of the transformation matrix
-    Tuple3 m3 = TupleSubtract(p1, MatrixTupleMultiply(M, NewPnt3(1, 0, 0)));
+    Tuple3 m3 = TupleSubtract(p1, MatrixTupleMultiply(M, UNIT_TRI_P1));
     M.contents[0][3] = m3[0];
     M.contents[1][3] = m3[1];
     M.contents[2][3] = m3[2];
@@ -138,4 +139,11 @@ void ApplyTransformation(Shape *s, Matrix4x4 t)
 {
     s->transformation = MatrixMultiply(s->transformation, t);
     s->inverse_transform = MatrixInvert(s->transformation);
+}
+
+bool CompareShapes(Shape* s1, Shape* s2)
+{
+    Tuple3 c1 = Centroid(ShapeBounds(s1));
+    Tuple3 c2 = Centroid(ShapeBounds(s2));
+    return TupleLessThan(c1,  c2);
 }

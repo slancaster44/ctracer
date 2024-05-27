@@ -50,4 +50,14 @@ Intersection NewIntersection(Shape *s, Ray r);
  */
 Intersection Intersect(Shape *s, Ray r);
 
+/**
+ * @memberof Intersection
+ * Comparator for two intersections 
+ *
+ * @param 'Intersection *i1' First intersection to sort
+ * @param 'Intersection *i2' Second intersection to sort
+ * @returns True if i1.ray_times[0] < i2.ray_times[0]
+*/
+bool CompareIntersections(Intersection *i1, Intersection *i2);
+
 #endif

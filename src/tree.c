@@ -174,6 +174,7 @@ void IntersectNode(Node *n, Ray r, Set *intersections)
 void IntersectTree(Tree *tree, Ray r, Set *intersections)
 {
     IntersectNode(&tree->start, r, intersections);
+    QuickSort(intersections, (Comparator) CompareIntersections);
 }
 
 Bounds SetBounds(Set *s)
@@ -256,33 +257,6 @@ void GetShapeSets(Set *bound, Set *unbound, Node *src)
     }
 }
 
-void SortByXCoord(Set *shapes, unsigned long lo, unsigned long hi)
-{
-    if (lo >= hi || lo < 0)
-    {
-        return;
-    }
-
-    Shape *pivot_shape = Index(shapes, lo);
-    double pivot_x_coord = MatrixTupleMultiply(pivot_shape->inverse_transform, NewPnt3(0, 0, 0))[0];
-
-    unsigned long i = lo;
-    for (unsigned long j = lo; j < hi; j++)
-    {
-        Shape *this_shape = Index(shapes, j);
-        Tuple3 this_center_point = MatrixTupleMultiply(this_shape->inverse_transform, NewPnt3(0, 0, 0));
-        if (this_center_point[0] <= pivot_x_coord)
-        {
-            SwapElements(shapes, i, j);
-            i++;
-        }
-    }
-
-    SwapElements(shapes, i, hi);
-    SortByXCoord(shapes, lo, i - 1);
-    SortByXCoord(shapes, i + 1, hi);
-}
-
 #define SHAPES_PER_CHILD 4
 void GenerateBVH(Tree *dst, Tree *src)
 {
@@ -290,7 +264,7 @@ void GenerateBVH(Tree *dst, Tree *src)
     ConstructSet(&bound_shapes, sizeof(Shape));
 
     GetShapeSets(&bound_shapes, &dst->start.shapes, &src->start);
-    SortByXCoord(&bound_shapes, 0, bound_shapes.length - 1);
+    QuickSort(&bound_shapes, (Comparator) CompareShapes);
 
     unsigned long num_groups = bound_shapes.length / SHAPES_PER_CHILD;
     for (unsigned long i = 0; i < num_groups; i++)
