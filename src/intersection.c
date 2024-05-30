@@ -38,11 +38,6 @@ Intersection IntersectPlane(Shape *s, Ray r)
     }
 
     result.count = 1;
-
-    if (r.direction[1] == 0.0)
-    {
-        r.direction[1] += EQUALITY_EPSILON;
-    }
     result.ray_times[0] = -r.origin[1] / r.direction[1];
 
     return result;

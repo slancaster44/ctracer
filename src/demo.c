@@ -221,12 +221,11 @@ void DemoTeapot()
     ConstructScene(&s, c, l);
     ReadObj(&s, "scenes/teapot.obj");
 
-    Shape floor = NewPlane(NewPnt3(0, 0.075, 0), NewVec3(0, 1, 0));
+    Shape floor = NewPlane(NewPnt3(0, 0, 0), NewVec3(0, 1, 0));
     floor.material.pattern = NewPattern(
         NewColor(0xDB, 0x60, 0x79, 0xFF),
         NewColor(0x92, 0xbb, 0xf7, 0xFF),
         CHECKERED);
-    TransformPattern(floor.material.pattern, RotationYMatrix(3.14 / 4));
     
     AddShape(&s, floor);
 
@@ -242,7 +241,7 @@ void DemoTeapot()
 int main()
 {
     // DemoCanvas();
-    //DemoJsonScene();
+    DemoJsonScene();
     // DemoTriangle();
     //  DemoPlane();
     //  DemoSphereScene();

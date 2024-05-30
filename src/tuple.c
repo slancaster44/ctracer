@@ -125,8 +125,7 @@ double TupleMagnitude(Tuple3 t1)
 double TupleFloorSum(Tuple3 t1)
 {
     Tuple3 floor = _mm256_floor_pd(t1);
-    Tuple3 r1 = _mm256_hadd_pd(floor, floor);
-    return r1[1] + r1[2];
+    return floor[0] + floor[1] + floor[2] + floor[3];
 }
 
 double TupleDotProduct(Tuple3 t1, Tuple3 t2)

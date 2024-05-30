@@ -297,7 +297,7 @@
             "material": {
                 "shader": "phong",
                 "pattern": {
-                    "type": "striped",
+                    "type": "checkered",
                     "color_a": [
                         0.33,
                         0,

@@ -88,10 +88,9 @@ Pattern NewPattern(Tuple3 color_a, Tuple3 color_b, PATTERN_TYPE type);
  * Transforms the pattern 'p,' by the given transformation matrix, and returns
  * the result
  * 
- * @param 'Pattern p' The pattern to be transformed
+ * @param 'Pattern *p' The pattern to be transformed
  * @param 'Matrix4x4 m' The transformation to be applied to the pattern
- * @returns The transformed pattern
- */
-Pattern TransformPattern(Pattern p, Matrix4x4 m);
+\ */
+void TransformPattern(Pattern *p, Matrix4x4 m);
 
 #endif

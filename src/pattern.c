@@ -18,8 +18,8 @@ Tuple3 RingedPatternAt(Tuple3 position, Pattern p)
 Tuple3 CheckeredPatternAt(Tuple3 position, Pattern p)
 {
     position[3] = 0.0; // The final element in the vector should not contribute
-    double sum = TupleFloorSum(position);
-    return (int) sum % 2 == 0 ? p.color_a : p.color_b;
+    int idx = ((int) TupleFloorSum(position) % 2);
+    return idx == 0 ? p.color_a : p.color_b;
 }
 
 Tuple3 GradientPatternAt(Tuple3 position, Pattern p)
@@ -70,8 +70,7 @@ Pattern NewSolidPattern(Tuple3 color)
         .type = SOLID,
     };
 
-    p = TransformPattern(p, IdentityMatrix());
-
+    TransformPattern(&p, IdentityMatrix());
     return p;
 }
 
@@ -83,14 +82,14 @@ Pattern NewPattern(Tuple3 color_a, Tuple3 color_b, PATTERN_TYPE type)
         .type = type,
         .transform = IdentityMatrix()};
 
-    p = TransformPattern(p, IdentityMatrix());
+    Matrix4x4 translation = TranslationMatrix(0, 0.025, 0); //Nudge it, it gets weird around 0
+    TransformPattern(&p, translation); 
 
     return p;
 }
 
-Pattern TransformPattern(Pattern p, Matrix4x4 m)
+void TransformPattern(Pattern *p, Matrix4x4 m)
 {
-    p.transform = m;
-    p.inverse_transform = MatrixInvert(m);
-    return p;
+    p->transform = MatrixMultiply(p->transform, m);
+    p->inverse_transform = MatrixInvert(m);
 }
