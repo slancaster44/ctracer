@@ -240,13 +240,6 @@ void DemoTeapot()
 
 int main()
 {
-    // DemoCanvas();
     DemoJsonScene();
-    // DemoTriangle();
-    //  DemoPlane();
-    //  DemoSphereScene();
-    //  DemoUnthreaded();
-
-    // BusyScene();
     DemoTeapot();
 }

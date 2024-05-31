@@ -73,4 +73,6 @@ void WriteToPPM(Canvas *c, const char *filename)
     }
 
     fclose(fp);
+
+    printf("Scene written to '%s'\n", filename);
 }
