@@ -6,7 +6,7 @@ https://slancaster44.github.io/ctracer/html/index.html
 
 ## Demo
 First clone the repo, then on any Linux system with access
-to AVX-512 instructions run the following commmand
+to AVX-512 instructions run the following command
 
 ```
     make demo
