@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['tree_675',['Tree',['../tree_8h.html#af87eab399ce21797ec2c16a7aea61a36',1,'tree.h']]]
+  ['distance_695',['Distance',['../structSet.html#adcb4733580274cc5ccbd005bf54a1972',1,'Set']]]
 ];

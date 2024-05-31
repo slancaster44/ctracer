@@ -63,6 +63,7 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="structSet-members.html">List of all members</a>  </div>
@@ -73,6 +74,13 @@ $(function() {
 
 <p><code>#include &lt;<a class="el" href="set_8h_source.html">set.h</a>&gt;</code></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
+Public Types</h2></td></tr>
+<tr class="memitem:a982806c8cbb7fe782c9d24e80f41d495"><td class="memItemLeft" align="right" valign="top">typedef bool(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structSet.html#a982806c8cbb7fe782c9d24e80f41d495">Comparator</a>) (void *v1, void *v2)</td></tr>
+<tr class="separator:a982806c8cbb7fe782c9d24e80f41d495"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adcb4733580274cc5ccbd005bf54a1972"><td class="memItemLeft" align="right" valign="top">typedef double(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structSet.html#adcb4733580274cc5ccbd005bf54a1972">Distance</a>) (void *v1, void *v2)</td></tr>
+<tr class="separator:adcb4733580274cc5ccbd005bf54a1972"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a8b5943d83bdda30f4ceba16d0b4d9bcb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structSet.html#a8b5943d83bdda30f4ceba16d0b4d9bcb">ConstructSet</a> (<a class="el" href="structSet.html">Set</a> *s, unsigned data_width)</td></tr>
@@ -91,6 +99,12 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a4bf9bbdcf34a302b1ff102fc0a5d2f01"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae4c13dbcb74d83494bbc2818bec972bc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structSet.html#ae4c13dbcb74d83494bbc2818bec972bc">SwapElements</a> (<a class="el" href="structSet.html">Set</a> *s, unsigned long ix, unsigned long iy)</td></tr>
 <tr class="separator:ae4c13dbcb74d83494bbc2818bec972bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7476f5a484ac0807e528910e69c7d7fc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structSet.html#a7476f5a484ac0807e528910e69c7d7fc">InsertSorted</a> (<a class="el" href="structSet.html">Set</a> *s, void *value, <a class="el" href="structSet.html#a982806c8cbb7fe782c9d24e80f41d495">Comparator</a> c)</td></tr>
+<tr class="separator:a7476f5a484ac0807e528910e69c7d7fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac1dd24c2bf5d86e48cc1077253e4ebd3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structSet.html#ac1dd24c2bf5d86e48cc1077253e4ebd3">QuickSort</a> (<a class="el" href="structSet.html">Set</a> *s, <a class="el" href="structSet.html#a982806c8cbb7fe782c9d24e80f41d495">Comparator</a> cmp)</td></tr>
+<tr class="separator:ac1dd24c2bf5d86e48cc1077253e4ebd3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4f4fc3ce1a10283f1d8142c3b9fc76da"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structSet.html#a4f4fc3ce1a10283f1d8142c3b9fc76da">SortByNearestNeighbor</a> (<a class="el" href="structSet.html">Set</a> *s, <a class="el" href="structSet.html#adcb4733580274cc5ccbd005bf54a1972">Distance</a> dst)</td></tr>
+<tr class="separator:a4f4fc3ce1a10283f1d8142c3b9fc76da"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -101,7 +115,42 @@ Public Attributes</h2></td></tr>
 <div class="textblock"><p>A dynamically allocated array of data </p>
 
 <p class="definition">Definition at line <a class="el" href="set_8h_source.html#l00009">9</a> of file <a class="el" href="set_8h_source.html">set.h</a>.</p>
-</div><h2 class="groupheader">Member Function Documentation</h2>
+</div><h2 class="groupheader">Member Typedef Documentation</h2>
+<a id="a982806c8cbb7fe782c9d24e80f41d495"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a982806c8cbb7fe782c9d24e80f41d495">&#9670;&nbsp;</a></span>Comparator</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef bool(* Comparator) (void *v1, void *v2)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Compare two set elements for sorted insert </p>
+
+<p class="definition">Definition at line <a class="el" href="set_8h_source.html#l00028">28</a> of file <a class="el" href="set_8h_source.html">set.h</a>.</p>
+
+</div>
+</div>
+<a id="adcb4733580274cc5ccbd005bf54a1972"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adcb4733580274cc5ccbd005bf54a1972">&#9670;&nbsp;</a></span>Distance</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef double(* Distance) (void *v1, void *v2)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Find the "distance" between two set elements </p>
+
+<p class="definition">Definition at line <a class="el" href="set_8h_source.html#l00034">34</a> of file <a class="el" href="set_8h_source.html">set.h</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
 <a id="a0100e6a67d1ce12b93a4f96370c62774"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a0100e6a67d1ce12b93a4f96370c62774">&#9670;&nbsp;</a></span>AppendValue()</h2>
 
@@ -137,7 +186,7 @@ Public Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The index at which the appended value is stored </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="set_8c_source.html#l00032">32</a> of file <a class="el" href="set_8c_source.html">set.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="set_8c_source.html#l00034">34</a> of file <a class="el" href="set_8c_source.html">set.c</a>.</p>
 
 </div>
 </div>
@@ -176,7 +225,7 @@ Public Attributes</h2></td></tr>
 </dl>
 <dl class="section note"><dt>Note</dt><dd>The destination set should not be initialized before calling <a class="el" href="structSet.html#a4bf9bbdcf34a302b1ff102fc0a5d2f01">CloneSet()</a> </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="set_8c_source.html#l00057">57</a> of file <a class="el" href="set_8c_source.html">set.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="set_8c_source.html#l00065">65</a> of file <a class="el" href="set_8c_source.html">set.c</a>.</p>
 
 </div>
 </div>
@@ -214,7 +263,7 @@ Public Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="set_8c_source.html#l00010">10</a> of file <a class="el" href="set_8c_source.html">set.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="set_8c_source.html#l00012">12</a> of file <a class="el" href="set_8c_source.html">set.c</a>.</p>
 
 </div>
 </div>
@@ -259,7 +308,7 @@ Public Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="set_8c_source.html#l00051">51</a> of file <a class="el" href="set_8c_source.html">set.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="set_8c_source.html#l00059">59</a> of file <a class="el" href="set_8c_source.html">set.c</a>.</p>
 
 </div>
 </div>
@@ -280,7 +329,7 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Deconstruct a set, and free all allocated memory </p>
 
-<p class="definition">Definition at line <a class="el" href="set_8c_source.html#l00021">21</a> of file <a class="el" href="set_8c_source.html">set.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="set_8c_source.html#l00023">23</a> of file <a class="el" href="set_8c_source.html">set.c</a>.</p>
 
 </div>
 </div>
@@ -319,7 +368,79 @@ Public Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A pointer to the requested data </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="set_8c_source.html#l00046">46</a> of file <a class="el" href="set_8c_source.html">set.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="set_8c_source.html#l00048">48</a> of file <a class="el" href="set_8c_source.html">set.c</a>.</p>
+
+</div>
+</div>
+<a id="a7476f5a484ac0807e528910e69c7d7fc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7476f5a484ac0807e528910e69c7d7fc">&#9670;&nbsp;</a></span>InsertSorted()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void InsertSorted </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structSet.html">Set</a> *&#160;</td>
+          <td class="paramname"><em>s</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>value</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structSet.html#a982806c8cbb7fe782c9d24e80f41d495">Comparator</a>&#160;</td>
+          <td class="paramname"><em>c</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Assuming 's' is sorted, insert value into the set in order</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname"><a class="el" href="structSet.html">Set</a></td><td>*s set to insert into </td></tr>
+    <tr><td class="paramname">void</td><td>*value the value to insert </td></tr>
+    <tr><td class="paramname">Comparator</td><td>c the function to compare values with </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ac1dd24c2bf5d86e48cc1077253e4ebd3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac1dd24c2bf5d86e48cc1077253e4ebd3">&#9670;&nbsp;</a></span>QuickSort()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void QuickSort </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structSet.html">Set</a> *&#160;</td>
+          <td class="paramname"><em>s</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structSet.html#a982806c8cbb7fe782c9d24e80f41d495">Comparator</a>&#160;</td>
+          <td class="paramname"><em>cmp</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Sort the given set according to the given comparator </p>
 
 </div>
 </div>
@@ -340,7 +461,43 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Empties the given set, and reinitializes its feilds </p>
 
-<p class="definition">Definition at line <a class="el" href="set_8c_source.html#l00066">66</a> of file <a class="el" href="set_8c_source.html">set.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="set_8c_source.html#l00074">74</a> of file <a class="el" href="set_8c_source.html">set.c</a>.</p>
+
+</div>
+</div>
+<a id="a4f4fc3ce1a10283f1d8142c3b9fc76da"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4f4fc3ce1a10283f1d8142c3b9fc76da">&#9670;&nbsp;</a></span>SortByNearestNeighbor()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SortByNearestNeighbor </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structSet.html">Set</a> *&#160;</td>
+          <td class="paramname"><em>s</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structSet.html#adcb4733580274cc5ccbd005bf54a1972">Distance</a>&#160;</td>
+          <td class="paramname"><em>dst</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Assuming 's' is a fully connected graph, and the distance between two elements can be found by 'dst,' order elements in the set, such that the distance between each element and the next is minimized</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname"><a class="el" href="structSet.html">Set</a></td><td>*s the set to be ordered </td></tr>
+    <tr><td class="paramname">Distance</td><td>dst A distance function that gives the distance between two elements in the set </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -377,7 +534,7 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Swap the element located at offset 'ix' with the element located at offset 'iy.' </p>
 
-<p class="definition">Definition at line <a class="el" href="set_8c_source.html#l00073">73</a> of file <a class="el" href="set_8c_source.html">set.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="set_8c_source.html#l00081">81</a> of file <a class="el" href="set_8c_source.html">set.c</a>.</p>
 
 </div>
 </div>

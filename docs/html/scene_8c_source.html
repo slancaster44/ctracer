@@ -215,54 +215,52 @@ $(function() {
 <div class="line"><a name="l00143"></a><span class="lineno"><a class="line" href="structScene.html#a0a9a47064557f9b2dc41992065a7aed6">  143</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="structScene.html#a0a9a47064557f9b2dc41992065a7aed6">RenderScene</a>(<a class="code" href="structScene.html">Scene</a> *s, <a class="code" href="structCanvas.html">Canvas</a> *c)</div>
 <div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;{</div>
 <div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;    <a class="code" href="scene_8c.html#a2de598b51a1cae2e1190fa634ff90d3c">GenerateSceneBVH</a>(s);</div>
-<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;    <a class="code" href="structTree.html#a59cb91b5898c9bc01c9ae46b56158fb6">PrintTree</a>(&amp;s-&gt;<a class="code" href="structScene.html#a8f330dbcefc3f1afaa60c9a3229fb7c5">shapes</a>);</div>
-<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160; </div>
-<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;    <span class="keywordtype">unsigned</span> canvas_size = (c-&gt;canvas_height * c-&gt;canvas_width);</div>
-<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;    <span class="keywordtype">unsigned</span> chunk_size = canvas_size / (unsigned)get_nprocs();</div>
-<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;    <span class="keywordtype">unsigned</span> num_chunks = canvas_size / chunk_size;</div>
-<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160; </div>
-<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;    <a class="code" href="structSet.html">Set</a> pids;</div>
-<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;    <a class="code" href="structSet.html#a8b5943d83bdda30f4ceba16d0b4d9bcb">ConstructSet</a>(&amp;pids, <span class="keyword">sizeof</span>(<span class="keywordtype">int</span>));</div>
-<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160; </div>
-<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;    <span class="keywordflow">for</span> (<span class="keywordtype">unsigned</span> cur_chunk = 0; cur_chunk &lt; num_chunks; cur_chunk++)</div>
-<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;    {</div>
-<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;        <span class="keywordtype">unsigned</span> cur_chunk_start = cur_chunk * chunk_size;</div>
-<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;        <span class="keywordtype">unsigned</span> cur_chunk_end = cur_chunk_start + chunk_size;</div>
-<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160; </div>
-<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;        <span class="keywordtype">int</span> pid = fork();</div>
-<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;        <span class="keywordflow">if</span> (pid == 0)</div>
-<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;        { <span class="comment">// Child renders its section</span></div>
-<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;            <a class="code" href="scene_8c.html#a2a6dece3b24c87005a384ebe387fc16a">RenderSceneSection</a>(s, c, cur_chunk_start, cur_chunk_end, c-&gt;canvas_width);</div>
-<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;            exit(0);</div>
-<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;        }</div>
-<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;        <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;        {</div>
-<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;            <a class="code" href="structSet.html#a0100e6a67d1ce12b93a4f96370c62774">AppendValue</a>(&amp;pids, &amp;pid); <span class="comment">// Parent keeps track of child</span></div>
-<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;        }</div>
-<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;    }</div>
-<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160; </div>
-<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;    <span class="keywordflow">for</span> (<span class="keywordtype">unsigned</span> pid_index = 0; pid_index &lt; pids.<a class="code" href="structSet.html#a1c3723083ac443ee0270c78f17b8e800">length</a>; pid_index++)</div>
-<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;    {</div>
-<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;        <span class="keywordtype">int</span> cur_pid;</div>
-<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;        <a class="code" href="structSet.html#a22619519a37fe833bc34adbfeb83a002">CopyOut</a>(&amp;pids, pid_index, &amp;cur_pid);</div>
-<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160; </div>
-<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;        <span class="keywordtype">int</span> exit_status;</div>
-<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;        waitpid(cur_pid, &amp;exit_status, WUNTRACED);</div>
-<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;    }</div>
-<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160; </div>
-<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;    <span class="keywordtype">unsigned</span> leftovers_start = num_chunks * chunk_size;</div>
-<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;    <span class="keywordflow">if</span> (leftovers_start != canvas_size)</div>
-<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;    {</div>
-<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;        <a class="code" href="scene_8c.html#a2a6dece3b24c87005a384ebe387fc16a">RenderSceneSection</a>(s, c, leftovers_start, canvas_size + 1, c-&gt;canvas_width);</div>
-<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;    }</div>
-<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;}</div>
-<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160; </div>
-<div class="line"><a name="l00188"></a><span class="lineno"><a class="line" href="structScene.html#af89e5cd45549dd64ff8ae02266faa997">  188</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="structScene.html#af89e5cd45549dd64ff8ae02266faa997">RenderSceneUnthreaded</a>(<a class="code" href="structScene.html">Scene</a> *s, <a class="code" href="structCanvas.html">Canvas</a> *c)</div>
-<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;{</div>
-<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;    <a class="code" href="scene_8c.html#a2de598b51a1cae2e1190fa634ff90d3c">GenerateSceneBVH</a>(s);</div>
-<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;    <a class="code" href="structTree.html#a59cb91b5898c9bc01c9ae46b56158fb6">PrintTree</a>(&amp;s-&gt;<a class="code" href="structScene.html#a8f330dbcefc3f1afaa60c9a3229fb7c5">shapes</a>);</div>
-<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;    <a class="code" href="scene_8c.html#a2a6dece3b24c87005a384ebe387fc16a">RenderSceneSection</a>(s, c, 0, c-&gt;canvas_height * c-&gt;canvas_width - 1, c-&gt;canvas_width);</div>
-<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;}</div>
+<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160; </div>
+<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;    <span class="keywordtype">unsigned</span> canvas_size = (c-&gt;canvas_height * c-&gt;canvas_width);</div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;    <span class="keywordtype">unsigned</span> chunk_size = canvas_size / (unsigned)get_nprocs();</div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;    <span class="keywordtype">unsigned</span> num_chunks = canvas_size / chunk_size;</div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160; </div>
+<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;    <a class="code" href="structSet.html">Set</a> pids;</div>
+<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;    <a class="code" href="structSet.html#a8b5943d83bdda30f4ceba16d0b4d9bcb">ConstructSet</a>(&amp;pids, <span class="keyword">sizeof</span>(<span class="keywordtype">int</span>));</div>
+<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160; </div>
+<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;    <span class="keywordflow">for</span> (<span class="keywordtype">unsigned</span> cur_chunk = 0; cur_chunk &lt; num_chunks; cur_chunk++)</div>
+<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;    {</div>
+<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;        <span class="keywordtype">unsigned</span> cur_chunk_start = cur_chunk * chunk_size;</div>
+<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;        <span class="keywordtype">unsigned</span> cur_chunk_end = cur_chunk_start + chunk_size;</div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160; </div>
+<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;        <span class="keywordtype">int</span> pid = fork();</div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;        <span class="keywordflow">if</span> (pid == 0)</div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;        { <span class="comment">// Child renders its section</span></div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;            <a class="code" href="scene_8c.html#a2a6dece3b24c87005a384ebe387fc16a">RenderSceneSection</a>(s, c, cur_chunk_start, cur_chunk_end, c-&gt;canvas_width);</div>
+<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;            exit(0);</div>
+<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;        }</div>
+<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;        <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;        {</div>
+<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;            <a class="code" href="structSet.html#a0100e6a67d1ce12b93a4f96370c62774">AppendValue</a>(&amp;pids, &amp;pid); <span class="comment">// Parent keeps track of child</span></div>
+<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;        }</div>
+<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;    }</div>
+<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160; </div>
+<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;    <span class="keywordflow">for</span> (<span class="keywordtype">unsigned</span> pid_index = 0; pid_index &lt; pids.<a class="code" href="structSet.html#a1c3723083ac443ee0270c78f17b8e800">length</a>; pid_index++)</div>
+<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;    {</div>
+<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;        <span class="keywordtype">int</span> cur_pid;</div>
+<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;        <a class="code" href="structSet.html#a22619519a37fe833bc34adbfeb83a002">CopyOut</a>(&amp;pids, pid_index, &amp;cur_pid);</div>
+<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160; </div>
+<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;        <span class="keywordtype">int</span> exit_status;</div>
+<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;        waitpid(cur_pid, &amp;exit_status, WUNTRACED);</div>
+<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;    }</div>
+<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160; </div>
+<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;    <span class="keywordtype">unsigned</span> leftovers_start = num_chunks * chunk_size;</div>
+<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;    <span class="keywordflow">if</span> (leftovers_start != canvas_size)</div>
+<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;    {</div>
+<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;        <a class="code" href="scene_8c.html#a2a6dece3b24c87005a384ebe387fc16a">RenderSceneSection</a>(s, c, leftovers_start, canvas_size + 1, c-&gt;canvas_width);</div>
+<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;    }</div>
+<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;}</div>
+<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160; </div>
+<div class="line"><a name="l00187"></a><span class="lineno"><a class="line" href="structScene.html#af89e5cd45549dd64ff8ae02266faa997">  187</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="structScene.html#af89e5cd45549dd64ff8ae02266faa997">RenderSceneUnthreaded</a>(<a class="code" href="structScene.html">Scene</a> *s, <a class="code" href="structCanvas.html">Canvas</a> *c)</div>
+<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;{</div>
+<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;    <a class="code" href="scene_8c.html#a2de598b51a1cae2e1190fa634ff90d3c">GenerateSceneBVH</a>(s);</div>
+<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;    <a class="code" href="scene_8c.html#a2a6dece3b24c87005a384ebe387fc16a">RenderSceneSection</a>(s, c, 0, c-&gt;canvas_height * c-&gt;canvas_width - 1, c-&gt;canvas_width);</div>
+<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;}</div>
 <div class="ttc" id="aequality_8h_html"><div class="ttname"><a href="equality_8h.html">equality.h</a></div></div>
 <div class="ttc" id="aintersection_8h_html"><div class="ttname"><a href="intersection_8h.html">intersection.h</a></div></div>
 <div class="ttc" id="amaterial_8h_html"><div class="ttname"><a href="material_8h.html">material.h</a></div></div>
@@ -298,15 +296,15 @@ $(function() {
 <div class="ttc" id="astructScene_html_ad8f2142e84c3d96730a95eb05aa5be0a"><div class="ttname"><a href="structScene.html#ad8f2142e84c3d96730a95eb05aa5be0a">Scene::ColorFor</a></div><div class="ttdeci">Tuple3 ColorFor(Scene *s, Ray r)</div><div class="ttdef"><b>Definition:</b> <a href="scene_8c_source.html#l00091">scene.c:91</a></div></div>
 <div class="ttc" id="astructScene_html_ae6d2fc386f7b538e7c0174027a3b3b3e"><div class="ttname"><a href="structScene.html#ae6d2fc386f7b538e7c0174027a3b3b3e">Scene::AddShape</a></div><div class="ttdeci">void AddShape(Scene *s, Shape sp)</div><div class="ttdef"><b>Definition:</b> <a href="scene_8c_source.html#l00025">scene.c:25</a></div></div>
 <div class="ttc" id="astructScene_html_ae8139beaff7ebe59f3c21c4702f6cfd1"><div class="ttname"><a href="structScene.html#ae8139beaff7ebe59f3c21c4702f6cfd1">Scene::ColorForLimited</a></div><div class="ttdeci">Tuple3 ColorForLimited(Scene *s, Ray r, int limit)</div><div class="ttdef"><b>Definition:</b> <a href="scene_8c_source.html#l00096">scene.c:96</a></div></div>
-<div class="ttc" id="astructScene_html_af89e5cd45549dd64ff8ae02266faa997"><div class="ttname"><a href="structScene.html#af89e5cd45549dd64ff8ae02266faa997">Scene::RenderSceneUnthreaded</a></div><div class="ttdeci">void RenderSceneUnthreaded(Scene *s, Canvas *c)</div><div class="ttdef"><b>Definition:</b> <a href="scene_8c_source.html#l00188">scene.c:188</a></div></div>
+<div class="ttc" id="astructScene_html_af89e5cd45549dd64ff8ae02266faa997"><div class="ttname"><a href="structScene.html#af89e5cd45549dd64ff8ae02266faa997">Scene::RenderSceneUnthreaded</a></div><div class="ttdeci">void RenderSceneUnthreaded(Scene *s, Canvas *c)</div><div class="ttdef"><b>Definition:</b> <a href="scene_8c_source.html#l00187">scene.c:187</a></div></div>
 <div class="ttc" id="astructScene_html_afed13ec4ba2d7ab75b273d507911b498"><div class="ttname"><a href="structScene.html#afed13ec4ba2d7ab75b273d507911b498">Scene::camera</a></div><div class="ttdeci">Camera camera</div><div class="ttdef"><b>Definition:</b> <a href="scene_8h_source.html#l00025">scene.h:25</a></div></div>
 <div class="ttc" id="astructSet_html"><div class="ttname"><a href="structSet.html">Set</a></div><div class="ttdef"><b>Definition:</b> <a href="set_8h_source.html#l00009">set.h:10</a></div></div>
-<div class="ttc" id="astructSet_html_a0100e6a67d1ce12b93a4f96370c62774"><div class="ttname"><a href="structSet.html#a0100e6a67d1ce12b93a4f96370c62774">Set::AppendValue</a></div><div class="ttdeci">unsigned long AppendValue(Set *s, void *value)</div><div class="ttdef"><b>Definition:</b> <a href="set_8c_source.html#l00032">set.c:32</a></div></div>
+<div class="ttc" id="astructSet_html_a0100e6a67d1ce12b93a4f96370c62774"><div class="ttname"><a href="structSet.html#a0100e6a67d1ce12b93a4f96370c62774">Set::AppendValue</a></div><div class="ttdeci">unsigned long AppendValue(Set *s, void *value)</div><div class="ttdef"><b>Definition:</b> <a href="set_8c_source.html#l00034">set.c:34</a></div></div>
 <div class="ttc" id="astructSet_html_a1c3723083ac443ee0270c78f17b8e800"><div class="ttname"><a href="structSet.html#a1c3723083ac443ee0270c78f17b8e800">Set::length</a></div><div class="ttdeci">unsigned long length</div><div class="ttdef"><b>Definition:</b> <a href="set_8h_source.html#l00015">set.h:15</a></div></div>
-<div class="ttc" id="astructSet_html_a22619519a37fe833bc34adbfeb83a002"><div class="ttname"><a href="structSet.html#a22619519a37fe833bc34adbfeb83a002">Set::CopyOut</a></div><div class="ttdeci">void CopyOut(Set *s, unsigned long index, void *out)</div><div class="ttdef"><b>Definition:</b> <a href="set_8c_source.html#l00051">set.c:51</a></div></div>
-<div class="ttc" id="astructSet_html_a348902dbdef184c563a3463ea618409d"><div class="ttname"><a href="structSet.html#a348902dbdef184c563a3463ea618409d">Set::Index</a></div><div class="ttdeci">void * Index(Set *s, unsigned long index)</div><div class="ttdef"><b>Definition:</b> <a href="set_8c_source.html#l00046">set.c:46</a></div></div>
-<div class="ttc" id="astructSet_html_a8b5943d83bdda30f4ceba16d0b4d9bcb"><div class="ttname"><a href="structSet.html#a8b5943d83bdda30f4ceba16d0b4d9bcb">Set::ConstructSet</a></div><div class="ttdeci">void ConstructSet(Set *s, unsigned data_width)</div><div class="ttdef"><b>Definition:</b> <a href="set_8c_source.html#l00010">set.c:10</a></div></div>
-<div class="ttc" id="astructSet_html_aa3144df72400f9ba4775977cc5e11858"><div class="ttname"><a href="structSet.html#aa3144df72400f9ba4775977cc5e11858">Set::DeconstructSet</a></div><div class="ttdeci">void DeconstructSet(Set *s)</div><div class="ttdef"><b>Definition:</b> <a href="set_8c_source.html#l00021">set.c:21</a></div></div>
+<div class="ttc" id="astructSet_html_a22619519a37fe833bc34adbfeb83a002"><div class="ttname"><a href="structSet.html#a22619519a37fe833bc34adbfeb83a002">Set::CopyOut</a></div><div class="ttdeci">void CopyOut(Set *s, unsigned long index, void *out)</div><div class="ttdef"><b>Definition:</b> <a href="set_8c_source.html#l00059">set.c:59</a></div></div>
+<div class="ttc" id="astructSet_html_a348902dbdef184c563a3463ea618409d"><div class="ttname"><a href="structSet.html#a348902dbdef184c563a3463ea618409d">Set::Index</a></div><div class="ttdeci">void * Index(Set *s, unsigned long index)</div><div class="ttdef"><b>Definition:</b> <a href="set_8c_source.html#l00048">set.c:48</a></div></div>
+<div class="ttc" id="astructSet_html_a8b5943d83bdda30f4ceba16d0b4d9bcb"><div class="ttname"><a href="structSet.html#a8b5943d83bdda30f4ceba16d0b4d9bcb">Set::ConstructSet</a></div><div class="ttdeci">void ConstructSet(Set *s, unsigned data_width)</div><div class="ttdef"><b>Definition:</b> <a href="set_8c_source.html#l00012">set.c:12</a></div></div>
+<div class="ttc" id="astructSet_html_aa3144df72400f9ba4775977cc5e11858"><div class="ttname"><a href="structSet.html#aa3144df72400f9ba4775977cc5e11858">Set::DeconstructSet</a></div><div class="ttdeci">void DeconstructSet(Set *s)</div><div class="ttdef"><b>Definition:</b> <a href="set_8c_source.html#l00023">set.c:23</a></div></div>
 <div class="ttc" id="astructShape_html"><div class="ttname"><a href="structShape.html">Shape</a></div><div class="ttdef"><b>Definition:</b> <a href="shape_8h_source.html#l00024">shape.h:25</a></div></div>
 <div class="ttc" id="astructShape_html_ae61fdac3b1a90dd2e8ee5d6cb5652291"><div class="ttname"><a href="structShape.html#ae61fdac3b1a90dd2e8ee5d6cb5652291">Shape::material</a></div><div class="ttdeci">Material material</div><div class="ttdef"><b>Definition:</b> <a href="shape_8h_source.html#l00032">shape.h:32</a></div></div>
 <div class="ttc" id="astructTree_html"><div class="ttname"><a href="structTree.html">Tree</a></div><div class="ttdef"><b>Definition:</b> <a href="tree_8h_source.html#l00027">tree.h:28</a></div></div>
@@ -314,16 +312,15 @@ $(function() {
 <div class="ttc" id="astructTree_html_a3cfc85dcadc627149f70d8ea467c2efc"><div class="ttname"><a href="structTree.html#a3cfc85dcadc627149f70d8ea467c2efc">Tree::ReconstructTree</a></div><div class="ttdeci">void ReconstructTree(Tree *tree)</div><div class="ttdef"><b>Definition:</b> <a href="tree_8c_source.html#l00015">tree.c:15</a></div></div>
 <div class="ttc" id="astructTree_html_a44bf6a2316f61cba22836f721e930613"><div class="ttname"><a href="structTree.html#a44bf6a2316f61cba22836f721e930613">Tree::IntersectTree</a></div><div class="ttdeci">void IntersectTree(Tree *tree, Ray r, Set *intersections)</div><div class="ttdef"><b>Definition:</b> <a href="tree_8c_source.html#l00174">tree.c:174</a></div></div>
 <div class="ttc" id="astructTree_html_a52c32c41118dfa730f2b19a05ff00524"><div class="ttname"><a href="structTree.html#a52c32c41118dfa730f2b19a05ff00524">Tree::CloneTree</a></div><div class="ttdeci">void CloneTree(Tree *destination, Tree *source)</div><div class="ttdef"><b>Definition:</b> <a href="tree_8c_source.html#l00090">tree.c:90</a></div></div>
-<div class="ttc" id="astructTree_html_a59cb91b5898c9bc01c9ae46b56158fb6"><div class="ttname"><a href="structTree.html#a59cb91b5898c9bc01c9ae46b56158fb6">Tree::PrintTree</a></div><div class="ttdeci">void PrintTree(Tree *tree)</div><div class="ttdef"><b>Definition:</b> <a href="tree_8c_source.html#l00068">tree.c:68</a></div></div>
 <div class="ttc" id="astructTree_html_ae0d64369aac4ec8488d10d8b06e40ad7"><div class="ttname"><a href="structTree.html#ae0d64369aac4ec8488d10d8b06e40ad7">Tree::ConstructTree</a></div><div class="ttdeci">void ConstructTree(Tree *tree)</div><div class="ttdef"><b>Definition:</b> <a href="tree_8c_source.html#l00008">tree.c:8</a></div></div>
 <div class="ttc" id="astructTree_html_aec6c0666b20d03ce96268fa7aa3c7697"><div class="ttname"><a href="structTree.html#aec6c0666b20d03ce96268fa7aa3c7697">Tree::DeconstructTree</a></div><div class="ttdeci">void DeconstructTree(Tree *tree)</div><div class="ttdef"><b>Definition:</b> <a href="tree_8c_source.html#l00035">tree.c:35</a></div></div>
 <div class="ttc" id="astructTuple3_html"><div class="ttname"><a href="structTuple3.html">Tuple3</a></div></div>
-<div class="ttc" id="astructTuple3_html_a8328146f6523837eec383fa66c79fbe6"><div class="ttname"><a href="structTuple3.html#a8328146f6523837eec383fa66c79fbe6">Tuple3::TupleNormalize</a></div><div class="ttdeci">Tuple3 TupleNormalize(Tuple3 t1)</div><div class="ttdef"><b>Definition:</b> <a href="tuple_8c_source.html#l00153">tuple.c:153</a></div></div>
-<div class="ttc" id="astructTuple3_html_ab349cf81fa3a0fc01ca47e2440e75e4d"><div class="ttname"><a href="structTuple3.html#ab349cf81fa3a0fc01ca47e2440e75e4d">Tuple3::TupleMagnitude</a></div><div class="ttdeci">double TupleMagnitude(Tuple3 t1)</div><div class="ttdef"><b>Definition:</b> <a href="tuple_8c_source.html#l00111">tuple.c:111</a></div></div>
+<div class="ttc" id="astructTuple3_html_a8328146f6523837eec383fa66c79fbe6"><div class="ttname"><a href="structTuple3.html#a8328146f6523837eec383fa66c79fbe6">Tuple3::TupleNormalize</a></div><div class="ttdeci">Tuple3 TupleNormalize(Tuple3 t1)</div><div class="ttdef"><b>Definition:</b> <a href="tuple_8c_source.html#l00158">tuple.c:158</a></div></div>
+<div class="ttc" id="astructTuple3_html_ab349cf81fa3a0fc01ca47e2440e75e4d"><div class="ttname"><a href="structTuple3.html#ab349cf81fa3a0fc01ca47e2440e75e4d">Tuple3::TupleMagnitude</a></div><div class="ttdeci">double TupleMagnitude(Tuple3 t1)</div><div class="ttdef"><b>Definition:</b> <a href="tuple_8c_source.html#l00117">tuple.c:117</a></div></div>
 <div class="ttc" id="astructTuple3_html_adc109e27ac689e9ea7c2632c8cbb358d"><div class="ttname"><a href="structTuple3.html#adc109e27ac689e9ea7c2632c8cbb358d">Tuple3::NewColor</a></div><div class="ttdeci">Tuple3 NewColor(uint8_t r, uint8_t g, uint8_t b, uint8_t a)</div><div class="ttdef"><b>Definition:</b> <a href="tuple_8c_source.html#l00024">tuple.c:24</a></div></div>
-<div class="ttc" id="astructTuple3_html_add0849fc8bed787944fdf8b19f3ffd91"><div class="ttname"><a href="structTuple3.html#add0849fc8bed787944fdf8b19f3ffd91">Tuple3::TupleSubtract</a></div><div class="ttdeci">Tuple3 TupleSubtract(Tuple3 t1, Tuple3 t2)</div><div class="ttdef"><b>Definition:</b> <a href="tuple_8c_source.html#l00196">tuple.c:196</a></div></div>
-<div class="ttc" id="atree_8c_html_a1089e53dc4f7c0093e4f75d4e0e3bb22"><div class="ttname"><a href="tree_8c.html#a1089e53dc4f7c0093e4f75d4e0e3bb22">GenerateBVH</a></div><div class="ttdeci">void GenerateBVH(Tree *dst, Tree *src)</div><div class="ttdef"><b>Definition:</b> <a href="tree_8c_source.html#l00287">tree.c:287</a></div></div>
-<div class="ttc" id="atree_8c_html_a37b0c7cd131c14bedca7a64e66a12923"><div class="ttname"><a href="tree_8c.html#a37b0c7cd131c14bedca7a64e66a12923">CalculateBounds</a></div><div class="ttdeci">void CalculateBounds(Tree *tree)</div><div class="ttdef"><b>Definition:</b> <a href="tree_8c_source.html#l00217">tree.c:217</a></div></div>
+<div class="ttc" id="astructTuple3_html_add0849fc8bed787944fdf8b19f3ffd91"><div class="ttname"><a href="structTuple3.html#add0849fc8bed787944fdf8b19f3ffd91">Tuple3::TupleSubtract</a></div><div class="ttdeci">Tuple3 TupleSubtract(Tuple3 t1, Tuple3 t2)</div><div class="ttdef"><b>Definition:</b> <a href="tuple_8c_source.html#l00201">tuple.c:201</a></div></div>
+<div class="ttc" id="atree_8c_html_a1089e53dc4f7c0093e4f75d4e0e3bb22"><div class="ttname"><a href="tree_8c.html#a1089e53dc4f7c0093e4f75d4e0e3bb22">GenerateBVH</a></div><div class="ttdeci">void GenerateBVH(Tree *dst, Tree *src)</div><div class="ttdef"><b>Definition:</b> <a href="tree_8c_source.html#l00261">tree.c:261</a></div></div>
+<div class="ttc" id="atree_8c_html_a37b0c7cd131c14bedca7a64e66a12923"><div class="ttname"><a href="tree_8c.html#a37b0c7cd131c14bedca7a64e66a12923">CalculateBounds</a></div><div class="ttdeci">void CalculateBounds(Tree *tree)</div><div class="ttdef"><b>Definition:</b> <a href="tree_8c_source.html#l00218">tree.c:218</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

@@ -108,7 +108,7 @@ Include dependency graph for tree.c:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:a2f75682dbde85fbf524cf0e1620ae002"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="tree_8c.html#a2f75682dbde85fbf524cf0e1620ae002">SHAPES_PER_CHILD</a>&#160;&#160;&#160;4</td></tr>
+<tr class="memitem:a2f75682dbde85fbf524cf0e1620ae002"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="tree_8c.html#a2f75682dbde85fbf524cf0e1620ae002">SHAPES_PER_CHILD</a>&#160;&#160;&#160;32</td></tr>
 <tr class="separator:a2f75682dbde85fbf524cf0e1620ae002"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
@@ -155,8 +155,6 @@ Functions</h2></td></tr>
 <tr class="separator:ad0bfb0f5344d524268533d3463a76b72"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8e2d4b0c9568860ed562673ce2826bd9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="tree_8c.html#a8e2d4b0c9568860ed562673ce2826bd9">GetShapeSets</a> (<a class="el" href="structSet.html">Set</a> *bound, <a class="el" href="structSet.html">Set</a> *unbound, Node *src)</td></tr>
 <tr class="separator:a8e2d4b0c9568860ed562673ce2826bd9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2a8710d10d83378b093fd5f8cba5386a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="tree_8c.html#a2a8710d10d83378b093fd5f8cba5386a">SortByXCoord</a> (<a class="el" href="structSet.html">Set</a> *shapes, unsigned long lo, unsigned long hi)</td></tr>
-<tr class="separator:a2a8710d10d83378b093fd5f8cba5386a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1089e53dc4f7c0093e4f75d4e0e3bb22"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="tree_8c.html#a1089e53dc4f7c0093e4f75d4e0e3bb22">GenerateBVH</a> (<a class="el" href="structTree.html">Tree</a> *dst, <a class="el" href="structTree.html">Tree</a> *src)</td></tr>
 <tr class="separator:a1089e53dc4f7c0093e4f75d4e0e3bb22"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -168,12 +166,12 @@ Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define SHAPES_PER_CHILD&#160;&#160;&#160;4</td>
+          <td class="memname">#define SHAPES_PER_CHILD&#160;&#160;&#160;32</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="tree_8c_source.html#l00286">286</a> of file <a class="el" href="tree_8c_source.html">tree.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="tree_8c_source.html#l00260">260</a> of file <a class="el" href="tree_8c_source.html">tree.c</a>.</p>
 
 </div>
 </div>
@@ -224,7 +222,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="tree_8c_source.html#l00217">217</a> of file <a class="el" href="tree_8c_source.html">tree.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="tree_8c_source.html#l00218">218</a> of file <a class="el" href="tree_8c_source.html">tree.c</a>.</p>
 
 </div>
 </div>
@@ -404,7 +402,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="tree_8c_source.html#l00287">287</a> of file <a class="el" href="tree_8c_source.html">tree.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="tree_8c_source.html#l00261">261</a> of file <a class="el" href="tree_8c_source.html">tree.c</a>.</p>
 
 </div>
 </div>
@@ -440,7 +438,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="tree_8c_source.html#l00235">235</a> of file <a class="el" href="tree_8c_source.html">tree.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="tree_8c_source.html#l00236">236</a> of file <a class="el" href="tree_8c_source.html">tree.c</a>.</p>
 
 </div>
 </div>
@@ -532,7 +530,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="tree_8c_source.html#l00222">222</a> of file <a class="el" href="tree_8c_source.html">tree.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="tree_8c_source.html#l00223">223</a> of file <a class="el" href="tree_8c_source.html">tree.c</a>.</p>
 
 </div>
 </div>
@@ -742,43 +740,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="tree_8c_source.html#l00179">179</a> of file <a class="el" href="tree_8c_source.html">tree.c</a>.</p>
-
-</div>
-</div>
-<a id="a2a8710d10d83378b093fd5f8cba5386a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2a8710d10d83378b093fd5f8cba5386a">&#9670;&nbsp;</a></span>SortByXCoord()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void SortByXCoord </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="structSet.html">Set</a> *&#160;</td>
-          <td class="paramname"><em>shapes</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">unsigned long&#160;</td>
-          <td class="paramname"><em>lo</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">unsigned long&#160;</td>
-          <td class="paramname"><em>hi</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="tree_8c_source.html#l00259">259</a> of file <a class="el" href="tree_8c_source.html">tree.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="tree_8c_source.html#l00180">180</a> of file <a class="el" href="tree_8c_source.html">tree.c</a>.</p>
 
 </div>
 </div>
@@ -798,7 +760,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="tree_8c_source.html#l00201">201</a> of file <a class="el" href="tree_8c_source.html">tree.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="tree_8c_source.html#l00202">202</a> of file <a class="el" href="tree_8c_source.html">tree.c</a>.</p>
 
 </div>
 </div>

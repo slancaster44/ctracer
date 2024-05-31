@@ -76,27 +76,29 @@ $(function() {
 <div class="textblock"><code>#include &quot;<a class="el" href="shape_8h_source.html">shape.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="intersection_8h_source.html">intersection.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="equality_8h_source.html">equality.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="bounds_8h_source.html">bounds.h</a>&quot;</code><br />
 <code>#include &lt;math.h&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for shape.c:</div>
 <div class="dyncontent">
 <div class="center"><img src="shape_8c__incl.png" border="0" usemap="#asrc_2shape_8c" alt=""/></div>
 <map name="asrc_2shape_8c" id="asrc_2shape_8c">
-<area shape="rect" title=" " alt="" coords="310,5,405,32"/>
-<area shape="rect" href="shape_8h.html" title=" " alt="" coords="218,80,291,107"/>
-<area shape="rect" href="intersection_8h.html" title=" " alt="" coords="15,80,126,107"/>
-<area shape="rect" href="equality_8h.html" title=" " alt="" coords="417,80,503,107"/>
-<area shape="rect" title=" " alt="" coords="506,155,574,181"/>
-<area shape="rect" href="tuple_8h.html" title=" " alt="" coords="248,379,315,405"/>
-<area shape="rect" href="ray_8h.html" title=" " alt="" coords="89,229,143,256"/>
-<area shape="rect" href="matrix_8h.html" title=" " alt="" coords="71,304,148,331"/>
-<area shape="rect" href="material_8h.html" title=" " alt="" coords="210,155,299,181"/>
-<area shape="rect" title=" " alt="" coords="220,453,319,480"/>
-<area shape="rect" title=" " alt="" coords="352,453,435,480"/>
-<area shape="rect" href="alignment_8h.html" title=" " alt="" coords="83,453,183,480"/>
-<area shape="rect" title=" " alt="" coords="5,379,72,405"/>
-<area shape="rect" href="set_8h.html" title=" " alt="" coords="375,304,430,331"/>
-<area shape="rect" href="pattern_8h.html" title=" " alt="" coords="167,229,249,256"/>
+<area shape="rect" title=" " alt="" coords="238,5,333,32"/>
+<area shape="rect" href="shape_8h.html" title=" " alt="" coords="226,155,299,181"/>
+<area shape="rect" href="intersection_8h.html" title=" " alt="" coords="69,155,179,181"/>
+<area shape="rect" href="equality_8h.html" title=" " alt="" coords="425,80,511,107"/>
+<area shape="rect" title=" " alt="" coords="514,155,582,181"/>
+<area shape="rect" href="bounds_8h.html" title=" " alt="" coords="166,80,247,107"/>
+<area shape="rect" href="tuple_8h.html" title=" " alt="" coords="79,453,145,480"/>
+<area shape="rect" href="ray_8h.html" title=" " alt="" coords="43,229,96,256"/>
+<area shape="rect" href="matrix_8h.html" title=" " alt="" coords="265,379,343,405"/>
+<area shape="rect" href="material_8h.html" title=" " alt="" coords="225,229,314,256"/>
+<area shape="rect" title=" " alt="" coords="61,528,160,555"/>
+<area shape="rect" title=" " alt="" coords="359,528,441,555"/>
+<area shape="rect" href="alignment_8h.html" title=" " alt="" coords="185,528,285,555"/>
+<area shape="rect" title=" " alt="" coords="271,453,337,480"/>
+<area shape="rect" href="set_8h.html" title=" " alt="" coords="383,379,438,405"/>
+<area shape="rect" href="pattern_8h.html" title=" " alt="" coords="246,304,327,331"/>
 </map>
 </div>
 </div>
@@ -116,6 +118,10 @@ Functions</h2></td></tr>
 <tr class="separator:a8dc5ba9f8414864dd49ac9e44cfaa872"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac47716d97f3670c35f19e4221bf2e09a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="shape_8c.html#ac47716d97f3670c35f19e4221bf2e09a">ApplyTransformation</a> (<a class="el" href="structShape.html">Shape</a> *s, <a class="el" href="unionMatrix4x4.html">Matrix4x4</a> t)</td></tr>
 <tr class="separator:ac47716d97f3670c35f19e4221bf2e09a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4abe0e8aa44692fd39be6aa924e5b51e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="shape_8c.html#a4abe0e8aa44692fd39be6aa924e5b51e">CompareShapes</a> (<a class="el" href="structShape.html">Shape</a> *s1, <a class="el" href="structShape.html">Shape</a> *s2)</td></tr>
+<tr class="separator:a4abe0e8aa44692fd39be6aa924e5b51e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac6bdc36f1d3141f35f2459cfe0da49f2"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="shape_8c.html#ac6bdc36f1d3141f35f2459cfe0da49f2">ShapeDistance</a> (<a class="el" href="structShape.html">Shape</a> *s1, <a class="el" href="structShape.html">Shape</a> *s2)</td></tr>
+<tr class="separator:ac6bdc36f1d3141f35f2459cfe0da49f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
@@ -153,7 +159,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="shape_8c_source.html#l00078">78</a> of file <a class="el" href="shape_8c_source.html">shape.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shape_8c_source.html#l00080">80</a> of file <a class="el" href="shape_8c_source.html">shape.c</a>.</p>
 
 </div>
 </div>
@@ -183,7 +189,37 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="shape_8c_source.html#l00137">137</a> of file <a class="el" href="shape_8c_source.html">shape.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shape_8c_source.html#l00139">139</a> of file <a class="el" href="shape_8c_source.html">shape.c</a>.</p>
+
+</div>
+</div>
+<a id="a4abe0e8aa44692fd39be6aa924e5b51e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4abe0e8aa44692fd39be6aa924e5b51e">&#9670;&nbsp;</a></span>CompareShapes()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool CompareShapes </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structShape.html">Shape</a> *&#160;</td>
+          <td class="paramname"><em>s1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structShape.html">Shape</a> *&#160;</td>
+          <td class="paramname"><em>s2</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="shape_8c_source.html#l00145">145</a> of file <a class="el" href="shape_8c_source.html">shape.c</a>.</p>
 
 </div>
 </div>
@@ -213,7 +249,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="shape_8c_source.html#l00051">51</a> of file <a class="el" href="shape_8c_source.html">shape.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shape_8c_source.html#l00053">53</a> of file <a class="el" href="shape_8c_source.html">shape.c</a>.</p>
 
 </div>
 </div>
@@ -243,7 +279,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="shape_8c_source.html#l00023">23</a> of file <a class="el" href="shape_8c_source.html">shape.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shape_8c_source.html#l00024">24</a> of file <a class="el" href="shape_8c_source.html">shape.c</a>.</p>
 
 </div>
 </div>
@@ -273,7 +309,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="shape_8c_source.html#l00007">7</a> of file <a class="el" href="shape_8c_source.html">shape.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shape_8c_source.html#l00008">8</a> of file <a class="el" href="shape_8c_source.html">shape.c</a>.</p>
 
 </div>
 </div>
@@ -309,7 +345,37 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="shape_8c_source.html#l00102">102</a> of file <a class="el" href="shape_8c_source.html">shape.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shape_8c_source.html#l00104">104</a> of file <a class="el" href="shape_8c_source.html">shape.c</a>.</p>
+
+</div>
+</div>
+<a id="ac6bdc36f1d3141f35f2459cfe0da49f2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac6bdc36f1d3141f35f2459cfe0da49f2">&#9670;&nbsp;</a></span>ShapeDistance()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double ShapeDistance </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structShape.html">Shape</a> *&#160;</td>
+          <td class="paramname"><em>s1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structShape.html">Shape</a> *&#160;</td>
+          <td class="paramname"><em>s2</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="shape_8c_source.html#l00153">153</a> of file <a class="el" href="shape_8c_source.html">shape.c</a>.</p>
 
 </div>
 </div>
@@ -326,7 +392,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="shape_8c_source.html#l00071">71</a> of file <a class="el" href="shape_8c_source.html">shape.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shape_8c_source.html#l00073">73</a> of file <a class="el" href="shape_8c_source.html">shape.c</a>.</p>
 
 </div>
 </div>
@@ -342,7 +408,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="shape_8c_source.html#l00072">72</a> of file <a class="el" href="shape_8c_source.html">shape.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shape_8c_source.html#l00074">74</a> of file <a class="el" href="shape_8c_source.html">shape.c</a>.</p>
 
 </div>
 </div>
@@ -358,7 +424,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="shape_8c_source.html#l00073">73</a> of file <a class="el" href="shape_8c_source.html">shape.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shape_8c_source.html#l00075">75</a> of file <a class="el" href="shape_8c_source.html">shape.c</a>.</p>
 
 </div>
 </div>
@@ -374,7 +440,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="shape_8c_source.html#l00075">75</a> of file <a class="el" href="shape_8c_source.html">shape.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shape_8c_source.html#l00077">77</a> of file <a class="el" href="shape_8c_source.html">shape.c</a>.</p>
 
 </div>
 </div>
@@ -390,7 +456,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="shape_8c_source.html#l00076">76</a> of file <a class="el" href="shape_8c_source.html">shape.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shape_8c_source.html#l00078">78</a> of file <a class="el" href="shape_8c_source.html">shape.c</a>.</p>
 
 </div>
 </div>
@@ -406,7 +472,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="shape_8c_source.html#l00067">67</a> of file <a class="el" href="shape_8c_source.html">shape.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shape_8c_source.html#l00069">69</a> of file <a class="el" href="shape_8c_source.html">shape.c</a>.</p>
 
 </div>
 </div>
@@ -422,7 +488,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="shape_8c_source.html#l00068">68</a> of file <a class="el" href="shape_8c_source.html">shape.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shape_8c_source.html#l00070">70</a> of file <a class="el" href="shape_8c_source.html">shape.c</a>.</p>
 
 </div>
 </div>
@@ -438,7 +504,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="shape_8c_source.html#l00069">69</a> of file <a class="el" href="shape_8c_source.html">shape.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shape_8c_source.html#l00071">71</a> of file <a class="el" href="shape_8c_source.html">shape.c</a>.</p>
 
 </div>
 </div>

@@ -88,8 +88,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a998d338e706f38180aefff003470ed4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae2b19d6c07cf1239b1ded6f8a4545ff6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structPattern.html">Pattern</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structPattern.html#ae2b19d6c07cf1239b1ded6f8a4545ff6">NewPattern</a> (<a class="el" href="structTuple3.html">Tuple3</a> <a class="el" href="structPattern.html#a0297deb64ab0823ee8b1e186874c3a8d">color_a</a>, <a class="el" href="structTuple3.html">Tuple3</a> <a class="el" href="structPattern.html#a49a86d012bf0a1fc9cced03690190a1d">color_b</a>, <a class="el" href="pattern_8h.html#a05e443f79340006d4a8ad3ffaf13f7ff">PATTERN_TYPE</a> <a class="el" href="structPattern.html#a50d29bdcd824c07bcff62482b4fc0c88">type</a>)</td></tr>
 <tr class="separator:ae2b19d6c07cf1239b1ded6f8a4545ff6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a50a7c7c1a4b21a3d692851f8aa23d817"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structPattern.html">Pattern</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structPattern.html#a50a7c7c1a4b21a3d692851f8aa23d817">TransformPattern</a> (<a class="el" href="structPattern.html">Pattern</a> p, <a class="el" href="unionMatrix4x4.html">Matrix4x4</a> m)</td></tr>
-<tr class="separator:a50a7c7c1a4b21a3d692851f8aa23d817"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adba742576adda94bbdaf2b5ba09e2bf7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structPattern.html#adba742576adda94bbdaf2b5ba09e2bf7">TransformPattern</a> (<a class="el" href="structPattern.html">Pattern</a> *p, <a class="el" href="unionMatrix4x4.html">Matrix4x4</a> m)</td></tr>
+<tr class="separator:adba742576adda94bbdaf2b5ba09e2bf7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -147,7 +147,7 @@ Public Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A pattern of the given type with the given color </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="pattern_8c_source.html#l00078">78</a> of file <a class="el" href="pattern_8c_source.html">pattern.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="pattern_8c_source.html#l00077">77</a> of file <a class="el" href="pattern_8c_source.html">pattern.c</a>.</p>
 
 </div>
 </div>
@@ -179,16 +179,16 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a50a7c7c1a4b21a3d692851f8aa23d817"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a50a7c7c1a4b21a3d692851f8aa23d817">&#9670;&nbsp;</a></span>TransformPattern()</h2>
+<a id="adba742576adda94bbdaf2b5ba09e2bf7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adba742576adda94bbdaf2b5ba09e2bf7">&#9670;&nbsp;</a></span>TransformPattern()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="structPattern.html">Pattern</a> TransformPattern </td>
+          <td class="memname">void TransformPattern </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="structPattern.html">Pattern</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="structPattern.html">Pattern</a> *&#160;</td>
           <td class="paramname"><em>p</em>, </td>
         </tr>
         <tr>
@@ -207,12 +207,11 @@ Public Attributes</h2></td></tr>
 <p>Transforms the pattern 'p,' by the given transformation matrix, and returns the result</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">'Pattern</td><td>p' The pattern to be transformed </td></tr>
-    <tr><td class="paramname">'Matrix4x4</td><td>m' The transformation to be applied to the pattern </td></tr>
+    <tr><td class="paramname">'Pattern</td><td>*p' The pattern to be transformed </td></tr>
+    <tr><td class="paramname">'Matrix4x4</td><td>m' The transformation to be applied to the pattern \ </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The transformed pattern </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="pattern_8c_source.html#l00091">91</a> of file <a class="el" href="pattern_8c_source.html">pattern.c</a>.</p>
 
