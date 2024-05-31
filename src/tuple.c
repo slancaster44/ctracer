@@ -86,7 +86,7 @@ bool TupleFuzzyEqual(Tuple3 t1, Tuple3 t2)
 bool TupleLessThan(Tuple3 t1, Tuple3 t2)
 {
     __mmask8 cmp = _mm256_cmp_pd_mask(t1, t2, _CMP_LT_OQ);
-    return (cmp != 0);
+    return (cmp >= 7);
 }
 
 Tuple3 TupleScalarMultiply(Tuple3 t1, double scalar)

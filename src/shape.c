@@ -148,3 +148,11 @@ bool CompareShapes(Shape* s1, Shape* s2)
     Tuple3 c2 = Centroid(ShapeBounds(s2));
     return TupleLessThan(c1,  c2);
 }
+
+
+double ShapeDistance(Shape *s1, Shape *s2) 
+{
+    Tuple3 c1 = Centroid(ShapeBounds(s1));
+    Tuple3 c2 = Centroid(ShapeBounds(s2));
+    return TupleMagnitude(TupleSubtract(c1, c2));
+}

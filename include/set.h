@@ -29,6 +29,12 @@ typedef bool (*Comparator)(void* v1, void* v2);
 
 /**
  * @memberof Set
+ * Find the "distance" between two set elements
+*/
+typedef double (*Distance)(void* v1, void* v2);
+
+/**
+ * @memberof Set
  * Constructs a set
  * 
  * @param 'Set *s' The set to initialize
@@ -113,5 +119,19 @@ void InsertSorted(Set *s, void* value, Comparator c);
  * Sort the given set according to the given comparator
 */
 void QuickSort(Set *s, Comparator cmp);
+
+/**
+ * @memberof Set
+ * Assuming 's' is a fully connected graph, and
+ * the distance between two elements can be found
+ * by 'dst,' order elements in the set, such that 
+ * the distance between each element and the next
+ * is minimized
+ * 
+ * @param Set *s the set to be ordered
+ * @param Distance dst A distance function that gives
+ * the distance between two elements in the set
+*/
+void SortByNearestNeighbor(Set *s, Distance dst);
 
 #endif

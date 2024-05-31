@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
+#include <math.h>
 
 #include "set.h"
 #include "tuple.h"
@@ -79,6 +80,11 @@ void ReconstructSet(Set *s)
 
 void SwapElements(Set *s, unsigned long ix, unsigned long iy)
 {
+    if (ix == iy)
+    {
+        return;
+    }
+    
     void* x = Index(s, ix);
     void* y = Index(s, iy);
 
@@ -133,4 +139,30 @@ void QuickSortHelper(Set *s, Comparator cmp, long lo, long hi)
 void QuickSort(Set *s, Comparator cmp)
 {
     QuickSortHelper(s, cmp, 0, (long) s->length - 1);
+}
+
+void SortByNearestNeighbor(Set *s, Distance dst)
+{
+    
+    for (unsigned long i = 0; i < s->length - 1; i++)
+    {
+        void *this_item = Index(s, i);
+
+        unsigned long closest_idx;
+        double distance = INFINITY;
+
+        for (unsigned long j = i + 1; j < s->length; j++)
+        {
+            void *candidate = Index(s, j);
+            double candidate_dst = dst(candidate, this_item);
+
+            if (candidate_dst < distance)
+            {
+                distance = candidate_dst;
+                closest_idx = j;
+            }
+        }
+
+        SwapElements(s, i+1, closest_idx);
+    }
 }

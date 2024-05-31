@@ -257,14 +257,18 @@ void GetShapeSets(Set *bound, Set *unbound, Node *src)
     }
 }
 
-#define SHAPES_PER_CHILD 4
+#define SHAPES_PER_CHILD 32
 void GenerateBVH(Tree *dst, Tree *src)
 {
     Set bound_shapes;
     ConstructSet(&bound_shapes, sizeof(Shape));
 
     GetShapeSets(&bound_shapes, &dst->start.shapes, &src->start);
+
+    //Sort the shapes such that shapes close to each other
+    //are grouped together
     QuickSort(&bound_shapes, (Comparator) CompareShapes);
+    SortByNearestNeighbor(&bound_shapes, (Distance) ShapeDistance);
 
     unsigned long num_groups = bound_shapes.length / SHAPES_PER_CHILD;
     for (unsigned long i = 0; i < num_groups; i++)

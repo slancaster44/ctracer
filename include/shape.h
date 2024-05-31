@@ -120,4 +120,11 @@ void AddShape(Scene *s, Shape sp);
  * Compare two shapes for sorting
 */
 bool CompareShapes(Shape* s1, Shape* s2);
+
+/**
+ * @memberof Shape
+ * Find the distance between the centroid of
+ * two shapes
+*/
+double ShapeDistance(Shape *s1, Shape *s2);
 #endif
