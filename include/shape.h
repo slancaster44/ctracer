@@ -74,8 +74,8 @@ Shape NewCube(Tuple3 pnt, double size);
 /**
  * @memberof Shape
  * Generate a new triangle
- * @param 'Tuple3 p1, p2, p3' The three corners of the cube
- * @returns A triangle with corners at the given poinnts
+ * @param 'Tuple3 p1, p2, p3' The three corners of the triangle
+ * @returns A triangle with corners at the given points
  */
 Shape NewTriangle(Tuple3 p1, Tuple3 p2, Tuple3 p3);
 
