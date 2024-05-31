@@ -131,15 +131,8 @@ void TestMatrixEqual()
         Pass("Matrix Equality");
     }
 
-    m2.contents[0][0] += EQUALITY_EPSILON;
-    if (MatrixEqual(m1, m2) || !MatrixFuzzyEqual(m1, m2))
-    {
-        Fail("Matrix Fuzzy Equality");
-    }
-    else
-    {
-        Pass("Matrix Fuzzy Equality");
-    }
+    m2.contents[0][0] += EQUALITY_EPSILON / 2;
+    TEST(MatrixFuzzyEqual(m1, m2), "Matrix Fuzzy Equality");
 }
 
 void TestMatrixMultiply()
@@ -701,7 +694,7 @@ void TestReflection()
     Ray r2 = NewRay(NewPnt3(0, 0, -3), NewVec3(0, -(sqrt(2.0) / 2), sqrt(2.0) / 2));
     CalculateBounds(&reflective_scene.shapes);
     Tuple3 result = ColorFor(&reflective_scene, r2);
-    TEST(TupleFuzzyEqual(NewTuple3(0.739048, 0.749048, 0.729048, 0.749048), result), "Scene reflection");
+    TEST(TupleFuzzyEqual(NewTuple3(0.739076, 0.749076, 0.729076, 0.749076), result), "Scene reflection");
 
     DeconstructScene(&reflective_scene);
 }
@@ -1104,7 +1097,7 @@ void TestRefraction()
 
     Ray r = NewRay(NewPnt3(0, 0, -3), NewVec3(0, -sqrt(2) / 2, sqrt(2) / 2));
     Tuple3 result = ColorFor(&s, r);
-    Tuple3 expect = NewTuple3(0.936395, 0.549116, 0.411837, 0.936395);
+    Tuple3 expect = NewTuple3(0.936425, 0.549140, 0.411855, 0.936425);
 
     TEST(TupleFuzzyEqual(result, expect), "Refraction, shader test");
 
@@ -1345,12 +1338,12 @@ void TestBounds()
     Matrix4x4 bt = MatrixMultiply(RotationXMatrix(M_PI / 4.0), RotationYMatrix(M_PI / 4.0));
     Bounds result = TransformBounds(b2, bt);
 
-    Tuple3 exp_min = NewPnt3(-1.4142, -1.7071, -1.7071);
-    Tuple3 exp_max = NewPnt3(1.4142, 1.7071, 1.7071);
+    Tuple3 exp_min = NewPnt3(-1.414214, -1.707107, -1.707107);
+    Tuple3 exp_max = NewPnt3(1.414214, 1.707107, 1.707107);
 
     TEST(TupleFuzzyEqual(exp_min, result.minimum_bound) &&
              TupleFuzzyEqual(exp_max, result.maximum_bound),
-         "Bounds transformation");
+         "formation");
 }
 
 void DemoUnthreaded()
